@@ -1,0 +1,8 @@
+<!--余额为0，无法提现-->
+<div class="wrap min_height6">
+    <div class="busy_box">
+        <span class="busy_icobg"></span>
+        <h3 class="h3">对不起，您当前余额为0元，无法进行提现！</h3>
+        <p class="p">请充值后再操作，或者<a href="#springUrl('/my/home.htm')">返回钱包首页</a></p>
+    </div>
+</div>

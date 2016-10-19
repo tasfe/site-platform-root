@@ -1,0 +1,165 @@
+
+<!-- S 主要内容 -->
+<div id="at" class="wrap">
+	<div class="page_title">
+    	<h2></h2>
+    </div>
+    <div class="pagebox pagebox1 relative pagezjzl" style="padding:0 49px; width:900px;">
+    	<h3 class="f14 b" style="padding-top:20px; line-height:34px;">资金账户</h3>
+        <form class="zz_form_1">
+            <div class="boxbg1" style="width:900px; background:#f3f3f3;">
+            	<p class="p2">
+					<input type="button" onclick="window.open('#springUrl("/my/recharge.htm")')" class="btnm_cz">
+					<input type="button" onclick="window.open('#springUrl("/transfer/toTransferKjt.htm")')" class="btnm_zz">
+					<input type="button" onclick="window.open('#springUrl("/cash/toCashing.htm")')" class="btnm_tx">
+				</p>
+                <p class="p1"><span class="f14 b">可用余额：</span><span class="color_f60 f25 yahei">$!{response.data.account.availableBalance}</span> 元<br><span class="f14 b">冻结资金：</span><span class="color_f60 f16 yahei">$!{response.data.account.frozenBalance}</span> 元</p>  
+            </div>
+            
+            
+        </form>
+        
+        <!--//2015-2-5 -->
+        <style>
+		.personal_balance_weilai{width:424px;}
+		.personal_balance_weilai .function_btn{ top:62px;}
+		.personal_balance_weilai .function_btn a{ font-size:14px; color:#666;}
+		.personal_balance_weilai .function_btn a:hover{ text-decoration:underline;}
+		.bgcolor_f7{ background:#f7f7f7;}
+		</style>
+		#if($!response.data.userType == 0)##如果是0表示供应商展示保理账户
+    		#if($!response.data.accountType == 205)##205表示供应商开通了保理账户
+               <div style=" display:inline-block;width:898px; border:1px solid #ddd;margin-top:20px;">
+                    <div class="personal_balance personal_balance_weilai" style=" border-right:1px solid #ddd; border-bottom:0;">
+                        <h3 style="padding-bottom:16px;" class="f14 b">保理账户</h3>
+                        <p style="padding-bottom:12px;"><span class="color_f60 f22 yahei">$!{response.data.baoliaccount.availableBalance}</span> 元</p>
+                        <a href="#springUrl('/my/all-trade1.htm?link=0201')" class="blue">查看记录</a>
+                         
+                    </div>
+                </div>
+    		#end
+		#end
+        <!--//2015-2-5 -->
+        
+		<h3 class="assetsh3"><a href="#springUrl('/my/bankCardInfo.htm?link=0104')" class="amore fr" style="margin-right:12px;">查看全部银行卡</a><i class="bankcardicon"></i><span class="f14 b">银行卡</span></h3>
+       	<div class="assets_bankcardlist bankcardmanage icons_list">
+        	<ul>
+            	#set($cardType = "")
+				#foreach($info in $response.data.list)
+					#if($info.cardType == "1")
+						#set($cardType="借记卡")
+					#elseif($info.cardType == "2")
+						#set($cardType="贷记卡")
+					#end
+					#set($cardNo=$info.bankAccountNumMask)
+					#set($end=$cardNo.length() - 6)
+					#if($cardNo.length() - 6 > 0)
+						#set($tailNo=$cardNo.substring($end))
+					#else
+						#set($tailNo=$cardNo)
+					#end
+					#if($info.bankcardId == $response.data.defaultCard)
+						<li>
+                        	<div>
+								<span class="bankcardbgimg ${info.bankCode}_s"></span>
+								<span class="bankcardbgimgicon icon ${info.bankCode}"></span>
+                                <span class="s1">$!{info.bankName}</span><span class="s2">$tailNo</span>
+                                <span class="s3">$cardType</span>
+                                <span class="ss"><span class="ssbg"></span><a href="#" onclick="cardManage($!{info.bankcardId})" class="gl">管理</a></span>
+                                <span class="mr">默认银行卡</span>
+                            </div>
+                        </li>
+				    #else
+						<li>
+                        	<div>
+								<span class="bankcardbgimg ${info.bankCode}_s"></span>
+								<span class="bankcardbgimgicon icon ${info.bankCode}"></span>
+                                <span class="s1">$!{info.bankName}</span><span class="s2">$tailNo</span>
+                                <span class="s3">$cardType</span>
+                                <span class="ss"><span class="ssbg"></span><a href="#" onclick="cardManage($!{info.bankcardId})" class="gl">管理</a></span>
+                                <span class="mr" data-bank="尾号为$tailNo的$!{info.bankName}储蓄卡" data-id="$!{info.bankcardId}"><a href="#" class="setDefaultBank">设为默认银行卡</a></span>
+                            </div>
+                        </li>
+					#end
+				#end
+				<li class="last">
+                	<a href="#springUrl('/my/add-bankcard-index.htm')" class="addbankcard"></a>
+                </li>
+				<input type="hidden" id="defaultCardId" name="defaultCardId" value="$!{response.data.defaultCard}"/>
+            </ul>
+        </div>
+        <h3 class="assetsh3" style="padding-top:10px; display:none;"><span class="f14 b">一户通</span><span class="amore" style=" font-size:12px;margin-left:12px;">可以使用永达互联网金融账户登录的网站及应用</span></h3>
+        <div class="assets_yihutonglist" style="display:none;">
+        	<ul>
+            	<li class="first"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/c1.gif"></li>
+                <li><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/c2.gif"></li>
+                <li><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/c3.gif"></li>
+                <li><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/c4.gif"></li>
+                <li class="first"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/c1.gif"></li>
+            </ul>
+        </div>
+    </div>
+  
+</div>
+<form action="#springUrl('/my/cardManage.htm')" id="bankCardForm" method="POST"><input type="hidden" id="bankCardId" name="bankCardId" value=""></form>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	
+	$(".assets_bankcardlist li").not(".last").hover(function(){
+		$(this).addClass("hover");
+		$(".mr>a",this).show();
+		
+	},function(){
+		$(this).removeClass("hover");
+		$(".mr>a",this).hide();
+	})
+	
+	$(".setDefaultBank").click(function(){
+		var html = '<div class="bankNnfasten"><div class="bankNnfasten_box">';
+		html += '<p class="bank_line">确认设置' + $(this).parent().attr("data-bank") + '为默认银行卡？</p>';
+		html += '<p class="btn_bankNnfasten_box"><input class="btn_bankNnfasten" type="button" value="" id="btn_setDefaultBank" data-id="'+$(this).parent().attr("data-id")+'"></p>';
+		html += '</div></div>';
+													
+		showWin('html', html, '', 500, 220, ' ', '', '');
+	});
+	
+	$("body").delegate("#btn_setDefaultBank","click",function(){
+		var $thisobj = $(this);
+		if($thisobj.val() == $thisobj.attr("data-placeholder")) {
+			$thisobj.val("");
+			$thisobj.removeClass("color_b3");
+		}
+		
+		var cardId = $(this).attr("data-id");
+		
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/setDefaultCard.htm')" ,
+            data: 'bankCardId='+cardId+'&defaultCardId='+$("#defaultCardId").val(),
+            success: function(response) {
+            	if(response.success){
+					window.location.href="#springUrl('/my/accountInfo.htm?link=0102')";
+            	} else {
+	            	$(".error").html(response.message);
+            	}
+            } ,
+            error: function(data) {
+               $(".error").html(response.message);
+            },
+            dataType: "json"
+        });
+		
+		closeSW();
+		
+	});
+	
+	
+})
+
+function cardManage(id){
+	$("#bankCardId").val(id);
+	$("#bankCardForm").submit();
+}
+
+</script>

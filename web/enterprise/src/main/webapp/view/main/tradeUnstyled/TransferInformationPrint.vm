@@ -1,0 +1,7 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/account.css" rel="stylesheet" type="text/css">
+
+<div id="dzdzd_xq" style="margin: 40px auto 0;"><img src="#springUrl('/SingleReceipt.htm?tradeType=')${tradeType}&flag=${flag}" alt="电子对账单"></div>
+<script>
+window.print();
+</script>

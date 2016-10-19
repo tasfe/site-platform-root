@@ -1,0 +1,31 @@
+<div class="wrapbg">
+<!-- S 主要内容 -->
+<div class="wrap">
+    <div class="page_title certification">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">实名认证</span>
+        </div>
+    </div>
+
+     <div class="login_main">
+          
+          <div class="logiAmend_succeed">
+              <div class="loginTipsBox">
+                       <i class="tipsIcon ok"></i>
+                       <p class="f16 bold mb10">恭喜您，您的实名认证资料已提交</p>
+                       <p>我们将在3个工作日内为您审核，请耐心等待！</p>
+                       <p class="mt36 f14">系统在<em class="red time_left">3</em>秒后自动跳转到<a href="#springUrl('/my/home.htm')">账户首页</a></p>
+              </div>
+          </div>
+          
+     </div>
+</div>
+<!-- E 主要内容 -->
+</div>
+<script>
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:3, url:"#springUrl('/my/home.htm')"});
+})
+</script>
+

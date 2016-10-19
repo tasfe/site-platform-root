@@ -1,0 +1,124 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+    </div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/accountSetting.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/securityInfo.htm')">
+     	  	   	             <span class="subNavIcon aqsz"></span>
+                             <span class="subNavTxt">安全设置</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/contacts/toContactsHome.htm')">
+     	  	   	             <span class="subNavIcon lxr"></span>
+                             <span class="subNavTxt">联系人</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1">联系人</div>
+               <div class="account_set_right_con_100">
+               		<div class="account_h3_lxr">
+                    	<form id="contact_friends_search_form">
+						##<input type="text" data-placeholder="请输入您想搜索的联系人" value="" class="inputtext w192 placeholder color_b3 fr" id="contact_friends_search_input">
+						</form>
+                         <a href="#springUrl('/contacts/toAddContacts.htm')" class="a_add">新增联系人</a>
+                    </div>
+                    <ul class="account_contacts_list">
+						#set ($i=1)
+						#foreach ($!mcInfo in $!response.data.list)
+    						#if($i%2 != 0)
+                                #set ($odd_class="")
+                            #else
+                                #set ($odd_class="on")
+							#end
+							#set($i=$i+1)
+                        	<li class=$odd_class>
+                                <div class="box">
+									#if($!{mcInfo.contactType} == '0')
+									<span class="b1">$!{mcInfo.accountName}</span>
+									<span class="b2">$!{mcInfo.memo}</span><br>
+									<span class="b3">$!{mcInfo.contactIdentity}</span>
+									<span class="b4">$!{mcInfo.mobile}</span>
+									#else
+									<span class="b1">$!{mcInfo.accountName}</span>
+									<span class="b2">$!{mcInfo.memo}</span><br>
+									<span class="b3">$!{mcInfo.accountNoSummary}</span>
+									<span class="b4" title="$!{mcInfo.bankName}-$!{mcInfo.province}-$!{mcInfo.bankBranch} $!{mcInfo.mobile}">
+										$!{mcInfo.bankName}-$!{mcInfo.province}-$!{mcInfo.bankBranch} $!{mcInfo.mobile}</span>
+									#end
+									<p class="p1" for="$!{mcInfo.contactId}">
+									##<a href="${request.contextPath}/contacts/toModifyContacts.htm?contactId=$!{mcInfo.contactId}&contactType=$!{mcInfo.contactType}">编辑</a>
+									##<span class="p15">|</span>
+									##<a href="#springUrl('/transfer/toTransferKjt.htm?link=0204')">转账</a><span class="p15">|</span><a href="#springUrl('/my/all-trade1.htm?link=0201')">交易记录</a><span class="p15"></span>
+									<a href="javascript:void(0)" class="del" onClick="del(this)">删除</a></p>
+                                </div>
+                            </li>
+						#end
+                    </ul>
+                    ##<div style="height:41px; padding-right:21px;">
+					##	<div class="nav_page mt10"><a href="#">首页</a><a href="#">上一页</a><i>第12页，共102页</i><a href="#">下一页</a><a href="#">尾页</a><span class="ml10">转到</span><input type="text" class="input_go"><span>页</span><input type="button" class="btn_go"></div>
+                    ##</div>
+                    
+               </div>
+
+
+     	  </div>
+     	  <!-- S 右边内容 -->
+
+     </div>
+
+</div>
+<script>
+$(function(){
+	$("#contact_friends_search_input").keyup(function(e){
+		if(e.keyCode == 13)
+			if($.trim($(this).val()) != "")
+				$("#contact_friends_search_form").submit();
+	});
+})
+function del(obj){
+	var name=$(obj).parent().parent().find(".b1").text();
+	var contactId=$(obj).parent().attr("for");
+	if(name==""){name="此联系人"}
+	var html = '<div class=" f14 b" style="text-align:center">确认删除'+name+'？</div>';
+		html += '<div class="div_btn_submit"> <input type="button" class="btn_qr btn_submit_del" data-disabled="btn_qrtjia" id="bankcontact_qr"><input type="button" class="btn_qx ml30" onclick="closeSW();"></div></div>';
+		
+	showWin('html', html, '', 600, 160, '确认', '', '');
+	
+	$(".btn_submit_del").live("click",function(){
+		jQuery.ajax({
+            type:'post', 
+            data: 'contactId=' + contactId,  
+			cache:false,
+            url:"${request.contextPath}/contacts/deleteContact.htm",                           
+            success:function(data){
+				window.location.href = '${request.contextPath}/contacts/toContactsHome.htm';
+            },
+            dataType:'json',
+            error:function (){                
+				$(".error").text("删除联系人失败！");
+            }
+        });
+	})
+}
+
+</script>

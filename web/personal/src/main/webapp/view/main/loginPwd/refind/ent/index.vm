@@ -1,0 +1,108 @@
+<div class="zhanghu_infor">
+     <div class="wrap">
+             <div class="account_number_manager">
+                    <div class="user_ibox">
+                            <h2 class="h2_titform"><em>找回登录密码</em>输入你要找回登录密码的账号</h2>
+                            <form action="${request.contextPath}/my/refind/loginPwd/ent/goMain.htm" method="POST">    	
+                                    <div class="form-horizontal center_form clearfix">                                
+                                        <div class="control-group">
+                                            <label class="control-label" for="payPassword">账户名：</label>
+                                            <div class="controls">
+                                              <input type="text" id="loginName" name="loginName" value="$!{loginName}" class="in_txt">
+                            					#if($!{accountNoExistMsg})
+													<label class='error'>$!{accountNoExistMsg}</label>
+												#end
+											</div>
+                                        </div>   
+                                        <div class="control-group">
+                                            <label class="control-label" for="payPassword">验证码：</label>
+                                            <div class="controls">
+												<input type="text" id="imageVerifyCode" name="imageVerifyCode" class="in_txt" style="width:110px;" >
+													<span class="yzm marl10">
+														<img id="randImage" onclick="reloadcode();"  src="#springUrl('/pvc.htm')" style="cursor: pointer;" width="85" height="25" />
+													</span>
+													<a href="#" id="reloadcode" class="btn_forget f_12 marl10">看不清？换一张</a>
+												#if($!{errorMsg})
+													<label class='error'>$!{errorMsg}</label>
+												#end
+											</div>
+                                        </div>   
+										
+                                        <div class="control-group">                
+                                            <div class="controls">
+                                              <button id="submit" type="submit" class="btn_h40_red bold">下一步</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                            
+                            
+                    </div>                                                          
+              </div>
+     </div>
+</div>
+	
+
+
+<script type="text/javascript">
+
+	$("#reloadcode").click(function(){
+		reloadcode();
+	});
+	
+	function reloadcode() {
+	   $("#randImage").attr("src","#springUrl('/pvc.htm')?id="+Math.random());
+	}
+	
+	$("#submit").click(function(){
+		$(".error").remove();
+		var success=true;
+		if($("#loginName").val()==""){
+			$("#loginName").parent().append("<label class='error'>账户名不能为空</label>");
+			success=false;
+		}else{
+    		if(!ajaxCheckLoginNameIsExist($("#loginName"))){
+    			success=false;
+    		}
+		}
+		if($("#imageVerifyCode").val()==""){
+			$("#imageVerifyCode").parent().append("<label class='error'>验证码不能为空</label>");
+			success=false;
+		}
+		return success;
+	});
+	
+	$("#loginName").blur(function(){
+    	$(this).parent().children(".error").remove();
+    	if($(this).val()==""){
+    		$(this).parent().append("<label class='error'>账户名不能为空</label>");
+    		return false;
+    	}
+    	ajaxCheckLoginNameIsExist($(this));
+	});
+	
+    function ajaxCheckLoginNameIsExist(obj){
+		var result=false;
+    	jQuery.ajax({      
+    	 	data:{
+    			loginName:obj.val()
+    		},
+            type: "Post",   
+			async:false,
+            url: "${request.contextPath}/my/refind/loginPwd/ent/checkLoginNameIsExist.htm",     
+            dataType: "json",     
+            success: function(data) {
+    			if(data){
+					result= true;
+    			}else{
+    				obj.parent().append("<label class='error'>账户名未注册</label>");
+    			}
+            },     
+            error: function(err) {     
+            }     
+        });   
+		return result;
+    };
+
+
+</script>

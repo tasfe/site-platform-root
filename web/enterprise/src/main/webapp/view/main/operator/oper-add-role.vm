@@ -1,0 +1,519 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title operator">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">操作员</span>
+		</div>
+	</div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/operator/operator-index.htm?refresh=true')">
+     	  	   	             <span class="subNavIcon jsgl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">角色管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/operator/manage-index.htm')">
+     	  	   	             <span class="subNavIcon cygl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">成员管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+            <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1 pos_rel">添加角色</div>
+     	  	   <div class="account_set_right_main clearfix">
+                       <form id="add-role-form" name="add-role-form" action="#springUrl('/my/operator/do-add-role.htm')" method="POST">
+                       <div class="amendBox" >
+                               <div class="amendOneBlock">
+                                     <div class="kjt_limit" style="padding-bottom:0">
+                                           <label><span class="f14 ">角色名称：</span>
+                                             <input type="text" class="inputtext w177" id="role_name" name="role_name" maxlength="20">
+                                           </label>
+                                           <div class="error h22" style="padding-left:76px;"></div>
+                                     </div>
+      
+                                     <div class="kjt_limit " style="padding-bottom:0"> <span class="f14 fd">角色描述：&nbsp; </span>
+                                           <textarea cols="45" rows="5" id="role_des" name="role_des" class="cutdown_words"  maxlength="50"   data-tip-place="1"></textarea>
+										   <div class="error h22 tip" style="padding-left:76px;"></div>
+                                     </div>
+                              </div>
+
+                              <p class="f12 bold mt10 mb10">权限分配</p>
+
+                              <div class="amendTwoBlock">
+                                  
+                                   <table border="0" cellspacing="0" cellpadding="0" class="amend_table">
+                                         <tr class="titColor">                                              
+                                               <th class="borShow" width="15%">权限分类</th>
+                                               <th class="borShow" width="25%">权限名称 </th>
+                                               <th class="borShow" width="60%">全选</th>
+                                         </tr>
+                                    </table>
+                              </div>
+
+						   <div id="J_RolesValue">
+							   <input type="hidden" id="role_ids" value="">
+							   <input type="hidden" id="role_ids_new" value="">
+							   <input type="hidden" id="role_add" name="role_add">
+							   <input type="hidden" id="role_del" name="role_del">
+						   </div>
+							  <div id="J_Submit_Error" class="error h22 tip" style="padding-left: 250px;">$!response.message</div>
+                              <div class="btn_amend"><input class="btn btn_sumbit" type="button" value="确 认"><input class="btn btn-bg J_btn_qx ml30" type="button" value="取 消"></div>
+                              
+
+                       </div>
+					   </form>
+                       
+
+     	  	   </div>
+
+     	  </div>
+     	  <!-- E 右边内容 -->
+
+     </div>
+
+</div>
+<!-- E 主要内容 -->
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/JSON2.js"></script>
+<script>
+$(".J_btn_qx").click(function(){
+	window.location.href = '#springUrl('/my/operator/operator-index.htm?refresh=true')';
+});
+
+$(".btn_sumbit").click(function(){
+	var btn_submit = $(this);
+	btn_submit.attr("disabled", true).addClass("btn_disabled");
+	$(".error").text("");
+	
+	if($("#role_name").val()==""){
+			$("#role_name").parent().parent().find(".error").text("请输入角色名称");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			return false;
+	}
+	
+	if($("#role_name").val().length > 20){
+			$("#role_name").parent().parent().find(".error").text("角色名称不能超过20个字");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			return false;
+	}
+		
+	if($("#role_des").val()==""){
+		$("#role_des").parent().find(".error").text("请输入角色描述");
+		btn_submit.attr("disabled", false).removeClass("btn_disabled");
+		return false;
+	}
+
+	// 检测 POS_CASHIER_APP 是否选择
+	/*if($("#J_TR_POS_APP").find(".checkbox_qx:checked").length > 0
+		&& $("#J_TR_POS_CASHIER_APP").find(".checkbox_qx:checked").length <= 0){
+			$("#J_Submit_Error").text("请选择：POS收银类型 相关权限！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			return false;
+	}*/
+	
+	$("#add-role-form").submit();
+});
+
+function addRole(jAdd,id){
+	var ids = jAdd.val();
+	if(ids == ""){
+		jAdd.val(id);
+	}
+	else{
+		jAdd.val(ids + "," + id);
+	}
+}
+
+function delRole(jAdd,id){
+	var ids = "," + jAdd.val() + ",";
+	ids = ids.replace(","+id+",",",");
+	if(ids.length == 1){
+		jAdd.val("");
+	}
+	else{
+		jAdd.val(ids.substring(1,ids.length-1));
+	}
+}
+
+//每次点击执行一次，设置变化的权限ids
+function setChangeIds(jThis){
+	var id = jThis.val();
+	var rolesOld = "," + $("#role_ids").val() + ",";
+	var apptype = jThis.data("apptype") == "" ? "" : ( "_" + jThis.data("apptype"));
+
+	// 如果点击的是：权限复选框
+	if(jThis.hasClass("checkbox_qx")){
+		// 如果该权限原来就有的
+		if(rolesOld.indexOf(","+id+",") >= 0){
+			// 如果是选中，需要删除 add 和 del input 中的记录
+			if(jThis.prop("checked")){//console.log(1);
+				delRole($("#role_add"+apptype),id);
+				delRole($("#role_del"+apptype),id);
+			}
+			// 如果是取消，需要 del 中记录
+			else{//console.log(2);
+				addRole($("#role_del"+apptype),id);
+			}
+		}
+		// 如果该权限原来就没有
+		else{
+			// 如果是选中，需要 add 中的记录
+			if(jThis.prop("checked")){//console.log(3);
+				addRole($("#role_add"+apptype),id);
+			}
+			else{//console.log(4);
+				delRole($("#role_add"+apptype),id);
+			}
+		}
+	}
+	// 如果点击的是：全选权限复选框
+	else{
+		var ck = jThis.parent().parent().parent().parent().find(".checkbox_qx");
+		for(var i = 0, len = ck.length; i < len; i++){
+			setChangeIds(ck.eq(i));
+		}
+	}
+
+/*
+	// 所有选中的权限
+	var J_Checkeds = $(".checkbox_qx:checked");
+	// 权限格式：,xxx,yyy,
+	var roleIds = ",";
+	J_Checkeds.each(function(index){
+		var J_Checked = J_Checkeds.eq(index);
+		var apptype = J_Checked.data("apptype");
+		switch (apptype){
+			case "POS_APP":
+				$("#role_add_POS_APP").val();
+				$("#role_del_POS_APP").val();
+				break;
+			case "POS_CASHIER_APP":
+				$("#role_add_POS_CASHIER_APP").val();
+				$("#role_del_POS_CASHIER_APP").val();
+				break;
+			default :
+		}
+		roleIds += J_Checked.val() + ",";
+	});
+//*/
+
+/*
+	var newIds = "", addIds = "", delIds = "", isHave = false;
+	var oldIds_array = ($("#role_ids").val()).split(",");
+	var oldIds_array_len = oldIds_array.length;
+
+	for(var i = 0; i < checkbox_checked_len; i++){
+		if(i == 0) newIds = checkbox_checked.eq(i).val();
+		else newIds += "," + checkbox_checked.eq(i).val();
+	}
+	var newIds_array = newIds.split(",");
+	
+	for(i = 0; i < oldIds_array_len; i++){
+		isHave = false;
+		for(var j = 0; j < checkbox_checked_len; j++){
+			if(oldIds_array[i] == newIds_array[j]) { isHave = true; break; }//没删除
+		}
+		if(!isHave){
+			if(delIds == "") delIds = oldIds_array[i];
+			else delIds += "," + oldIds_array[i];
+		}
+	}
+	for(i = 0; i < checkbox_checked_len; i++){
+		isHave = false;
+		for(j = 0; j < oldIds_array_len; j++){
+			if(newIds_array[i] == oldIds_array[j]) { isHave = true; break; }//没增加
+		}
+		if(!isHave){
+			if(addIds == "") addIds = newIds_array[i];
+			else addIds += "," + newIds_array[i];
+		}
+	}
+	
+	$("#role_ids_new").val(newIds);
+	$("#role_add").val(addIds);
+	$("#role_del").val(delIds);
+	//*/
+}
+
+// 初始化权限列表
+function initFuncTable() {
+	$.ajax({
+    	type: "post",
+		url: "$!{path}/my/operator/getAllFunctionList.htm",
+		data: "",
+		cache:false,
+		dataType: "JSON",
+		success: function(result){
+			if (result && result.success && result.messageObj) {
+				showLev1FuncTable(result.messageObj);
+				$.ajax({
+					type: "post",
+					url: "$!{path}/my/operator/getAllFunctionList.htm?sourceId=POS_APP",
+					data: "",
+					cache:false,
+					dataType: "JSON",
+					success: function(result){
+						if (result && result.success && result.messageObj) {
+							showLev1FuncTable(result.messageObj,"POS_APP");
+							/*$.ajax({
+								type: "post",
+								url: "$!{path}/my/operator/getAllFunctionList.htm?sourceId=POS_CASHIER_APP",
+								data: "",
+								cache:false,
+								dataType: "JSON",
+								success: function(result){
+									if (result && result.success && result.messageObj) {
+										showLev1FuncTable(result.messageObj,"POS_CASHIER_APP");
+										initCheckboxAllEvent();
+									}else{
+										//window.location.href="#springUrl('/error.htm')";
+									}
+								}
+							});*/
+							// 如果开启了上面的请求，那么此处事件初始化就不需要了
+							initCheckboxAllEvent();
+						}else{
+							//window.location.href="#springUrl('/error.htm')";
+						}
+					}
+				});
+			}else{
+				//window.location.href="#springUrl('/error.htm')";
+			}
+		}
+    });
+}
+
+// 显示权限可控的功能列表
+function showLev1FuncTable(data,apptype) {
+	var J_RolesValue = $("#J_RolesValue");
+	apptype = apptype || "";
+	var appname = "商户钱包";
+	var classNameTr = "";
+	switch (apptype){
+		case "POS_APP":
+			appname = "POS收单";
+			J_RolesValue.append('<input type="hidden" id="role_add_' + apptype + '" name="role_add_' + apptype + '"><input type="hidden" id="role_del_' + apptype + '" name="role_del_' + apptype + '">');
+			break;
+		case "POS_CASHIER_APP":
+			appname = "POS收银类型";
+			J_RolesValue.append('<input type="hidden" id="role_add_' + apptype + '" name="role_add_' + apptype + '"><input type="hidden" id="role_del_' + apptype + '" name="role_del_' + apptype + '">');
+			classNameTr = "hidden";
+			break;
+		default :
+			appname = "商户钱包";
+	}
+	if (!data || data.length == 0) {
+		return;
+	}
+
+	var len = data.length;
+	var html = '';
+
+	// 过滤出父级，并从data中删除
+	var lev1Data = [];
+	for(var i = 0; i < len; i++){
+		if(data[i].parentId == "0"){
+			lev1Data.push(data[i]);
+			data.splice(i,1);i--;len--;
+		}
+	}
+
+	len = data.length;
+	var len_lev1Data = lev1Data.length;
+
+	for(i = 0; i < len_lev1Data; i++){
+		var _lev1Data = lev1Data[i];
+		if(i == 0)
+			html += '<tr id="J_TR_'+apptype+'" class="'+classNameTr+'">'
+					+'<td class="borShow" rowspan="' + len_lev1Data + '">'+appname+'</td>'
+					+'<td class="lev1-"><span><label><input type="checkbox" class="checkbox_all" value="' + _lev1Data.functionId + '" data-apptype="' + apptype + '" />' + _lev1Data.functionName + '</label></span></td>';
+		else
+			html += '<tr>'
+				+'<td class="lev1-"><span><label><input type="checkbox" class="checkbox_all" value="' + _lev1Data.functionId + '" data-apptype="' + apptype + '" />' + _lev1Data.functionName + '</label></span></td>';
+
+		var isNone = true;
+		html += '<td class="lev2-">';
+		for(var j = 0; j < len; j++){
+			var _lev2Data = data[j];
+			if(_lev1Data.functionId == _lev2Data.parentId){
+				isNone = false;
+				html += '<span><label><input id="' + _lev2Data.functionId + '" type="checkbox" class="checkbox_qx" value="' + _lev2Data.functionId + '" data-apptype="' + apptype + '" />' + _lev2Data.functionName + '</label></span>'
+			}
+		}
+
+		if(isNone)
+			html += '<span><label><input id="' + _lev1Data.functionId + '" type="checkbox" class="checkbox_qx" value="' + _lev1Data.functionId + '" data-apptype="' + apptype + '" />' + _lev1Data.functionName + '</label></span></td>'
+					+'</tr>';
+		else
+			html += '</tr>';
+	}
+
+
+	/*
+	for (var i=0; i<len; i++) {
+		var fun = data[i];
+		// parentId=0的为一级权限资源
+		if (fun.parentId == '0') {
+			html += '<tr><td class="borShow">' + fun.functionName + '</td><td class="lev2-' + fun.functionId + '"></td><td><input type="checkbox" class="checkbox_all" /></td></tr>';
+		} else {
+			funcArr[funcArr.length] = fun;
+		}
+	}
+	*/
+	
+	/*html = '<tr>'
+			+'<td class="lev1-"><input type="checkbox" class="checkbox_all" /></td>'
+			+'<td class="lev2-"></td>'
+			+'</tr>';*/
+	
+	$('.amend_table').append(html);
+	/*
+	if (funcArr && funcArr.length > 0) {
+		showLev2FuncTable(funcArr);
+	}
+	*/
+	/*for (i=0; i<len; i++) {
+		var fun = data[i];
+		html = '<span><label><input type="checkbox" class="checkbox_qx" value="' + fun.functionId + '" />' + fun.functionName + '</label></span>';
+		$(".lev2-").append(html);
+	}*/
+	
+}
+
+// 显示二级权限资源 没用
+function showLev2FuncTable(funcArr) {
+	if (!funcArr || funcArr.length == 0) {
+		return;
+	}
+	
+	var len = funcArr.length;
+	var html = '';
+	for (var i=0; i<len; i++) {
+		var fun = funcArr[i];
+		var parentId = fun.parentId;
+		var functionId = fun.functionId;
+		if (parentId && functionId) {
+			$('.lev2-' + parentId).each(function() {
+				var html = '<span><label><input type="checkbox" class="checkbox_qx" value="' + functionId + '" />' + fun.functionName + '</label></span>';
+				$(this).append(html);
+			});
+		}
+	}
+}
+
+// 初始化所有复选框事件
+function initCheckboxAllEvent() {
+	$(".checkbox_all").click(function(){
+		var jThis = $(this);
+		var this_all_checkbox = jThis.parent().parent().parent().parent().find("input:checkbox");
+		var isCheck = jThis.attr("checked");
+		if(isCheck == "checked") this_all_checkbox.attr("checked", true);
+		else this_all_checkbox.attr("checked", false);
+		
+		setChangeIds(jThis);
+	});
+	
+	$(".checkbox_qx").click(function(){
+		var jThis = $(this);
+		var val = jThis.val();
+		if(val == "EW_ORDER_SEARCH_ALL"){
+			$("#EW_TRANSACTION_DETAIL_ALL").prop("checked", jThis.prop("checked"));
+		}
+		else if(val == "EW_TRANSACTION_DETAIL_ALL"){
+			$("#EW_ORDER_SEARCH_ALL").prop("checked", jThis.prop("checked"));
+		}
+		//var isCheck = jThis.attr("checked");
+		var checkbox_qx = jThis.parent().parent().parent().find("input:checkbox").not(".checkbox_all");
+		var checkbox_qx_checked = jThis.parent().parent().parent().find("input:checked");
+		var checkbox_all = jThis.parent().parent().parent().parent().find(".checkbox_all");
+		
+		//if(isCheck == "checked") {
+		// 所属分类的权限个数
+			var len = checkbox_qx.length;
+		// 所属分类的选中的权限个数
+			var len_checked = checkbox_qx_checked.length;
+		// 如果一个权限都没有选中
+			if(len_checked == 0){
+				checkbox_all[0].indeterminate = false;
+				checkbox_all.attr("checked", false);
+			}
+			// 如果全部选中
+			else if(len_checked == len){
+				checkbox_all[0].indeterminate = false;
+				checkbox_all.attr("checked", true);
+			}
+			// 如果选中了部分
+			else{
+				checkbox_all[0].indeterminate = true;
+				checkbox_all.attr("checked", false);
+			}
+			/*
+			var flag = true;
+			for(var i = 0; i < len; i++){
+				if(checkbox_qx.eq(i).attr("checked") != "checked") {
+					checkbox_all.attr("checked", false);
+					checkbox_all[0].indeterminate = true;
+					flag = false; break;
+				}
+			}
+			if(flag){
+				checkbox_all[0].indeterminate = false;
+				checkbox_all.attr("checked", true);
+			}*/
+		//}
+		/*else {
+			checkbox_all.attr("checked", false);
+		}*/
+		
+		setChangeIds(jThis);
+		if(val == "EW_ORDER_SEARCH_ALL"){
+			setChangeIds($("#EW_TRANSACTION_DETAIL_ALL"));
+		}
+		else if(val == "EW_TRANSACTION_DETAIL_ALL"){
+			setChangeIds($("#EW_ORDER_SEARCH_ALL"));
+		}
+	});
+
+	// POS收单 联动显示 隐藏 POS_CASHIER_APP
+	/*$(".checkbox_all[data-apptype='POS_APP'], .checkbox_qx[data-apptype='POS_APP']").click(function(){
+		var jThis = $(this);
+		if(jThis.hasClass("checkbox_all")){
+			if(jThis.prop("checked")){
+				$("#J_TR_POS_CASHIER_APP").removeClass("hidden");
+			}
+			else{
+				$("#J_TR_POS_CASHIER_APP").addClass("hidden");
+			}
+		}
+		else{
+			var J_TD = jThis.parent().parent().parent();
+			if(J_TD.find(".checkbox_qx:checked").length){
+				$("#J_TR_POS_CASHIER_APP").removeClass("hidden");
+			}
+			else{
+				$("#J_TR_POS_CASHIER_APP").addClass("hidden");
+			}
+		}
+	});*/
+}
+
+$(function(){
+	// 初始化权限列表
+	initFuncTable();
+})
+</script>

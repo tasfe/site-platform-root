@@ -1,0 +1,62 @@
+<div class="wrapbg">
+    <div id="money_cz" class="wrap">
+    #foreach($!tradeInfo in $!response.data.page)
+        <div class="page_title transaction">
+            <div class="title fl">
+                <i class="icon fl"></i>
+                  <span class="tt fl">$!tradeInfo.tradeType订单信息</span>
+            </div>
+        </div>
+        <div class="pagebox "> 
+        <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        ##foreach($!tradeInfo in $!response.data.page)
+	     <tr>
+            <td class="tab_w">交易单号</td>
+            <td class="tab_w2" id="J_tradeVoucherNo">$!{tradeInfo.tradeNo}1111</td>
+            <td class="tab_w">交易时间</td>
+            <td class="Detail_tab_no tab_w2">$!dateUtil.getNewFormatDateString($!{tradeInfo.tradeTime})</td>
+         </tr>
+         <tr class="cl">
+             <td>交易类型</td>
+             <td>$!tradeInfo.tradeType</td>
+             <td>卡类型</td>
+             <td class="Detail_tab_no">$!{tradeInfo.cardType}</td>
+         </tr>
+         <tr>
+             <td>所属银行</td>
+             <td>$!tradeInfo.bank</td>
+             <td>交易账号</td>
+             <td class="Detail_tab_no">$!tradeInfo.bankNo</td>
+         </tr>
+         <tr  class="cl">
+             <td>交易金额</td>
+             <td>$!tradeInfo.tradeAmount</td>
+             <td>手续费</td>
+             <td class="Detail_tab_no">$!{tradeInfo.tradeFee}</td>
+         </tr>
+         <tr >
+             <td>结算金额</td>
+             <td>$!{tradeInfo.tradeSum}</td>
+	         <td >交易状态</td>
+             <td >$!{tradeInfo.status}</td>
+         </tr>
+  	         <tr class="cl">
+             <td >终端号</td>
+             <td  >$!{tradeInfo.clientNo}</td>
+	         <td>原因</td>
+             <td id="J_operator">$!{tradeInfo.reason}</td>
+         </tr>
+         <tr >
+             <td>备注</td>
+             <td>$!{tradeInfo.remark}</td>
+	         <td></td>
+             <td></td>
+         </tr>
+         #end
+        </table> 
+        </div> 
+        <div class="fun_btn relative">
+	        <input type="button" value="返 回" class="btn btn-bg" onClick="goBackOrClose();">
+        </div>
+    </div>
+</div>

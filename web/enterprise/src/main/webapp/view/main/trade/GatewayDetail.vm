@@ -1,0 +1,165 @@
+<div class="wrapbg">
+    <div id="money_cz" class="wrap">
+        <div class="page_title transaction">
+            <div class="title fl">
+                <i class="icon fl"></i>
+                <span class="tt fl">订单信息</span>
+            </div>
+        </div>
+  <div class="pagebox "> 
+  <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+	#foreach($info in $response.data.list.baseInfoList)
+  <tr>
+    <td class="tab_w">交易订单号</td>
+    <td class="tab_w2">$!{info.tradeVoucherNo}<br></td>
+    <td class="tab_w">商户订单号</td>
+    <td class="Detail_tab_no tab_w2">$!{info.serialNumber}</td>
+  </tr>
+   #if($info.TradeType=="INSTANT_TRASFER")
+	#set($tradeType ="普通转账交易")
+	#elseif($info.TradeType=="INSTANT_ACQUIRING")
+		#set($tradeType ="即时到账收单交易")
+	#elseif($info.TradeType=="ENSURE_ACQUIRING")
+		#set($tradeType ="担保收单交易")
+	#elseif($info.TradeType=="PREPAY_ACQUIRING")
+		#set($tradeType ="下订收单交易")
+	#elseif($info.TradeType=="REFUND_ACQUIRING")
+		#set($tradeType ="收单退款交易")
+	#else
+		#set($tradeType =$info.TradeType)
+   #end
+  <tr class="cl">
+    <td>创建时间</td>
+    <td>$!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>
+    <td>交易类型</td>
+    <td class="Detail_tab_no">$tradeType</td>
+  </tr>
+  <tr>
+    <td>交易金额（元）</td>
+    <td>$moneyUtil.getAmount($!info.payAmount)</td>
+    <td>手续费（元）</td>
+    <td class="Detail_tab_no">$!{moneyUtil.getAmount($!info.payeeFee)}</td>##数据暂缺
+  </tr>
+  <tr  class="cl">
+    <td>实际金额（元）</td>
+    <td>$moneyUtil.getAmount($!info.orderMoney)</td>
+    <td>支付时间</td>
+    <td class="Detail_tab_no">$!dateUtil.getNewFormatDateString(${info.gmtpaid})</td>
+  </tr>
+  #if(${info.orderState} == "100")
+
+                                   #set($tradeStatus="待支付")##待支付
+                                   #set($moneycolor="money")
+                                #elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+                                   #set($tradeStatus="处理中")##    
+                                #elseif(${info.orderState} == "201")
+                                    #set($tradeStatus="支付成功")##   付款成功=支付成功
+                                #elseif($info.orderState == "999")
+                                   #set($tradeStatus="交易失败")##   交易关闭视为交易失败
+                                #end
+
+                                #if($info.tradeType == "INSTANT_TRASFER")
+                                    #if($info.orderState == "301" || $info.orderState == "401")
+                                       #set($tradeStatus="交易结束")##转账成功视为交易 成功
+                                    #end
+                                    #if($info.orderState == "998")
+                                       #set($tradeStatus="交易失败")##转账失败视为交易失败
+                                    #end
+                                #else
+                                    #if($info.orderState == "301")
+                                       #set($tradeStatus="交易成功")##交易成功
+                                    #elseif($info.orderState == "401")
+                                       #set($tradeStatus="交易结束")##交易结束视为交易成功
+                                    #end
+                                 #end  ##  #待支付 #处理中 退款中  #交易成功  失败  退款失败      已退款    #等待发货       #等待确认收货
+                                   #if($info.memberId == $info.buyerId)
+                                    	#set($plusminus ="-")
+										#set($moneycolor="orange f14 bold")
+                                   #elseif($info.memberId == $info.sellerId)
+                                   		#set($plusminus ="")
+										#set($moneycolor="green  f14 bold")
+								   #end
+  <tr >
+    <td>状态</td>
+    <td>$!{tradeStatus}</td>
+	 <td >退款笔数</td>
+    <td >${response.data.count}笔</td>
+  </tr>
+  	 <tr class="cl">
+    <td >已退金额</td>
+    <td  >$moneyUtil.getAmountNum(${response.data.am})元</td>
+	    <td></td>
+    <td ></td>
+  </tr>
+	#end
+	
+</table>
+<div class="table_div" style="margin-top:20px;"><h3 class="ff ">退款记录</h3></div>
+<div class="table_div">
+    <table width="100%" class="table1">
+      <tbody><tr>
+        <th width="110">退款时间</th>
+        <th width="260">退款订单号</th>
+        <th width="120">退款金额<em>（元）</em></th>
+        <th width="140">退款状态</th>
+        ##<th width="140">退款申请人</th>
+        ##<th width="110">退款审核人</th>
+        <th width="">操作</th>
+      </tr>
+      #set ($i=1)
+      #foreach ($!tradeInfo in $!response.data.info)
+      #if($i%2 != 0)
+      #set ($odd_class="")
+      #else
+      #set ($odd_class="on")
+      #end
+      #set($i=$i+1)
+      <tr class=$odd_class>
+          <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtSubmit) </td>
+          <td>$!tradeInfo.tradeVoucherNo</td>
+          <td class="green f14 bold">$!moneyUtil.getAmount($!tradeInfo.payAmount)</td>
+          #if($!tradeInfo.status == 100)
+          <td><span>待支付</span></td>
+          #elseif($!tradeInfo.status == 101 || $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+          <td><span>支付中</span></td>
+          #elseif($!tradeInfo.status == 201)
+          <td><span>付款成功</span></td>
+          #elseif($!tradeInfo.status == 301 || $!tradeInfo.status == 401)
+          <td><span>交易成功</span></td>
+          #elseif($!tradeInfo.status == 900 || $!tradeInfo.status == 901)
+          <td><span>退款中</span></td>
+          #elseif($!tradeInfo.status == 951)
+          <td><span>退款成功</span></td>
+          #elseif($!tradeInfo.status == 952)
+          <td><span>退款失败</span></td>
+          #elseif($!tradeInfo.status == 999)
+          <td><span>交易关闭</span></td>
+          #else
+          <td><span>$!tradeInfo.status</span></td>
+          #end
+          <td>
+              <a href="${request.contextPath}/my/RefundDetail.htm?tradeVoucherNo=$!tradeInfo.tradeVoucherNo&origTradeSourceVoucherNo=$!tradeInfo.origTradeSourceVoucherNo" >查看详情</a>
+          </td>
+      </tr>
+      #end
+      #if(!$response.data.info || $!response.data.info.size()<=0)
+      <tr>
+          <td colspan="5">无退款信息！</td>
+      </tr>
+      #end
+      <tr class="nbb">
+          <td colspan="5">
+              <div class="fl table1_bottom_left">
+              </div>
+              <div class="nav_page mt10"> #parse("common/control/paginator.vm")
+              </div></td>
+      </tr>
+    </tbody>
+    </table>
+</div>
+<div class="fun_btn relative">
+	<a href="${request.contextPath}/my/TransactionRecords.htm" class="btn btn-bg recenternoml" style="margin-left: -50px;">返 回</a>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,54 @@
+<!--会员设置支付密码-->
+
+<div class="zhanghu_infor">
+             <!-- S 流程 -->
+             <div class="findFlow">
+                  <p class="findFlow-one" style="display:none;"></p>
+                  <p class="findFlow-two" style="display:none;"></p>
+                  <p class="findFlow-three"></p>
+             </div>
+             <!-- E 流程 -->
+             <div class="wrap">
+                     <div class="account_number_manager">                    
+                            <div class="user_ibox">
+
+                            <div class="min_height6">
+                            #if($response.success)
+                                <div class="user_done_success">
+                                      <i class="right_sign"></i>
+                                      <ul>
+                                          <li class="tit">恭喜您，支付密码设置成功！</li>
+                                          <li class="last"><font id="time" class="red_f2">5</font> &nbsp;秒后自动返回钱包首页，不愿等待请点击<a href="#springUrl('/my/home.htm')">返回钱包首页</a></li>
+                                      </ul>
+                                </div>
+                            #else
+                                 <div class="user_done_success">
+                                  <i class="ico_err"></i>
+                                  <ul>
+                                      <li class="tit"> 对不起，设置支付密码失败！<br> 
+                                       $!{response.message}  
+                                      </li>
+                                      <li class="last"><!--font id="time" class="red_f2">5</font> &nbsp;秒后自动返回钱包首页，不愿等待请点击--><a href="#springUrl('/my/home.htm')">返回钱包首页</a>
+                                     </li>
+                                  </ul>
+                            </div>
+                            #end
+                            </div>
+                
+                </div>
+           </div>
+       </div>
+</div>
+                
+                
+<script>
+
+$("#time").countDown({
+        count:5,
+        isDisabled:false,
+        endFun:function(){
+            window.location.href='#springUrl("/my/home.htm")';
+        }
+    });
+
+</script>

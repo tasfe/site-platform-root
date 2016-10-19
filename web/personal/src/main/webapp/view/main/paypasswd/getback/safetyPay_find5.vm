@@ -1,0 +1,132 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>支付密码找回</h2></div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginList">
+              <form action="${request.contextPath}/my/set-back-paypasswd.htm">
+			   <input type="hidden" name="token" value="$!response.message"/>
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">请输入新支付密码：</span>
+                   	 <div class="pwdiv pwdiv1 fl"><input name="newPasswd" type="hidden" id="pay_pw" /></div>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;"></div>
+               </div>
+               
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">确认新支付密码：</span>
+                     <div class="pwdiv pwdiv2 fl"><input name="renewPasswd" type="hidden" id="re_pay_pw" /></div>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;"></div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+	$(function(){
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$(".pwdiv1").append(pgeditor.load());
+		pgeditor.pgInitialize();
+
+		var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$(".pwdiv2").append(pgeditor1.load());
+		pgeditor1.pgInitialize();
+		
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+			$(".error").text("");
+			var flag;
+
+			if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+				var wid = pgeditor.settings.pgeWindowID;
+				var wid1 = pgeditor1.settings.pgeWindowID;
+				pgeditor.pwdLength(function(){
+					if(outs[wid].length == 0){
+						$(".pwdiv1").parent().parent().find(".error").text("请输入密码！");
+						btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+						return false;
+					}
+
+					pgeditor.pwdStrength(function(n){
+						if(n <= 2){
+							$(".pwdiv1").parent().parent().find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！");
+							btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+							return false;
+						}
+
+						pgeditor1.pwdLength(function(){
+							if(outs[wid1].length == 0){
+								$(".pwdiv1").parent().parent().find(".error").text("请输入密码！");
+								btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+								return false;
+							}
+
+							pgeditor1.pwdStrength(function(n){
+								if(n <= 2){
+									$(".pwdiv2").parent().parent().find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！");
+									btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+									return false;
+								}
+							});
+						})
+					});
+
+					//产生随机数加密
+					getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor,pgeditor1],function(){
+						//获得密文
+						setPwdResult(pgeditor,$('#pay_pw'),function(){
+							setPwdResult(pgeditor1,$('#re_pay_pw'),function(){
+								flag = checkPW2($('#pay_pw'), $('#re_pay_pw'), $('#re_pay_pw').parent().parent().find(".error"));
+								if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+								$("form").submit();
+							});
+						});
+					});
+				});
+			}
+			else{
+				var len = pgeditor.pwdLength();
+				if (len == 0) {
+					$(".pwdiv1").parent().parent().find(".error").text("请输入密码！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+				}
+				else if(len < 6 || len > 32){
+					$(".pwdiv1").parent().parent().find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+				}
+
+				len = pgeditor1.pwdLength();
+				if (len == 0) {
+					$(".pwdiv2").parent().parent().find(".error").text("请输入密码！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+				}
+				else if(len < 6 || len > 32){
+					$(".pwdiv2").parent().parent().find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+				}
+
+				getSrandNum("${request.contextPath}/ocx/generateRandomKey.htm",[pgeditor,pgeditor1]);
+
+				setPwdResult(pgeditor,$('#pay_pw'));
+				setPwdResult(pgeditor1,$('#re_pay_pw'));
+				flag = checkPW2($('#pay_pw'), $('#re_pay_pw'), $('#re_pay_pw').parent().parent().find(".error"));
+				if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+				$("form").submit();
+			}
+		});
+	})
+</script>

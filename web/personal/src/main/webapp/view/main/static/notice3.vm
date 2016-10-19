@@ -1,0 +1,27 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/news.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrap mt30">
+     
+     <div class="newsHead">首页 &gt; 系统公告</div>
+
+     <div class="newsMain">
+     	 
+         <div class="newscontent">
+              
+              <h1 class="header">永达互联网金融网站升级维护通知<span class="time">2015年09月08日</span></h1>
+             
+              <p>尊敬的用户：</p>
+              <p> 永达互联网金融网站将于2015年9月9日22：30—2015年9月10日04:30进行升级维护，届时永达互联网金融网站将暂停所有服务，故请妥善安排业务办理时间，给您带来的不便敬请谅解！如有疑问，请拨打永达互联网金融客户服务热线：400-611-0909</p>
+			  <p>特此公告</p>
+              <p style="text-align:right;">永达互联网金融信息服务有限公司</p>
+              <p style="text-align:right;">2015-09-08</p>
+         
+        </div>
+        
+        <div class="btmBtn"><div><a class="btnLeft" href="#springUrl('/static/notice2.htm')"></a><a class="btnCenter" href="javascript:;" style="background:none; cursor:default;"></a><a class="btnRight" href="#"></a></div></div>
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+

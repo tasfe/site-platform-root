@@ -1,0 +1,457 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_zz" class="wrap">
+	<div class="page_title transfer">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">转账</span>
+		</div>
+		<div class="right fr"><a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=4')">转账记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_7_3.html&6,2')">转账常见问题</a></div>
+	</div>
+    <div class="zz_tab_link">
+		<a href="${path}/transfer/toTransferKjt.htm?link=0204" class="tab_zz_kjt fl cur">转账到永达账户</a>
+		<a href="${path}/bTransfer/toTransferBank.htm" class="tab_zz_yh fl ">转账到银行账户</a>
+	</div>
+    <div class="pagebox pagebox1 pagezz relative">
+		<div class="step-wrap step-wrap2">
+			<span class="step-index step-index-cur">1</span>
+			<span class="step-name step-name-cur">转账信息</span>
+			<span class="s"></span>
+			<span class="step-index">2</span>
+			<span class="step-name">转账审核</span>
+			<span class="s"></span>
+			<span class="step-index">3</span>
+			<span class="step-name">转账成功</span>
+		</div>
+        <form class="kjtTransferForm" action="${path}/transfer/toConfirmTransferKjt.htm" method="post">
+			<input type="hidden" id="platformType" name="platformType" value="1"/>
+            <div class="boxbg1 w860">
+            	<div class="pl226">
+                    <div class="zz_pl_rt">批量转账到账户（单次最大支持999笔） <a href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/download/model-batch-yongda-transfer.xls">下载模板</a>  模板更新于2016-3-3 | <a href="#" id="btn_a_drmb">导入模板</a></div>
+                    <div class="current_user"><span class="s1">操作员：$!{user.operator_login_name}</span>账户余额：<span class="color_f6 b">$!{account.availableBalance}</span>元</div>
+                    <div class="zzdiv zzdivinput">
+						<input type="text" data-placeholder="永达账号" name="emailList" value="" class="inputtext w232 placeholder account" /><input type="text" data-placeholder="转账金额" name="moneyList" value="" class="inputtext w138 placeholder money2 zz_money" maxlength="13" /> <span>元</span>
+						<!--<input type="text" data-placeholder="手机号" name="mobileList" value="" class="inputtext w138 placeholder mobile" maxlength="11" />-->
+					</div>
+                    <div class="zzdiv"><input type="button" value="添加账户" class="addZzToKjt"><span class="tips f12">注：最多可添加<b>5</b>条转账信息，如需更多，请使用右上角批量转账导入功能。</span></div>
+                    <div class="zzdiv f12 sqinfozz"><label><input type="checkbox" id="sendNoteMsg" name="sendNoteMsg" value="1" class="checkboxdx"><span class="tips">短信通知联系人</span></label></div>
+					<div class="total_count"><span class="b">总转账笔数：</span><span id="total_bishu" class="b">0</span><span class="dw">笔</span></div>
+                    <div class="total_money"><span class="b">转账总金额：</span><span id="total_money" class="color_f6 b">0.00</span><span class="dw"> 元</span>
+						<span class="b" style="padding-left:33px;">服务费：</span>
+						<span id="servFeeText" class="b">0.00</span><span class="dw"> 元</span>
+					</div>
+                    <div class="total_pay_money"><span class="b">总额：</span><span id="total_pay_money"  class="color_f6 b">0.00</span><span class="dw"> 元</span></div>
+                    <div class="row" style="display:inline-block;"><span class="fl b">备注：</span><div class="select_div" ><select name="remarkType" id="remarks" style="width:150px;">
+                        <option value="1">劳务费</option>
+                        <option value="2">归还个人借款</option>
+                        <option value="3">奖励</option>
+                        <option value="4">债权转账</option>
+                        <option value="5">产权转让</option>
+                        <option value="6">产品购销</option>
+                        <option value="0">其他</option>
+                        </select></div></div>
+                    <div class="row" style="padding-left:44px;"><textarea class="area1 cutdown_words" name="remark" style=" display:none;" data-tip-place="1" maxlength="50"></textarea><div class="f12 tip h20 error" id="submit_error">$!{errorMsg}</div></div>
+					<input type="hidden" id="totalTransMoney" name="totalTransMoney" value="" />
+					<input type="hidden" id="totalMoney" name="totalMoney" value="" />
+					<input type="hidden" id="serviceCharge" name="serviceCharge" value="" />
+				</div>
+                <div class="error h22" style="padding-left:380px;"></div>
+                <div class="btn_bottom_tx row3" style="padding-top:0;"><input type="button" value="下一步" style="width:100px" class="btn btn_submit"></div>
+            </div>
+        </form>
+        <a href="#@" class="contact_friends_open">显示联系人</a>
+        <div class="contact_friends">
+            <div class="contact_friends_search">
+            <input type="text" data-placeholder="请输入您想搜索的联系人" value="" class="inputtext w192 placeholder" id="contact_friends_search_input">
+            <a href="#@" class="contact_friends_close">隐藏联系人</a>
+            </div>
+            <div class="contact_friends_list_box">
+                <ul class="contact_friends_list">
+                </ul>
+            </div>
+        </div>
+		<br>
+		<!--<div class="faq_relevant">
+            <h4>转账问题：</h4>
+            <dl>
+                <dt>转账有哪几种分类？</dt>
+                <dd>答：转账是资金转移的一个过程，包括账户余额转到账户/银行账户、银行账户到账户余额<br />按资金转移的接收方不同，可以分为转账到账户和转账到银行账户<br />按一次可添加转账接收方个数可以分为批量转账和单笔转账</dd>
+            </dl>
+            <dl>
+                <dt>哪些情况操作员不能转账申请？</dt>
+                <dd>答：a) 永达商户账号被冻结，无法转账；<br />b) 永达商户账号被加入转账黑名单；<br />c) 永达商户账号没有开通转账服务；<br />d) 永达商户账号合同到期未续约；<br />e) 永达商户账号注销；<br />f) 操作员没有转账申请权限；<br />g) 账户可用余额不足；<br />h) 账户资金冻结；<br />i) 当天转账次数超限。</dd>
+            </dl>
+            <dl>
+                <dt>为什么转账不成功？</dt>
+                <dd>答：1、请检查您输入的转账信息是否正确<br />2、请检查您的网络是否稳定<br />3、请检查您转账金额是否超限<br />4、请检查您的余额是否足够<br />5、其他原因可拨打客服热线：0571-28276085</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>
+        <!--<a href="javascript:void(0)" class="Collapse"></a>-->
+    </div>
+</div>
+</div>
+<script>
+var canTransferMoney = $!{account.availableBalance};
+//data 二维数组 name account id
+var contacts = "";
+var zz_member_max = 5;
+var zz_member_index = 1;
+
+function getTotal(){
+	$("#submit_error").text("");
+	var $zzdiv = $(".zzdivinput");
+	var zzdiv_len = $zzdiv.length;
+	var total_bishu = 0;
+	var total_money = 0;
+	var total_pay_money = 0;
+	
+	for(var i = 0; i < zzdiv_len; i++){
+		var jAccount_eq = $zzdiv.eq(i).find(".account");
+		var $money_eq = $zzdiv.eq(i).find(".zz_money");
+		var account_value = $.trim(jAccount_eq.val());
+		account_value = account_value == jAccount_eq.attr("data-placeholder") ? "" : account_value;
+		var money_value = $.trim($money_eq.val());
+		money_value = money_value == $money_eq.attr("data-placeholder") ? "" : money_value;
+		
+		if(account_value != "" && money_value != ""){
+			total_bishu++
+			total_money += parseFloat(money_value);
+		}
+	}
+	total_money = total_money.toFixed(2);
+	$("#total_bishu").text(total_bishu);
+	$("#total_money").text(total_money);
+	$("#totalTransMoney").val(total_money);
+
+	if(total_money == '0.00'){
+		$("#submit_error").text("请输入转账金额！");	
+		return false;
+	}
+	
+	var result = true;
+	if(total_money > canTransferMoney){
+		$("#submit_error").text("您的转账金额已超限，请重新输入！");
+		return false;
+	}else if(total_money > 0){
+		getServFee(total_money, function(total_fee) {
+			$("#serviceCharge").val(total_fee);
+			$('#servFeeText').text(total_fee);
+			total_pay_money = parseFloat(total_money) + parseFloat(total_fee);
+			total_pay_money = total_pay_money.toFixed(2);
+			$("#total_pay_money").text(total_pay_money);
+			$("#totalMoney").val(total_pay_money);
+			
+			if(total_pay_money > canTransferMoney){
+        		$("#submit_error").text("您的转账金额已超限，请重新输入！");
+        		result = false;
+        	}
+		});
+	} else if (total_money <= 0) {
+		$("#submit_error").text("请输入转账金额！");
+		return false;
+	}
+	return result;
+}
+
+function initContactFriendsKjt($list, data){
+	if (!data || data.length == 0) {
+		$list.html('');
+		return;
+	}
+	var data_len = data.length;
+	var data_html = "";
+	for(var i = 0; i< data_len; i++){
+		var obj = data[i];
+		var memo = obj.memo;
+		if (!memo){ 
+			memo = "";
+		} else {
+			memo = '(' + obj.memo + ')';
+		}
+		data_html += '<li data-id="' + obj.contactId + '"><span class="name">' + obj.name +memo+'</span><span class="account" data-value="' + obj.contactIdentity + '">' + obj.contactIdentitySummary + '</span></li>';
+	}
+	$list.html(data_html);
+}
+
+function getServFee(money, callback) {
+	// 计算服务费
+	$.ajax({
+    	type: "POST",
+		url: "$!{path}/transfer/queryServiceCharge.htm",
+		data: "money=" + money,
+		async:false,
+		cache:false,
+		dataType: "JSON",
+		success: function(result){
+			var servFee = 0.00;
+			if (result && result.success) {
+				servFee = parseFloat(result.message) || 0.00;
+				servFee = servFee.toFixed(2);
+				$('#servFee').val(servFee);
+				$('#servFeeText').text(servFee);
+			}
+			callback(servFee);
+		}
+    });
+}
+
+$(function(){
+	if($("#remarks").val()=="0"){$(".area1").show();}else{$(".area1").hide();}
+	$("#remarks").change(function(){
+		if($(this).val()=="0"){
+			$(".area1").show();
+		}else{
+			$(".area1").hide();$(".area1").parent().find(".error").text("");
+		}
+	})
+	
+	// 初始化联系人
+    $.ajax({
+    	type: "POST",
+		url: "$!{path}/contacts/queryContacts.htm",
+		data: "contactType=0",
+		dataType: "JSON",
+		cache: false,
+		success: function(result){
+			contacts = result.messageObj;
+			initContactFriendsKjt($(".contact_friends_list"), contacts);
+		}
+    });
+	
+	$("#contact_friends_search_input").keyup(function(){
+		var key = $.trim($(this).val());
+		initContactFriendsKjt($(".contact_friends_list"), searchFromData(key, contacts, ['name','contactIdentity']));
+	});
+	
+	$("body").delegate(".contact_friends_list li","click",function(){
+		var myThis = $(this);
+		var account = $.trim(myThis.find(".account").attr("data-value"));
+		var jAccount = $(".zzdivinput .account");
+		var account_len = jAccount.length;
+		var isNeedAdd = true;
+		for(var i = 0; i < account_len; i++){
+			var jAccount_eq = jAccount.eq(i);
+			var value = $.trim(jAccount_eq.val());
+			if(value == "" || value == jAccount_eq.attr("data-placeholder")) { jAccount_eq.val(account).removeClass("color_b3"); isNeedAdd = false; break;}
+		}
+		if(isNeedAdd){
+			$(".addZzToKjt").click();
+			$(".zzdivinput .account").last().val(account).removeClass("color_b3");
+		}
+	});
+
+	$(".contact_friends_open").click(function(){
+		$(this).hide();
+		$(".contact_friends").show();
+	});
+	$(".contact_friends_close").click(function(){
+		$(".contact_friends_open").show();
+		$(".contact_friends").hide();
+	});
+	
+	$(".addZzToKjt").click(function(){
+		if(zz_member_index < zz_member_max){
+			zz_member_index++;
+			var html = '<div class="zzdiv zzdivinput"><input type="text" data-placeholder="永达账号" value="永达账号" name="emailList" class="inputtext w232 placeholder color_b3 account" ><input type="text" data-placeholder="转账金额" value="转账金额" name="moneyList" class="inputtext w138 placeholder color_b3 money2 zz_money" maxlength="13"> <span>元</span><a href="javascript:void(0)" class="delZzToKjt">删除</a></div>';
+			$(this).parent().before(html);
+			
+			if(zz_member_index == zz_member_max) $(this).hide();
+		}
+	});
+	$("body").delegate(".delZzToKjt","click",function(){
+		zz_member_index--;
+		$(this).parent().remove();
+		$(".addZzToKjt").show();
+		getTotal();
+	});
+	
+	
+	$("body").delegate(".zzdivinput .account, .zzdivinput .zz_money","blur",function(){
+		getTotal();
+	});
+	
+	$("#btn_a_drmb").click(function(){
+		var html = '<form class="upload_file" action="$!{path}/transfer/importKjtBatchTransfer.htm" method="post" enctype="multipart/form-data">' 
+			+ '<div class="floatbox2"><div class="cont_info"><div class="sz_info">'
+			+ '<div style="display:inline-block;"><input type="text" class="inputtext w264 fl" id="file1" style="margin-right:6px;"> <div class="relative fl">'
+			+ '<input type="button" value="浏 览" class="btn_liulan">' 
+			+ '<input for="file1" id="file_select" name="batchFile" type="file" class="input_file" ></div></div>' 
+			+ '<div style="height:30px; line-height:30px;" class="error"></div>'
+			+ '<p class="">模板更新于2015-3-23，请注意使用最新模板。</p>'
+			+ '<p class="">文件格式要求：xls、xlsx，仅支持最大单次<span class="b red">999</span>笔批量转账操作</p>';
+		html += '</div></div><div class="div_btn_submit"><input type="button" class="btn J_btn_upload" value="上 传"></div></div></form>';
+													
+		showWin('html', html, '', 700, 300, '上传文件', '', '');
+	});
+	
+	$("body").delegate(".input_file","change",function(){
+		var myThis = $(this);
+		var path = myThis.val();
+		var txtid = myThis.attr("for");
+		$("#" + txtid).val(path);
+		checkFile({
+			fileId: myThis.attr("id"),
+			fileTextId: txtid,
+			fileType: "notimg",
+			path: path,
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: myThis.parent().parent().find(".error")
+		});
+	}).delegate(".J_btn_upload","click",function(){
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_disabled");
+		var $tip = $btn_submit.parent().parent().find(".error");
+		$tip.text("");
+		
+		var myThis = $("#file_select");
+		var flag = checkFile({
+			fileId: myThis.attr("id"),
+			fileTextId: myThis.attr("for"),
+			fileType: "notimg",
+			path: myThis.val(),
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: myThis.parent().parent().find(".error")
+		});
+		if(!flag) { 
+			$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			return false; 
+		}
+		
+		$(".upload_file").submit();
+	});
+	
+	$(".area1").blur(function(){
+		if($("#remarks").val()=="0"){
+			if($.trim($(this).val())==""){ $(".area1").parent().find(".error").text("请输入备注信息！"); }
+			else { $(".area1").parent().find(".error").text(""); }
+		}
+	});
+	
+	$(".btn_submit").bind('click', function() {
+		submitForm(this);
+	});
+});
+
+function submitForm(obj) {
+	if (!getTotal()) {
+		return;
+	}
+	var $btn_submit = $(obj);
+	$btn_submit.attr("disabled", true).addClass("btn_disabled");
+	$("#submit_error").text("");
+	
+	var $zzdiv = $(".zzdivinput");
+	var zzdiv_len = $zzdiv.length;
+	var isZzToNone = true;
+	for(var i = 0; i < zzdiv_len; i++){
+		var jAccount_eq = $zzdiv.eq(i).find(".account");
+		var account_value = $.trim(jAccount_eq.val());
+		account_value = account_value == jAccount_eq.attr("data-placeholder") ? "" : account_value;
+		
+		var $money_eq = $zzdiv.eq(i).find(".zz_money");
+		var money_value = $.trim($money_eq.val());
+		money_value = money_value == $money_eq.attr("data-placeholder") ? "" : money_value;
+		
+		var $mobile_eq = $zzdiv.eq(i).find(".mobile");
+		var mobile_value = $.trim($mobile_eq.val());
+		mobile_value = mobile_value == $money_eq.attr("data-placeholder") ? "" : mobile_value;
+		
+		if(account_value == "" && money_value != ""){
+			 $("#submit_error").text("请输入第"+(i+1)+"位您需转账的永达账号！");
+			 $btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			 return false;
+		}
+		else if((account_value != "" && money_value == "")||(account_value != "" && money_value == "0.00")){
+			 $("#submit_error").text("第"+(i+1)+"位转账金额必须大于0！"); 
+			 $btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			 return false;
+		}
+		else if(account_value != "" && money_value != "") {
+			if (!(RegExp(regexEnum.email).test(account_value) || RegExp(regexEnum.mobile).test(account_value))) {
+				 $("#submit_error").text("您输入的第"+(i+1)+"位永达账号不正确，请重新输入！");
+				 $btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				 return false;
+			}
+			else {// tipObj.text(""); return true; 
+			
+			}
+		}
+		/*
+		if($("#sendNoteMsg").is(":checked")){
+			if(account_value != "" || money_value != ""){
+				if(mobile_value == ""){
+					$("#submit_error").text("请输入第"+(i+1)+"位收款人手机号码！"); 
+					$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					return false;
+				}
+				else if (!RegExp(regexEnum.mobile).test(mobile_value)) {
+					 $("#submit_error").text("请输入第"+(i+1)+"位收款人正确的手机号码！"); 
+					 $btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					 return false;
+				}
+			}
+		}
+		*/
+		if(account_value != "" && money_value != "") isZzToNone = false;
+	}
+	
+	if(isZzToNone) {
+		$("#submit_error").text("请输入您需转账的永达账号！");
+		$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+		return false;
+	}
+	
+	var $remark = $(".area1");
+	if($("#remarks").val()=="0"){
+		if($.trim($remark.val())==""){ 
+			$("#submit_error").text("请输入备注信息！"); 
+			$btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+	}
+	
+	for(var i = 0; i < zzdiv_len; i++){
+		var jAccount_eq = $zzdiv.eq(i).find(".account");
+		var account_value = $.trim(jAccount_eq.val());
+		account_value = account_value == jAccount_eq.attr("data-placeholder") ? "" : account_value;
+		
+		var $money_eq = $zzdiv.eq(i).find(".zz_money");
+		var money_value = $.trim($money_eq.val());
+		money_value = money_value == $money_eq.attr("data-placeholder") ? "" : money_value;
+		
+		if(account_value == "" && money_value == ""){
+			jAccount_eq.val("");
+			$money_eq.val("");
+		}
+	}
+	
+	var jTransferForm = $(".kjtTransferForm");
+	$.ajax({
+    	type: "POST",
+		url: "$!{path}/transfer/validateLflt.htm",
+		data: jTransferForm.serialize(),
+		async: false,
+		dataType: "JSON",
+		cache: false,
+		success: function(result) {
+			if (result && result.success) {
+				jTransferForm.submit();
+			} else {
+				$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				$("#submit_error").text(result.message);
+			}
+		},
+		error: function() {
+			$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			$("#submit_error").text("系统繁忙中，请稍后再试！");
+		}
+    });
+}
+
+function strIndexOf(str, key) {
+	if (str && str.indexOf(key) >= 0) {
+		return true;
+	}
+	return false;
+}
+</script>

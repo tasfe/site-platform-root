@@ -1,0 +1,92 @@
+
+ <link href="${WEB_RESOURCE.staticAddress}wallet/common/css/account2.css" rel="stylesheet" type="text/css">
+ <!-- S 主要内容 -->
+  <div class="wrap">
+		<div class="page_title"><h2>实名认证</h2></div>
+		<div class="safetyMain">
+			<div >
+				<div class="login_limit">
+					<div class="content w697px">
+					  <div class="title" style="border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #cfcfcf; margin-top: 20px;">
+							永达互联网金融实名认证<a class="blue" style="  margin-left: 15px; font-size: 12px; color: #ff6600;" href="#springUrl('/help/helpcenter.htm')">使用遇到的问题？</a>
+					  </div>
+					</div>
+
+				</div>
+			    <div class="login_limit">
+					<div class="usbKeyCon_tips w655px">
+						  由于你选择的永达互联网金融账户类型为公司账户，因此只可申请永达互联网金融企业会员实名认证。
+					</div>
+			    </div>    
+				<div class="login_limit">
+					<div class="content w697px">
+						  <div class="title">这是一项身份识别服务，请您注意以下几点：</div>
+						  <div class="verify_con">
+							<ul style="margin-left: 16px;">
+							  <li style="list-style-type: disc;  margin-top: 15px;">
+								请确保您是具有法人资格的商户，您需提供可证明您依法设立或可依法经营、开展社会活动的执照、证件等（如营业执照副本、社团法人注册登记证明、企事业单位机构代码证等）。
+							  </li>
+							  <li style="list-style-type: disc;  margin-top: 15px;">
+								有效期3个月内的证件不予受理。
+							  </li>
+							  <li style="list-style-type: disc;  margin-top: 15px;">
+								如无法提供公司信息，建议您重新注册个人类型的永达互联网金融账号重新申请认证。
+							  </li>
+							</ul>
+							
+							<div class="error h22"></div>
+							
+							<div class="row">
+				                 <div class="checkbox pdlf170" style="padding-left:0px"><input type="checkbox" class="mr5" id="agree_xieyi" ><span><label for="agree_xieyi">我已阅读并同意</label><a href="javascript:" id="xieyi">《永达互联网金融实名认证服务协议》</a></span><div class="error h18"></div></div>
+			                </div>
+
+		         
+							 <div class="certificateBtn">
+							 <form class="from1" id="guide" name="guide" action="${request.contextPath}/my/go-enterprise-certification.htm" method="get">
+								  <input id="btn_submit" class="btn_ljsq" type="button" value=""/>
+								  </form>
+		                    </div>
+						  </div>
+					</div>
+			  </div>      
+      </div>
+    </div>
+  </div>
+	
+  <script>
+	function iframeOk(){
+		initYes();
+		closeSW();
+	}
+	function iframeCancel(){
+		initNo();
+		closeSW();
+	}
+	function initNo(){
+		$("#agree_xieyi").attr("checked", false);
+		$("#btn_submit").attr("disabled", true).addClass("btn_ljsq_disable");
+	}
+	function initYes(){
+		$("#agree_xieyi").attr("checked", true);
+		$("#btn_submit").attr("disabled", false).removeClass("btn_ljsq_disable");
+	}
+	
+$(function(){
+	$(".hoverli").removeClass("cur");
+	initNo();
+	$(".btn_ljsq").click(function(){
+		$("#guide").submit();
+	});
+	$("#xieyi").click(function(){
+		showWin("iframe","${request.contextPath}/view/xieyi/AuthenticationServiceAgreement.html","",960,600,"请阅读：《永达互联网金融实名认证服务协议》");
+	});
+	
+	$("#agree_xieyi").click(function(){
+		if($(this).is(":checked")){
+			$("#btn_submit").attr("disabled", false).removeClass("btn_ljsq_disable");
+		}else {
+			$("#btn_submit").attr("disabled", true).addClass("btn_ljsq_disable");
+		}
+	});
+})
+</script>

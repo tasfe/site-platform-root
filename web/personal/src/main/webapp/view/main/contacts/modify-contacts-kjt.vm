@@ -1,0 +1,116 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+    </div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/accountSetting.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/securityInfo.htm')">
+     	  	   	             <span class="subNavIcon aqsz"></span>
+                             <span class="subNavTxt">安全设置</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/contacts/toContactsHome.htm')">
+     	  	   	             <span class="subNavIcon lxr"></span>
+                             <span class="subNavTxt">联系人</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1">编辑永达互联网金融联系人</div>
+               <div class="account_set_right_con_100">
+               		<div class="bankcx_xz" style="padding-left:263px; padding-top:40px;"></div>
+	
+    	<div class="tab1" >
+		<table cellpadding="0" cellspacing="0" border="0" class="bankcx " id="addAccountlist" >
+        	<tr><td width="354" class="text_l b f14">账户名：</td><td>$!{response.data.mc.accountName}</td></tr>
+            <tr><td width="354" class="text_l b f14">永达互联网金融帐号：</td><td><input type="text" id="contactIdentity" class="inputtext w198 kjtzz" value="$!{response.data.mc.contactIdentity}"></td></tr>
+            <tr><td class="text_l b f14">备注：</td><td><input type="text" class="inputtext w198" id="remark" maxlength="20" value="$!{response.data.mc.memo}"></td></tr>
+		</table>
+        <table  border="0" cellspacing="0" cellpadding="0" style="margin:0" class="bankcx">
+            <tbody>
+            	<tr>
+                    <td style="padding:0;" width="354"></td>
+                    <td style="padding:0;"><div style="height:30px; line-height:30px;" class="error"></div></td>
+                </tr>
+
+             </tbody>
+         </table>
+        </div>
+        
+		<input type="hidden" id="contactId" name="contactId" value="$!{response.data.mc.contactId}"/>
+		
+		<div class="div_btn_submit"> <input type="button" class="btn_qr btn_sumbit"><input type="button" class="btn_fh ml30" onclick="history.go(-1);return false;"></div>
+                    
+               </div>
+
+
+     	  </div>
+     	  <!-- S 右边内容 -->
+
+     </div>
+
+</div>
+
+<script>
+
+$(function(){
+	$(".btn_sumbit").click(function(){
+		
+		var err=true;
+		$(".tab1 .error").text("");
+		$("#addAccountlist .kjtzz").each(function(){
+			var v=$(this).val();
+			if(v==""){
+				$(".tab1 .error").text("请输入联系人帐号！");
+				err=false;
+			}
+		});
+		if(err==false){return false;}
+		
+		var remark = $('#remark').val();
+		var contactId = $('#contactId').val();
+		var contactIdentity = $('#contactIdentity').val();
+		
+		var paramStr = 'contactId=' + contactId
+			+ '&memo=' + remark + '&contactIdentity=' + contactIdentity;;
+		// 提交修改联系人信息
+		$.ajax({
+            type:'post', 
+            data: paramStr, 
+			cache:false,
+            url:"${request.contextPath}/contacts/modifyContact.htm",
+			dataType:'json',
+            success:function(result){
+				if (result && result.success) {
+					window.location.href="#springUrl('/contacts/toContactsHome.htm')";
+				} else {
+					$(".error").html("修改联系人失败！");
+				}
+            },
+            error:function (){ 
+				$(".error").html("修改联系人失败！");
+            }
+        });
+			
+		
+	});
+})
+</script>

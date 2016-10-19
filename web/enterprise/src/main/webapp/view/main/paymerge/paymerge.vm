@@ -1,0 +1,105 @@
+<div class="wrap">
+    <h2 class="h2_titform"><span class="warn_tip fr">合并付款不能进行永达账户的充值操作</span><em>合并付款</em>尚未付款（<i>4</i>）笔</h2>
+    
+    <form class="">
+    	<table class="pay_Merge">
+                            <colgroup>
+                                    <col width="160px">
+                                    <col width="540px">
+                                    <col width="150px">
+                                    <col width="150px">
+                           </colgroup>
+                           <tr>
+                                   <td>
+                                       <label class="checkbox">
+                                          <input type="checkbox" class="CheckboxOne">2013.10.21                                       
+                                      </label>
+                                  </td>
+                                  <td>购物支付：春晖橱柜-[暖气片特惠季预约上门] 启木地暖专营店暖气片特惠季 </td>
+                                  <td class="money_trade">-1700.00</td>
+                                  <td>待支付</td>
+                             </tr>
+                             <tr class="odd">
+                                   <td>
+                                       <label class="checkbox">
+                                          <input type="checkbox" class="CheckboxOne">2013.10.21                                       
+                                      </label>
+                                  </td>
+                                  <td>购物支付：春晖橱柜-[暖气片特惠季预约上门] 启木地暖专营店暖气片特惠季 </td>
+                                  <td class="money_trade">-1700.00</td>
+                                  <td>待支付</td>
+                             </tr>
+                             <tr >
+                                   <td>
+                                       <label class="checkbox">
+                                          <input type="checkbox" class="CheckboxOne">2013.10.21                                       
+                                      </label>
+                                  </td>
+                                  <td>购物支付：春晖橱柜-[暖气片特惠季预约上门] 启木地暖专营店暖气片特惠季 </td>
+                                  <td class="money_trade">-1700.00</td>
+                                  <td>待支付</td>
+                             </tr>
+                             <tr class="odd">
+                                   <td>
+                                       <label class="checkbox">
+                                          <input type="checkbox" class="CheckboxOne">2013.10.21                                       
+                                      </label>
+                                  </td>
+                                  <td>购物支付：春晖橱柜-[暖气片特惠季预约上门] 启木地暖专营店暖气片特惠季 </td>
+                                  <td class="money_trade">-1700.00</td>
+                                  <td>待支付</td>
+                             </tr>
+                             <tr>
+                                   <td>
+                                       <label class="checkbox">
+                                          <input type="checkbox" class="CheckboxOne">2013.10.21                                       
+                                      </label>
+                                  </td>
+                                  <td>购物支付：春晖橱柜-[暖气片特惠季预约上门] 启木地暖专营店暖气片特惠季 </td>
+                                  <td class="money_trade">-1700.00</td>
+                                  <td>待支付</td>
+                             </tr>
+        </table>
+    	    <ul class="choose_method">
+                <li>
+                    <a href="javascript:;" class="CheckboxAll" hidefocus="true">全选</a>
+                    |
+                    <a href="javascript:;" class="CheckboxNone" hidefocus="true">取消全选 </a>
+                    |
+                    <a href="javascript:;" class="CheckboxOpsite" hidefocus="true">反选</a>
+                 </li>
+             </ul>
+             <div class="total_eval">
+    	          <span>已选择合并付款记录（<i>0</i>）笔   </span><span>总额：<b>0.00</b> 元</span>
+             </div>
+             <button class="btn_h40_red bold make_sure_pay" type="submit">确认付款</button>
+	</form>    
+    
+    
+    
+    
+    
+    
+            
+</div>
+<script type="text/javascript">
+		     $(function(){
+				 
+				   $(".CheckboxAll").click(function(){
+					
+							$(".pay_Merge").find(".CheckboxOne").attr("checked",true);
+					 });
+		
+		             $(".CheckboxNone").click(function(){
+					
+							$(".pay_Merge").find(".CheckboxOne").attr("checked",false);
+					 }); 
+					 $(".CheckboxOpsite").click(function(){
+			
+						$(".pay_Merge :checkbox").each(function(){
+								 $(this).attr("checked",!$(this).attr("checked"))
+						});
+					});
+		    
+			});
+</script>

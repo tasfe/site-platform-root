@@ -1,0 +1,372 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/chosen.css" rel="stylesheet" type="text/css" />
+<div class="wrapbg">
+<!-- S 主要内容 -->
+<div class="wrap">
+	<div class="page_title certification">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">实名认证</span>
+		</div>
+	</div>
+
+     <div class="login_main">
+		 <div class="step-wrap">
+			 <span class="step-index">1</span>
+			 <span class="step-name">备案信息</span>
+			 <span class="s"></span>
+			 <span class="step-index step-index-cur">2</span>
+			 <span class="step-name step-name-cur">资金账户信息</span>
+			 <span class="s"></span>
+			 <span class="step-index">3</span>
+			 <span class="step-name">法人信息</span>
+		 </div>
+
+          <form id="certification">
+          <div class="login_content_wrap_t">
+               <div class="login_content clearfix">
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>商户银行开户名：</label>
+                         <div class="row_con">
+                              <input id="bank_account_name" name="bank_account_name" type="text" class="login_input" value="$!{response.data.companyName}">
+                              <span class="color_b3 f12">对公账户名必须与您实名认证上的名称保持一致（基本户、一般户均可）</span>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>开户银行：</label>
+                         <div class="row_con">
+                              <div class="select_div mr16 fl">
+                                   <select id="accountbank">
+                                        
+                                   </select>
+                              </div>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>开户银行所在城市：</label>
+                         <div class="row_con">
+                              <div class="select_div mr16 fl">
+                                   <select id="accountProvince">
+                                        <option value="-1">--请选择省份--</option>
+                                   </select>
+                              </div>
+                              <div class="select_div mr16 fl">
+                                   <select id="accountcity">
+                                        <option value="-1">--请选择城市--</option>
+                                   </select>
+                              </div>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+					<div class="row_rank" style="z-index:10">
+                         <label class="row_label" for=""><i class="red">*</i>开户银行支行名称：</label>
+                         <div class="row_con">
+                              <select name="branchname" id="branchname" class="chzn-select w232" style="width:245px;" data-placeholder="--请选择--"><option value="-1">--请选择--</option></select>
+							<!--<input id="branchname" name="branchname" type="text" class="login_input cutdown_words" maxlength="200" data-tip-place="2">-->
+                              <span class="color_b3 f12" style="vertical-align:10px;">如您无法确定，建议您致电银行客服询问</span>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank" style="z-index:1">
+                         <label class="row_label" for=""><i class="red">*</i>商户银行账号：</label>
+                         <div class="row_con">
+                              <input id="bankaccount1" name="bankaccount1" type="text" class="login_input number" maxlength="25">
+                              <span class="color_b3 f12">不支持信用卡和存折进行认证</span>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank" style="z-index:1">
+                         <label class="row_label" for=""><i class="red">*</i>确认商户银行账号：</label>
+                         <div class="row_con">
+                              <input id="bankaccount2" name="bankaccount2" type="text" class="login_input number" maxlength="25" onpaste="return false">
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error" id="commonError"></div>
+                    </div>
+                    <div class="row_rank">
+                         <p class="color_b3 pl57">永达会给该对公银行账户汇入一笔1元以下的确认金额，您需要去柜台或者通过网银查询该对公账户的收支明细单，<br>并正确输入这笔金额才能通过认证。</p>
+                    </div>
+                    <div class="certificateBtn">
+                         <input class="btn btn_submit" type="button" value="下一步">
+                         <input class="btn btn-bg ml20" type="button" value="上一步" onclick="goBackOrClose();">
+                    </div>
+					
+               </div>
+          </div>
+          </form>
+     </div>
+</div>
+<!-- E 主要内容 -->
+</div>
+<a id="fix_online_kf" href="#"></a>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script> 
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcore.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcalendar.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/chosen.jquery.js"></script>
+<script>
+$(function(){
+
+	initCorpBanks();
+	// 显示银行列表
+    function initCorpBanks() {
+    	jQuery.ajax({
+        	type: "get",
+    		url: "${request.contextPath}/contacts/queryCorpBanks.htm",
+    		data: "",
+    		dataType: "JSON",
+    		success: function(result) {
+    			if (result && result.success) {
+    				var bankArr = result.messageObj;
+    				var optHtml = '';
+    				var len = bankArr.length;
+    				for (var i=0; i<len; i++) {
+    					optHtml += '<option value="' + bankArr[i].bankId + '">' + bankArr[i].bankName + '</option>'
+    				}
+    				
+    				var jBank = $('#accountbank');
+    				jBank.append(optHtml);
+    				selOneOption(jBank, 'text', $("#accountbank").val());
+    			}
+    		}
+        });
+    }
+	
+	// 选中指定的选项
+    function selOneOption(jSelectObj, type, value) {
+    	if(!jSelectObj || !type || !value) {
+    		return;
+    	}
+    	
+    	jSelectObj.find('option').each(function() {
+    		var jOpt = $(this);
+    		if (type == 'text') {
+    			if (jOpt.text() == value) {
+    				jOpt.attr("selected",true);
+    			}
+    		} else {
+    			if (jOpt.val() == value) {
+    				jOpt.attr("selected",true);
+    			}
+    		}
+    	});
+    }
+	initProvinces();
+	// 显示省份列表
+    var provArr = null;
+    function initProvinces() {
+    	jQuery.ajax({
+        	type: "get",
+    		url: "${request.contextPath}/my/queryAllProvCities.htm",
+    		data: "",
+    		dataType: "JSON",
+    		success: function(result) {
+    			if (result && result.success) {
+    				// 省份
+    				provArr = result.messageObj;
+    				var jprov = $('#accountProvince');
+    				jprov.html('<option value="-1">--请选择省份--</option>');
+    				var provOptHtml = '';
+    				var len = provArr.length;
+    				for (var i=0; i<len; i++) {
+    					provOptHtml += '<option value="' + provArr[i].provId + '">' + provArr[i].provShortName + '</option>'
+    				}
+    				jprov.append(provOptHtml).bind('change', function() {
+    					initCities($(this).val());
+						$("#branchname").html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+    				});
+    			}
+    		}
+        });
+    }
+	
+	// 根据省份初始化该省下的市
+    function initCities(provId) {
+		
+    	var len = provArr.length;
+    	for (var i=0; i<len; i++) {
+    		if (provId == provArr[i].provId) {
+    			showCities(provArr[i].cityInfos);
+    		}
+    	}
+    }
+	
+	// 显示城市
+    function showCities(cityInfos) {
+		
+    	var jCity = $('#accountcity');
+    	jCity.html('<option value="-1">--请选择城市--</option>');
+    	
+    	var len = cityInfos.length;
+    	var cityOptHtml = '';
+    	for (var i=0; i<len; i++) {
+    		cityOptHtml += '<option value="' + cityInfos[i].cityId + '">' + cityInfos[i].cityShortName + '</option>'
+    	}
+    	jCity.append(cityOptHtml);
+    }
+	$('#accountcity').bind('change', function() {
+    	initBranches($('#accountbank').val(), $(this).val());
+    });
+	
+	// 初始化某市某某银行的支行
+    function initBranches( bankCode, cityId) {
+    	jQuery.ajax({
+        	type: "get",
+    		url: "${request.contextPath}/contacts/queryBranches.htm",
+    		data: "cityId=" + cityId + "&bankCode=" + bankCode,
+    		dataType: "JSON",
+    		success: function(result) {
+    			if (result && result.success) {
+    				var jBranch = $('#branchname');
+    				var branchArr = result.messageObj;
+    				jBranch.html('<option value="-1">--请选择支行--</option>');
+    				
+    				var optHtml = '';
+					if(branchArr == null){
+						optHtml += '<option value="-1">暂无</option>';
+					}
+					else{
+						var len = branchArr.length;
+						for (var i=0; i<len; i++) {
+							optHtml += '<option value="' + branchArr[i].branchId + '" for2="' + branchArr[i].branchNo + '">' + branchArr[i].branchName + '</option>'
+						}
+					}
+    				
+    				jBranch.append(optHtml);
+    				selOneOption(jBranch, 'text', $("#branchname").val());
+    				jBranch.trigger("liszt:updated");
+    			}
+    		}
+        });
+    }
+	
+	$("#branchname").chosen();
+	
+
+	//切换银行
+	$("#accountbank").live("change",function(){
+    	// 初始化所有省
+    	$("#accountProvince").val("-1");
+		//初始化城市
+		$("#accountcity").html('<option value="-1">--请选择城市--</option>');
+		//初始化支行
+		$("#branchname").html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+	});
+
+	$("#bank_account_name").blur(function(){
+		checkMust($(this), $(this).parent().parent().find(".error"), "请输入商户银行开户名！");
+	});
+	
+	$("#branchname").blur(function(){
+		checkMust($(this), $(this).parent().parent().find(".error"), "请输入您的开户银行支行名称！");
+	});
+	
+	$("#bankaccount1").blur(function(){
+		var flag = checkMust($(this), $(this).parent().parent().find(".error"), "请输入对公银行账号信息！");
+		if(flag)
+		if(!RegExp(regexEnum.bankcard).test($(this).val())) { $(this).parent().parent().find(".error").text("请输入8-25位数字组成的对公银行账号信息！"); }
+	});
+	
+	$("#bankaccount2").blur(function(){
+		var flag = checkMust($(this), $(this).parent().parent().find(".error"), "请输入对公银行账号信息！");
+		if(flag)
+		if($("#bankaccount1").val() != $("#bankaccount2").val()){
+			$("#bankaccount2").parent().parent().find(".error").text("您输入的两遍对公银行账号信息不一致，请重新输入！");
+		}
+	}).keypress(function(e){
+		if(e.ctrlKey) return false;
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#bank_account_name");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入商户银行开户名！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#accountbank");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		var value = thisObj.val();
+		if(value == "-1" || value == ""){
+			tipObj.text("请选择您的开户银行！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		thisObj = $("#accountProvince");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		value = thisObj.val();
+		if(value == "-1" || value == ""){
+			tipObj.text("请选择您开户银行所在地区！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		thisObj = $("#accountcity");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		value = thisObj.val();
+		if(value == "-1" || value == ""){
+			tipObj.text("请选择您开户银行所在地区！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		
+		thisObj = $("#branchname");
+		tipObj = thisObj.parent().parent().find(".error");
+		value = thisObj.val();
+		if(value == "-1" || value == ""){
+			tipObj.text("请输入您的开户银行支行名称！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		thisObj = $("#bankaccount1");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请输入对公银行账户信息！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		if(!RegExp(regexEnum.bankcard).test(thisObj.val())) { tipObj.text("请输入8-25位数字组成的对公银行账户信息！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#bankaccount2");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请再次输入对公银行账户信息！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		if($("#bankaccount1").val() != $("#bankaccount2").val()){
+			$("#bankaccount2").parent().parent().find(".error").text("您输入的两遍对公银行账户信息不一致，请重新输入！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		var province = $('#accountProvince option:selected').text();
+		var city = $('#accountcity option:selected').text();
+		var bankCode = $('#accountbank option:selected').val();
+		var bankName = $('#accountbank option:selected').text();
+		var branchname = $('#branchname option:selected').text();
+		
+		jQuery.ajax({
+        	type: "post",
+    		url: "${request.contextPath}/my/account-certification.htm",
+    		dataType: "json",
+    		data: {bank_account_name:$("#bank_account_name").val(),branchname:branchname,bankaccount1:$("#bankaccount1").val(),
+			bankaccount2:$("#bankaccount2").val(),bankCode:bankCode,bankName:bankName,province:province,city:city},
+    		success: function(result){
+    			if (result.success) {
+					$(".error:last").text("");
+    				window.location.href = '${request.contextPath}/my/go-person-certification.htm';
+    			}else{
+					$("#commonError").html(result.message);
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				}
+    		},
+    		error: function(){
+				$(".error:last").text(G.sysError);
+    			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+    		}
+        });
+	})
+})
+</script>

@@ -1,0 +1,167 @@
+<div id="money_cz" class="wrap">
+<div class="page_title"> </div>
+	<div class="pagebox">
+    <form id="form_search">
+        <div class="search_row mt10">
+        	<label class="label1 fl">申请时间：</label>
+            <div class="data_div mr16 fl"><input class="datapick" type="text" value="" id="startDate" readonly><span>至</span><input class="datapick" type="text" value="" id="endDate" readonly></div>
+            <ul class="data_range fl"><li class="data_range_week" data-value="7">一周内</li><li class="data_range_month" data-value="30">一个月内</li><li class="data_range_quarter" data-value="90">三个月内</li><li class="data_range_year" data-value="365">一年内</li><input type="hidden" class="data_range_value"></ul>
+        </div>
+        <div class="search_row">
+            <dl class="search_dl">
+            <dt>应用类型：</dt>
+            <dd class="cur" data-value="0">全部</dd>
+            <dd data-value="1" name="appType">代发工资</dd>
+            <input type="hidden" class="search_dl_value">
+            </dl>
+        </div>
+        <div class="search_row">
+            <dl class="search_dl">
+            <dt>审核状态：</dt>
+            <dd class="cur" data-value="0">全部</dd>
+            <dd data-value="1" name="shStatus">待审核</dd>
+            <dd data-value="2" name="shStatus">审核通过</dd>
+            <dd data-value="3" name="shStatus">审核拒绝</dd>
+            <input type="hidden" class="search_dl_value">
+            </dl>
+        </div>
+        <div class="search_row">
+        	<label class="label1 fl">关 键 字：</label>
+            <div class="select_div mr16 fl"><select name="selectType"><option value="" name="batchId">批次号</option></select></div>
+            <input class="inputtext w177" type="text" value="" name="value">
+        </div>
+        <div class="search_row">
+        	<input type="button" value="" class="btn_chaxun ml30">
+        </div>
+        <div class="tools"><a href="#" class="tools_dc gray1 fr">导出下载</a></div>
+        
+        <div class="table_div">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+            <th width="55" class="td_left pl15"><label><input type="checkbox" class="checkbox_all"> <em>全选</em></label></th>
+            <th width="70">审核状态</th>
+            <th width="145">批次号</th>
+            <th width="90">申请时间</th>
+            <th width="100">金额<em>（元）</em></th>
+            <th width="85">手续费<em>（元）</em></th>
+            <th width="85">申请人</th>
+            <th width="160">收款账户</th>
+            <th width="75">操作</th>
+          </tr>
+        </table>
+        </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+			#foreach ($!tradeInfo in $!response.data.page.infos)
+        <tr>                                      
+           <td width="55" class="td_left pl15">
+        		#if($!tradeInfo.status == "1")
+        			<input type="checkbox" name="id" value="$!tradeInfo.id" class="checkbox">
+        		#end
+			</td>
+			 #if($!tradeInfo.status == "1")
+           <td width="70"><span>待审核</span></td>
+		   #elseif($!tradeInfo.status == "2")
+			<td width="70"><span>审核通过</span></td>
+			 #elseif($!tradeInfo.status == "3")
+			<td width="70"><span>审核拒绝</span></td>
+			 #end
+           <td width="145">$!tradeInfo.batchNo</td>
+           <td width="90">$!tradeInfo.gmtCreated</td>
+           <td width="100"><span class="green  f14 bold">$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+           <td width="85"><span class="orange  f14 bold">$!tradeInfo.fee</span></td>
+           <td width="85">$!tradeInfo.applyName</td>
+           <td width="160">$!tradeInfo.bankAccount<br>$!tradeInfo.bankBranch</td>
+           <td width="75"><a href="${request.contextPath}/my/appAudit.htm?transId=$!tradeInfo.transId&batchNo=$!tradeInfo.batchNo">查看详情</a></td>
+        </tr>
+			#end
+			#if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+        <tr>
+        	<td colspan="10">无应用审核信息！</td>
+        </tr>
+		 #end
+        <tr class="nbb">
+           <td colspan="9">
+           	<div class="fl table1_bottom_left2"><input type="button" value="" class="btn_shenhe"></div>
+            <div class="nav_page mt16"><a href="#">首页</a><a href="#">上一页</a><i>第12页，共102页</i><a href="#">下一页</a><a href="#">尾页</a><span class="ml10">转到</span><input type="text" class="input_go"><span>页</span><input type="button" class="btn_go"></div>
+           </td>
+        </tr>
+		
+        </table>
+
+        
+    </form>
+    </div>
+    
+</div>
+<div id="footer">
+  <div class="wrap" >
+    <div class="dk">
+      <p class="link_us"><a href="#">关于永达商户钱包</a> | <a href="#">联系我们</a> | <a href="#">格式条款</a> | <span>客服热线:0571-28276085</span></p>
+      <p class="link_friend"></p>
+      <p class="copyright">永达版权所有 2012-2015   </p>
+      <ul class="fbimg">
+        <li><a href="#"><img src="../common/images/foot-1.gif" alt="支付业务许可证"></a></li>
+        <li><a href="#"><img src="../common/images/foot-2.gif" alt="verisign加密服务"></a></li>
+        <li><a href="#"><img src="../common/images/foot-3.gif" alt="杭州动态岗亭"></a></li>
+        <li><a href="#"><img src="../common/images/foot-4.gif" alt="客服邮箱"></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<a id="fix_online_kf" href="#"></a> 
+<script src="../common/js/jquery-1.8.2.min.js"></script>
+<script src="../common/js/js.js"></script>
+<script src="../common/js/lhgcore.min.js" type="text/javascript"></script>
+<script src="../common/js/lhgcalendar.min.js" type="text/javascript"></script>
+<script>
+var dayRang = 90;
+function doSearch() {
+	var beginDateObj = $('#startDate');
+	var endDateObj = $('#endDate');
+	var beginDateValue = beginDateObj.val();
+	var endDateValue = endDateObj.val();
+	if (beginDateValue != "" || endDateValue != "") {
+		if (beginDateValue == "") { alert("开始时间为空！"); return false; }
+		else if (endDateValue == "") { alert("结束时间为空！"); return false; }
+		else {
+			if (compareDate(beginDateValue, endDateValue) < 0) {
+				alert("起始时间不能大于结束时间！");
+				return false;
+			}
+			else {
+				var maxdate = GetDateRangStr(((beginDateValue).split(" "))[0], dayRang-1);
+				maxdate = getDateValue(maxdate);
+				var enddate = getDateValue(((endDateValue).split(" "))[0]);
+				if (compareDate(enddate, maxdate) < 0) {
+					alert("请在" + dayRang + "天内查询信息！");
+					//alert("请在90天内查询信息！");
+					return false;
+				}
+			}
+		}
+	}
+	$("#form_search").submit();
+}
+
+$(function(){
+	setClearStartDate('#startDate', '#endDate', dayRang);
+	setClearEndDate('#startDate', '#endDate', dayRang);
+	
+	$(".btn_chaxun").click(function(){
+		doSearch();
+	});
+	
+	$(".checkbox_all").click(function(){
+		var $thisobj = $(this);
+		var isCheck = $thisobj.attr("checked");
+		if(isCheck == "checked") $(".checkbox").attr("checked", true);
+		else $(".checkbox").attr("checked", false);
+	});
+	$(".checkbox").click(function(){
+		var $thisobj = $(this);
+		var isCheck = $thisobj.attr("checked");
+		if(isCheck == "checked") { var len = $(".checkbox").length; var flag = true; for(var i = 0; i < len; i++){ if($(".checkbox").eq(i).attr("checked") != "checked") { $(".checkbox_all").attr("checked", false); flag = false; break; } } if(flag) $(".checkbox_all").attr("checked", true);}
+		else { $(".checkbox_all").attr("checked", false);}
+	});
+})
+</script>

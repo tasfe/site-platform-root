@@ -1,0 +1,440 @@
+  <style>
+    html,body{
+      height  : 100%;
+      width   : 100%;
+      margin  : 0;
+      padding : 0;
+      background-color: rgb(244,245,246);
+    }
+    .banner{
+      width : 100%;
+    }
+    .introduction{
+      background-color : white;
+      width        : 60%;
+      margin-top     : 2em;
+      margin-left    : 20%;
+      border-color     : rgb(224,225,226);
+      border-style     : solid;
+      border-width     : 1px;
+    }
+    .content{
+      width     : 90%;
+      margin-left : 5%;
+      padding     : 1em;
+    }
+    .detail{
+      width     : 60%;
+      height    : auto;
+      margin-top  : 2em;
+      margin-left : 20%;
+      overflow    : hidden;
+    }
+    .left{
+      width    : 20%;
+      height   : 100%;
+      float    : left;
+      text-align : center;
+      background-color : white;
+      border-color     : rgb(224,225,226);
+      border-style     : solid;
+      border-width     : 1px;
+      margin-bottom    : -10000px;
+      padding-bottom   : 10000px;
+    }
+    .right{
+      width: 75%;
+      height: 100%;
+      float: right;
+      background-color: white;
+      border-color: rgb(224,225,226);
+      border-style: solid;
+      border-width: 1px;
+      margin-bottom: -10000px;
+      padding-bottom: 10000px;
+    }
+    .recruit_button{
+      height: 2em;
+      line-height: 2em;
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+      border-bottom-color: rgb(224,225,226);
+      cursor: pointer;
+      font-weight:bold;
+      font-size:14px;
+    }
+    .buttonDisabled{
+      height: 2em;
+      line-height: 2em;
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+      border-bottom-color: rgb(224,225,226);
+      font-size:14px;
+    }
+    .active{
+      background-color: rgb(244,245,246);
+    }
+    .show{
+      display: block;
+    }
+    .hide{
+      display: none;
+    }
+    .recruit{
+      width: 80%;
+      margin-top: 2em;
+      margin-left: 10%;
+    }
+    .dashed{
+      border-bottom:1px dashed #000000;
+    }
+  </style>
+  <script>
+    $(document).ready(function(){
+      $(".recruit_button").click(function(event){
+        $(".recruit_button").removeClass("active");
+        $(event.target).addClass("active");
+        $(".recruit").removeClass("show").addClass("hide");
+        switch($(event.target).attr("message")){
+          case "develop":
+            $("#develop").removeClass("hide").addClass("show");
+            break;
+          case "test":
+            $("#test").removeClass("hide").addClass("show");
+            break;
+          case "product":
+            $("#product").removeClass("hide").addClass("show");
+            break;
+          case "operate":
+            $("#operate").removeClass("hide").addClass("show");
+            break;
+          case "account":
+            $("#account").removeClass("hide").addClass("show");
+            break;
+          default:
+            break;
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="banner">
+    <img style="width:100%" src="${WEB_RESOURCE.staticAddress}wallet/common/images/recruit_banner.png"></img>
+  </div>
+  <div class="introduction">
+    <div class="content">
+
+      <h2>
+       <b>
+         加入我们
+         </b>
+      </h2>
+      <br />
+      <p>不管你是技术叼炸天，还是设计美如画，亦或是运营用户如牛市，我们都要！要！要！加入我们永达互联网金融，成就你自己的未来！</p>
+      <p>1、更直接的发展：有别于传统的发展模式——定制化快速发展，第一时间接触行业核心业务。</p>
+      <p>2、具有竞争力的薪资。</p>
+      <p>3、健全的福利保障：五险一金、年底双薪、带薪年假、健康体检、员工关怀、出差补贴、高温补贴、专业培训、员工旅游。</p>
+      <p>4、透明温暖的企业文化：竞争透明，关系透明，考核透明，具有互联网特质的发展环境。</p>
+      <br />
+  
+    </div>
+  </div>
+  <div class="detail">
+    <div class="left">
+      <div class="buttonDisabled">
+      </div>
+      <div class="recruit_button active" message="develop">
+           研发
+      </div>
+      <div class="recruit_button" message="test">
+            测试
+      </div>
+      <div class="recruit_button" message="product">
+          产品
+      </div>
+      <div class="recruit_button" message="operate">
+         运营
+      </div>
+
+    </div>
+    <div class="right">
+      <div id="develop" class="recruit show">
+
+        <h4>
+          <b> 高级JAVA开发工程师（经理）</b>
+        </h4>
+        <p>工作地点：上海/杭州</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、参与大型系统平台金融支付模块的设计、开发和测试。</p>
+        <p>2、承担开发任务，理解项目需求，确保按时、按质、按量完成任务。</p>
+        <p>3、按规范编写相关技术文档，并有效参与评审。</p>
+        <p>4、负责所开发功能的配置、调试、修改及用户支持，对所承担的模块负责，及时解决出现的问题。</p>
+        <p>5、与团队成员合作、沟通、对开发过程中的问题进行总结，能够知道和培训其他开发人员，愿与团队分享开发经验 。</p>
+        <p>6、完成交办的其他各类技术开发任务。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、全日制大学本科及以上学历，5年以上工作经验。思维清晰，善于思考，能独立分析和解决问题。沟通表达能力强，抗压能力强，有较强的主动性及团队合作精神，具有领导力，责任心强。</p>
+        <p>2、熟悉Linux系统，5年以上JAVA相关技术B/S结构项目开发经验，熟练掌握MyEclipse，SVN等常用开发工具，熟悉常用设计模式。</p>
+        <p>3、具有金融支付项目开发经验，熟悉多种支付方式的对接开发（如银联、支付宝、快捷支付等）。</p>
+        <p>4、精通Spring、Sturts、Mybatis等开发框架，熟练使用Redis、Memcache等开源系统。</p>
+        <p>5、精通Javascript、JQuery、Ajax、HTML等前端开发技术，能熟练使用调试方法解决问题。</p>
+        <p>6、精通MySQL、Oracle等数据库的设计开发，熟练使用数据库开发工具，精通SQL编写和存储过程及触发器的编程，精通数据库集群构建经验更佳。</p>
+        <p>7、具有丰富的软件系统设计经验和良好的文档编写习惯。</p>
+        <br />
+        <p>简历投递方式：hr@kjtpay.com.cn(杭州） ludan@kjtpay.com.cn(上海）</p>
+        <br />
+        <div class="dashed"></div>
+        <br />
+        <h4>
+          <b>Java高级工程师（高级）</b>
+        </h4>
+        <p>工作地点：上海</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、深入了解业务需求，提供架构设计。</p>
+        <p>2、为移动和Web编写核心API。</p>
+        <p>3、指导和培训工程师。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、全日制大学本科及以上学历</p>
+        <p>2、5年以上互联网软件开发工作经验</p>
+        <p>3、精通Linux平台下Java或者C/C++开发，以及性能调优。</p>
+        <p>4、熟悉J2EE WEB编程技术，对各种开源的框架如Spring、Hibernate等有深入的应用和优化经验。</p>
+        <p>5、熟悉数据库（MySQL，MS SQL Server）使用，设计，调优。</p>
+        <p>6、熟练掌握各类常用数据结构和相关算法。</p>
+        <p>7、熟悉分布式系统的设计和应用，熟悉分布式缓存、消息等机制。</p>
+        <p>8、有钻研精神，对技术充满热情，有团队合作精神。</p>
+        <p>符合以下条件者优先</p>
+        <p>1、电商领域开发经验</p>
+        <p>2、使用Scala编写分布式应用经验。</p>
+        <p>3、熟悉异步、事件驱动编程模型和框架（Akka，Netty，node.js）。</p>
+        <p>4、.NET开发经验。</p>
+        <p>5、有开放源代码作品。</p>
+        <br />
+        <p>简历投递方式：ludan@kjtpay.com.cn(上海）</p>
+        <br />
+        <div class="dashed"></div>
+        <br />
+        <h4>
+        <b>    高级Java开发工程师 </b>
+        </h4>
+        <p>工作地点：杭州</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、参与完成中小型项目的系统分析、设计，并主导完成详细的设计，并负责核心业务功能与底层基础功能的功能设计、代码实现与单元测试。</p>
+        <p>2、能够在团队中完成code review的任务，确保相关代码的有效性和正确性，并能够通过code review提供相关性能以及稳定性的建议。 </p> 
+        <p>3、解决系统存在的问题以及定期版本升级。</p>
+        <p>4、确保代码和文档的高质高量。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、JAVA基础扎实，理解io、多线程、集合等基础框架，对JVM原理有一定的了解。</p>
+        <p>2、3年及以上使用JAVA开发的经验，对于你用过的开源框架，能了解到它的原理和机制。对Spring,ibatis等开源框架熟练使用并了解其基本原理。</p>
+        <p>3、熟悉分布式系统的设计和应用，熟悉分布式、缓存、消息等机制。能对分布式常用技术进行合理应用，解决问题。</p>
+        <p>4、掌握多线程及高性能的设计与编码及性能调优。有高并发应用开发经验。</p>
+        <p>5、掌握Linux 操作系统和大型数据库（Oracle）。对sql优化有丰富的经验。</p>
+        <p>6、熟悉常用设计模式。</p>
+        <p>7、喜欢去看及尝试最新的技术，追求编写优雅的代码，从技术趋势和思路上能影响技术团队。</p>
+        <p>8、学习能力强，适应能力好。具备耐心/细心的品质。</p>
+        <br />
+        <p>简历投递方式：hr@kjtpay.com.cn(杭州）</p>
+        <br />
+        <div class="dashed"></div>
+        <br />
+        <h4>
+          <b>JAVA开发工程师</b>
+        </h4>
+        <p>工作地点：上海/杭州</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、根据要求完成应用模块的分析、设计。</p>
+        <p>2、能独立完成应用的开发任务，并优化系统程序。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、二年以上JAVA开发经验，熟悉Spring、Hibernate、Netty等常用框架。</p>
+        <p>2、熟悉Javascript、Ajax、CSS等web开发技术。</p>
+        <p>3、熟悉JAVA基础技术，如socket、多线程、反射等技术。</p>
+        <p>4、熟悉基本软件项目开发流程。</p>
+        <p>5、熟悉数据库的使用。</p>
+        <p>6、具有较强的逻辑思维能力、独立工作能力和良好的团队精神，能很快适应新的环境，自学能力强，善于团购沟通与团队协作。</p>
+        <br />
+        <p>简历投递方式：hr@kjtpay.com.cn(杭州） ludan@kjtpay.com.cn(上海）</p>
+        <br />
+        <div class="dashed"></div>
+        <br />
+        <h4>
+          <b> 前端高级开发工程师</b>
+        </h4>
+        <p>工作地点：上海</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、负责前端架构设计、编码和网站性能优化。</p>
+        <p>2、培训和带领初级工程师完成项目任务。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、全日制本科以上学历，计算机或相关专业毕业。</p>
+        <p>2、2年以上互联网企业前端开发经验。</p>
+        <p>3、精通HTML5，CSS3和JS编程。</p>
+        <p>4、熟悉开源JS框架（Jquery/Angularjs/ExtJS/BackboneJs）。</p>
+        <p>5、对前端开发有激情和兴趣，喜欢钻研。</p>
+        <p>6、有团队合作经验，具备良好的沟通能力。</p>
+        <p>7、熟悉Node.JS者优先。</p>
+        <br />
+        <p>简历投递方式：ludan@kjtpay.com.cn(上海）</p>
+        <br />
+        <div class="dashed"></div>
+        <br />
+        <h4>
+          <b>Android高级软件工程师</b>
+        </h4>
+        <p>工作地点：上海</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、承担Android应用架构的设计和规范化工作。</p>
+        <p>2、承担Android应用架构的设计和开发任务，并对交付质量负责。</p>
+        <p>3、负责初级工程师的代码review和指导。</p>
+        <p>4、负责各类自定义空间以及新技术的研发。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、计算机、数学或通信及相关专业全日制本科以上学历。</p>
+        <p>2、2年以上Android开发经验，了解Android底层技术架构（APP层）。5年Java开发经验，精通多线程，socket通信，文件操作等Java底层技术。</p>
+        <p>3、精通Android各类自定义控件的开发以及界面效果的制作，了解整个用户操作时间的传导流程。</p>
+        <p>4、熟悉PhoneGap/Titanium框架者优先。</p>
+        <p>5、思路清晰、善于思考，具备较好的需求裂解能力和抗压能力。具备良好敬业精神、沟通能力和团队合作精神。</p>
+        <br />
+        <p>简历投递方式：ludan@kjtpay.com.cn(上海）</p>
+        <br />
+        <div class="dashed"></div>
+        <br />
+        <h4>
+          <b>Linux牛人</b>
+        </h4>
+        <p>工作地点：上海</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、负责Linux服务器和其上开源应用的自动部署脚本开发。</p>
+        <p>2、定义和指导各个软件监控点的开发。</p>
+        <p>3、网站安全管理。</p>
+        <p>4、系统监控和故障排除。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、全日制大学本科以上学历，2年相关工作经验。</p>
+        <p>2、管理过大型网站的服务器群</p>
+        <p>3、自认为有Hacker的基因，喜欢研究系统底层的工作原理。</p>
+        <p>4、熟悉服务器安全技术，可以用主流安全工具（Nessus，Nmap，OpenVAS）审计网站安全并采取相应措施降低网站安全风险。</p>
+        <p>5、编程高手，可以用Python和Shell脚本编写自动部署软件。</p>
+        <p>6、有高度的责任感，勇于承担压力。</p>
+        <p>7、优先录取者：热衷联系集成的理念，用Jenkins构建过自动测试和部署平台，熟悉Chef/Puppet。</p>
+        <br />
+        <p>简历投递方式：ludan@kjtpay.com.cn(上海）</p>
+        <br />
+      </div>
+      <div id="test" class="recruit hide">
+        <h4>
+       <b> 高级测试工程师</b>
+        </h4>
+        <p>工作地点：杭州</p>
+         <br />
+        <p>工作职责：</p>
+    <p>1、开展软件性能测试（在产品研发项目中开展软件性能测试工作，包括性能测试需求分析、方案制订、测试场景设计、测试程序和脚本开发，测试环境准备、数据准备、性能测试执行、测试报告编写等）。 </p>
+    <p>2、进行系统调优工作（在产品研发项目中通过性能测试发现系统性能问题和性能瓶颈，进行系统调优工作，包括系统级调优和应用级调优，使系统性能得到提升）。 </p>
+    <p>3、参与性能测试体系建设，核心系统功能测试等工作。 </p>
+     
+     <br />
+        <p>任职资格：</p>
+    <p>1、计算机相关专业，本科或以上学历。 </p> 
+    <p>2、五年以上工作经验(三年以上开发、二年以上测试）。</p>
+    <p>3、精通各种测试方案的设计。 </p>
+    <p>4、对软件工程和大型分布式软件架构有深刻的认识。 </p>
+    <p>5、精通Linux 操作系统和大型数据库。</p>
+    <p>6、深入了解HTTP/TCP/IP等网络协议，熟悉J2EE web系统。</p>
+    <p>7、良好的沟通技能，团队合作能力、以及辅导能力。</p>
+      
+      <br />
+        
+        <p>简历投递方式：hr@kjtpay.com.cn(杭州）</p>
+        <br />
+    <br />
+          <div class="dashed"></div>
+        <br />
+        <h4>
+       <b> 测试工程师</b>
+        </h4>
+        <p>工作地点：杭州</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、分析并评审相关用户需求，技术设计文档。</p>
+        <p>2、根据需求设计测试场景与测试用例。</p>
+        <p>3、执行测试并完成测试报告，参与测试过程改进及流程改进。</p>
+        <p>4、推进测试所发现问题的解决。</p>
+        <p>5、基于测试需求，设计并实现分布式自动化测试框架。熟悉性能及底层服务测试。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、计算机及相关专业本科以上学历。</p>
+        <p>2、熟悉面向对象的概念和编程理念。</p>
+        <p>3、2年以上软件测试经验，支付或银行测试经验者优先。具有设计自动化测试框架以及搭建自动化测试平台的实际经验。</p>
+        <p>4、良好的解决问题能力、语言表达能力和综合协调能力。工作认真细致、积极主动，学习能力强，具有良好的沟通表达能力及团队合作意识。</p>
+        <p>5、熟悉软件测试理论知识，熟练掌握测试用例设计方法。</p>
+        <p>6、较强的测试分析能力，能准确地定位问题，并推动问题及时合理地解决。</p>
+        <p>7、良好的需求理解能力与高效的沟通能力。</p>
+        <p>8、熟练使用缺陷管理工具（TestLink, Mantis）。</p>
+        <br />
+        <p>简历投递方式：hr@kjtpay.com.cn(杭州）</p>
+        <br />
+        
+      </div>
+      <div id="product" class="recruit hide">
+        <h4>
+           <b>  金融产品支付经理 </b>
+        </h4>
+        <p>工作地点：上海/杭州</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、依据用户使用场景，设计出满足甚至超出用户预期的功能特性。</p>
+        <p>2、根据客户需求和产品运营需求，制订产品的实施路线图并负责产品的生命周期管理。</p>
+        <p>3、主动通过各种渠道了解用户反馈，掌握一定的调研方法论，持续优化产品。</p>
+        <p>4、通过设计运营数据指标体系，进行数据的收集和分析，挖掘潜在规律和问题，以优化产品和支撑决策产品目录维护。</p>
+        <p>5、管理和优化产品SLA。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、本科以上学历，5年以上工作经验，1-2年的金融行业或银行产品管理经验，3年研发经验。</p>
+        <p>2、掌握基础会计、银行业务知识，了解项目管理知识。</p>
+        <p>3、具备业务分析，产品设计、产品运营等知识和技能。</p>
+        <p>4、具备研发，研发设计知识和技能。</p>
+        <p>5、计划性和执行能力较强。</p>
+        <p>6、优秀的沟通协调能力、书面表达能力、逻辑思维能力。</p>
+        <p>7、强烈的责任心，优秀的团队合作意识，能在压力下工作 。</p>
+        <p>8、有银行行业产品和研发成功实施案例者优先。</p>
+        <br />
+        <p>简历投递方式：hr@kjtpay.com.cn(杭州） ludan@kjtpay.com.cn(上海）</p>
+        <br />
+      </div>
+      <div id="operate" class="recruit hide">
+        <h4>
+          <b> 客服专员 </b>
+        </h4>
+        <p>工作地点：杭州</p>
+        <br />
+        <p>工作职责：</p>
+        <p>1、通过热线电话、在线咨询和电子邮件等渠道为用户提供专业优质的服务。</p>
+        <p>2、在系统后台里准确记录用户的相关信息和咨询的问题。  </p>
+        <p>3、对于一线无法解决的问题需要通过系统后台提交给相关部门，并且根据相关流程进行及时跟进，直到问题最终解决。</p>
+        <p>4、收集用户对永达互联网金融产品和服务的建议，及时通过相关流程反馈给相关部门。</p>
+        <br />
+        <p>任职资格：</p>
+        <p>1、中专以上学历，电脑操作熟练，熟悉办公软件Word 和 Excel等的基本操作。</p>
+        <p>2、口齿清晰、普通话标准，有较强的表达能力，沟通能力，工作责任心和团队合作精神。</p>
+        <p>3、具备较强的学习能力及适应能力，能承受工作压力。</p>
+        <p>4、对呼叫中心工作充满热情，有耐心，办事稳重，具有良好的服务意识和敬业精神。</p>
+        <p>5、能适应轮班制工作，能积极配合公司在工作时间上的安排。</p>
+        <p>6、有客户服务经验的、或从事过互联网行业者优先。</p>
+        <br />
+        <p>简历投递方式：hr@kjtpay.com.cn(杭州）</p>
+        <br />
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <br />

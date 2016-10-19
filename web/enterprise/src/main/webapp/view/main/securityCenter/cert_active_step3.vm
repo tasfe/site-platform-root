@@ -1,0 +1,86 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">永达盾</span>
+		</div>
+	</div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+			  <div class="step-wrap">
+				  <span class="step-index">1</span>
+				  <span class="step-name">验证身份</span>
+				  <span class="s"></span>
+				  <span class="step-index">2</span>
+				  <span class="step-name">输入手机校验码</span>
+				  <span class="s"></span>
+				  <span class="step-index step-index-cur">3</span>
+				  <span class="step-name step-name-cur">激活下载证书</span>
+				  <span class="s"></span>
+				  <span class="step-index">4</span>
+				  <span class="step-name">激活成功</span>
+			  </div>
+               
+               <div class="usbKeyCenter" style="height:100px;">
+                   <div class="ml90"> <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/zsDown.gif" alt="" class="fl"><p class="fl" style="padding:20px 0 0 20px; line-height:22px;">正在下载证书，激活您的永达盾<br>请确保在激活成功前不要拔出永达盾</p></div>
+               </div>
+               <span id="tiperror" style="color:red; float:center"></span>
+               <div class="usbKeyFaq">
+                    <h4>下载问题：</h4>
+                    <dl>
+                        <dt>为什么会下载失败？</dt>
+                        <dd>答：1、请检查永达盾是否有正确插入电脑<br />2、请检查永达盾是否有被拔出电脑<br />3、请检查网络是否稳定<br />4、其他原因请联系客服热线：0571-28276085</dd>
+                    </dl>
+                     <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+                </div>
+          </div>
+     </div>
+</div>
+</div>
+<form id="form2" action="#springUrl('/certActive/certActive.htm')" method="post"><input type="hidden" id="certSn" name="certSn" /></form>
+<form id="error" action="#springUrl('/securityCenter/error.htm')" method="post"></form>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+<script>
+
+$(document).ready(function(){
+	
+	//获取key序列号
+	var serialNo = getKeySeriaNo();
+	//获取csr
+	var csr = getCsr("hard");
+	
+	if(csr != ""){
+		$.ajax({
+			type:"POST",
+			url:"#springUrl('/certActive/certApply.htm')",
+			async:true,
+			data:{"csr":csr, "serialNo":serialNo},
+			dataType: "json",
+			success:function(restP){
+				if(restP.success){
+					$("#tiperror").text("")
+					if (restP.data.certSignBufP7.length > 0){
+						var flag = installCert(restP.data.certSignBufP7);
+						if(flag) {
+							$("#certSn").val(restP.data.certSerialNumber);
+							$("#form2").submit();
+						}
+					}
+				} else {
+					$("#error").submit();
+					//$("#tiperror").text(restP.message);
+				}
+			},
+			error:function(){$("#tiperror").text(G.sysError);}
+		});
+	}
+});
+</script>

@@ -1,0 +1,70 @@
+<div class="wrap">
+	#if($emailResult)
+        <div class="zhanghu_infor">
+            <div class="wrap">
+                     <div class="account_number_manager">
+                     
+                            <div class="user_ibox">
+                                
+                                
+                                    <h2 class="h2_titform"><em>登陆密码找回</em></h2>
+                                    <input type="hidden" id="loginMailUrl" name="loginMailUrl" value="$!{loginMailUrl}"/>
+                                    <div class="form-horizontal center_form clearfix">                              
+                                        <p class="f_yh f_20 fc_yellow marb10">验证邮件已发出，请你登录邮箱进行验证</p>
+                                        <p class="marb20">登录邮箱<em class="fc_yellow">${email}</em>点击链接重新设置登陆密码</p>
+                                        <p><a href="#" id="loginEmail" class="btn_h40_red bold marb40">立即登录邮箱验证</a></p>
+                                        <p class="marb10 bold">如果您还没收到邮件</p>
+                                        <p class="marb10">请先检查是否在您的垃圾邮件中，如果还是未收到邮件<a class="marl20" id="ajaxResendEmail" href="#">重新发送邮件</a></p>
+                                    </div>
+                                        
+                            </div>                                                          
+                      </div>
+             </div>
+        </div>
+
+    #else
+    	<div class="user_done_success">
+	          <i class="right_sign pngFixBg" style="background:url('${WEB_RESOURCE.staticAddress}wallet/image/pay_state.png') no-repeat scroll 0 -48px;"></i>
+	          <ul>
+	              <li class="tit">邮件发送失败！</li>
+	              <li>您现在可以选择：</li>
+	              <li class="last">
+	              	<a href="#springUrl('/register/main.htm')" target="_blank">返回注册页面</a>
+	              	<a href="#springUrl('/index.htm')" target="_blank">返回钱包首页</a>
+	              </li>
+	          </ul>
+	    </div>
+    #end
+</div>
+<script type="text/javascript">
+jQuery.ajaxSetup({ cache: false }); 
+$("#ajaxResendEmail").click(function(){
+    if($("#ajaxResendEmail").attr("disabled")) {
+        return;
+    }
+    $('#ajaxResendEmail').countDown({
+        text:"秒后重新发送邮件",
+        endText:"重新发送邮件",
+        isDisabled:true,
+        count:10
+    });
+  	jQuery.ajax({
+        type: 'GET',
+        url: "#springUrl('/my/refind/loginPwd/ent/ajaxResendMail.htm')" ,
+    	data: "bizType=" + $("#bizType").val(),
+        success: function(response) {
+			
+        } ,
+        dataType: "json"
+	});
+});
+
+$("#loginEmail").click(function() {
+	var url = $("#loginMailUrl").val();
+	if (url != '') {
+		window.open(url,'_blank');
+	} else {
+		$("#login_email_error").html('<label  class="error">暂不支持此邮箱登陆跳转，请您手动登陆邮箱并完成验证!</label>');
+	}
+});
+</script>

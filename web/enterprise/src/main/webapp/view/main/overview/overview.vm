@@ -1,0 +1,182 @@
+<div class="wrapbg">
+<div id="money_zl" class="wrap">
+	<div class="page_title overview-funds">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">资金总览</span>
+		</div>
+	</div>
+    <div class="pagebox pagebox1 relative pagezjzl" style="padding:0 49px; width:900px;">
+    	<h3 class="f14" style="padding:20px 0 15px; line-height:34px;">资金账户</h3>
+        <form class="zz_form_1">
+            <div class="boxbg1" style="width:900px;">
+            	<p class="p2">
+					<a class="btn mr10 btn_disabled" href="javascript:;" data-href="${request.contextPath}/recharge/toInputMoney.htm?link=0202">充 值</a>
+					<a class="btn mr10 btn_disabled" href="javascript:;" data-href="${request.contextPath}/transfer/toTransferKjt.htm?link=0204">转 账</a>
+					<a class="btn mr10 btn_disabled" href="javascript:;" data-href="${request.contextPath}/cash/toInputCashInfo.htm?link=0203">提 现</a>
+				</p>
+                <p class="p1">
+    				<span class="f14">可用余额：</span><span class="color_f6 f32 balance" id="J_balance">$!{account.availableBalance}</span> 元<br>
+    				<span class="f14">冻结资金：</span><span class="f16">$!{account.frozenBalance}</span> 元
+				</p>
+            </div>
+        </form>
+        <div style="display:inline-block;padding:52px 0 36px 0; width:900px;">
+			<!--
+        	<div class="" style="float:left; width:450px ">
+            	<h3><span class="f14 b" style=";padding-left:25px;">收支总览</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单位：元</h3>
+      			<div id="container1" style="width:425px; height:310px; padding-top:16px;padding-left:25px;">
+                </div>
+      		</div>
+             <div class="" style="float:left;width:450px;">
+             	<h3><span class="f14 b" style="padding-left:85px;">上月支出结构</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单位：元</h3>
+      			<div id="container2" style="width:450px; height:326px;">
+                </div>	
+             </div>
+			 -->
+        </div>
+    </div>
+</div>
+</div>
+<script>
+	$("#J_balance").html(fomatMoney($!{account.availableBalance}));
+/*
+var chart;
+$(function () {
+	// 显示收支总览
+    $.ajax({
+    	type: "POST",
+		url: "queryIncomingAndOutgoing.htm",
+		data: "name=John&location=Boston",
+		dataType: "JSON",
+		success: function(result){
+			showIncomingAndOutgoing(result.data.incoming, result.data.outgoing);
+		}
+    });
+	
+	// 显示上月支出结构
+	$.ajax({
+    	type: "POST",
+		url: "queryLastMonthOutgoing.htm",
+		data: "name=John&location=Boston",
+		dataType: "JSON",
+		success: function(result){
+			showLastMonthOutgoing(result.data);
+		}
+    });
+});
+
+function showIncomingAndOutgoing(inData, outData) {
+	$('#container1').highcharts({
+		chart: {
+			type: 'line'
+		},
+		title: {
+			text: ''
+		},
+		credits: { //版权隐藏
+			 enabled: false  
+		},
+		subtitle: {
+			text: ''
+		},
+		xAxis: {
+			tickLength:0,//刻度高度
+			categories: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+		},
+		yAxis: {
+			min:0,
+			title: {
+				text: ''
+			}
+		},
+		tooltip: {
+			backgroundColor:"#fff5c8",
+			borderColor:"#f7d17f",
+			style:{ 
+				padding:10,
+				color:"#666"
+			},
+			formatter: function() { //当鼠标悬置数据点时的格式化提示
+				return '<span style="color:#ff7200;">'+ this.x +' 收入</span><br/><b>'+ this.y + '</b> 元 ';
+			}
+		},
+		
+		plotOptions: {
+			line: {
+				dataLabels: {
+					enabled: false
+				},
+				enableMouseTracking: true,
+				events:{//监听点的鼠标事件  
+                    click: function() {  
+					
+                    }  
+                }
+				
+				
+			}
+		},
+
+		series: [{
+			lineColor:"#0788f6", 
+			name: '支出',
+		 	marker: {
+				symbol: 'circle',//点形状
+				fillColor: '#0788f6'
+			},
+
+			data: inData
+		}, {
+			lineColor:"#ff7200", 
+			name: '收入',
+			marker: {
+				symbol: 'circle',//点形状
+				fillColor: '#ff7200'
+			},
+			data: outData
+		}]
+	});
+}
+
+function showLastMonthOutgoing(outData) {
+	$('#container2').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+		credits: { //版权隐藏
+			 enabled: false  
+		},
+        title: {
+            text: ''
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['转账',   outData.transfer],
+                ['代发工资', outData.salary],
+                ['代发订单', outData.order],
+                ['提现',  outData.cash],
+                ['退款',  outData.refund]
+            ]
+        }]
+    });
+}
+*/
+</script>

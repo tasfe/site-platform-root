@@ -1,0 +1,78 @@
+<div class="wrapbg">
+<div id="money_tx" class="wrap">
+    <div class="page_title getcash">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">提现</span>
+        </div>
+        <div class="right fr"><a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=3')">提现记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_7_2.html&6,1')">提现问题</a></div>
+    </div>
+    <div class="step-wrap">
+        <span class="step-index">1</span>
+        <span class="step-name">提现信息</span>
+        <span class="s"></span>
+        <span class="step-index step-index-cur">2</span>
+        <span class="step-name step-name-cur">提现审核</span>
+        <span class="s"></span>
+        <span class="step-index">3</span>
+        <span class="step-name">完成提现</span>
+    </div>
+    <div class="pagebox pagebox1">
+
+        <div class="bank_cooper_title">您的提现申请已提交！</div>
+        <form class="cz_form_1">
+            <div class="boxbg1">
+
+                <table cellpadding="0" cellspacing="0" border="0" class="sqinfo">
+                	<tr>
+                    	<td class="h3 p24"><i class="txsh_yq"></i></td>
+                        <td class="p24"><span class="f16 b">您的提现申请已提交！</span></td>
+                    </tr>
+                	<tr>
+                    	<td class="h3">提现金额：</td>
+                        <td><span class="color_f6 b">$!{cashingForm.money}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现账户名：</td>
+                        <td>$!{memberName}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现账户：</td>
+                        <td>$!{bankAcctInfo.bankName}  $!{bankAcctInfo.bankAccountNumMask}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现类型：</td>
+                        <td>$!{cashingForm.typeDesc}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">服务费：</td>
+                        <td><span class="b">$!{cashingForm.serviceCharge}</span>元</td>
+                    </tr>
+                
+                </table>
+            </div>
+        </form>
+        <br>
+        <!--<div class="faq_relevant">
+            <h4>提现问题：</h4>
+            <dl>
+                <dt>什么是提现？</dt>
+                <dd>答：提现是指将永达账户中的可用余额钱转到提现的银行账户上的操作。</dd>
+            </dl>
+            <dl>
+                <dt>什么情况下不能操作提现？</dt>
+                <dd>答：a) 永达商户账号被冻结，无法提现<br />b) 永达商户账号被加入提现黑名单<br />c) 永达商户账号没有实名认证<br />d) 永达商户账号注销<br />e) 操作员没有提现申请权限<br />f) 账户可用余额不足<br />g) 账户资金冻结</dd>
+            </dl>
+            <dl>
+                <dt>什么是委托提现？</dt>
+                <dd>答：永达提供给商家，由商家授权后，帮其永达账户内余额定时或定额划拨至指定银行卡的提现服务。</dd>
+            </dl>
+            <dl>
+                <dt>什么情况下操作员不能委托提现申请？</dt>
+                <dd>答：a) 永达商户账号被冻结，无法提现<br />b) 永达商户账号被加入提现黑名单<br />c) 永达商户账号没有实名认证<br />d) 永达商户账号注销<br />e) 操作员没有委托提现申请权限<br />f) 当前已委托提现申请/审核通过</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>-->
+    </div>
+</div>
+</div>

@@ -1,0 +1,188 @@
+<div class="container">
+  <div class="wrap">
+    <div class="page_title">
+      <h2>身份验证</h2>
+    </div>
+    <div class="box_e1e1e1 w998">
+      <div class="login_tips">为了给您提供更好的支付和金融服务，您需要填写真实的身份信息享受会员保障服务。身份信息一经录入不可更改，隐私信息
+未经本人许可严格保密。</div>
+      <div class="reg_content_wrap2" style="height:auto;">
+        <div class="login_content clearfix">
+          <form id="identity-input-form" name="identity-input-form" action="#springUrl('/my/do-personal-verifyIdentity.htm')" method="post">
+            <div class="row">
+                <label class="row_label" for="">永达互联网金融账户名：</label>
+                <div class="row_con">
+                     <span>$!response.data.loginName</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="row_block">
+                 
+                 <div class="row">
+                      <label class="row_label" for=""><span class="f14 color_f60 bold">设置身份信息</span></label>
+                     <div class="row_con">
+                           <span class="f12 color_b3"><span class="color_ffa365">请务必准确填写本人的身份信息，注册后不能修改</span>，隐私信息未经本人允许严格保密</span>
+                      </div>
+                      <div class="clear"></div>
+                 </div>
+
+                 <div class="row">
+                      <label class="row_label" for="">真实姓名：</label>
+                      <div class="row_con">
+                           <input id="realname" name="realname" type="text" class="login_input cutdown_words" maxlength="20" data-tip-place="2"> <a id="unfamiliarLink" class="f12" href="javascript:void(0)" style="color:#08c; display:none">选择生僻字</a>
+                           <em class="f12 color_b3"></em>
+                      </div>
+                      <div class="clear"></div>
+                      <div class="row_tip error tip"></div>
+                 </div>
+                 
+                 <div class="row">
+                      <label class="row_label" for="cardtype">证件类型：</label>
+                      <div class="row_con">
+                           <div class="select_div fl">
+                                   <select name="cardtype" id="cardtype">
+                                        <option value="idCard">大陆居民身份证</option>
+                                        <option value="hkCard">港澳台公民身份证</option>
+                                        <option value="otherCard">其他</option>
+                                   </select>
+                              </div>
+                      </div>
+                      <div class="clear"></div>
+                      <div class="row_tip error tip"></div>
+                 </div>
+                 
+                 
+                 <div class="row">
+                      <label class="row_label" for="">证件号：</label>
+                      <div class="row_con">
+                           <input id="idcard" name="idcard" type="text" class="login_input" maxlength="19">
+                      </div>
+                      <div class="clear"></div>
+                      <div class="row_tip error"></div>
+                 </div>
+                 
+            </div>
+            <div class="error pdlf170" id="sError"></div>
+            <div class="btn pdlf170" style="padding-bottom:55px;">
+                  <input class="btn_tijiao btn_submit" type="button" value="">
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  
+  <script>
+    var un=[
+    		["a","奡靉叆"],["b","仌昺竝霦犇愊贲琲礴埗別骉錶"],["c","旵玚棽琤翀珵楮偲赪瑒篪珹捵茝鷐铖宬査嶒"],["d","耑昳菂頔遆珰龘俤叇槙璗惇"],["e","峩"],["f","仹汎沨昉璠雰峯洑茀渢棻棻頫"],["g","玍冮芶姏堽粿筦嘏釭"],["h","郃浛訸嗃瓛翃隺鋐滈翚翯竑姮葓皜袆淏皞翙銲鉷澒澔閤婳黃峘鸻鈜褘锽谹嫮"],["i",""],["j","冏泂劼莙濬暕珒椈珺璟競煚傑玦鑑瑨瑨琎勣寯烱浕斚倢瑴畯雋傢峤"],["k","凱堃蒯鹍崑焜姱衎鵾愷鎧"],["l","玏呂俍冧倞琍綝壘孋瓅璘粦琍麗樑秝鍊崚链镠皊箖菻竻鸰琭瓈騄浬瑠嶺稜欐昽"],["m","劢忞旻旼濛嫚媺铓鋩洺媌媔祃牻慜霂楙媄瑂"],["n","婻寗嫟秾迺柟薿枏"],["o",""],["p","芃玭玶罴毰珮蘋慿弸掽逄砯"],["q","玘佺耹踆骎啟蒨慬勍嵚婍璆碏焌駸綪锜荍釥嶔啓"],["r","汭瑈瑢讱镕婼叡蒻羢瀼"],["s[sh]","屾昇妽珅姼甡湦骦塽挻甦鉥燊遂陞莦湜奭佀聖骕琡"],["t","沺凃禔慆弢颋譚曈榃湉珽瑱橦镋渟黇頲畑媞鰧"],["u",""],["v",""],["w","卍彣炆溦娬韡暐偉湋妏硙珷娒"],["x","仚旴忺炘昍烜爔斅豨勲敩虓鈃禤燮瑄晞賢翾譞諕璿琇晛焮珣晅郤禼皛哓肸谞迿咲婞昫缐姁猇欻箮翛暁"],["y","乂冘弌贠伝伃杙沄旸玙玥垚訚堯溁嫈澐颺熤儀赟祎瑀湧燚嬿鋆嫄愔贇彧崟韻龑颙晹媖顒禕羕炀弇湲霙嫕浥飏峣曣億雲愔洢暘钖垟詠燿鹓歈貟瑩燏暎畇娫矞祐溳崯颍煬靷谳異軏繄"],["z[zh]","烝梽喆禛誌曌衠淽枬詟炤昝珘赒"]
+    		];
+	
+	$(function(){
+		//生僻字
+    	int();
+		
+    	$("#unfamiliarLink").click(function(){
+    		var top=$(this).offset().top;
+    		var left=$(this).offset().left;
+    		$(".unfamiliar").css({"left":left-200,"top":top+11}).show();
+    		$(".unfamiliar-spells a:first").addClass("selected");
+    		return false;
+    	})
+    	
+    	$(".unfamiliar-spells a").live("hover",function(){
+    		$(this).addClass("selected").siblings().removeClass("selected");
+    		$(".unfamiliar-words").empty();
+    		var id=$(this).attr("data-id");
+    		var str=un[id][1];
+    		for(i=0;i<str.length;i++){
+    			var html='<a style="z-index:10;" class="unfamiliar-word" href="javascript:void(0)">'+str.charAt(i)+'</a>'
+    			$(".unfamiliar-words").append(html)			
+    		}
+    		return false;
+    	})
+    	$(".unfamiliar-words a").live("click",function(){
+    		var v=$(this).text();
+    		var t=$("#realname").val();
+    		var newval=t+v;
+    		$(".unfamiliar").hide();
+    		$("#realname").val(newval);
+			$("#realname").trigger("keyup");
+    	})
+    	$(document).bind('click',function(e){
+    		var e = e || window.event; //浏览器兼容性
+    		var elem = e.target || e.srcElement;
+    		while (elem) { //循环判断至跟节点，防止点击的是div子元素
+    			if (elem.id && elem.id=='unfamiliar') {return;}
+    			elem = elem.parentNode;
+    		}
+    		
+    		$('.unfamiliar').hide(); //点击的不是div或其子元素
+    	}); 
+		
+		$("#realname").blur(function(){
+			var jThis = $(this);
+			checkMust(jThis,jThis.parent().parent().find(".error"),"请输入真实姓名！");
+		})
+		
+		$("#idcard").blur(function(){
+			var jThis = $(this);
+			var f=checkMust(jThis,jThis.parent().parent().find(".error"),"请输入您的证件号码！");
+			if(!f){return false;}
+			
+			var jCardtype = $("#cardtype");
+			var jTip = jThis.parent().parent().find(".error");
+			if(jCardtype.val() == "idCard") {
+				checkIdCard(jThis,jTip,"请输入18位身份证号码！");
+			}
+			else {
+				var value = jThis.val();
+				if(value.length > 19) { jTip.text("证件号码位数不能超过19位！");}
+			}
+		})
+		
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_tijiao_disabled");
+			$(".error").text("");
+			
+			var flag = checkMust($("#realname"),$("#realname").parent().parent().find(".error"),"请输入真实姓名！");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_tijiao_disabled"); return false; }
+			
+			flag = checkMust($("#idcard"),$("#idcard").parent().parent().find(".error"),"请输入您的证件号码！");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_tijiao_disabled"); return false; }
+			
+			var jCardtype = $("#cardtype");
+			var jTip = $("#idcard").parent().parent().find(".error");
+			if(jCardtype.val() == "idCard") {
+				flag = checkIdCard($("#idcard"),jTip,"请输入18位身份证号码！");
+				if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_tijiao_disabled"); return false; }
+			}
+			else {
+				var value = $("#idcard").val();
+				if(value.length > 19) { jTip.text("证件号码位数不能超过19位！"); btn_submit.attr("disabled", false).removeClass("btn_tijiao_disabled"); return false;}
+			}
+			
+			$("#identity-input-form").submit();
+			
+		});
+		
+		
+	})
+	
+    function int(){
+    	var html='<div class="unfamiliar" id="unfamiliar" style="width: 500px; z-index: 700; position: absolute; l"><div class="unfamiliar-spells"></div><div class="unfamiliar-words"></div></div>';
+    	$("body").append(html);
+    	$(un).each(function(i,items){
+    		var html='<a data-id="'+i+'" title="'+items[0]+'" class="unfamiliar-spell" href="javascript:void(0)">'+items[0]+'</a>'
+    		$(".unfamiliar-spells").append(html);
+    	});
+    	var str=un[0][1];
+    	for(i=0;i<str.length;i++){
+    		var html='<a style="z-index:10;" class="unfamiliar-word" href="javascript:void(0)">'+str.charAt(i)+'</a>'
+    		$(".unfamiliar-words").append(html)			
+    	}
+    }
+</script>

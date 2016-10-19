@@ -1,0 +1,31 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/news.css" rel="stylesheet" type="text/css">
+
+<!-- S 主要内容 -->
+<div class="wrap mt30">
+     
+     <div class="newsHead">首页 &gt; 系统公告</div>
+
+     <div class="newsMain">
+     	 
+         <div class="newscontent">
+              
+              <h1 class="header">关于QQ邮箱收不到永达互联网金融邮件的通知<span class="time">2015年8月19日</span></h1>
+              
+              <p>尊敬的用户：</p>
+			  
+                                                                            
+              <p>您好！由于腾讯邮件系统与我司对接，导致部分域名为@qq.com的邮件无法正常接收，影响永达互联网金融会员用户正常使用账号，建议您可以登录腾讯邮箱，</p>
+              <p>通过设置—反垃圾—白名单—域名白名单—输入【kjtpay.om】来解决，给您带来不便敬请谅解！</p>
+              <p>特此公告</p>
+              <p style="text-align:right;">永达互联网金融信息服务有限公司</p>
+              <p style="text-align:right;">2015-08-19</p>
+         
+        </div>
+        
+        <div class="btmBtn"><div><a class="btnLeft" href="#"></a><a class="btnCenter" href="javascript:;" style="background:none; cursor:default;"></a><a class="btnRight" href="#springUrl('/static/notice2.htm')"></a></div></div>
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+

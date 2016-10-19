@@ -1,0 +1,111 @@
+
+	#set($totalItem = $!response.data.page.pageInfo.totalItem)
+
+    <div id="paginator"></div>
+    <div class="goto">
+      <span class="dis_b">到第</span> <input type="text" id="show-page-goto" name="show-page-goto" class="pg_jump"  maxlength="10" #if(!$totalItem || $totalItem == 0) disabled="disabled" #else value="$!response.data.page.pageInfo.currentPage" #end /> <span class="dis_b">页</span>
+      <span class="dis_b"> <input id="submitGoto" class="confirm" type="button" #if(!$totalItem || $totalItem == 0) disabled="disabled" #end  value="确   定"/></span>
+      共 #if($totalItem) $!{totalItem} #else 0 #end 条
+      <span  class="dis_b" id="page_total"></span>
+    </div>
+
+ <script language="javascript">
+ $(function(){
+		var totalItem = '$!response.data.page.pageInfo.totalItem';
+		var pageSize = '$!response.data.page.pageInfo.pageSize';
+		var currentPage = '$!response.data.page.pageInfo.currentPage';
+		var pageCount = '$!response.data.page.pageInfo.totalPage';
+		if(pageCount == 0){
+			pageCount=1;
+		}
+		if(!currentPage || totalItem == 0){
+			currentPage = 1;
+		}
+		$("#page_total").html(', '+pageCount+'页');
+
+        var options = {
+            currentPage: currentPage,
+            totalPages: pageCount,
+			size:"normal",
+            alignment:"center",
+			numberOfPages:6,
+
+			itemTexts: function (type, page, current) {
+                    switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return page;
+                    }
+                },
+			tooltipTitles: function (type, page, current) {
+                    switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return "第 " + page +" 页";
+                    }
+                },
+
+			onPageClicked: function(e,originalEvent,type,page){
+				return toQuerySubmit(page);
+            },
+            
+            itemContainerClass: function (type, page, current) {
+                return (page === current) ? "active" : "pointer-cursor";
+            }
+		}
+
+		$('#paginator').bootstrapPaginator(options);
+
+		$("#submitGoto").click(function(){
+			var page = $('#show-page-goto').val();
+			if(jQuery.isNumeric(page)&& parseInt(page)>0){
+				if(parseInt(page) > parseInt(pageCount)){
+					jQuery.dialog({
+						 title: "消息", 
+						 lock: true,
+			             content: "跳转页数小于等于总页数！",
+						 height: 100,
+						 width:200,
+			             ok:function(){}
+						 });
+					return false;
+				}else{
+					$('#paginator').bootstrapPaginator("show",page);
+					toQuerySubmit(page);
+				}
+			}else{
+				jQuery.dialog({
+						 title: "消息", 
+						 lock: true,
+			             content: "请输入正整数！",
+						 height: 100,
+						 width:200,
+			             ok:function(){}
+						 });
+				return false;
+			}
+		});
+ });
+</script>
+
+
+
+
+
+
+
+

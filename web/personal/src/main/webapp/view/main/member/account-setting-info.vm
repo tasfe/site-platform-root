@@ -1,0 +1,385 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+    </div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/accountSetting.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/securityInfo.htm')">
+     	  	   	             <span class="subNavIcon aqsz"></span>
+                             <span class="subNavTxt">安全设置</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/contacts/toContactsHome.htm')">
+     	  	   	             <span class="subNavIcon lxr"></span>
+                             <span class="subNavTxt">联系人</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1">基本信息</div>
+     	  	   <div class="account_set_right_con">
+     	  	   	    
+     	  	   	    <div class="set_right_info clearfix">
+     	  	   	    	 
+     	  	   	    	 <div class="account_set_personnel">
+                         	<span class="set_personnel_tx">
+							  ##<img src="${WEB_RESOURCE.staticAddress}wallet/common/images/img.gif"><i class="bg"></i><i class="black_text">修改头像</i>
+								<img src="${WEB_RESOURCE.staticAddress}wallet/common/images/tx.gif">
+							</span>
+     	  	   	    	 	  <ul class="set_personnel">
+								  #if($data.membertType == "1")
+     	  	   	    	 	  	  <li>姓名：<span title="$!{response.data.realName}">$!{response.data.dealedRealName}</span></li>
+								  #else
+								  <li>会员名称：<span title="$!{response.data.memberName}">$!{response.data.dealedMemberName}</span></li>
+								  #end
+     	  	   	    	 	  	  <li>帐户名：$!{response.data.loginName}<span class="si3">
+     	  	   	    	 	  	  		
+     	  	   	    	 	  	  		#if('1'==${response.data.membertType}) 
+											<a id="updateAccount" href="#">&nbsp;修改</a></span>
+										#end
+								  </li>
+     	  	   	    	 	  	  <li>绑定手机：$!{response.data.verify_mobile} 
+									#if(!$!{response.data.verify_mobile} )
+										未绑定
+										<span class="si3"><a href="${request.contextPath}/my/go-set-mobilephoneByPayPwd.htm">&nbsp;绑定</a></span>
+        							#else	
+										<span class="si3"><a href="${request.contextPath}/my/go-reset-mobilephone.htm">&nbsp;修改</a></span>
+        							#end
+								  </li>
+                                  
+     	  	   	    	 	  </ul>
+							  <ul class="set_personnel" style="  margin-left: 50px; ">
+                                <li  style="width: 310px;word-break: break-all;">
+            						绑定邮箱：$!{response.data.verify_email} 
+								  #if(!$!{response.data.verify_email} )
+    									未绑定
+            							<span class="si3"><a href="${request.contextPath}/my/check-set-email.htm">绑定</a></span>
+									#elseif($!{response.data.verify_mobile})
+            							<span class="si3"><a href="${request.contextPath}/my/go-unset-email.htm">解绑</a> <em>|</em> </span>
+            							<span class="si3"><a href="${request.contextPath}/my/check-update-email.htm?gopage=zhsz">修改</a></span>
+        							#else
+										<span class="si3"><a href="${request.contextPath}/my/check-update-email.htm?gopage=zhsz">修改</a></span>
+								  #end
+                                </li>
+                                <li>
+            						##头像：
+                                  ##<span class="si3"><a href="#">修改</a></span>
+                                </li>
+                              </ul>
+                              ##<ul class="safety">
+                              ##     <li><span>安全等级：<i class="gradeIcon g2"></i>中</span><a href="#" class="ml40">安全提升</a></li>
+                              ##</ul>
+     	  	   	    	 </div>
+     	  	   	    	 
+
+     	  	   	    	 <div class="account_set_box clearfix">
+     	  	   	    	 	  <ul class="serve">
+     	  	   	    	 	  	  
+     	  	   	    	 	  	   <li>
+     	  	   	    	 	  	         <div class="serveBox">
+     	  	   	    	 	  	         	  
+											  #if ($!response.data.verify_mobile)
+											  <span class="photo t1 t1_1"></span>
+                                              <span class="txt"><strong class="bold">手机绑定</strong><br><em><a href="#">已绑定</a></em></span>
+											  #else
+											  <span class="photo t1 t1_2"></span>
+											  <span class="txt"><strong class="bold">手机绑定</strong><br><em><a href="${request.contextPath}/my/go-set-mobilephoneByPayPwd.htm">未绑定</a></em></span>
+											  #end
+     	  	   	    	 	  	         </div>
+                                         ##<p class="color_b3">您已享有大额收付款服务</p>
+     	  	   	    	 	  	   </li>
+								   <li>
+									#if(!$!{response.data.verify_email} )
+        							<<div class="serveBox">
+                                        <span><img style="margin-top:6px;" src="${WEB_RESOURCE.staticAddress}wallet/common/images/yx1.png"></span>
+                                        <span class="txt"><strong class="bold">邮箱绑定</strong><br><em><a href="${request.contextPath}/my/check-set-email.htm">未绑定</a></em></span>
+                                      </div>
+        							#else
+										<div class="serveBox">
+                                        <span><img style="margin-top:6px;" src="${WEB_RESOURCE.staticAddress}wallet/common/images/yx2.png"></span>
+                                        <span class="txt"><strong class="bold">邮箱绑定</strong><br><em><a href="#">已绑定</a></em></span>
+                                      </div>
+        							#end
+                                      
+                                    </li>
+     	  	   	    	 	  	   <li>
+										#if($!response.data.memberType == 'personal')
+											<div class="serveBox">
+											  #if ($!response.data.certifyLevel == '1')
+											  <span class="photo t2 t2_1"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/go-personal-certification.htm?link=0400')">已认证</a></em></span>
+                            				  #elseif ($!response.data.certifyLevel == '2')
+											  <span class="photo t2 t2_1"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/go-personal-certification.htm?link=0400')">已认证</a></em></span>
+											  #elseif ($!response.data.certifyLevel == '3')
+											  <span class="photo t2 t2_1"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/go-personal-certification.htm?link=0400')">已认证</a></em></span>
+                            				  #else
+											  <span class="photo t2 t2_1"></span>
+                            				  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/go-personal-certification.htm?link=0400')">未认证</a></em></span>
+                            				  #end
+     	  	   	    	 	  	         	</div>
+										#else
+     	  	   	    	 	  	         <div class="serveBox">
+											  #if ($!response.data.verify_name == 'checkPass')
+											  <span class="photo t2 t2_1"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/verifyAmount.htm')">金额验证</a></em></span>
+                            				  #elseif ($!response.data.verify_name == 'PASS')
+											  <span class="photo t2 t2_1"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/certification-detail.htm')" class="color_4e">已认证</a></em></span>
+											  #elseif ($!response.data.verify_name == 'init')
+											  <span class="photo t2 t2_1"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#">认证中</a></em></span>
+                            				  #elseif ($!response.data.verify_name == 'checkReject')
+											  <span class="photo t2 t2_1"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/go-enterprise-certification.htm')">重新认证</a></em></span>
+                            				  #else
+											  <span class="photo t2 t2_1"></span>
+                            				  <span class="txt"><strong class="bold">实名认证</strong><br><em><a href="#springUrl('/my/go-enterprise-certification.htm')">未认证</a></em></span>
+                            				  #end
+     	  	   	    	 	  	         	</div>
+										 #end
+                                         ##<p class="color_b3">您已享有大额收付款服务</p>
+     	  	   	    	 	  	   </li>
+								   
+     	  	   	    	 	  	 ##  <li class="last">
+     	  	   	    	 	  	   ##      <div class="serveBox">
+											  <!--#if ($!response.data.hard == "true")
+											  <span class="photo t3"></span>
+     	  	   	    	 	  	         	  <span class="txt"><strong class="bold">快捷盾</strong><br><em>已激活</em></span>
+											  #else
+											  <span class="photo t3"></span>
+											  <span class="txt"><strong class="bold">快捷盾</strong><br><em><a href="#springUrl('/hardcertActivate/showHardDetails.htm')">未激活</a></em></span>
+											  #end -->
+										##	  <span class="photo t3"></span>
+										##	  <span class="txt"><strong class="bold">快捷盾</strong><br><em><a href="#">立即申请</a></em></span>
+     	  	   	    	 	  	        ## </div>
+                                         ##<p class="color_b3">您已享有大额收付款服务</p>
+     	  	   	    	 	  	 ##  </li>
+								   <!--
+     	  	   	    	 	  	   <li class="last">
+										 <div class="serveBox">
+										 #if ($!response.data.soft == "true")
+										 <span class="photo t3 t3_1"></span>
+ 	  	   	    	 	  	         	 <span class="txt"><strong class="bold">数字证书</strong><br><em>已申请</em></span>
+										 #else
+										 <span class="photo t3 t3_2"></span>
+										 <span class="txt"><strong class="bold">数字证书</strong><br><em><a href="#springUrl('/my/accountManage.htm?link=0400')">未申请</a></em></span>
+										 #end
+										 </div>
+                                         ##<p class="color_b3">您已享有大额收付款服务</p>
+     	  	   	    	 	  	   </li>-->
+     	  	   	    	 	  </ul>
+     	  	   	    	 </div>
+
+     	  	   	    	 <div class="serve_info clearfix">
+     	  	   	    	 	  <p>
+     	  	   	    	 	     <span class="si1">登录密码：</span>
+     	  	   	    	 	     <span class="si2">登录时需验证，保护账户信息</span>
+     	  	   	    	 	     <span class="si3"><a href="${request.contextPath}/my/reset-login-passwd.htm">修改登录密码</a></span>
+     	  	   	    	 	  </p>
+     	  	   	    	 	  <p>
+     	  	   	    	 	     <span class="si1">支付密码：</span>
+     	  	   	    	 	     <span class="si2">资金变动或账户信息变更时需验证，安全级别更高。</span>
+								 #if(!$!response.data.isSetPayPwd == 'false')
+									<span class="si3"><a href="${request.contextPath}/my/go-set-pay-passwd.htm">设置支付密码</a></span>	
+								 #else
+     	  	   	    	 	     <span class="si3"><a href="${request.contextPath}/my/reset-pay-passwd.htm">修改支付密码</a> | <a href="${request.contextPath}/my/go-get-paypasswd-index.htm">找回支付密码</a></span>
+								 #end
+							  </p>
+     	  	   	    	 	  ##<p>
+     	  	   	    	 	  ##   <span class="si1">安全保护问题：</span>
+     	  	   	    	 	  ##   <span class="si2">保护账户安全的3个安全保护问题</span>
+     	  	   	    	 	  ##   <span class="si3"><a href="#">修改</a></span>
+     	  	   	    	 	  ##</p>
+							  #if($!response.data.memberType == 'personal')
+							  <p>
+     	  	   	    	 	     <span class="si1">身份验证：</span>
+								 #if ($!response.data.certifyLevel == '1')
+     	  	   	    	 	     <span class="si2">实名证件号码： $!{response.data.authNo}</span>
+     	  	   	    	 	     <span class="si3"><a href="#springUrl('/my/go-personal-certification.htm?link=0400')">实名校验</a></span>
+								 #elseif ($!response.data.certifyLevel == '2')
+								 <span class="si2">实名证件号码： $!{response.data.authNo}</span>
+								 <span class="si3"><a href="#springUrl('/my/go-personal-certification.htm?link=0400')">实名认证（V1）</a></span>
+								 #elseif ($!response.data.certifyLevel == '3')
+								 <span class="si2">实名证件号码： $!{response.data.authNo}</span>
+								 <span class="si3"><a href="/my/go-personal-certification.htm?link=0400">实名认证（V2）</a></span>
+								 #else
+								 <span class="si2">实名证件号码： </span>
+								 <span class="si3"><a href="#springUrl('/my/go-personal-certification.htm?link=0400')">未认证</a></span>
+								 #end
+     	  	   	    	 	  </p>
+							  #else
+     	  	   	    	 	  <p>
+     	  	   	    	 	     <span class="si1">身份验证：</span>
+								 #if ($!response.data.verify_name == 'PASS')
+     	  	   	    	 	     <span class="si2">实名证件号码：$!{response.data.authNo} </span>
+     	  	   	    	 	     <span class="si3">已认证</span>
+								 #elseif ($!response.data.verify_name == 'checkPass')
+								 <span class="si2">实名证件号码： </span>
+								 <span class="si3"><a href="#springUrl('/my/verifyAmount.htm')">金额验证</a></span>
+								 #elseif ($!response.data.verify_name == 'init')
+								 <span class="si2">实名证件号码： </span>
+								 <span class="si3"><a href="#">认证中</a></span>
+								 #elseif ($!response.data.verify_name == 'checkReject')
+								 <span class="si2">实名证件号码： </span>
+								 <span class="si3"><a href="#springUrl('/my/go-enterprise-certification.htm')">重新认证</a></span>
+								 #else
+								 <span class="si2">实名证件号码： </span>
+								 <span class="si3"><a href="#springUrl('/my/go-enterprise-certification.htm')">未认证</a></span>
+								 #end
+     	  	   	    	 	  </p>
+							  #end
+     	  	   	    	 </div>
+
+     	  	   	    </div>
+
+     	  	   </div>
+
+     	  </div>
+     	  <!-- S 右边内容 -->
+
+     </div>
+
+</div>
+<!-- E 主要内容 -->
+<form action="#springUrl('/softcertActivate/gotoview.htm')" id="softCertForm" method="POST"><input type="hidden" id="btype" name="btype" value=""></form>
+<script>
+	$(function(){
+		$(".serve_info p").hover(function(){
+    		$(this).addClass("hover");
+    	},function(){
+    		$(this).removeClass("hover");
+    	});
+		/*
+		jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/softcertActivate/checkSoftCert.htm')",
+			dataType: "json",
+			cache: false,
+            success: function(response) {
+             if(response.success) {
+				var certSns = response.data.certSns;
+				for(var i = 0; i < certSns.length; i++) {
+					certArr = filterCerts("", 1 , certSns[i]);
+					if(certArr != null && certArr.length > 0) { // 是证书用户，并且本机安装了证书
+						$("#btype").val("isCertUser");
+						$("#security").html('<a href="#" onclick="javascript:submit();">已安装</a>');
+						return;
+					} 
+				}
+				// 是证书用户，但本机未安装了证书
+				$("#btype").val("NotInstallCertUser");
+				$("#security").html('<a href="#" onclick="javascript:submit();">未安装</a>');
+             } else {
+			 	//非证书用户isNotCertUser
+				$("#btype").val("isNotCertUser");
+                $("#security").html('<a href="#" onclick="javascript:submit();">未申请</a>');
+             }
+            }
+        });
+		*/
+	})
+	
+	function submit(){
+		$("#softCertForm").submit();
+	}
+	
+	$(document).ready(function(){
+        $("#findpaypwd,#updatepaypwd").click(function(){
+          //showWin('iframe', '3.2.3-1账户设置-基本信息-修改登录名-身份验证.html', '', 700, 360, '修改账户名', '', '');//已绑定手机和邮箱的情况，注意别删掉
+          
+          var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+          html += '<div style="padding:0 27px;" class="ApplyDigitalinfo f14"><p style="text-align: center;"><i class="tipcautionMax" style="line-height: 47px;"><span class="f14 b">您尚未设置支付密码，请先进行支付密码的设置后继续操作！</span></i></p>';
+          html += '<p style="padding-left: 142px;"><a href="#">设置支付密码</a></p>';
+          html += '</div>';
+          html += '</div></div>';
+          html += '<div class="div_btn_submit"><input type="button" class="btn_qr" style="margin-right:30px;"></div></div>';
+          showWin('html', html, '', 700, 280, ' ', '', '');
+        });
+
+        $("#updateAccount").click(function(){
+			 var phone_email="$!response.data.phone_email";
+			 var isSetPayPwd="$!response.data.isSetPayPwd";
+			 var certifyLevel="$!response.data.certifyLevel";
+			 var verify_name="$!response.data.verify_name";
+			 if(phone_email == "false"){
+			 	 var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+              	 html += '<div style="padding:0 27px;" class="ApplyDigitalinfo f14"><p style="text-align: center;"><i class="tipcautionMax" style="line-height: 47px;"><span class="f14 b">您尚未绑定手机或邮箱，请先进行手机和邮箱的绑定后继续操作！</span></i></p>';
+              	 html += '<p style="padding-left: 128px;"><a href="${request.contextPath}/my/go-set-mobilephoneByPayPwd.htm">手机绑定</a><a style="margin-left:28px;" href="${request.contextPath}/my/check-set-email.htm">邮箱绑定</a></p>';
+              	 html += '</div>';
+               	 html += '</div></div>';
+               	 html += '<div class="div_btn_submit"><input type="button" class="btn_qr" style="margin-right:30px;"></div></div>';
+               	 showWin('html', html, '', 700, 280, ' ', '', '');
+			 }else if(isSetPayPwd == "false"){
+			 	 var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+              	 html += '<div style="padding:0 27px;" class="ApplyDigitalinfo f14"><p style="text-align: center;"><i class="tipcautionMax" style="line-height: 47px;"><span class="f14 b">您尚未设置支付密码，请先进行支付密码的设置后继续操作！</span></i></p>';
+              	 html += '<p style="padding-left: 128px;"><a href="${request.contextPath}/my/go-set-pay-passwd.htm">设置支付密码</a></p>';
+              	 html += '</div>';
+               	 html += '</div></div>';
+               	 html += '<div class="div_btn_submit"><input type="button" class="btn_qr" style="margin-right:30px;"></div></div>';
+               	 showWin('html', html, '', 700, 280, ' ', '', '');
+			 }if(phone_email == "true"){
+			 	var verify='false';
+				if(certifyLevel=='1' ||certifyLevel=='2' ||certifyLevel=='3' ||verify_name=='PASS'){
+					verify='true'
+				}
+          	 	window.location.href='${request.contextPath}/my/accountNameSetting.htm?verify='+verify;
+          	 }
+           	 
+        });
+
+        $(".set_personnel_tx").hover(
+          function(){ $(this).find(".bg").show().end().find(".black_text").show();},
+          function(){ $(this).find(".bg").hide().end().find(".black_text").hide();}
+        ).click(function(){
+          showWin('iframe', 'uploadTx.html', '', 720, 280, '修改我的头像', '', '');
+        });
+        
+        $(".serve_info p").hover(function(){
+          $(this).addClass("hover");
+        },function(){
+          $(this).removeClass("hover");
+        })
+      });
+
+      function next(){
+        console.log("next");
+      }
+
+      function ok(){
+        console.log("ok");
+      }
+
+      function go(){
+        console.log("go");
+      }
+
+      window.addEventListener('message',function(e){
+        if(e.data === "next"){
+          showWin('iframe', '3.2.3-2账户设置-基本信息-修改登录名-修改.html', '', 700, 360, '修改账户名', '', '');
+        }else if(e.data === "ok"){
+          showWin('iframe', '3.2.3-3账户设置-基本信息-修改登录名-成功.html', '', 700, 360, '修改账户名', '', '');
+        }else if (e.data === "go") {
+          window.location = "https://www.baidu.com";
+        }
+      },false);
+</script>

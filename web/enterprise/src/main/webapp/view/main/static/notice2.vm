@@ -1,0 +1,29 @@
+
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/news.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrap mt30">
+     
+     <div class="newsHead">首页 &gt; 系统公告</div>
+
+     <div class="newsMain">
+     	 
+         <div class="newscontent">
+              
+              <h1 class="header">升级维护通知<span class="time">2015年09月08日</span></h1>
+             
+              <p>尊敬的用户：</p>
+
+              <p style="text-align:right;">公司</p>
+              <p style="text-align:right;">2015-09-08</p>
+         
+        </div>
+        
+        <div class="btmBtn"><div><a class="btnLeft" href="#springUrl('/static/notice1.htm')"></a><a class="btnCenter" href="javascript:;" style="background:none; cursor:default;"></a><a class="btnRight" href="#springUrl('/static/notice3.htm')"></a></div></div>
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/js.js"></script> 

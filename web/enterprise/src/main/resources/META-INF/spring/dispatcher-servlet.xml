@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:annotation-config />
+    <mvc:default-servlet-handler />
+
+    <context:component-scan base-package="com.netfinworks.site.web" />
+    <context:component-scan base-package="com.yongda.site.web" />
+    
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+	        <list>
+	            <value>file:${config.root}/app.properties</value>
+	        </list>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven>
+        <!-- 注册自定义argument resolver -->
+        <mvc:argument-resolvers>
+            <bean class="com.netfinworks.site.web.WebProcessInfoResolver" />
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <!-- velocity config -->
+    <import resource="velocity-config-${web.work.model}.xml" />
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+        <property name="messageConverters">
+             <list>
+                 <bean  class="org.springframework.http.converter.StringHttpMessageConverter">
+                     <property name="supportedMediaTypes">
+                         <list>
+                             <value>text/html;charset=UTF-8</value>
+                         </list>
+                     </property>
+                 </bean>
+                 <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+             </list>
+         </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="ignoreAcceptHeader" value="true" />
+        <property name="defaultContentType" value="text/html" />
+        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+            </map>
+        </property>
+        <!-- 用于开启 /model/123?format=json 的支持 -->
+        <property name="favorParameter" value="false" />
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+                <bean id="viewResolver" class="com.netfinworks.site.web.common.resolver.VelocityMultipleLayoutViewResolver">
+                    <property name="cache" value="true" />
+                    <property name="prefix" value="" />
+                    <property name="suffix" value=".vm" />
+                    <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml" />
+                    <property name="contentType" value="text/html; charset=utf-8"></property>
+                    <property name="exposeSpringMacroHelpers" value="true" />
+                    <property name="mappings">
+                        <map>
+                                   <!-- 个性化布局在此添加 -->
+                            <entry key="login*" value="common/layout/login-layout-new.vm" />
+                            <entry key="index*" value="common/layout/index-layout.vm" />
+                            <entry key="main/register/*" value="common/layout/register-layout.vm" />
+                            <entry key="main/static/*" value="common/layout/static-layout.vm" />
+                            <entry key="main/help/*" value="common/layout/help-layout.vm" />
+                            <entry key="main/customservice/*" value="common/layout/static-layout.vm"/>
+                             
+                            <!-- 活动 -->
+                            <!-- 365日日 -->
+                       	    <entry key="main/activity/jsh" value="common/layout/tradeUnstyled-default.vm"/>
+                            
+                            <entry key="main/securityCenter/cert_detail" value="common/layout/no-headerandfoot-layout.vm" />
+                            <entry key="main/securityCenter/updateDun" value="common/layout/no-headerandfoot-layout.vm" />
+                            <!-- list布局 -->
+                            <entry key="main/settlement/*" value="common/layout/list-layout.vm" />
+                            <entry key="main/walletCheck/*" value="common/layout/list-layout.vm" />
+                            <entry key="main/list/*" value="common/layout/list-layout.vm" />
+                            <entry key="main/downloadBill/*" value="common/layout/list-layout.vm" />
+                            <entry key="main/PendingAudit/*" value="common/layout/list-layout.vm" />
+                            <entry key="main/goods/*" value="common/layout/list-layout.vm" />
+                            <entry key="main/tradeUnstyled/*" value="common/layout/tradeUnstyled-default.vm" />
+                            <!-- 默认布局 -->
+                            <entry key="main/*" value="common/layout/default-layout-new.vm" />
+                            <entry key="common/*" value="common/layout/default-layout-new.vm" />
+                        </map>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <!-- for application/json -->
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 异常处理 -->
+    <bean id="exceptionResolver" class="com.netfinworks.site.web.common.resolver.WebExceptionResolver">
+        <property name="defaultErrorView">
+            <value>/common/exception/error</value>
+        </property>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/exception/uploadSizeExceeded</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 处理Mutipart文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding">
+            <value>UTF-8</value>
+        </property>
+        <property name="maxUploadSize">
+            <value>${maxUploadFileSize}</value>
+        </property>
+    </bean>
+
+
+    <!-- 表单验证 -->
+    <bean id="validatorFactory" class="org.springmodules.validation.commons.DefaultValidatorFactory">
+        <property name="validationConfigLocations">
+            <list>
+                <value>classpath:META-INF/validator/validator-rules.xml</value>
+                <value>classpath:META-INF/validator/validator-member.xml</value>
+                <value>classpath:META-INF/validator/validator-custom.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" /> 
+   	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="META-INF.validator.messages" />
+    </bean>
+    -->
+
+    <bean id="formValidate" class="com.netfinworks.site.web.common.util.FormValidatorHolder">
+        <constructor-arg ref="validatorFactory" />
+    </bean>
+
+    <!-- 读取资源文件 -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="120" />
+		<property name="basenames">
+			<list>
+				<value>classpath:META-INF/validator/messages</value>
+			</list>
+		</property>
+	</bean>
+    
+	<!-- 配置验证器 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<!-- 如果不加默认到使用classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+	
+	<!-- 启用验证器 -->
+	<mvc:annotation-driven validator="validator" />
+
+	<!-- <bean id="kaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">no</prop>
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>
+                        <prop key="kaptcha.image.width">100</prop>
+                        <prop key="kaptcha.image.height">28</prop>
+                        <prop key="kaptcha.textproducer.font.size">28</prop>
+                        <prop key="kaptcha.session.key">KAPTCHA</prop>
+                        <prop key="kaptcha.textproducer.char.string">abcdefh23456789kmnrstwxz</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <prop key="kaptcha.textproducer.font.names">Arial,Courier</prop> 
+                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean> -->
+
+	<!-- 验证码配置 -->
+	<bean id="kaptchaProducer" class="com.netfinworks.site.core.common.KaptchaProducer"></bean>
+</beans>

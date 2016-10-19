@@ -1,0 +1,217 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">商户登录</span>
+		</div>
+	</div>
+    <div class="pagebox pagelogin">
+    	<div class="ad fl"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/login_banner.gif"></div>
+        <div class="as fl">
+        	<form id="loginForm" class="login_page_form">
+            <div class="row"><span>商户账号：</span><input id="manageUser" name="manageUser" type="text" data-placeholder="请输入商户账号" class="input2 placeholder"></div>
+            <div class="row"><span>操 作 员：</span><div class="select_div" style="width:188px;"><select name="selectType" id="operator" name="operator" style="width:188px;">
+					<option value="">请选择操作员</option>
+			</select></div>
+			</div>
+            <style type="text/css">
+			.ocx_style { left:7px; top:5px; width:180px; }
+			</style>
+            <div class="row row_mm"><span>登录密码：</span><div class="passworddiv relative" style="overflow:hidden;" id="passworddiv"><input type="text" data-input="passworddiv"  data-placeholder="请输入密码" class="placeholder password" id="unSafePwInputOut" style="display:none" ><input type="password" data-input="passworddiv" class="password" id="unSafePwInput" name="unSafePwInput" style="display:none" ><i></i><input name="password" type="hidden" id="password" /></div></div>
+            <div class="row row_pw">
+            	<a href="${request.contextPath}/my/refind/loginPwd/ent/index.htm" class="fogetpw_help" title="点击可找回账户的登录密码"></a><a href="${request.contextPath}/my/refind/loginPwd/ent/index.htm">忘记登录密码</a>
+            	<label><input type="checkbox" id="checkbox_safepw" name="checkbox_safepw" checked><span>安全控件登录</span></label>
+            </div>
+            <div class="row row_yzm"><span>验 证 码：</span><div class="yzm_i" id="yzm_i"><input id="captcha_value" type="text" data-placeholder="请输入验证码" class="placeholder" data-input="yzm_i"  name="captcha_value"><i class="yzm_rw"></i></div><img id="randImage" src="#springUrl('/pvc.htm')" alt="验证码" title="点击更新验证码" class="yzm_img"></div>
+            <div class="clear error" style="height:auto">&nbsp;</div>
+            <input type="button" value="" class="login btn_submit">
+            <div class="row row_zc"><a href="${request.contextPath}/register/register-index.htm" class="a1">免费注册</a><a href="${request.contextPath}/register/register-index.htm">账户激活</a></div>
+
+			<input type="hidden" name="redirect_url" id="redirect_url" value="$!response.data.returnUrl"/>
+			<input type="hidden" name="operatorId" id="operatorId" value=""/>
+			<input type="hidden" name="operator_loginName" id="operator_loginName" value=""/>
+			</form>
+        </div>
+    </div>
+</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.cookie.js${WEB_RESOURCE.staticVersion}"></script>
+<script>
+	$(function(){
+		if($("#manageUser").val() != "" && $("#manageUser").val() != $("#manageUser").attr("data-placeholder")){
+			queryOper();	
+		}
+		
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$("#passworddiv").append(pgeditor.load());
+		pgeditor.pgInitialize(); //初始化控件
+		
+		$("#unSafePwInputOut").focus(function(){
+			$("#unSafePwInputOut").hide();
+			$("#unSafePwInput").show().focus();
+		});
+		$("#unSafePwInput").blur(function(){
+			if($(this).val() == ""){
+				$("#unSafePwInputOut").show();
+				$("#unSafePwInput").hide();
+			}
+		});
+		
+		$("#checkbox_safepw").click(function(){
+			if($(this).attr("checked") == "checked"){
+				$(".ocx_style").css("top", "5px");
+				$("#unSafePwInputOut").hide();
+				$("#unSafePwInput").hide().val("");
+			}
+			else{
+				$(".ocx_style").css("top", "-100px");
+				pgeditor.pwdclear();
+				$("#unSafePwInputOut").show();
+				$("#unSafePwInput").hide();
+			}
+		});
+		
+		//jQuery.cookie('yd_ent_user_name',null,{path: '/site-web-enterprise',domain: '${WEB_RESOURCE.staticAddressDomain}'});
+		
+		$("#manageUser").blur(function(){
+			var manageUser = jQuery.trim($(this).val());
+			manageUser = manageUser == $(this).attr("data-placeholder") ? "" : manageUser;
+			$(this).val(manageUser);
+			checkAccount({cmd:"login", username:manageUser, tipObj:$(".error"), async:true, url:"#springUrl('/login/checkLoginName.htm')",success:function(d){queryOper();}, error:function(){$("#operator").html('<option value="">请选择操作员</option>');}});
+		});
+		
+		$("#captcha_value").blur(function(){
+			var code = $(this).val();
+			code = code == $(this).attr("data-placeholder") ? "" : code;
+			$(this).val(code);
+			checkVerificationCode({code:code, tipObj:$(".error"), imgTipObj:$(".yzm_rw"), async:true, url:"#springUrl('/login/checkVerifiCode.htm')"});
+		}).keydown(function(event){
+			if(event.keyCode ==13){
+				$(".btn_submit").focus().click();
+			}
+		});
+		
+		function _submit(){
+			var btn_submit = $(".btn_submit");
+			var tipObj = $(".error");
+
+			var code = $("#captcha_value").val();
+			code = code == $("#captcha_value").attr("data-placeholder") ? "" : code;
+			var flag = checkVerificationCode({code:code, tipObj:tipObj, imgTipObj:$(".yzm_rw"), async:false, url:"#springUrl('/login/checkVerifiCode.htm')"});
+			if(!flag){ btn_submit.attr("disabled", false).removeClass("login_disabled"); return false; }
+
+			var operSelected = $('#operator option:selected');
+			$("#operatorId").val(operSelected.val());
+			$("#operator_loginName").val(operSelected.text());
+
+			jQuery.ajax({
+    			url:"#springUrl('/login/main.htm')",
+    			type:'post',
+    			dataType:'json',
+    			data:$("#loginForm").serialize(),
+    			success:function(data, textStatus, jqXHR){
+					refreshVericode($("#randImage"));
+    				if(data.success) {
+    					window.location.href = data.redirect;
+                    } else {
+						$(".yzm_rw").removeClass("right").removeClass("wrong");
+                    	tipObj.text(data.message);
+						btn_submit.attr("disabled", false).removeClass("login_disabled");
+    				}
+    			},
+    			error:function(XMLHttpRequest, textStatus, errorThrown){
+					refreshVericode($("#randImage"));
+					$(".yzm_rw").removeClass("right").removeClass("wrong");
+					tipObj.text("系统异常");
+    				return false;
+    			}
+    		});
+		}
+		
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("login_disabled");
+			var tipObj = $(".error");
+			tipObj.text("&nbsp;");
+			
+			var manageUser = jQuery.trim($("#manageUser").val());
+			manageUser = manageUser == $("#manageUser").attr("data-placeholder") ? "" : manageUser;
+			var flag = checkAccount({cmd:"login", username:manageUser, tipObj:tipObj, async:false, url:"#springUrl('/login/checkLoginName.htm')"});
+			if(!flag){ btn_submit.attr("disabled", false).removeClass("login_disabled"); return false; }
+			
+			if($("#checkbox_safepw").attr("checked") == "checked"){
+				var jsonSubmit = {
+					jBtnSubmit:btn_submit,
+					cssClass:"btn_login_disabled",
+					urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+				};
+				var pgeditors = [
+					{
+						jPwInput:pgeditor,
+						jInput:$("#password"),
+						jTip:tipObj,
+						txtEmpty:"请输入登录密码！"
+					}
+				];
+				checkPgeditor({
+					jsonSubmit:jsonSubmit,
+					pgeditors:pgeditors,
+					callback:function(){
+						_submit();
+					}
+				});
+			}
+			else{
+				//setPwdResult(pgeditor);
+				var unSafePwInputObj = $("#unSafePwInput");
+				var unSafePwInput = unSafePwInputObj.val();
+				if(unSafePwInput == "" || unSafePwInput == unSafePwInputObj.attr("data-placeholder")){
+					tipObj.text("请输入登录密码");
+					
+					btn_submit.attr("disabled", false).removeClass("login_disabled");
+					return false;
+				}
+
+				_submit();
+			}
+		});
+	});
+	
+	function queryOper(){
+		jQuery.ajax({
+				type: 'post',
+		        url: "#springUrl('/login/query.htm')",
+		        data: $("#loginForm").serialize(),
+				dataType: "json",
+		        success: function(restP) {
+		        	if(restP && restP.success) {
+		        		var _html = '';
+		        		var data = restP.data.operators;
+		         		for(var i = 0; i < data.length; i++){
+							var oper = data[i];
+							/*
+							if(oper.loginName == manageUser){
+								_html += '<option value='+oper.operatorId+'>Admin</option>';	
+							}else{
+								_html += '<option value='+oper.operatorId+'>'+oper.loginName+'</option>';	
+							}
+							*/
+							_html += '<option value='+oper.operatorId+'>'+oper.loginName+'</option>';
+		         		}
+						$("#operator").html(_html);
+		         		
+		        	}else{
+						$(".error").text(restP.message);	
+					}
+		        },
+				error:function(){
+					$(".error").text(restP.message);	
+				}
+				
+		        
+			});	
+	}
+	
+</script>

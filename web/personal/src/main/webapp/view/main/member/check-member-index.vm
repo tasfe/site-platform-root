@@ -1,0 +1,45 @@
+
+<div class="container">
+  <div class="wrap">
+	<div class="page_title">
+    	<h2></h2>
+    </div>
+    <div class="pagebox pagebox1" style=" height:280px; padding-top:95px;">
+		#if($!response.data.model == 'SET_PASSWD')
+        <table cellpadding="0" cellspacing="0" border="0"  class="sqinfo mb10" width="100%">
+            <tr>
+                <td class="tcenter"><i class="zzffwqfm zzffwqfm_alert2" style="line-height:48px;"><span class="f16 b tip_title">您当前的操作需要设置支付密码后才能操作！</span></i></td>
+            </tr>
+        </table>
+        <div class="btn_bottom_tx row3"><a href="#springUrl('/my/go-set-pay-passwd.htm?link=0400')" class="btn_ljsz" style="margin:0 auto;">立即设置</a></div> 
+		#elseif($!response.data.model == 'BIND_PHONE')
+		<table cellpadding="0" cellspacing="0" border="0"  class="sqinfo mb10" width="100%">
+            <tr>
+                <td class="tcenter"><i class="zzffwqfm zzffwqfm_alert2" style="line-height:48px;"><span class="f16 b tip_title">您当前的操作需要绑定手机后才能操作！</span></i></td>
+            </tr>
+        </table>
+        <div class="btn_bottom_tx row3"><a href="#springUrl('/my/go-set-mobilephoneByPayPwd.htm?link=0400')" class="btn_ljbd" style="margin:0 auto;">立即绑定</a></div> 
+		#elseif($!response.data.model == 'CERTIFI_V2')
+		<table cellpadding="0" cellspacing="0" border="0"  class="sqinfo mb10" width="100%">
+            <tr>
+                <td class="tcenter"><i class="zzffwqfm zzffwqfm_alert2" style="line-height:48px;"><span class="f16 b tip_title">您当前的操作需要完成实名认证(V2)后才能操作！</span></i></td>
+            </tr>
+        </table>
+        <div class="btn_bottom_tx row3"><a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="btn_ljrz" style="margin:0 auto;">立即验证</a></div> 
+		#elseif($!response.data.model == 'CERTIFI_V1')
+		<table cellpadding="0" cellspacing="0" border="0"  class="sqinfo mb10" width="100%">
+            <tr>
+                <td class="tcenter"><i class="zzffwqfm zzffwqfm_alert2" style="line-height:48px;"><span class="f16 b tip_title">您当前的操作需要完成实名认证(V1)后才能操作！</span></i></td>
+            </tr>
+        </table>
+        <div class="btn_bottom_tx row3"><a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="btn_ljrz" style="margin:0 auto;">立即验证</a></div> 
+		#else
+		<table cellpadding="0" cellspacing="0" border="0"  class="sqinfo mb10" width="100%">
+            <tr>
+                <td class="tcenter"><i class="zzffwqfm zzffwqfm_alert2" style="line-height:48px;"><span class="f16 b tip_title">您当前的操作需要完成实名校验后才能操作！</span></i></td>
+            </tr>
+        </table>
+        <div class="btn_bottom_tx row3"><a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="btn_ljrz" style="margin:0 auto;">立即验证</a></div> 
+		#end
+    </div>
+</div>

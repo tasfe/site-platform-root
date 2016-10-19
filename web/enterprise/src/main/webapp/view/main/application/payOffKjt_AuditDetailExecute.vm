@@ -1,0 +1,343 @@
+<div id="nav_con_2"><div></div></div>
+<div id="money_cz" class="wrap">
+  <div class="page_title"> <h2>代发工资审核详情</h2> </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>转账信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">交易订单号</td>
+          <td class="tab_w2">$!response.data.transId<br></td>
+          <td  class="tab_w">批次号（仅批量转账）</td>
+          <td  class="Detail_tab_no tab_w2">$!response.data.batchNo</td>
+        </tr>
+        <tr class="cl">
+          <td>创建时间</td>
+          <td >$!response.data.createTime<br /></td>
+          <td >交易类型</td>
+          <td class="Detail_tab_no">代发工资</td>
+        </tr>
+        <tr  >
+          <td>交易金额（元）</td>
+          <td >$!response.data.amount</td>
+          <td>服务费（元）</td>
+          <td class="Detail_tab_no">$!response.data.fee</td>
+        </tr>
+        <tr>
+          <td>总金额（元）</td>
+          <td >$!response.data.totalAmount</td>
+		  <td>短信通知</td>
+		  <td >$!response.data.isSend</td>
+        </tr>
+        <tr  >
+          <td>付费理由</td>
+          <td>$!response.data.memo<br></td>
+		  <td>状态</td>
+		  #if($!response.data.status == "1")
+			<td>待审核</td>
+          #elseif($!response.data.status == "2")
+			<td>审核通过</td>
+		  #else
+			<td>审核拒绝</td>
+		  #end
+        </tr>
+      </table>
+    </div>
+        <div class="table_div">
+      <h3>收款方信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">账户名称</td>
+        <td class="tab_w2">$!response.data.payeeNo<br></td>
+        <td  class="tab_w">帐号</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.payeeNo</td>
+      </tr>
+    </table>
+    </div>
+
+    <div class="table_div">
+      <h3>申请信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">申请时间</td>
+          <td class="tab_w2">$!response.data.createTime</td>
+          <td  class="tab_w">申请操作员</td>
+          <td  class="Detail_tab_no tab_w2">$!response.data.operatorName</td>
+        </tr>
+      </table>
+    </div>	
+	<form id="form_qr" method="post">	
+	<input type="hidden" name="id" value="$!response.data.id">
+    <div class="audit_select">
+      <ul>
+        <li>
+          <label>
+            <input name="operate" type="radio" value="agree" checked>
+            审核通过</label>
+        </li>
+        <li>
+          <label>
+            <input name="operate" type="radio" value="reject">
+            审核拒绝</label>
+        </li>
+      </ul>
+    </div>
+    <div class="audit_ok" >
+      <div style="margin-left:50px;">
+        <label><span class="f14">备　　注：</span>
+        <input type="text" class="inputtext wpw cutdown_words" name="remark" id="agreeRemark" data-tip-place="2" maxlength="50">
+        </label>
+        <div class="tip h22" style="margin-left:76px;"></div>
+      </div>
+	  <div style="margin-left:50px;">
+        <label><span class="f14 fl">支付密码：</span>
+          <div class="pwdiv fl" style="margin-left:6px;"><input name="payPassword" type="hidden" id="password" /></div>
+        </label>
+        <div class="error h22 clear" id="pay_error" style="margin-left:76px;"></div>
+      </div>
+     <div id="captchaDiv" style="margin-left:37px; line-height:28px; display:none;">
+           <label><span class="f14 limitLeft fl">手机校验码：</span>
+			 <input id="bizType" name="bizType" type="hidden" value="AUDIT_PAYOFF">
+             <input type="text"  name="mobileCaptcha" class="inputtext w80" value="" id="sjyzm" style="margin-left:6px;">
+             <input class="btn_mfhq ml10" type="button" value="">
+           </label>
+           <label class="ml5 h22"></label>
+           <div class="mainTips h22 error" id="payCode_error" style="margin-left:90px;"></div>
+	   </div>
+	   <input id="signedData" name="signedData" type="hidden" />
+	   <div id="needUpdataKjd" class="ml160 mb15" style="display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</div>
+	   <div class="red" style="margin-left:274px; margin-bottom:20px;" id="errorMsg"></div>
+	   
+       <div class="error" style=" height:30px; line-height:30px; padding-left:266px;"></div>
+      <div class="">
+      <input class="btn" id="btn_pass" type="button" value="确 认" style="margin-left:126px;">
+      </div> 
+	</div>
+    <div class="audit_ok" style="display:none">
+      <div style="margin-left:50px;">
+        <label><span class="f14">备　　注：</span>
+        <input type="text" class="inputtext wpw cutdown_words" name="remark" id="rejectRemark" data-tip-place="2" maxlength="50">
+        </label>
+        <div class="tip h22 error" style="margin-left:76px;"></div>
+      </div>
+      <div class="">
+      <input class="btn" id="btn_reject" type="button" value="确 认" style="margin-left:126px;">
+      </div> </div>
+	   </form>
+  </div>
+</div>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+#if($!{isCertActive} == 'yes')
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+#end
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+
+
+
+<script>
+$(function(){
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+
+	$(".audit_select input").each(function(index, element) {
+        var thisobj = $(this);
+		thisobj.click(function(){
+			$(".audit_ok").hide().eq(index).show();
+		});
+    });
+
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$(".pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+	
+	$(".btn_mfhq").click(function(){
+        var jThis = $(this);
+        sendPhoneCode({
+            jBtn:jThis,
+            jTip:$('#captchaDiv .error'),
+            url:"${request.contextPath}/cert/sendMobileCertCode.htm"
+        });
+	});
+
+	function _submit(){
+        var btn_submit = $("#btn_pass");
+        var signedData;
+        var jForm = $("#form_qr");
+        var i;
+
+        if($("#sjyzm").attr("id") == "sjyzm"){
+            var flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入校验码！");
+            if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+        }
+
+        if (cert) {
+            signedData = signAndReturn(jForm, cert, [jForm.find('#password').val()]);
+            signedData = encodeURIComponent(signedData);
+            // 签名后提交
+            $.ajax({
+                url:'${request.contextPath}/my/verifySign.htm',
+                type:'post',
+                dataType:'json',
+                data:{"signedData":signedData,"payPassword":$("#password").val()},
+                async:false,
+                success:function(data){
+                    if(!data.success){
+                        $('#errorMsg').html(data.message);
+                        i=1;
+                        btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+                    }
+                }
+            });
+        } else {
+            $.ajax({
+                url:'${request.contextPath}/my/verifyCode.htm',
+                type:'post',
+                dataType:'json',
+                data:{"mobileCaptcha":$('#sjyzm').val(),"bizType":$('#bizType').val()},
+                async:false,
+                success:function(data,statusText){
+                    if(!data.success){
+                        $('#payCode_error').html(data.message);
+                        //用于判断校验码是否输入正确
+                        i=1;
+                        btn_submit.attr("disabled", false).removeClass("btn_disabled");
+                        stopCountDown($(".btn_mfhq"));
+                        return false;
+                    }
+                }
+            });
+        }
+
+        if(i == 1){
+            return false;
+        }
+
+        $.ajax({
+            url:'${request.contextPath}/my/verifyPaypass.htm',
+            type:'post',
+            dataType:'json',
+            data:{"payPassword":$('#password').val()},
+            async:false,
+            success:function(data,statusText){
+                if(!data.success){
+                    $('#pay_error').html(data.message);
+                    i=1;
+                    btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+                }
+            }
+        });
+
+
+
+        if(i == 1){
+            return false;
+        }
+        $.ajax({
+            url:'${request.contextPath}/my/payoffKjtAuditConfirm.htm',
+            type:'post',
+            dataType:'json',
+            async:false,
+            data:{"payPassword":$('#password').val(),"mobileCaptcha":$('#sjyzm').val(),"operate":$('input:radio[name="operate"]:checked').val(),
+                "remark":$('#agreeRemark').val(),"id":$!response.data.id,"remark":$('#agreeRemark').val(),"signedData":signedData},
+            success:function(data){
+                if(data.success){
+                    var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+                    html += '<tr><td class="tcenter"><i class="zzffwqfm txsh_wq2"><span class="f16 b tip_title">您的审核操作已成功！</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="${request.contextPath}/my/all-audit.htm?shStatus=1&link=0301">我的待审核页面</a></span></span></i></td></tr></table>';
+                    html += '</div></div>';
+                    showWin('html', html, {mode:1}, 600, 200, ' ', '', '');
+
+                    goUrlByTime({$obj:$(".time_left"), time:3, url:"${request.contextPath}/my/all-audit.htm?shStatus=1&link=0301"});
+                }else{
+                    var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+                    html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">您的审核操作失败！'+data.message+'</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="${request.contextPath}/my/all-audit.htm?shStatus=1&link=0301">我的待审核页面</a></span></span></i></td></tr></table>';
+                    html += '</div></div>';
+                    showWin('html', html, {mode:1}, 600, 200, ' ', '', '');
+
+                    goUrlByTime({$obj:$(".time_left"), time:3, url:"${request.contextPath}/my/payoffKjtAudit.htm?id=$!response.data.id"});
+                }
+            }
+        });
+    }
+
+	$("#btn_pass").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+        var flag;
+
+        var jsonSubmit = {
+            jBtnSubmit:btn_submit,
+            cssClass:"btn_disabled",
+            urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+        };
+        var pgeditors = [
+            {
+                jPwInput:pgeditor,
+                jInput:$("#password"),
+                jTip:$(".pwdiv").parent().parent().find(".error"),
+                txtEmpty:"请输入支付密码！"
+            }
+        ];
+        checkPgeditor({
+            jsonSubmit:jsonSubmit,
+            pgeditors:pgeditors,
+            callback:function(){
+                _submit();
+            }
+        });
+	});
+	
+	$("#btn_reject").click(function(){
+                var btn_submit = $(this);
+                btn_submit.attr("disabled", true).addClass("btn_disabled");
+                $(".error").text("");
+
+                var jRemark = $("#rejectRemark");
+                if($.trim(jRemark.val()) == ""){
+                    btn_submit.attr("disabled", false).removeClass("btn_disabled");
+                    jRemark.parent().parent().find(".error").text("请填写拒绝理由！");
+                    return false;
+                }
+
+		$.ajax({
+			url:"${request.contextPath}/my/payoffKjtAuditConfirm.htm",
+			type:'post',
+			dataType:'json',
+			async:false,
+			data:{"remark":$('#rejectRemark').val(),"id":$!response.data.id,"operate":$('input:radio[name="operate"]:checked').val()},
+			success:function(data){
+				if(data.success){
+        			var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+    				html += '<tr><td class="tcenter"><i class="zzffwqfm txsh_wq2"><span class="f16 b tip_title">您的审核操作已成功！</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="${request.contextPath}/my/all-audit.htm?shStatus=1&link=0301">我的待审核页面</a></span></span></i></td></tr></table>';
+    				html += '</div></div>';
+    				showWin('html', html, {mode:1}, 600, 200, ' ', '', '');
+    				
+    				goUrlByTime({$obj:$(".time_left"), time:3, url:"${request.contextPath}/my/all-audit.htm?shStatus=1&link=0301"});
+    			}else{
+    				var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+    				html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">您的审核操作失败！'+data.message+'</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="${request.contextPath}/my/all-audit.htm?shStatus=1&link=0301">我的待审核页面</a></span></span></i></td></tr></table>';
+    				html += '</div></div>';
+    				showWin('html', html, {mode:1}, 600, 200, ' ', '', '');
+    				
+    				goUrlByTime({$obj:$(".time_left"), time:3, url:"${request.contextPath}/my/payoffKjtAudit.htm?id=$!response.data.id"});
+    			}	
+			}
+		});
+	});
+	
+	// 检查硬证书
+	selectVerifyStyle("#springUrl('/certActive/getCertSns.htm')");
+	
+	// 检查永达盾是否插入
+	intervalCheckUSB();
+})
+</script>

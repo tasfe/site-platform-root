@@ -1,0 +1,52 @@
+<div class="wrapbg">
+<div class="zhanghu_infor safety">
+    <div class="wrap min_height6">
+    	<div class="user_ibox">
+    		<h2 class="h2_titform"><em>解绑邮箱</em></h2>
+    		<input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+             <div class="form-horizontal center_form clearfix">
+            	<div class="control-group">
+    				<input id="url" name="url" type="hidden" value="$!response.data.url"/>
+                    <p class="f_yh f_20 fc_yellow marb10">验证邮件已发出，请您登录邮箱进行验证</p>
+                    <p class="marb20">登录邮箱<em class="fc_yellow">$!response.data.email</em>点击邮箱链接即可解绑</p>
+            		<p class="marb20"><input id="login_email_submit" type="submit"  class="btn_h40_red bold" value="立即登录邮箱验证"></p>
+    				<p id="login_email_error"></p>
+    				<p class="marb10 bold">如果您还没收到邮件</p>
+                    <p class="marb10">请先检查是否在您的垃圾邮件中，如果还是未收到邮件<a id="send_email" href="#" class="marl20">重新发送邮件</a></p>
+       		 </div>
+    		</div>
+    	 </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+jQuery.ajaxSetup({ cache: false }); 
+$("#send_email").click(function(){
+	        if($("#send_email").attr("disabled")) {
+	            return;
+	        };
+	        $('#send_email').countDown({
+	            text:"秒后重新发送邮件",
+	            endText:"重新发送邮件",
+	            isDisabled:true,
+	            count:10
+	        });
+         jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/my/email/sendMail.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+			cache: false,
+            success: function(response) {
+            } ,
+            dataType: "json"
+        });
+  });
+$("#login_email_submit").click(function() {
+	var url = $("#url").val();
+	if (url != '') {
+		window.open(url,'_blank');
+	}else {
+		$("#login_email_error").html('暂不支持此邮箱登陆跳转，请您手动登陆邮箱并完成验证');
+	}
+});
+</script>

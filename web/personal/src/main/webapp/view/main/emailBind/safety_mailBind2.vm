@@ -1,0 +1,46 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>邮箱绑定</h2></div>
+
+     <div class="safetyMain">
+     	 <form action="${request.contextPath}/my/go-set-email-active.htm" method="POST">
+			<input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+         <div class="loginCenter">
+               
+              <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">邮箱帐号：</span>
+                          <input type="text" class="inputtext w232" value="" id="email" name="email">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form> 
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		var flag = checkMust($("#email"),$(".error"),"请输入邮箱帐号");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		flag = checkEmail($("#email"),$(".error"),"邮箱格式不正确");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		
+		$("form").submit();
+	});
+})
+</script>
+

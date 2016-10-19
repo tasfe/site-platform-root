@@ -1,0 +1,67 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>支付密码找回</h2></div>
+     
+
+     <div class="safetyMain">
+     	  <form action="${request.contextPath}/my/check-paypasswd-captcha.htm">
+		  <input type="hidden" name="bizType" id="bizType" value="$!response.data.bizType"/>
+          <div class="loginCenter">
+               
+                           
+                   <div class="login_limit hg40">
+                       <span class="f14 ml30">手机校验码已发送至绑定手机<em class="bold">186****0232</em>，请输入手机校验码。</span>
+                   </div>
+                   
+                   <div class="login_limit">
+                       <label><span class="f14 limitLeft">手机校验码：</span>
+                         <input type="text" name="mobileCaptcha" class="inputtext w80" value="" id="sjyzm">
+                         <input class="btn_mfhq ml10" type="button" value="">
+                       </label>
+                       <label class="ml5"></label>
+                       <div class="mainTips ml160 error"></div>
+                    </div>
+                   
+                   <div class="loginAmendBtn" style="padding-left:181px;"> <input class="btn_qr btn_submit" type="button" value=""></div>
+               
+               
+          </div>
+          </form>
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	$(".btn_mfhq").click(function(){
+		$(".error").text("");
+		countDown($(this),60,"");
+		jQuery.ajax({
+		    type: 'GET',
+		    url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+		    success: function(response) {
+				if(response.success) {
+					$(".error").text("校验码已发送");
+				}else{
+					$(".error").text("若长时间未收到校验码，请联系客服 400-611-0909");	
+				}
+		    } ,
+			error:function(){$(".error").text(G.sysError)},
+		    dataType: "json"
+		});
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		
+		$("form").submit();
+	});
+})
+</script>

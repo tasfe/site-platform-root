@@ -1,0 +1,1140 @@
+/* 全局样式 */
+a,button,input,textarea,div,span,ul,li{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+body{
+  background:#F0EFF5;
+  overflow-x: hidden;
+}
+.bottomNav{
+  position:fixed;
+  width:100%;
+  height:60px;
+  line-height:60px;
+  border-top:1px solid #E5E5E5;
+  background:#FBFBFB;
+  bottom:0px;
+  left:0px;
+  opacity:0.9;
+  z-index:999;
+}
+.bottomNavItem{
+  width:33.3%;
+  float:left;
+  text-align:center;
+  font-size:13px;
+  margin-top:5px;
+}
+.bottomNavItem span{
+  display:block;
+}
+.bottomNavIcon{
+  width:35px;
+  height:35px;
+  line-height:35px;
+  margin:0 auto;
+}
+.bottomNavText{
+  height:15px;
+  line-height:15px;
+  color:#999;
+}
+.me-header{
+  width:100%;
+  height:170px;
+  text-align:center;
+  clear:both;
+  overflow:hidden;
+  background-image: -moz-linear-gradient( 90deg, rgb(76,93,217) 0%, rgb(76,142,217) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(76,93,217) 0%, rgb(76,142,217) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(76,93,217) 0%, rgb(76,142,217) 100%);
+}
+.me-userInfo{
+  margin-top:30px;
+}
+.me-userHeader{
+  width:60px;
+  height:60px;
+  border-radius:60px;
+  overflow:hidden;
+  padding:5px;
+  border:2px solid #6184DD;
+  margin:0 auto;
+  margin-top:15px;
+}
+.me-userHeader img{
+  width:100%;
+  height:100%;
+  border-radius:60px;
+}
+.me-userMobile{
+  margin-top:15px;
+  color:#FFF;
+  font-size:20px;
+}
+.me-walletInfo{
+  clear:both;
+  overflow:hidden;
+}
+.me-walletInfoItem{
+  width:49.7%;
+  float:left;
+  text-align:center;
+  border-bottom:1px solid #E5E5E5;
+  background:#FBFBFB;
+
+}
+.me-walletInfoItem span{
+  display:block;
+}
+.me-walletInfoNumber{  
+  clear:both;
+  overflow:hidden;
+}
+.me-walletInfoNumber{
+  color:#F74A38;
+  font-size:20px;
+  line-height:25px;
+  height:25px;
+  padding-top:15px;
+}
+.me-walletInfoTitle{
+  color:#999;
+  font-size:15px;
+  line-height:25px;
+  height:25px;
+  padding-bottom:15px;
+}
+.me-walletInfoItemFirst{
+  border-right:1px solid #E5E5E5;
+}
+.me-contentList{
+  overflow:scroll;
+}
+.me-list{
+  background:#FFF;
+  clear:both;
+  overflow:hidden;
+  margin-top:15px;  
+  border-top:1px solid #E5E5E5;
+  border-bottom:1px solid #E5E5E5;
+}
+.itemMarginLeft li{
+  margin-left:3%;
+}
+.leftTitle{
+  display:inline-block;
+  width:20%;
+  float:left;
+  overflow:hidden;
+  margin-left:6%;
+}
+.input-pointer{
+  width:50%;
+}
+.clearInput{
+  width:20px;
+  height:20px;
+  line-height:20px;
+  font-size:17.5px;
+  display:inline-block;
+  margin-top:15px;
+  border-radius:30px;
+  color:#FFF;
+  text-align:center;
+  float:right;
+  margin-right:2%;
+  background:url(../images/icon_del.png) no-repeat;
+  background-size:100% 100%;
+  background-position:center center; 
+}
+.getPwWrap{
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  background:#F0EFF5;
+}
+/* 银行卡列表样式 */
+.bankCard{
+  width:90%;
+  height:130px;
+  margin:0 auto;
+  margin-top:3%;
+  margin-bottom:3%;
+  border-radius:10px;
+}
+.dcCard{
+  background-image: -moz-linear-gradient( -37deg, rgb(85,151,207) 0%, rgb(60,134,210) 100%);
+  background-image: -webkit-linear-gradient( -37deg, rgb(85,151,207) 0%, rgb(60,134,210) 100%);
+  background-image: -ms-linear-gradient( -37deg, rgb(85,151,207) 0%, rgb(60,134,210) 100%);
+}
+.ccCard{
+  background-image: -moz-linear-gradient( -37deg, rgb(241,101,87) 0%, rgb(233,85,130) 100%);
+  background-image: -webkit-linear-gradient( -37deg, rgb(241,101,87) 0%, rgb(233,85,130) 100%);
+  background-image: -ms-linear-gradient( -37deg, rgb(241,101,87) 0%, rgb(233,85,130) 100%);
+}
+.bankCardIcon{
+  display:inline-block;
+  width:45px;
+  height:45px;
+  line-height:53px;
+  border:1px solid #FFF;
+  background:#FFF;
+  border-radius:55px;
+  margin:5%;
+  float:left;
+}
+.bankCardIf{
+  padding:5%;
+  height:45px;
+}
+.bankCardIfTitle{
+  height:25px;
+  line-height:25px;
+  font-size:20px;
+  color:#FCE9E8;
+  font-weight:bold;
+}
+.bankCardIfType{
+  height:20px;
+  line-height:20px;
+  font-size:16px;
+  color:#FCE9E8;
+}
+.bankCardNumber{
+    font-size:23px;
+    color:#FFF;
+}
+.nocard{
+  text-align:center;
+}
+.nocard img{
+  width:35%;
+  margin:0 auto;
+  margin-top:5%;
+}
+.nocard p{
+  margin-top:1%;
+  color:#FFF;
+}
+.bankContentTitle{
+  width:100%;
+  height:90px;
+  margin-bottom:3%;
+}
+.unBindBtn{
+  color:#F16566;
+  text-align:center;
+  font-weight:bold;
+}
+.c-tip{
+  margin:5%;
+  color:#999;
+}
+.payPasswordInputWrap{
+  width:90%;
+  margin:0 auto;
+  height:50px;
+  line-height:50px;
+  border-radius:10px;
+  border:1px solid #E5E5E5;
+  background:#FFF;
+  margin-top:15px;
+}
+.getPassword{
+  color:#369EFF;
+  margin-right:5%;
+  font-size:14px;
+}
+
+.helpCenterTitle{
+  height:50px;
+  line-height:50px;
+  clear:both;
+  font-weight:bold;
+  padding-left:10px;
+  font-size:15px;
+}
+.helpCenterTextLeft{
+  display:inline-block;
+  width:70%;
+  float:left;
+  overflow:hidden;
+  height:50px;
+}
+.helpCenterContent{
+  display:none;
+  color:#676767;
+  font-size:15px;
+  width:90%;
+  margin:0 auto;
+  margin-top:15px;
+  padding-bottom:15px;
+}
+.helpCenterList{
+  border-bottom:1px solid #E5E5E5;
+  transition:0.3s all ease;
+  background:#FBFBFB;
+}
+.helpCenterArrow{
+  transition:0.3s all ease;
+}
+.helpCenterArrowActive{
+  transform:rotateZ(90deg);
+}
+.sendMsg{
+  display:inline-block;
+  border-left:1px solid #E5E5E5;
+  width:75px;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+  font-size:13px;
+  background:#369EFF;
+  color:#FFF;
+  border-radius:5px;
+}
+.sendMsgGray{
+  background:#999;
+  color:676767;
+}
+.donePay{
+  color:#369FFF;
+}
+.btnGray{
+  background:#D8D8D8;
+  color:#000;
+}
+.btnGray:hover{
+  background:#D8D8D8;
+  color:#000;
+}
+.msgTip{
+  color:#999;
+  font-size:15px;
+  text-align:center;
+  height:20px;
+  line-height:20px;
+  margin-top:10px;
+}
+.index-header{
+  padding:5px;
+  background:#FBFBFB;
+}
+.tqImg{ 
+  float:left;
+  width:9%;
+  padding:0px 6px;
+}
+.box-right{
+  float:right;
+  margin-right:2%;
+  padding-left:3%;
+  text-align:center;
+  border-left:1px solid #E5E5E5;
+}
+.headerInfoBox{
+  display:inline-block;
+  font-size:15px;
+}
+.dialog-cardInfo{
+    position:fixed;
+    width:300px;
+    min-height:100px;
+    background:#FFF;
+    z-index:999999;
+    border-radius:5px;
+    top:15%;
+    left:50%;
+    margin-left:-150px;
+    opacity:0.9;
+}
+.iconItem{
+    width:33.3%;
+    height:95px;
+    float:left;
+    text-align:center;
+}
+.index-gray{
+  color:#999;
+}
+.iconListText{
+  display:block;
+  font-size:15px;
+  color:#999;
+  margin-top:-9px;
+}
+.index-iconList{
+  clear:both;
+  overflow:hidden;
+  padding-bottom:10px;
+  border-bottom:1px solid #E5E5E5;
+  background:#FBFBFB;
+}
+.index-floor{
+  margin-top:15px;
+  border-top:1px solid #E5E5E5;
+  border-bottom:1px solid #E5E5E5;
+  background:#FFF;
+}
+.index-floorF1{
+  clear:both;
+  overflow:hidden;
+}
+.index-floorF1-left{
+  width:49.9%;
+  float:left;
+  border-right:1px solid #E5E5E5;
+  height:150px;
+}
+.index-floorF1-right{
+  width:49.5%;
+  height:150px;
+  float:right;
+}
+.index-floorF1Title{
+  font-size:16px;
+  line-height:16px;
+  padding:5%;
+}
+.index-floorF1Desc{
+  font-size:13px;
+  line-height:15px;
+  color:#999;
+  font-weight:normal;
+  padding-left:5%;
+  word-break:break-word;
+}
+.index-floorF1Full{
+  width:100%;
+  height:150px;
+  background:url(../images/pig.jpg) no-repeat;
+  background-size:100% 100%;
+}
+.index-floorF1Title2{
+  font-size:24px;
+  line-height:16px;
+  padding:7% 0% 2% 7%;
+  color:#000;
+}
+.index-floorF1Desc2{
+  font-size:12px;
+  line-height:15px;
+  color:#FFF;
+  font-weight:normal;
+  padding-left:7%;
+  word-break:break-word;
+  color:#999;
+}
+
+.finderItem{
+  width:95%;
+  margin:0 auto;
+  margin-top:15px;
+  min-height:240px;
+  background:#FFF;
+}
+.finderImg img{
+  width:100%;
+  margin-top:10px;
+}
+.finderDesc{
+  margin-top:-15px;
+}
+.msgTime{
+  margin-top:15px;
+  margin-bottom:20px;
+  padding-bottom: 15px;
+}
+.msgPointer{
+  display:inline-block;
+  background:#F45035;
+  width:9px;
+  height:9px;
+  border-radius:15px;
+  margin-left:-12px;
+  margin-right:5px;
+}
+.msgNav{
+  width:100%;
+  position:fixed;
+  top:0px;
+  left:0px;
+  height:39px;
+  border-bottom:1px solid #E5E5E5;
+  background:#FFF;
+  z-index:999;
+}
+.msgNavItem{
+  width:50%;
+  text-align:center;
+  height:37px;
+  line-height:37px;
+  float:left;
+}
+.msgNavItemActive{
+  color:#F54B3A;
+  border-bottom:2px solid #F54B3A;
+}
+.msgListItem{
+  background:#FFF;
+  margin-top:5px;
+  margin:0 auto;
+  width:95%;
+  height:auto;
+}
+.msgList{
+  margin-top:50px;
+}
+.detailList li{
+  height:auto;
+  background:#FFF;
+  clear:both;
+  overflow:hidden;
+}
+.detailLine1{
+  padding-top:10px;
+  min-height:30px;
+  line-height:30px;
+  clear:both;
+  overflow:hidden;
+}
+.detailLine2{
+  min-height:30px;
+  line-height:30px;
+  margin-top:-5px;
+  clear:both;
+  overflow:hidden;
+  padding-bottom:10px;
+}
+.detailList span{
+  display:inline-block;
+  width:45%;
+  height:20px;
+  line-height:20px;
+}
+.moneyDetailTitle{
+  font-size:16px;
+  margin-left:5%;
+}
+.moneyDetailAmount{
+  font-size:16px;
+  margin-right:5%;
+  text-align:right;
+  float:right;
+}
+.moneyDetailTime{
+  margin-left:5%;
+  font-size:15px;
+  color:#999;
+}
+.moneyDetailBlance{
+  margin-right:5%;
+  font-size:15px;
+  color:#999;
+  text-align:right;
+}
+.moneyDetailAmount-add{
+  color:#26AA19;
+}
+.info-gray{
+  color:#999;
+  margin-right:16px;
+}
+.huafeiNavItemActive{
+  color:#369EFF;
+  border-bottom:2px solid #369EFF;
+}
+.phoneNumberWrap{
+  margin-top:50px;
+  width:100%;
+  height:90px;
+  background:#FFF;
+  border-top:1px solid #E5E5E5;
+  border-bottom:1px solid #E5E5E5;
+}
+.phoneNumberInputWrap .yd-input-noBorder{
+  margin:12px 0px 0px 20px;
+  width:239px;
+  font-size:30px;
+}
+.phoneNumberTipWrap{
+  font-size:14px;
+  color:#999;
+  margin:0px 0px 5px 20px;
+}
+.hf_rightBtn{
+  float:right;
+  display:inline-block;
+  width:30px;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+  margin-top:20px;
+  margin-right:5px;
+}
+.phoneNumberClear{
+  display:inline-block;
+  width:20px;
+  height:20px;
+  line-height:20px;
+  text-align:center;
+  border-radius:20px;
+  background:url(../images/icon_del.png) no-repeat;
+  background-size:100% 100%;
+  background-position:center center; 
+}
+.phoneNumberArrow{
+  display:inline-block;
+  width:30px;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+  background:url(../images/arrow.png) no-repeat;
+  background-size:25% 35%;
+  background-position:center center;
+  transform: rotateZ(90deg);
+  transition:0.3s all ease;
+}
+.phoneNumberArrowActive{
+  transform: rotateZ(270deg);
+}
+.phoneNumberList{
+  position:absolute;
+  background:#FFF;
+  width:100%;
+  height:auto;
+  clear:both;
+  overflow:hidden;
+  margin-top:19px;
+}
+.phoneNumberList ul li{
+  border-bottom:1px solid #E5E5E5;
+  height:39px;
+  line-height:39px;
+  padding-left:20px;
+  font-size:17px;
+}
+.czList{
+  margin-top:20px;
+}
+.czListItem{
+  display:block;
+  width:30.5%;
+  height:75px;
+  border:1px solid #369EFF;
+  color:#369EFF;
+  border-radius:5px;
+  text-align:center;
+  margin:1%;
+  float:left;
+  background:#FFF;
+  overflow:hidden;
+}
+.czListItemType{
+  display:block;
+  font-size:20px;
+  width:100%;
+  height:50px;
+  line-height:50px
+}
+.czListItemAmount{
+  display:inline-block;
+  font-size:12px;
+  width:100%;
+  height:25px;
+  line-height:25px;
+  background:#F7F7F7;
+}
+.czListItemTypeLl{
+  display:block;
+  font-size:19px;
+  width:100%;
+  height:75px;
+  line-height:75px
+}
+.czDetail{
+  width:100%;
+  height:50px;
+  float:left;
+}
+.czDetailItem{
+  width:100%;
+  height:auto;
+  clear:both;
+  overflow:hidden;
+  background:#FFF;
+  border-top:1px solid #E5E5E5;
+  border-bottom:1px solid #E5E5E5;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+.czDetailItemInfo{
+  width:70%;
+  float:left;
+  margin-left:20px;
+  line-height:20px;
+}
+.czDetailItemBtn{
+  display:inline-block;
+  float:right;
+  margin-right:20px;
+  width:39px;
+  height:25px;
+  line-height:25px;
+  color:#369EFF;
+  font-size:13px;
+  border:1px solid #369EFF;
+  text-align:center;
+  margin-top:5px;
+}
+.czListItemNoAct{
+  color:#C9C9CF;
+  border:1px solid #C9C9CF;
+}
+.czDetailItemAmount{
+  font-size:18px;
+}
+.czDetailItemAmountBF{
+  font-size:18px;
+  color:#999;
+  margin-left:5px;
+  text-decoration:line-through;
+  font-style:normal;
+}
+.czDetailItemAmountDesc{
+  font-size:13px;
+  color:#999;
+}
+.czDetailTitle{
+  font-weight:normal;
+  font-size:13px;
+  padding:10px 0px 10px 20px;
+}
+.czDetailItemDesc{
+  font-size:12px;
+  color:#999;
+}
+.czHelp{
+  position:absolute;
+  width:100px;
+  height:35px;
+  line-height:35px;
+  left:50%;
+  bottom:10px;
+  margin-left:-50px;
+  color:#369EFF;
+  text-align:center;
+  font-size:14px;
+}
+/* 图标 */
+.icon-me{
+  display:inline-block;
+  width:50px;
+  height:50px;
+}
+.icon-index{
+  display:inline-block;
+  width:75px;
+  height:75px;
+}
+.icon-index-marginTop{  
+  margin-top:3px;
+}
+.finder-label{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  float:right;
+  background:#CCC;
+  margin:-18px;
+}
+.label-XIANSHI{
+  background:url(../images/title1.png) no-repeat;
+  background-size:100% 100%;
+  background-position:center center;
+}
+.label-REMEN{
+  background:url(../images/title2.png) no-repeat;
+  background-size:100% 100%;
+  background-position:center center;
+}
+.label-TUIJIAN{
+  background:url(../images/title3.png) no-repeat;
+  background-size:100% 100%;
+  background-position:center center;
+}
+.label-TEHUI{
+  background:url(../images/title4.png) no-repeat;
+  background-size:100% 100%;
+  background-position:center center;
+}
+.icon-shouye{
+  background:url(../images/home_n.png) no-repeat;
+  background-size:70% 70%;
+  background-position:center center;
+}
+.icon-faxian{
+  background:url(../images/find_n.png) no-repeat;
+  background-size:70% 70%;
+  background-position:center center;
+}
+.icon-wode{
+  background:url(../images/me_n.png) no-repeat;
+  background-size:70% 70%;
+  background-position:center center;
+}
+.shouye-active{
+  background:url(../images/home_f.png) no-repeat;
+  background-size:70% 70%;
+  background-position:center center;
+}
+.faxian-active{
+  background:url(../images/find_f.png) no-repeat;
+  background-size:70% 70%;
+  background-position:center center;
+}
+.wode-active{
+  background:url(../images/me_f.png) no-repeat;
+  background-size:70% 70%;
+  background-position:center center;
+}
+.icon-back{  
+  background:url(../images/back.png) no-repeat;
+  background-size:70% 70%;
+  margin-top:13px;
+}
+.icon-help{  
+  background:url(../images/help.png) no-repeat;
+  background-size:70% 70%;
+  margin-top:13px;
+}
+.icon-baodan{
+  background:url(../images/listIco1.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-youka{
+  background:url(../images/listIco2.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-xiaoxi{
+  background:url(../images/listIco3.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-wenti{
+  background:url(../images/listIco4.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-shezhi{
+  background:url(../images/listIco5.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-youkaBig{
+  background:url(../images/selIcon1.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-shoujiBig{
+  background:url(../images/selIcon2.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-weizhangBig{
+  background:url(../images/selIcon3.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+.icon-baodanBig{
+  background:url(../images/selIcon4.png) no-repeat;
+  background-size:60% 60%;
+  background-position:center center;
+}
+
+.icon-arrow{
+  background:url(../images/arrow.png) no-repeat;
+  background-size:20% 30%;
+  background-position:center center;
+}
+.icon-payway{  
+  display:inline-block;
+  background:url(../images/arrow.png) no-repeat;
+  background-size:30% 30%;
+  background-position: center center;
+  width:35px;
+  height:50px;
+}
+.icon-close{  
+  background:url(../images/close.png) no-repeat;
+  background-size:50% 30%;
+  background-position: center center;
+  height:50px;
+}
+.bank-icon{
+  display:inline-block;
+  background:none;
+  width:50px;
+  height:50px;
+  background: url(../images/icon_bank2.png) 3px -2760px no-repeat;
+}
+.icon-money{  
+  background:url(../images/money.png) no-repeat;
+  background-size:60% 60%;
+  background-position: center center;
+  height:50px;
+}
+.selectBank{
+  display:inline-block;
+  width:50px;
+  height:50px;
+}
+.selectBank-selected{
+  background:url(../images/payway-select.png) no-repeat;
+  background-size:50% 50%;
+  background-position: center center;
+}
+.icon-bankerror{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background:url(../images/bank-error.png) no-repeat;
+  background-size:50% 50%;
+  background-position: center center;
+}
+.icon-bankIcon{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background:url(../images/bank-error.png) no-repeat;
+  background-size:39% 39%;
+  background-position: center center;
+}
+.icon-Info{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background:url(../images/info.png) no-repeat;
+  background-size:39% 39%;
+  background-position: center center;
+}
+.icon-pw1{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background:url(../images/password_hide.png) no-repeat;
+  background-size:39% 25%;
+  background-position: center center; 
+}
+.icon-pw2{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background:url(../images/password_show.png) no-repeat;
+  background-size:39% 25%;
+  background-position: center center; 
+}
+.yd-nowLoading{
+  display:block;
+  width:160px;
+  height:160px;
+  color:#FFF;
+  background:#000;
+  border-radius:5px;
+  opacity:0.9;
+  position:fixed;
+  left:50%;
+  margin-left:-80px;
+  top:35%;
+}
+.yd-loadingImg{
+  text-align:center;
+  padding-top:30px;
+}
+.yd-loadingIcon{
+  text-align:center;
+  margin-left:43px;
+  margin-top:21px;
+}
+.yd-loadingIconItem{
+  display:inline-block;
+  float:left;
+  width:10px;
+  height:10px;
+  background:#FFF;
+  border-radius:10px;
+  margin-left:10px;
+}
+/* 银行图标 */
+/* 中国银行 */
+.BOC { background-position: -3px -17px;}
+/* 中国农业银行 */
+.ABC { background-position: -3px -72px;}
+/* 交通银行 */
+.COMM { background-position: -3px -132px;}
+/* 东亚银行 */
+.HKBEA { background-position: -3px -187px;}
+/* 北京农商行 北京农村商业银行 */
+.BJRCB { background-position: -3px -245px;}
+/*北京银行*/
+.BCCB { background-position: -3px -301px;}
+/*渤海银行*/
+.CBHB { background-position: -3px -361px;}
+/*建设银行*/
+.CCB { background-position: -3px -417px;}
+/*光大银行*/
+.CEB { background-position: -3px -477px;}
+/*兴业银行*/
+.CIB { background-position: -3px -528px;}
+/*中信银行*/
+.CITIC { background-position: -3px -587px;}
+/*招商银行*/
+.CMB { background-position: -3px -645px;}
+/*民生银行*/
+.CMBC { background-position: -3px -703px;}
+/*浙商银行*/
+.CZB { background-position: -3px -758px;}
+/*广东发展银行 广发银行*/
+.GDB { background-position: -3px -817px;}
+/*广州市商业银行 广州市银行 广州银行*/
+ .GZCB { background-position: -3px -874px;}
+/*广州农商银行 暂不支持 930*/
+/*徽商银行*/
+.HSBANK { background-position: -3px -991px;}
+/*华夏银行*/
+.HXB { background-position: -3px -1047px;}
+/*杭州银行*/
+.HCCB { background-position: -3px -1105px;}
+/*中国工商银行*/
+.ICBC { background-position: -3px -1160px;}
+/* 江苏银行 暂不支持 1217*/
+/*宁波银行*/
+.NBCB { background-position: -3px -1277px;}
+/*南京银行*/
+.NJCB { background-position: -3px -1331px;}
+/*平安银行*/
+.SZPAB { background-position: -5px -1389px; width: 55px; height: 50px;}
+/*不是中国邮政？？？？？*/
+.POST { background-position: -3px -1447px;}
+/*中国邮储银行*/
+.PSBC { background-position: -3px -1447px;}
+/*深圳发展银行*/
+.SDB { background-position: -3px -1505px;}
+/*上海银行*/
+.BOS { background-position: -3px -1561px;}
+/*上海农村商业银行 上海农商银行*/
+.SHRCB { background-position: -3px -1618px;}
+/*浦东发展银行 浦发银行*/
+.SPDB { background-position: -3px -1673px;}
+/*广州市农信社 广州农村信用合作社 广州市农村信用合作社*/
+.GNXS { background-position: -3px -1732px;}
+/*恒丰银行*/
+.EGBANK { background-position: -3px -1789px;}
+/*温州市商业银行 温州银行*/
+.WZCB { background-position: -3px -1847px;}
+/*汉口银行*/
+.HKBCHINA { background-position: -3px -1902px;}
+/*长沙银行*/
+.CSCB { background-position: -3px -1962px;}
+/*摩根大通银行*/
+.JPM { background-position: -3px -2017px;}
+/*浙江稠州商业银行*/
+.CZCB { background-position: -3px -2075px;}
+/*深圳农村商业银行*/
+.SNXS { background-position: -3px -2133px;}
+/* 浙江农信（丰收卡） 暂不支持 2189*/
+/*新韩银行*/
+.SHFG { background-position: -3px -2246px;}
+/*晋城市商业银行 晋城银行*/
+.SXJS { background-position: -3px -2205px;}
+/*渣打银行*/
+.SCB { background-position: -3px -2361px;}
+/*德意志银行*/
+.DBBJ { background-position: -3px -2418px;}
+/*花旗银行*/
+.CITIB { background-position: -3px -2477px;}
+/*香港上海汇丰银行*/
+.HSBC { background-position: -3px -2535px;}
+/*重庆三峡银行*/
+.CCQTGB { background-position: -3px -2588px;}
+/*湖南农信社 湖南农村信用合作社 湖南省农村信用社*/
+.HNNXS { background-position: -3px -2647px;}
+/*银联在线支付 中国银联*/
+.UPOP { background-position: -3px -2705px;}
+/*成都银行*/
+.CDCB { background-position: -3px -2818px;}
+
+
+
+/* 下面的没图 */
+/*
+URCB 农村合作银行
+RCC  农村信用合作社
+ZHNX 珠海市农村信用合作社
+YDXH 尧都信用合作联社
+CYB  集友银行
+其他不知道
+*/
+.bankcard-list .URCB,
+.bankcard-list .SDE,
+.bankcard-list .RCC,
+.bankcard-list .ZHNX,
+.bankcard-list .YDXH,
+.bankcard-list .CYB,
+.bankcard-list .HSB,
+.bankcard-list .HZB,
+.bankcard-list .JSBC {
+  background-position: -10px -2027px;
+}
+
+.animaFlash1{
+-webkit-animation:flash .5s .2s ease both;
+-moz-animation:flash 1s .2s ease both; animation-iteration-count: infinite;}
+
+.animaFlash2{
+-webkit-animation:flash .5s .2s ease both;
+-moz-animation:flash 1s .2s ease both; animation-iteration-count: infinite;}
+.animaFlash3{
+-webkit-animation:flash .5s .2s ease both;
+-moz-animation:flash 1s .2s ease both;animation-iteration-count: infinite;}
+@-webkit-keyframes flash{
+0%{opacity: 0.3;}
+100%{opacity: 1;}
+}
+@-moz-keyframes flash{
+0%{opacity: 0.3;}
+100%{opacity: 1;}
+}
+.fadeInanimation{
+-webkit-animation:fadeInUp2 .5s .2s ease both;
+-moz-animation:fadeInUp2 .5s .2s ease both;}
+@-webkit-keyframes fadeInUp2{
+0%{opacity:0.1;
+-webkit-transform:translateY(20px)}
+100%{opacity:1;
+-webkit-transform:translateY(0)}
+}
+@-moz-keyframes fadeInUp2{
+0%{opacity:0.1;
+-moz-transform:translateY(20px)}
+100%{opacity:1;
+-moz-transform:translateY(0)}
+}
+
+.upInAnimation{
+-webkit-animation:upIn .5s .2s ease both;
+-moz-animation:upIn .5s .2s ease both;}
+@-webkit-keyframes upIn{
+0%{opacity:0;
+-webkit-transform:translateY(1000px)}
+100%{opacity:1;
+-webkit-transform:translateY(0)}
+}
+@-moz-keyframes upIn{
+0%{opacity:0;
+-moz-transform:translateY(1000px)}
+100%{opacity:1;
+-moz-transform:translateY(0)}
+}

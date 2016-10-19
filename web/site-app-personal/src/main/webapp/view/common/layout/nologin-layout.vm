@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>#if($page_title) $page_title #else 永达互联网金融钱包 #end</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/wallet.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/wallet_online.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/skins/jiaDialog.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/online.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/security.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+
+    <!--[if lt IE 9]>
+      <script src="${WEB_RESOURCE.staticAddress}wallet/js/html5shiv.js${WEB_RESOURCE.staticVersion}"></script>
+    <![endif]-->
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/jquery.min.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/jquery.artDialog.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/jquery.validate.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/form_validate.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/comment.js${WEB_RESOURCE.staticVersion}"></script>
+    <style>
+        .safe_plugin{ display:none; position:relative; width:540px; height:250px;}
+        .safe_plugin .safe_tit{ margin:10px 10px 20px 10px; padding-bottom:15px; font-family:"微软雅黑";  color:#333; font-size:18px; text-align:center; border-bottom:3px solid #ddd;}
+        .safe_plugin p.p_txt{ padding-top:10px; text-align:center; font-size:14px;}
+        .safe_plugin p.pd_top{ padding-top:40px;}
+    </style>
+</head>
+<body>
+	<div class="container">
+		#parse("/common/control/header-nologin.vm")
+
+		$screen_content
+
+    </div>
+    <script src="${WEB_RESOURCE.staticAddress}wallet/js/validate.js${WEB_RESOURCE.staticVersion}"></script>
+
+</body>
+</html>

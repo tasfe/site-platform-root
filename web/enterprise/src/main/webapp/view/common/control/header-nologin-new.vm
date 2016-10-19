@@ -1,0 +1,71 @@
+<style type="text/css">
+    body, button, input, select, textarea { font: 12px/1.5 "微软雅黑",arial,tahoma;}
+    #header{ width:100%; height:32px; background:#fff; border-bottom: 1px solid #ebebeb;}
+    #header .wrap{ height:32px; background:#fff;}
+    #header .top { height: 32px; line-height: 32px; color: #999; text-align: right; padding-right: 10px;}
+    #header .top .s, #footer .link_us .s, .index-last-record .link .s { padding: 0 5px;}
+    .a9:link, .a9:visited { color: #999;}
+    .a9:hover { color: #3c98e6;}
+    #nav_con { height: 59px; background-color: #fff;}
+    #logo { height:48px; margin:5px 0 0 5px;}
+    #logo .logo_merchant { height:48px;}
+    #nav_con ul { width: auto; height: 59px; background-color: #fff;}
+    #nav_con ul li.hoverli{ float:left; height:56px; position:inherit; margin: 0 12px;}
+    #nav_con ul li a.hovera{ display:inline-block;  height:56px; padding:0 4px; font-size:16px; color:#666; font-family: 微软雅黑; font-weight: normal; line-height: 56px;}
+    #nav_con ul li.cur { border-bottom: 3px solid #42a8ff; background:none;}
+    #nav_con ul li.cur a.hovera { color: #42a8ff;}
+    #nav_con li.cur .subnav { position:absolute; width: 1000px; left: 50%; margin-left: -500px; top:92px; z-index:6;}
+    #nav_con ul li .subnav .cur { border-bottom: none;}
+    #nav_con li.cur .subnav li a { font-size: 14px; font-family: 微软雅黑; color:#666; padding:0 10px; display:inline-block; margin-top:7px; height:22px; line-height:22px; background:none; border-radius:0; }
+    #nav_con li.cur .subnav li.cur, #nav_con li.cur .subnav li.addbg{ border-bottom: none; background: none;}
+    #nav_con li.cur .subnav li.cur a,#nav_con li.cur .subnav li:hover a{ color:#42a8ff; padding:0 10px; background: none;}
+    #nav_con_2 { width:100%; height:37px; background:#f6f6f6; border-top: 1px solid #eaeaea;}
+    #nav_con_2 .wrap { height: 37px; background-color: #f6f6f6;}
+
+    /* 上面和登录后的头部样式一样 */
+    #header_i { height: 58px;}
+    #header_i .wrap { height: 58px;}
+    #header_i #logo { margin-top: 5px;}
+    #header_i #logo .logo_mp {margin:0;}
+    #nav li a.hovera { line-height: 55px;}
+    #nav li a.hovera i { margin: 27px 5px 0 7px;}
+    #nav li .subnav { top: 58px;}
+</style>
+<!--头部-->
+<div id="header" >
+    <div class="wrap">
+        <div class="top clearfix">
+            <a class="a9" href="${request.contextPath}/register/register-index.htm">注册</a> <span class="s">|</span> <a href="#springUrl('/customservice/index.htm')" class="a9">客服中心</a> <span class="s">|</span> 客服热线：<span class="dh">0571-28276085</span>
+        </div>
+    </div>
+</div>
+
+<div id="header_i" class="no_bb">
+    <div class="wrap">
+        <h2 id="logo"><a href="#springUrl('/my/home.htm?link=0101')"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo.png" alt="永达商户钱包"></a><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo_merchant.png" alt="商户专业版" class="logo_mp"></h2>
+        <ul id="nav">
+            <li class="hoverli first"><a href="${request.contextPath}/index.htm?link=0100" class="hovera">首页</a></li>
+            <li class="hoverli"  data-list="1">
+                <a href="#springUrl('/static/wyzf.htm?link=0300')" class="hovera"><i></i>应用产品</a>
+                <div class="subnav">
+                	<dl>
+                    	<dt>收款服务</dt>
+                        <dd><a href="#springUrl('/static/jsdz.htm?link=0300')">即时到账</a></dd>
+                        <dd><a href="#springUrl('/static/wyzf.htm?link=0300')">网银支付</a></dd>
+                    </dl>
+                    <dl>
+                    	<dt>付款服务</dt>
+                        <dd><a href="#springUrl('/static/plzz.htm?link=0300')">批量转账</a></dd>
+                    </dl>
+                    <dl>
+                    	<dt>增值服务</dt>
+                        <dd><a href="javascript:;">POS收单</a></dd>
+                    </dl>
+                </div>
+            </li>
+            <li class="hoverli last">
+                <a href="#springUrl('/help/helpcenter.htm?link=0400')" class="hovera" target="_blank">帮助中心</a>
+            </li>
+        </ul>
+    </div>
+</div>

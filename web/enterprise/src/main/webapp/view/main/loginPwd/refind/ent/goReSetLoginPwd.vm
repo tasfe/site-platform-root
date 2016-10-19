@@ -1,0 +1,111 @@
+<div class="wrapbg">
+<div class="wrap">
+
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">找回登录密码</span>
+		</div>
+	</div>
+
+     <div class="safetyMain">
+     	 <style>
+			.loginList{ margin-left:110px;}
+			</style>
+         <div class="loginList">
+               <form id="reset-loginpwd-form" name="reset-loginpwd-form" class="" action="${request.contextPath}/my/refind/loginPwd/ent/reSetLoginPwd.htm" method="POST">
+               <div class="login_limit" id="pwdiv_login_pw">
+                   <label><span class="f14 limitLeft">输入新登录密码：</span>
+                     <div class="pwdiv fl"><input name="login_pw" type="hidden" id="login_pw" data-type="11" /></div>
+                     <div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外</em>
+                   </label>
+                   <div class="mainTips ml160 error clear"></div>
+               </div>
+               
+               <div class="login_limit" id="pwdiv_login_pw2">
+                   <label><span class="f14 limitLeft">重新输入登录密码：</span>
+                     <div class="pwdiv fl"><input name="reLoginPwd" type="hidden" id="reLoginPwd" data-type="11" /></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外</em>
+                   </label>
+                   <div class="mainTips ml160 error clear">$!errorMsg</div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确 认"></div>
+               </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+</div>
+<script>
+	$(function(){
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$("#pwdiv_login_pw .pwdiv").append(pgeditor.load());
+		pgeditor.pgInitialize();
+
+		var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$("#pwdiv_login_pw2 .pwdiv").append(pgeditor1.load());
+		pgeditor1.pgInitialize();
+		
+		window.setInterval(function(){checkPwStrongPG(pgeditor, $('#pwdiv_login_pw').find('.error'), $('#pwdiv_login_pw').find('.gradeIcon'), $('#pwdiv_login_pw').find('.gradeText'));},1000); //实时显示密码强度
+		/*
+		$("#loginPwd").blur(function(){
+			checkPW($(this), $(this).parent().parent().find(".error"));
+		});
+		
+		$("#loginPwd").keyup(function(e){
+			checkPwStrong($(this), $(this).parent().parent().find(".error"), $(this).parent().parent().find(".gradeIcon"), $(this).parent().parent().find(".gradeText"));
+		});
+		
+		$("#reLoginPwd").blur(function(){
+			checkPW2($("#loginPwd"), $(this), $(this).parent().parent().find(".error"));
+		});
+		*/
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+			/*
+			var flag = checkPW($("#loginPwd"), $("#loginPwd").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			flag = checkPW2($("#loginPwd"), $("#reLoginPwd"), $("#reLoginPwd").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			*/
+
+			var jsonSubmit = {
+				jBtnSubmit:btn_submit,
+				cssClass:"btn_disabled",
+				urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+			};
+			var pgeditors = [
+				{
+					jPwInput:pgeditor,
+					jInput:$("#login_pw"),
+					jTip:$("#pwdiv_login_pw").find(".error"),
+					txtEmpty:"请输入新的登录密码！",
+					txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外"
+				},
+				{
+					jPwInput:pgeditor1,
+					jInput:$("#reLoginPwd"),
+					jTip:$("#pwdiv_login_pw2").find(".error"),
+					txtEmpty:"请输入新的登录密码！",
+					numCompareEqual:0,
+					txtCompareEqual:"您输入的两次登录密码不一致，请重新输入！"
+				}
+			];
+			checkPgeditor({
+				jsonSubmit:jsonSubmit,
+				pgeditors:pgeditors,
+				callback:function(){
+					$("form").submit();
+				}
+			});
+		});
+	})
+</script>

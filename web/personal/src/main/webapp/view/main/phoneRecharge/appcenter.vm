@@ -1,0 +1,45 @@
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+      </div>
+    <div class="pagebox0nb">
+    	<div class="app_cont_l">
+        	<h3 class="h3"><a>应用中心</a></h3>
+            <ul class="app_nav">
+            	##<li>
+                ##<a href="#" class="cur"><img src="../common/images/app/app1-s.gif">AA收款</a>
+                ##</li>
+                <li>
+                <a href="#"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app2-s.gif">手机充值</a>
+                </li>
+                ##<li>
+                ##<a href="#"><img src="../common/images/app/app3-s.gif">信用卡还款</a>
+                ##</li>
+            </ul>
+        </div>
+        <div class="app_cont_r">
+        	<ul class="app_list">
+            	##<li>
+                ##<img src="../common/images/app/app1-b.gif">
+                ##<p class="jbinfo"><span class="tit">AA收款</span><span class="int">轻松收款 简单快捷</span></p>
+                ##<p class="des">没有永达互联网金融帐号，也可以付款，一个链接就可轻松收款。</p>
+                ##<a href="#" class="msfq">马上发起AA收款</a>
+                ##</li>
+                <li>
+                <img src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app2-b.gif">
+                <p class="jbinfo"><span class="tit">话费充值</span><span class="int">三步缴费 快捷方便</span></p>
+                <p class="des">三大运营商，一个平台轻松搞定您的话费充值！</p>
+                <a href="#springUrl('/my/phoneRecharge.htm')" class="msfq">立即充值</a>
+                </li>
+                ##<li>
+                ##<img src="../common/images/app/app3-b.gif">
+                ##<p class="jbinfo"><span class="tit">信用卡还贷</span><span class="int">轻松收款 简单快捷</span></p>
+                ##<p class="des">没有永达互联网金融帐号，也可以付款，一个链接就可轻松收款。</p>
+                ##<a href="#" class="msfq">马上发起AA收款</a>
+               ## </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

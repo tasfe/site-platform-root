@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>快捷盾</h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               
+                           <div class="tx_step step step_3" style="margin-left:80px; padding-bottom:10px;"><i></i><span class="s1">验证身份</span><span class="s2">下载激活</span><span class="s3">激活成功</span></div>
+               
+               
+               <div class="usbKeyCenter" style="margin:0 0 20px 425px; padding-top:30px;">
+                    <div class="loginTipsBox">
+                           <i class="tipsIcon succeed"></i>
+                           <p class="f16 bold mb10">您的快捷盾已激活成功!</p>
+                           <p>您的永达互联网金融账号已得到快捷盾的保护</p>
+                    </div>
+               </div>
+               <p style="text-align:center;">您现在可以：<a class="mr16" href="#springUrl('/hardcertActivate/showHardDetails.htm')">管理快捷盾</a><a href="#springUrl('/my/accountManage.htm')">安全中心</a></p>
+               <div class="usbKeyFaq">
+                    <h4>快捷盾问题：</h4>
+                    <dl>
+                        <dt>激活后快捷盾的有效期是多久？</dt>
+                        <dd>答：激活后默认快捷盾的有效期为1年，快捷盾失效后需要重新激活。</dd>
+                    </dl>
+					<dl>
+                        <dt>如何更新快捷盾？</dt>
+                        <dd>答：快捷盾需要一年更新一次，系统会在过期前30天在页面通知更新快捷盾，超过更新时间也会在收银台和永达互联网金融操作页面提示更新。</dd>
+                    </dl>
+					<dl>
+                        <dt>原账户不用了，那我的快捷盾可以绑定到新的账户上吗？</dt>
+                        <dd>答：目前不可以。鉴于一个快捷盾绑定一个账户，所以无法用于其它账户。您新的账户需要重新购买申请快捷盾。</dd>
+                    </dl>
+                    <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>s
+                </div>
+
+          </div>
+      
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+
+
+
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script> 
+</body>
+</html>

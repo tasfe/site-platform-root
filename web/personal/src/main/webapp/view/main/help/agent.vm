@@ -1,0 +1,10 @@
+<script type="text/javascript">
+//得到a.html中的a_iframe
+var a_iframe = parent.parent.document.getElementById("helpfaq_iframe");
+//<SPAN>location.hash用来获取页面的标签值</SPAN>，这个值通过b.html中的js函数改变。包括height属性
+var hash_url = window.location.hash;
+//得到b.html传递过来的height属性
+var hash_height = hash_url.split("#")[1]+"px";
+//调整a_iframe的height，达到自适应
+a_iframe.height = hash_height;
+</script> 

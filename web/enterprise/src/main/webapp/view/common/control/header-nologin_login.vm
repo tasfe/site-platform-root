@@ -1,0 +1,6 @@
+
+<div class="login-header">
+    <div class="logo_nav">
+        <h1 class="logo"><a href="#"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/image/logo-login-ex.png"></a></h1>
+    </div>
+</div>

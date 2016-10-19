@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.fos:fos-service-facade:1.0.3-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/fos/fos-service-facade/1.0.3-SNAPSHOT/fos-service-facade-1.0.3-20160330.054344-2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/fos/fos-service-facade/1.0.3-SNAPSHOT/fos-service-facade-1.0.3-20160330.054344-2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/fos/fos-service-facade/1.0.3-SNAPSHOT/fos-service-facade-1.0.3-20160330.054344-2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

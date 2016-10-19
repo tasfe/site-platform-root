@@ -1,0 +1,46 @@
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">手机绑定修改</span>
+        </div>
+    </div>
+     #if($!response.data.useType == "usePhone") 
+     <div class="safetyTab"><a href="#" class="tabOne fl cur">原手机号码可用</a><a href="#" class="tabTwo fl">原手机号码不可用</a></div>
+     #else
+	 <div class="safetyTab"><a href="#" class="tabOne fl">原手机号码可用</a><a href="#" class="tabTwo fl cur">原手机号码不可用</a></div>
+	 #end
+	<div class="safetyMain">
+         #if($!response.success) 
+         <div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">恭喜您，您的手机号码$!response.data.mobile已成功修改！</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至<a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')">安全中心</a></p>
+              </div>
+              
+         </div>  
+         #else
+		<div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+				   #if($!response.message)
+				   <p class="f16 bold mb10">$!response.message</p>
+				   #else
+                   <p class="f16 bold mb10">对不起!您的手机修改失败!</p>
+				   #end
+                   <p><em class="red time_left">3</em>秒后会自动跳转至<a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')">安全中心</a></p>
+              </div>
+         </div> 
+		 #end
+     </div>
+</div>
+</div>
+<script>
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:3, url:"#springUrl('/securityCenter/safetyIndex.htm?link=0500')"});
+})
+</script>

@@ -1,0 +1,165 @@
+<div class="wrapbg">
+<div class="wrap">
+
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">永达盾</span>
+		</div>
+	</div>
+     
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               
+          <div class="activateTit pos_rel">
+          
+              <ul>
+                   <li><span class="bold f16">永达盾</span><span class="ml30 color_f6">（<em class="bold">68</em>元）</span></li>
+                   <li class="mt5">申请后账户安全等级为：<span class="spBar"><span style="width:125px;"></span></span><span class="f14 ml10">高</span></li>
+              </ul>
+              
+              <span class="imgAct"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/shieldImg.gif" alt=""></span>
+          
+          </div>  
+                
+          <div class="usbConBox clearfix" style="padding:25px; width:870px;">
+          
+               <p class="bold">激活永达盾后，只有在插入永达盾的情况下，才能进行转账、提现、审核等涉及资金变动的操作。</p>
+               <p class="mt20 l_h20" style="color:#858689;">支持的操作系统：Windows XP/Windows 7/Windows 8/ Windows 10/Windows Vista<br>支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等</p>
+               
+               <ul class="actList2">
+                   <li><input class="saBtn_ck" type="button" value="" id="saBtn_ck">查看永达盾详情。</li>
+                   <li><input class="saBtn_jb" type="button" value="" id="saBtn_jb">解绑后在进行资金操作时将不受到硬证书的安全保护，建议解绑后尽快重新绑定。</li>
+                   <li><span id="errorMsg" class="error"></span></li>
+                   <li><span class="b">注销：请联系客服</span> 注销后您的硬证书将永久不可使用，建议您及时申请新的永达盾保护帐号安全。</li>
+                   <li><span class="b">挂失：请联系客服</span> 挂失后,您的帐号安全将不再受到永达盾的保护,如挂失时间超过15天,永达盾将会自动注销。</li>
+                   <li><span class="b">解绑：请联系客服</span> 解除挂失后，您的帐号安全将受到原有永达盾的保护。</li>
+				   <li><span id="needUpdataKjd" class="error" style="display:none"><span></span><a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</span></li>
+				   
+				</ul>
+          	   <!-- 
+          	   <ul class="actList">
+                   <li style="color:#595757;"><input type="button" class="btn_jhszzs"><input class="saBtn_szzs" type="button" value="">若还没有永达盾，<a href="#">点击申请</a></li>
+                   <li><p class="actCon_tips">支付盾暂不支持您当前的浏览器[？]</p></li>
+                   <li><p class="actCon_tips">请先安装永达盾驱动，再进行激活</p></li>
+               </ul>
+          	   -->
+          </div>
+          
+          <div class="usbKeyFaq" style="padding:30px 70px 50px">
+                    <h4>永达盾问题：</h4>
+                    <dl>
+                        <dt>什么是永达盾？</dt>
+                        <dd>答：永达盾是我司推出的安全产品，是为了更好的保障用户的账户资金安全，防止用户账户和资金被盗。</dd>
+                    </dl>
+                    <dl>
+                        <dt>申请购买永达盾需要提供什么信息？</dt>
+                        <dd>答：申请时除需要支付永达盾的费用外，无需提供额外的信息</dd>
+                    </dl>
+                    <dl>
+                        <dt>永达盾可以申请多个吗？</dt>
+                        <dd>答：可以，一个操作员即申请一个永达盾，假如您有3个操作员账号，您就可以申请3个永达盾。</dd>
+                    </dl>
+                    <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+            </div>
+            <input type="hidden" name="certificationType"  id="certificationType" value="hard"/>
+          	<input type="hidden" name="certificationStatus"  id="certificationStatus" value="ACTIVATE"/>
+			<input type="hidden" name="certSn"  id="certSn" value="$!{certSn}"/>
+     </div>
+     </div>
+</div>
+</div>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+
+
+<script>
+var cert = null;
+var pkcsInfo = null;
+var csr = null;
+var origCert = null;
+var certSn = null;
+var older = null;
+
+$(function(){
+	// 查询出所有
+	checkHardCert("#springUrl('/certActive/getCertSns.htm')",'hard', 'ACTIVATED', function(result) {
+		if (result && result.status) {
+			if (result.status == 4) {
+				// 硬证书已经过期
+				cert = result.cert;
+				certSnsNo = result.certSnsNo;
+    			
+    			
+				document.getElementById("saBtn_jb").disabled = true;
+				document.getElementById("saBtn_ck").disabled = true;
+				
+				// 已经过期显示，即将过去隐藏，解绑按钮置灰.查询按钮置灰
+				//已过去证书由于需要初始化key，暂时不做更新，只做文案提示
+				$('#needUpdataKjd').show().text("您的永达盾证书已过期");
+				$("#updata").attr("href", "#").hide();
+				
+				return;
+			} else if (result.status == 3) {
+				// 硬证书即将过期
+				cert = result.cert;
+				certSnsNo = result.certSnsNo;
+				//csr = result.csr;
+				//旧证书对CSR签名
+				oldcsr = result.csr;
+				pkcsInfo = signCSR(cert, oldcsr);
+				origCert = cert.GetEncodedCert(2)
+				certSn = result.certSn;
+				var provider = "ExcelSecu CSP for TWCX V5.0";
+				csr = genRenewCSR(provider, 1, 2048, cert, "Y");
+    			// 已经过期隐藏，即将过去显示，解绑按钮置灰
+    			$('#needUpdataKjd').show().find("span").text("您的永达盾证书即将过期");
+				$('#needUpdataKjd').find("#updata").attr("href", "#springUrl('/certRenew/gotoUpdateDun.htm')");
+				document.getElementById("saBtn_jb").disabled = false;
+				document.getElementById("saBtn_ck").disabled = false;
+				return;
+			} else if (result.status == 1) {
+				//没有插入永达盾
+				cert = result.cert;
+				certSnsNo = result.certSnsNo;
+				csr = result.csr;
+    			// 已经过期隐藏，即将过去隐藏，解绑按钮置灰
+				$('#needUpdataKjd').remove();
+				document.getElementById("saBtn_jb").disabled = false;
+				//$('#errorMsg').text('请插入您的永达盾！');
+				return;
+			} else if (result.status == 0) {
+				//证书可用
+				cert = result.cert;
+				certSnsNo = result.certSnsNo;
+				csr = result.csr;
+				// 已经过期隐藏，即将过去隐藏，解绑按钮可用
+				$('#needUpdataKjd').remove();
+				document.getElementById("saBtn_jb").disabled = false;
+				document.getElementById("saBtn_ck").disabled = false;
+				return;
+			}
+		} else {
+			// 隐藏点击更新，解绑按钮置灰
+			$('#needUpdataKjd').remove();
+			document.getElementById("saBtn_jb").disabled = true;
+			return;
+		}
+	});	
+	
+	$(".saBtn_ck").click(function(){
+		showWin('iframe', '${request.contextPath}/certDetail/showCertDetail.htm?certSn=$!{certSn}', '', 720, 314, '永达盾详情', '', '');
+	})
+	$(".saBtn_jb").click(function(){	
+		window.location.href="${request.contextPath}/certUnbind/step1.htm?certSn=$!{certSn}";
+	})
+	
+	
+})
+</script>
+

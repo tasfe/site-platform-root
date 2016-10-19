@@ -1,0 +1,73 @@
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">企业服务</span>
+        </div>
+    </div>
+    <div class="pagebox" style=" padding-bottom:55px;">
+    	<h3 class="newserviceh3">收款服务</h3>
+        
+        <ul class="newservicelist">
+        		<li>
+                    <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-1.gif">
+                    <p><b>网银支付</b><br><span class="color_b3">网银支付，买家支付更安全。</span></p>
+                    <a href="#springUrl('/static/wyzf.htm')">详情 >></a>
+                </li>
+                <li>
+                	<img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-4.gif">
+                	<p><b>即时到账</b><br><span class="color_b3">买家付款即刻到账，无需等待。</span></p>
+					<a href="#springUrl('/static/jsdz.htm')">详情 >></a>
+                
+                </li>
+        </ul>
+
+        <h3 class="newserviceh3">出款服务</h3>
+        
+        <ul class="newservicelist">
+        	 ##	<li>
+             ##       <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-10.gif">
+             ##       <p><b>转账</b><br><span class="color_b3">无需到银行排队，轻松搞定转账。</span></p>
+             ##       <a href="#">详情 >></a>
+             ##   </li>
+                <li>
+                	<img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-3.gif">
+                	<p><b>批量转账</b><br><span class="color_b3">批量转账，一次可以给多个账户同时转账。</span></p>
+					<a href="#springUrl('/static/plzz.htm')">详情 >></a>
+                </li>
+        </ul>
+        <h3 class="newserviceh3">增值服务</h3>
+        
+        <ul class="newservicelist">
+		<!--
+			<li>
+                    <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-7.gif">
+                    <p><b>代发工资</b><br><span class="color_b3">给员工发工资、发绩效，方便快捷</span></p>
+                    <a href="#springUrl('/static/dfgz.htm')">详情 >></a>
+              </li>
+			-->
+          ##      <li>
+          ##       	<img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-11.gif">
+          ##      	<p><b>委托提现</b><br><span class="color_b3">批量转账，一次可以给多个账户同时转账。</span></p>
+		  ##		<a href="#">详情 >></a>
+          ##     </li>
+                
+            </ul>
+
+    </div>
+    
+    
+  
+</div>
+</div>
+<script>
+$(function(){
+	$(".newservicelist li").hover(function(){
+		$(this).addClass("hover")
+		
+	},function(){
+		$(this).removeClass("hover")
+	})
+})
+</script>

@@ -1,0 +1,335 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/account.css" rel="stylesheet" type="text/css">
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+	<div class="page_title">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">退款申请</span>
+		</div>
+	</div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>订单信息</h3>
+    </div>
+	#set($info =$baseInfoList)
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">交易订单号 </td>
+          <td class="tab_w2">$!{info.tradeVoucherNo}<br></td>
+		<tr/>
+		<tr class="cl">
+          <td  class="tab_w">商户订单号</td>
+          <td  class="Detail_tab_no tab_w2">$!{info.serialNumber}</td>
+        </tr>
+        <tr >
+          <td>创建时间</td>
+          <td >$!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>
+		<tr/>
+		<tr class="cl">
+          <td >交易类型</td>
+          <td class="Detail_tab_no">担保收单交易</td>
+        </tr>
+        <tr>
+          <td>交易金额（元）</td>
+          <td id="Detail_tabamount">$moneyUtil.getAmount($!info.payAmount)</td>
+		  <tr/>
+		  <tr class="cl">
+          <td>手续费（元）</td>
+          <td class="Detail_tab_no" >$!{moneyUtil.getAmount($!info.payeeFee)}</td>
+        </tr>
+        <tr >
+          <td>实际金额（元）</td>
+          <td >$moneyUtil.getAmount($!info.orderMoney)</td>
+          <input type="hidden" name="Amount" id="Amount" value="$moneyUtil.getAmount($!info.orderMoney)">
+		<tr/>
+		<tr class="cl">
+          <td class="cl">支付时间</td>
+          <td class="cl Detail_tab_no">$!dateUtil.getNewFormatDateString(${info.gmtpaid})</td>
+        </tr>
+        
+        #if(${info.orderState} == "100")
+           #set($tradeStatus="待支付")##待支付
+        #elseif(${info.orderState} == "201"||${info.orderState} == "301")
+           #set($tradeStatus="支付成功")##   付款成功=支付成功    交易成功视为支付成功
+        #elseif(${info.orderState} == "999"||${info.orderState} == "998")
+           #set($tradeStatus="交易失败")##  交易失败
+        #elseif($info.orderState == "401")
+           #set($tradeStatus="结算成功")##交易结束视为==结算成功
+        #end
+        
+        <tr >
+          <td>状态</td>
+          <td>$!{tradeStatus}</td>
+		<tr/>
+		<tr class="cl">
+          <td class="cl">可退金额</td>
+          <td class="cl Detail_tab_no">$moneyUtil.getAmount($maxRefundMoney)</td>
+        </tr>
+      </table>
+    </div>
+    <form class="from1" id="withdrawForm" name="withdrawForm" action="${request.contextPath}/my/pos/RefundApplyPay.htm" method="post">
+		<input type="hidden" name="maxmoney" id="maxmoney" value="$maxRefundMoney">
+		<input type="hidden" name="noRefundMoney" id="noRefundMoney" value="$noRefundMoney">
+		<input type="hidden" name="refundFee" id="refundFee" >
+        <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:0" class="sqinfo tab1">
+	        <tr>
+	            <td width="450" class="f12" style="text-align:right;">退款金额：</td>
+	            <td width="80" class="f12">
+	            <label><input name="full" type="radio" value="1" checked class="tk_radio">全额退款</label>
+	            </td>
+	            <td width="80" class="f12">
+	            <label><input name="full" type="radio" value="2" class="tk_radio" id="tk_radio_part">部分退款</label>
+	            </td>
+				<input type="hidden" name="refundAmount" id="refundAmount" >
+	            <td class="f12">
+	            <input type="text" class="inputtext w177 money2" id="tk_money" name="tk_money" style="visibility:hidden" maxlength="13">
+	            </td>
+	        </tr>
+	        <tr id="sxf_1">
+	            <td class="f12" style="text-align:right;">退回手续费：</td>
+	            <td class="f12" colspan="3" id="sxf_1_td">$!{moneyUtil.getAmount($!info.payeeFee)}</td>
+	        </tr>
+			<tr>
+				<td class="f12" style="text-align:right;">备注：</td>
+	            <td class="f12" colspan="3"><input type="text" class="inputtext w177 " id="remarks"  name="remarks"/></td>
+			</tr>
+	        <tr id="error1">
+	        	<td class="ptb0"></td>
+	            <td class="error ptb0" colspan="3"></td>
+	        </tr>
+			<tr id="error2">
+	        	<td class="ptb0"></td>
+	            <td class="error ptb0" colspan="3"></td>
+	        </tr>
+	        <tr>
+	            <td colspan="4" style="text-align:center"><input type="button" value="确 定" class="btn J_btn_qd btn_submit" ></td>
+	        </tr>
+        </table>
+    </form>
+	<br>
+  </div>
+</div>
+</div>
+<script>
+$(function(){
+		var valu=parseFloat($("#tk_money").val().replace(" ","")) ;
+		
+		var Detail_tabamount=parseFloat($("#Detail_tabamount").text());
+		
+	
+		var maxmonet=$("#maxmoney").val()
+		
+		$(".tk_radio").eq(0).attr("checked","checked")
+		$("#tk_money").val("");
+        if($(".tk_radio").eq(0).is(":checked")){
+        	 $("#tk_money").css("visibility","hidden");
+			 $("#sxf_1").show();
+			 $("#sxf_2").hide();
+			 $("#error1").show();
+			 $("#error2").hide();
+			 $("#refundFee").val($("#sxf_1_td").text("0.00"));
+			 if(maxmonet<=0){
+				$("#error1 .error").text("无可退金额").show();
+				$(".J_btn_qd").remove();
+			}
+			 $.ajax({
+				url:"${request.contextPath}/my/getFee.htm?feeAmount="+maxmonet,
+				async: false,
+				cashe:false,
+				success: function(response){
+					$(".error").text("");
+					if(response.success) {
+						$("#sxf_1_td").text(response.data.fee);
+                		$("#refundFee").val(response.data.fee);
+					}
+					else{ $(".error").text(G.sysError);  return false;}
+                },
+				error:function(response){
+					$(".error").text(G.sysError); return false;
+                }
+			});
+		 
+        }else if($(".tk_radio").eq(1).is(":checked")){
+        	$("#tk_money").css("visibility","visible");
+			 $("#sxf_1").hide();
+			 $("#sxf_2").show();
+			 $("#error1").hide();
+			 $("#error2").show();
+			if($("#tk_money").val()==""||$("#tk_money").val()=="0"){
+    			$("#sxf_2_td").text("");
+    		}else{
+				$.ajax({
+    				url:"${request.contextPath}/my/getFee.htm?feeAmount="+$("#tk_money").val(),
+    				async: false,
+    				cashe:false,
+    				success: function(response){
+    				
+    					if(response.success) {
+							$("#error2 .error").text("")
+    						$("#sxf_2_td").text(response.data.fee);
+                    		$("#refundFee").val(response.data.fee);
+    					}
+    					else{ $("#error2 .error").text(G.sysError); return false;}
+                    },
+    				error:function(response){
+    					$("#error2 .error").text(G.sysError); return false;
+                    }
+    			});
+			}
+			  
+        }
+
+	
+	$(".tk_radio").each(function(index, element) {
+        var thisobj = $(this);
+		thisobj.click(function(){
+			if(index == 0) { $("#tk_money").css("visibility","hidden"); $("#sxf_1").show(); $("#sxf_2").hide(); $("#refundFee").val($("#sxf_1_td").text());}
+			if(index == 1) { $("#tk_money").css("visibility","visible"); $("#sxf_1").hide(); $("#sxf_2").show(); $("#refundFee").val($("#sxf_2_td").text());}
+		});
+    });
+	
+	
+	
+	var tk_money_max = $("#Amount").val();
+	
+	$(".tk_radio").click(function(){
+		var attr=$(this).attr("checked");
+		var v="";
+		if(attr){
+			var value=$(this).val();
+			if(value=="1"){
+				$("#error1").show();
+				$("#error2").hide();
+				if(maxmonet==""|| maxmonet=="0"){
+        			$("#sxf_1_td").text("0.00");
+        		}else{
+					v=maxmonet;
+				}
+    			
+    		}else{
+				$("#error1").hide();
+				$("#error2").show();
+				if($("#tk_money").val()==""||$("#tk_money").val()=="0"){
+        			$("#sxf_2_td").text("0.00");
+        		}else{
+					v=$("#tk_money").val();	
+				}
+				
+    		}
+			if(v!=""){
+    			$.ajax({
+    				url:"${request.contextPath}/my/getFee.htm?feeAmount="+v,
+    				async: false,
+    				cashe:false,
+    				success: function(response){
+    				
+    					if(response.success) {
+    						$(".error").text("");
+    						if(v==maxmonet){
+                    			$("#sxf_1_td").text(response.data.fee);
+                    		}else{
+                    			$("#sxf_2_td").text(response.data.fee);
+                    		}
+                    		$("#refundFee").val(response.data.fee);
+    					}
+    					else{ $(".error").text(G.sysError);return false;}
+                    },
+    				error:function(response){
+    					$(".error").text(G.sysError);return false; 
+                    }
+    			});
+			}
+		}
+
+	});
+	
+	$("#tk_money").blur(function(){
+		var v = $(this).val();
+		if(v==0) { $("#error2 .error").text("请输入退款金额");  }
+		else if(parseFloat($(this).val()) > maxmonet) {
+			$("#error2 .error").text("最多退款金额：" + maxmonet + "元"); 
+		}
+		else {
+			$.ajax({
+				/*type: "post";*/
+				url:'${request.contextPath}/my/getFee.htm?feeAmount='+v,
+				cashe:false,
+				success: function(response){
+					if(response.success) {
+						$("#sxf_2_td").text(response.data.fee);
+                		$("#refundFee").val(response.data.fee);
+						$("#error2 .error").text("");
+					}else{ 
+					$("#error2 .error").text(G.sysError); return false;
+					}
+                },
+				error:function(response){
+					$("#error2 .error").text(G.sysError);return false;
+                }
+			});
+		}
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		/*btn_submit.attr("disabled", true).addClass("btn_disabled");*/
+		$(".error").text("");
+
+ 
+		if($("#tk_radio_part").attr("checked") == "checked" && $("#tk_money").val().replace(" ","") == "")  { 
+			$("#error2 .error").text("请输入退款金额"); 
+			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			return false;
+		}
+		
+		
+		var v=parseFloat($("#tk_money").val().replace(" ","")) ;
+		
+		if($("#tk_radio_part").attr("checked") == "checked" &&Detail_tabamount<maxmonet){
+			$("#error2 .error").text("输入的金额大于可退金额，请重新输入"); 
+			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			return false;
+		}
+		if($(".tk_radio").eq(0).is(":checked")){
+			$("#refundAmount").val(maxmonet);
+			if(maxmonet<=0){
+				$("#error1 .error").text("无可退金额");
+			    btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			    return false;
+			}
+			
+		}else if($(".tk_radio").eq(1).is(":checked")){
+			
+			var v = parseFloat($("#tk_money").val());
+    		if(v==0) { $("#error2 .error").text("请输入退款金额"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+			}else if(v > maxmonet) {
+    			$("#error2 .error").text("最多退款金额：" + maxmonet + "元"); 
+				btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+    		}else {
+				$("#refundAmount").val(v);
+    			$.ajax({
+    				url:"${request.contextPath}/my/getFee.htm?feeAmount="+v,
+					async: false,
+					cashe:false,
+    				success: function(response){
+					
+    					if(response.success) {
+							$("#error2 .error").text("");
+    						$("#sxf_2_td").text(response.data.fee);
+                    		$("#refundFee").val(response.data.fee);
+    					}
+    					else{ $("#error2 .error").text(G.sysError); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;}
+                    },
+    				error:function(response){
+    					 $("#error2 .error").text(G.sysError); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+                    }
+    			});
+    		}
+			
+		}
+		
+		$("#withdrawForm").submit();
+	});
+})
+</script>

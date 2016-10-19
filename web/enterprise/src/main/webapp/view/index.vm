@@ -1,0 +1,317 @@
+<div id="J_index_right" class="index_right fr">
+	<div class="title">
+		<a class="fl" href="#springUrl('/my/home.htm?link=0101')"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo.png" alt="永达商户钱包"></a>
+		<div class="fr">
+			<a href="#springUrl('/help/faq.htm?=FAQ_8_1.html&7,0')" target="_blank">安全保障</a>
+			<a href="#springUrl('/help/helpcenter.htm')" target="_blank">帮助中心</a>
+		</div>
+	</div>
+	<div class="login_box">
+		<div class="black"></div>
+		<div id="login_i" class="pr" style="background:#333 repeat scroll 0 0 rgba(0, 0, 0, 0.4); height:100%; overflow:hidden;">
+			<form id="login_form">
+				<div class="error" style="height: 22px; line-height: 22px; padding-left: 126px;"></div>
+				<div class="row fl">
+					<span class="fl f14 label">商户账号</span>
+					<input id="J_Account" name="manageUser" type="text" data-placeholder="请输入商户账号" value="" class="input1 placeholder"></div>
+				<div class="row fl" style="height:36px;">
+					<span class="fl f14 label">操作员</span>
+					<div class="select_div" style="padding:6px;"><select id="J_Operator" name="operator"><option value="">请选择操作员</option></select></div>
+				</div>
+				<style type="text/css">
+					.ocx_style { left:12px; top:-80px; width:208px; }
+				</style>
+				<div class="row fl">
+					<span class="fl f14 label">密码</span>
+					<div class="rowt relative fl" style="overflow:hidden; width:272px; height:29px; background:#fff; margin-bottom:4px; border:1px solid #7085a4;" id="index_pw"><input type="text" data-placeholder="请输入登录密码" value="" class="input1 placeholder" id="J_UnSafePwText"><input type="password" class="input1" id="J_UnSafePw" name="unSafePwInput"  style="display:none;"><input name="password" type="hidden" id="password" /></div>
+				</div>
+				<div class="row row_pw fl">
+					<span class="fl f14 label"></span>
+
+					<a href="${request.contextPath}/my/refind/loginPwd/ent/index.htm" class="fogetpw_help" title="点击可找回账户的登录密码"></a>
+					<a href="${request.contextPath}/my/refind/loginPwd/ent/index.htm">忘记登录密码</a>
+
+					<input type="checkbox" id="J_CkSafePw" name="checkbox_safepw" checked="checked" class="fl">
+					<label class="fl" for="J_CkSafePw">安全控件登录</label>
+					<a title="" class="fogetpw_help fl" href="#"></a>
+				</div>
+				<div class="row row_yzm fl">
+					<span class="fl f14 label">验证码</span>
+					<div class="yzm_i" id="yzm_i"><input id="J_Captcha" name="captcha_value" type="text" data-placeholder="请输入验证码" value="" class="placeholder" data-input="yzm_i" ><i class="yzm_rw"></i></div><img id="randImage" src="#springUrl('/pvc.htm')" alt="验证码" title="点击更新验证码" class="yzm_img" style="width:94px;height:35px;"></div>
+
+				<input type="button" value="登 录" class="btn btn_submit fl" style="width: 278px; height: 48px; line-height: 48px; margin-left: 125px;">
+				<div class="row row_zc fl"><a class="f14" href="${request.contextPath}/register/register-index.htm">免费注册</a><a class="f14" href="${request.contextPath}/register/register-index.htm">账户激活</a></div>
+
+				<input type="hidden" name="redirect_url" id="redirect_url" value="$!response.data.returnUrl"/>
+				<input type="hidden" name="operatorId" id="operatorId" value=""/>
+				<input type="hidden" name="operator_loginName" id="operator_loginName" value=""/>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="J_index_left" class="index_left fl" style="background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/index/bg.jpg) center no-repeat;"><img id="J_index_img" style="display:none;" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/index/bg.jpg" alt=""></div>
+
+<div id="J_index_footer" class="index-footer">
+	<div id="J_index_footer_bg" class="bg"></div>
+	<div id="J_index_footer_left" class="index-footer-left fl">
+		<div class="copyright fl">永达版权所有 2015-2020　　经营许可证编号：浙B2-20160314　　浙ICP备16001583号</div>
+		<div class="fr" style="height: 48px; overflow: hidden;">
+			<img style="height: 48px;" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/indexFootLeftRight.png" alt="">
+		</div>
+	</div>
+	<div id="J_index_footer_right" class="index-footer-right fr">
+		<a href="#springUrl('/static/aboutus.htm')">关于永达</a> <span class="s">|</span> <a href="#springUrl('/static/service.htm')">格式条款</a> <span class="s">|</span> <a href="#springUrl('/static/contactus.htm')">联系我们</a> <span class="s">|</span> 客服热线：<span class="dh">0571-28276085</span>
+	</div>
+</div>
+
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/js.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pw.js"></script>
+<!--<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.cookie.js"></script>-->
+<script>
+	$(function(){
+		function queryOper(){
+			jQuery.ajax({
+				type: 'post',
+				url: "#springUrl('/login/query.htm')",
+				data: $("#login_form").serialize(),
+				dataType: "json",
+				success: function(restP) {
+					if(restP && restP.success) {
+						var _html = '';
+						var data = restP.data.operators;
+						for(var i = 0; i < data.length; i++){
+							var oper = data[i];
+							/*
+							 if(oper.loginName == J_Account_Val){
+							 _html += '<option value='+oper.operatorId+'>Admin</option>';
+							 }else{
+							 _html += '<option value='+oper.operatorId+'>'+oper.loginName+'</option>';
+							 }
+							 */
+							_html += '<option value='+oper.operatorId+'>'+oper.loginName+'</option>';
+						}
+						J_Operator.html(_html);
+
+					}else{
+						$(".error").text(restP.message);
+					}
+				},
+				error:function(){
+					$(".error").text(G.sysError);
+				}
+			});
+		}
+
+		var J_body = $("body"),
+				J_header = $("#header"),
+				J_index_left = $("#J_index_left"),
+				J_index_img = $("#J_index_img"),
+				J_index_right = $("#J_index_right"),
+				J_index_footer = $("#J_index_footer"),
+				J_index_footer_bg = $("#J_index_footer_bg"),
+				J_index_footer_left = $("#J_index_footer_left"),
+				J_index_footer_right = $("#J_index_footer_right"),
+				J_Account = $("#J_Account"),
+				J_Account_Val = jQuery.trim(J_Account.val()),
+				J_Operator = $("#J_Operator"),
+				J_UnSafePwText = $("#J_UnSafePwText"),
+				J_UnSafePw = $("#J_UnSafePw"),
+				J_CkSafePw = $("#J_CkSafePw"),
+				J_Captcha = $("#J_Captcha");
+
+		function getWindowWH(){
+			var jBody = $("body");
+
+			var ww = $(window).width();
+			if(ww > 1000){
+				jBody.css({"overflow-x":"hidden"});
+			}
+			else{
+				ww = 1000;
+				jBody.css({"overflow-x":"auto"});
+			}
+
+			var wh = $(window).height();
+			if(wh > 600){
+				jBody.css({"overflow-y":"hidden"});
+			}
+			else{
+				wh = 600;
+				jBody.css({"overflow-y":"auto"});
+			}
+
+			//jBody.width(ww).height(wh);
+
+			return { w:ww, h:wh	};
+		}
+
+		function resetWindow(){
+			var wh = getWindowWH();
+
+			J_body.width(wh.w);
+
+			J_index_left.width(wh.w - J_index_right.width());
+			J_index_left.height(wh.h - J_header.height());
+
+			J_index_img.width(J_index_left.width());
+			J_index_img.height(wh.h - J_header.height());
+			J_index_img.show();
+
+			J_index_right.height(wh.h - J_header.height());
+
+			J_index_footer.width(wh.w);
+			J_index_footer.css({"top": wh.h - J_index_footer.height()});
+			J_index_footer_bg.width(wh.w);
+			J_index_footer_left.width(J_index_left.width());
+			J_index_footer_right.width(J_index_right.width());
+			J_index_footer.show();
+		}
+
+		resetWindow();resetWindow();
+    	$(window).resize(function () {
+			resetWindow();resetWindow();
+    	});
+
+		if(J_Account_Val != "" && J_Account_Val != J_Account.attr("data-placeholder")){
+			queryOper();	
+		}
+
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$("#index_pw").append(pgeditor.load(function(){$(".ocx_style").css("top", "10px");}));
+		pgeditor.pgInitialize(); //初始化控件
+    	
+    	J_UnSafePwText.focus(function(){
+    		J_UnSafePwText.hide();
+    		J_UnSafePw.show().focus();
+    	});
+    	J_UnSafePw.blur(function(){
+			if($(this).val() == ""){
+        		J_UnSafePwText.show();
+        		J_UnSafePw.hide();
+			}
+    	});
+
+		$(".ocx_style").css("top", "8px");
+		J_UnSafePwText.hide();
+		J_UnSafePw.hide().val("");
+		
+    	J_CkSafePw.click(function(){
+    		if(J_CkSafePw.prop("checked")){
+    			$(".ocx_style").css("top", "8px");
+    			J_UnSafePwText.hide();
+    			J_UnSafePw.hide().val("");
+    		}
+    		else{
+    			$(".ocx_style").css("top", "-100px");
+				pgeditor.pwdclear();
+    			J_UnSafePwText.show();
+    			J_UnSafePw.hide();
+    		}
+    	});
+		
+		//jQuery.cookie('yd_ent_user_name',null,{path: '/site-web-enterprise',domain: '${WEB_RESOURCE.staticAddressDomain}'});
+
+		J_Account.blur(function(){
+			J_Account_Val = jQuery.trim(J_Account.val());
+			J_Account_Val = J_Account_Val == J_Account.attr("data-placeholder") ? "" : J_Account_Val;
+			J_Account.val(J_Account_Val);
+			checkAccount({cmd:"login", username:J_Account_Val, tipObj:$(".error"), async:true, url:"#springUrl('/login/checkLoginName.htm')",success:function(d){queryOper();}, error:function(){J_Operator.html('<option value="">请选择操作员</option>');}});
+		});
+		
+		J_Captcha.blur(function(){
+			var code = J_Captcha.val();
+			code = code == J_Captcha.attr("data-placeholder") ? "" : code;
+			J_Captcha.val(code);
+			checkVerificationCode({code:code, tipObj:$(".error"), imgTipObj:$(".yzm_rw"), async:true, url:"#springUrl('/login/checkVerifiCode.htm')"});
+		}).keydown(function(event){
+			if(event.keyCode ==13){
+				$(".btn_submit").focus().click();
+			}
+		});
+		
+		function _submit(){
+			var btn_submit = $(".btn_submit");
+			var tipObj = $(".error");
+
+			var code = J_Captcha.val();
+			code = code == J_Captcha.attr("data-placeholder") ? "" : code;
+			var flag = checkVerificationCode({code:code, tipObj:tipObj, imgTipObj:$(".yzm_rw"), async:false, url:"#springUrl('/login/checkVerifiCode.htm')"});
+			if(!flag){ btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+
+			var operSelected = J_Operator.find('option:selected');
+			$("#operatorId").val(operSelected.val());
+			$("#operator_loginName").val(operSelected.text());
+
+			jQuery.ajax({
+    			url:"#springUrl('/login/main.htm')",
+    			type:'post',
+    			dataType:'json',
+    			data:$("#login_form").serialize(),
+    			success:function(data, textStatus, jqXHR){
+					refreshVericode($("#randImage"));
+    				if(data.success) {
+    					window.location.href = data.redirect;
+                    } else {
+						$(".yzm_rw").removeClass("right").removeClass("wrong");
+                    	tipObj.text(data.message);
+						btn_submit.attr("disabled", false).removeClass("btn_disabled");
+    				}
+    			},
+    			error:function(XMLHttpRequest, textStatus, errorThrown){
+					refreshVericode($("#randImage"));
+					$(".yzm_rw").removeClass("right").removeClass("wrong");
+					tipObj.text("系统异常");
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+    			}
+    		});
+		}
+		
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			var tipObj = $(".error");
+			tipObj.text("　");
+			
+			J_Account_Val = jQuery.trim(J_Account.val());
+			J_Account_Val = J_Account_Val == J_Account.attr("data-placeholder") ? "" : J_Account_Val;
+			var flag = checkAccount({cmd:"login", username:J_Account_Val, tipObj:tipObj, async:false, url:"#springUrl('/login/checkLoginName.htm')"});
+			if(!flag){ btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			if(J_CkSafePw.prop("checked")){
+				var jsonSubmit = {
+					jBtnSubmit:btn_submit,
+					cssClass:"btn_disabled",
+					urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+				};
+				var pgeditors = [
+					{
+						jPwInput:pgeditor,
+						jInput:$("#password"),
+						jTip:tipObj,
+						txtEmpty:"请输入登录密码！"
+					}
+				];
+				checkPgeditor({
+					jsonSubmit:jsonSubmit,
+					pgeditors:pgeditors,
+					callback:function(){
+						_submit();
+					}
+				});
+			}
+			else{
+				//setPwdResult(pgeditor);
+				var J_UnSafePw_val = J_UnSafePw.val();
+				if(J_UnSafePw_val == "" || J_UnSafePw_val == J_UnSafePw.attr("data-placeholder")){
+					tipObj.text("请输入登录密码");
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					return false;
+				}
+				
+				_submit();
+			}
+		});
+	});
+</script>

@@ -1,0 +1,14 @@
+<div id="" class="wrap">
+	<div class="page_title">
+    	<h2></h2>
+    </div>
+    <div class="pagebox pagebox1" style=" height:280px; padding-top:95px;">
+        <table cellpadding="0" cellspacing="0" border="0"  class="sqinfo" width="100%">
+            <tr>
+                <td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">对不起，您不具备访问该页面的权限！</span><br><span class="color_66 f12">如有疑问请致电：<span class="b">400-611-0909</span>,或者选择在线咨询！</span></i></td>
+            </tr>
+        </table>
+        <div class="btn_bottom_tx row3"><input type="button" value="" class="btn_fanhui" onClick="history.back(-1);return false;"></div> 
+    </div>
+  
+</div>

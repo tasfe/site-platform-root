@@ -1,0 +1,57 @@
+<form id="menuForm" name="menuForm" action="" method="post">
+</form>
+ <style>
+ .clearfix li {
+	 float: left;
+	 font-family:微软雅黑;
+	 font-size: 14px;
+	 padding: 0 15px;
+	 display: inline;
+	 margin-top:5px;
+	 height:35px;
+	 line-height:35px;
+	 margin-right:18px;
+ }
+ .clearfix li a {
+	 color:#333333;
+	 outline:none;
+ }
+ </style>
+ #set($pageMapping = $response.data.pageReqMapping)
+     <div class="tab">
+           <em class="icon_left"></em>
+           <em class="icon_right"></em>
+           <ul class="clearfix">
+                   <li #if($pageMapping =='/my/home.htm' || $pageMapping =='/my/all-trade.htm') class="navitem cur" #end >                                        
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-trade.htm')" hidefocus="true">交易记录</a><s class="yj_r"></s><b></b>
+                   </li>
+                   <li #if($pageMapping =='/my/all-recharge.htm') class="navitem cur" #end>
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-recharge.htm')" hidefocus="true">充值记录</a><s class="yj_r"></s><b></b>
+                   </li>
+                   <li #if($pageMapping =='/my/all-cach.htm') class="navitem cur" #end>
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-cach.htm')" hidefocus="true">提现记录</a><s class="yj_r"></s><b></b>
+                   </li>
+                   <li #if($pageMapping =='/my/all-transfer.htm') class="navitem cur" #end>
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-transfer.htm')" hidefocus="true">转账记录</a><s class="yj_r"></s><b></b>
+                   </li>
+                   <li #if($pageMapping =='/my/all-walletCheck.htm') class="navitem cur" #end>
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-walletCheck.htm')" hidefocus="true">钱包对账单</a><s class="yj_r"></s><b></b>
+                   </li>
+                   <li #if($pageMapping =='/my/all-settlement.htm') class="navitem cur" #end>
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-settlement.htm')" hidefocus="true">结算对账单</a><s class="yj_r"></s><b></b>
+                   </li>
+                    <li>
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/downloadBill.htm')" hidefocus="true">对账单下载</a><s class="yj_r"></s><b></b>
+                   </li>
+					<li #if($pageMapping =='/my/all-audit.htm') class="navitem cur" #end>
+                      <s class="yj_l"></s><a href="javascript:toMenuSubmit('${request.contextPath}/my/all-audit.htm')" hidefocus="true">审核记录</a><s class="yj_r"></s><b></b>
+                   </li>
+           </ul>                    
+      </div>
+<script language="javascript">
+	function  toMenuSubmit(adr){
+		 document.menuForm.action=adr;
+		 document.menuForm.submit(); 
+	  }
+</script>
+      

@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="foot_in" id="footIn">
+        <div class="foot_con">
+            <p><a href="#springUrl('/static/aboutkjt.htm')" target="view_window1">关于永达互联网金融</a>
+            |
+            <a href="#springUrl('/static/recruit.htm')" target="_blank">诚聘英才</a>
+            | <a href="#springUrl('/static/contactus.htm')" target="view_window2">联系我们</a>
+
+            | <a href="#" target="view_window3">网站地图</a>
+            | <a href="#" target="view_window4">永达互联网金融</a> 永达互联网金融版权所有 浙ICP备12033617号 经营许可证编号：浙B2-20130212</p>
+
+        </div>
+    </div>
+ </div>

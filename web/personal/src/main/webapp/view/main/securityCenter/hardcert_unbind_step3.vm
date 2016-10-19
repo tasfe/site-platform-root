@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>解绑</h2></div>
+     
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               
+                
+                <div class="usbConBox clearfix">
+                
+               <div class="usbCenter">
+              
+                           
+                           <div class="loginTipsBox ml161">
+                                 <i class="tipsIcon succeed"></i>
+                                 <p class="f16 bold mb10">快捷盾解绑成功!</p>
+                                 <p>由于您所解绑的快捷盾仍然保留了您的账户信息,请你妥善保管好您的快捷盾.</p>
+                                 <p class="mt30">您的账户不再受到快捷盾的保护,请您尽快重新<a href="#springUrl('/hardcertActivate/step1.htm')"><em class="red bold">绑定快捷盾</em></a>继续保护您的账户安全.</p>
+                                 <p class="mt5">您现在可以前往：<a class="bold" href="#springUrl('/hardcertActivate/step1.htm')">快捷盾首页</a><a class="ml10 bold" href="#springUrl('/my/accountManage.htm')">安全中心</a></p>
+                            </div>
+                
+                </div>
+          
+               
+          </div>
+          
+          
+          <div class="usbKeyFaq">
+                    <h4>快捷盾问题：</h4>
+                    <dl>
+                        <dt>如何解绑快捷盾？</dt>
+                        <dd>答：点击解绑快捷盾，按照相关操作要求输入信息后可解绑快捷盾。</dd>
+                    </dl>
+					<dl>
+                        <dt>解绑快捷盾后是否还可以重新绑定？</dt>
+                        <dd>答：可以重新绑定，插入快捷盾，重新绑定即可。</dd>
+                    </dl>
+                 <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+                </div>
+          
+      
+     </div>
+     
+</div>
+</div>
+<!-- E 主要内容 -->
+
+
+
+
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script> 
+</body>
+</html>

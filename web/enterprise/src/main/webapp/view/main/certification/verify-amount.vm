@@ -1,0 +1,119 @@
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title certification">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">金额验证</span>
+        </div>
+    </div>
+
+     <div class="login_main safetyMain">
+         <div class="loginList">
+              <form>
+              <div class="login_limit hg40">
+                     <label><span class="f14 limitLeft">银行账户名：</span>
+                      <span class="f14" id="realName">$!{response.data.info.realName}</span>
+                     </label>
+                     <label class="ml5"></label>
+               </div>
+               <div class="login_limit hg40">
+                     <label><span class="f14 limitLeft">银行帐号：</span>
+                      <span class="f14">$!{response.data.info.bankAccountNumMask}</span>
+                     </label>
+                     <label class="ml5"></label>
+               </div>
+               <div class="login_limit hg40">
+                     <label><span class="f14 limitLeft">开户银行：</span>
+                      <span class="f14">$!{response.data.info.bankName}</span>
+                     </label>
+                     <label class="ml5"></label>
+               </div>
+               <div class="login_limit hg40">
+                     <label><span class="f14 limitLeft">开户银行所在城市：</span>
+                      <span class="f14">$!{response.data.info.city}</span>
+                     </label>
+                     <label class="ml5"></label>
+               </div>
+               <div class="login_limit hg40">
+                     <label><span class="f14 limitLeft">开户银行支行名称：</span>
+                      <span class="f14">$!{response.data.info.bankBranch}</span>
+                     </label>
+                     <label class="ml5"></label>
+               </div>
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft"><span class="red">* </span>验证打款金额：</span>
+                     <input type="text" class="inputtext w232 placeholder money2" value="" id="money" name="money" data-placeholder="请输入永达打款至您账户的金额" maxlength="13">
+                   </label>
+                   <label class="ml5">元</label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               
+               <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确认"></div>
+
+              </form>
+         </div>
+     </div>
+</div>
+</div>
+
+
+
+
+<script>
+	$(function(){
+		
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+			
+			var value = jQuery.trim($("#money").val());
+			value = value == $("#money").attr("data-placeholder") ? "" : value;
+			if(value == ""){
+				$(".error").text("请输入打款金额！");
+				btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+			}
+			jQuery.ajax({
+            	type: "post",
+        		url: "${request.contextPath}/my/doVerifyAmount.htm",
+        		dataType: "json",
+        		data: {money:value},
+        		success: function(result){
+        			if (result.success) {
+						var html = '<style type="text/css">.sw_0 #sw_title { height:30px; padding-top:0;}</style>';
+            			html += '<div class="sw_tip">';
+            			html += '<div class="sw_tip_title mb15"><i class="success"></i><span>恭喜您已经通过永达实名认证!</span></div>';
+            			html += '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
+            			html += '<tr><td style="width:333px; text-align:right; padding-right:5px; line-height:22px;">认证通过时间：</td><td style="line-height:22px;">'+result.data.verifyDate+'</td></tr>';
+            			html += '<tr><td style="width:333px; text-align:right; padding-right:5px;">银行帐户：</td><td style="line-height:22px;">'+$("#realName").text()+'</td></tr>';
+            			html += '<tr><td style="width:333px; text-align:right; padding-right:5px;">认证卡号：</td><td style="line-height:22px;">'+result.data.authNo+'</td></tr>';
+            			html += '</table>';
+            			html += '</div>';
+            			html += '<div style="text-align:center; padding:20px;"><input type="button" id="ckxq" class="btn" value="确认" ></div>';
+            			
+            			showWin('html', html, {mode:1}, 730, 280, ' ', '', '');
+            			
+            			$("#ckxq").live("click",function(){
+            				window.location.href = '${request.contextPath}/my/certification-detail.htm';
+            			});
+						
+					}else{
+						btn_submit.attr("disabled", false).removeClass("btn_disabled");
+						$(".error").text(result.message);
+						return false;	
+					}
+        		},
+        		error: function(){
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+        			$(".error").text(result.message);
+					return false;
+        		}
+            });
+			
+			
+		});
+		
+		
+	})
+</script>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <title>常见问题</title>
+</head>
+<body style="overflow:scroll">
+<div id="J_FaqList" class="blockWrap" style="margin-top:25px;">
+  
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script>
+  tools.ajaxSubmit({
+    "type": "GET",
+    "url": gurl + "/index/faq/weixin",
+    "suc_suc": function(response){
+      // 已登录 则填值
+      var data = response.data.faqs[0].faqList;
+      var _html = "";
+      for(var i = 0, len = data.length; i < len; i++){
+        var _data = data[i];
+        _html += '<div class="helpCenterList">'
+                + '<div class="helpCenterTitle"><span class="helpCenterTextLeft">' + _data.name + '</span><i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i></div>'
+                + '<div class="helpCenterContent">' + _data.answer + '</div>'
+                + '</div>';
+      }
+
+      $("#J_FaqList").html(_html);
+
+      $(".helpCenterTitle").unbind().click(function(){
+        if($(this).find(".helpCenterArrow").hasClass("helpCenterArrowActive")){
+          $(this).parent().find(".helpCenterContent").hide();
+          $(this).css("border-bottom","none");
+          $(this).find(".helpCenterArrow").removeClass("helpCenterArrowActive");
+        }
+        else{
+          $(this).parent().find(".helpCenterContent").show();
+          $(this).css("border-bottom","1px solid #E5E5E5");
+          $(this).find(".helpCenterArrow").addClass("helpCenterArrowActive");
+        }
+      });
+
+    }
+  });// ajaxSubmit
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<div class="add_bank_dialog" id="addBankDialog" style="height:450px">
+    <form id="withdraw_bank_form" name="withdraw_bank_form" action="" method="POST" class="form-horizontal" >
+         <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>银行卡号：</label>
+             <div class="controls">
+                <input type="text" id="showCardId" name="showCardId" class="in_txt disabled_txt" value="$!bankcard.bankAccountNumMask" disabled>
+             </div>
+            </div>
+          <div class="control-group">
+             <label class="control-label" for=""><i class="fc_r_ff">*</i>银行名称：</label>
+               <div class="controls">
+                 <input type="text" id="showBankName" name="showBankName" class="in_txt disabled_txt" value="$!bankcard.bankName" disabled>
+               </div>
+            </div>   
+            <div class="control-group">
+                <label class="control-label" for=""><i class="fc_r_ff">*</i>开户名：</label>
+                <div class="controls">
+                  <input type="text" id="showUserName" name="showUserName" class="in_txt disabled_txt" value="$!bankcard.realName" disabled>
+                </div>
+            </div>
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>开户银行所在省、直辖市：</label>
+            <div class="controls">
+                <input type="text" id="province" name="province" class="in_txt disabled_txt" value="$!bankcard.province" disabled>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>开户银行所在城市：</label>
+            <div class="controls">
+                <input type="text" id="city" name="city" class="in_txt disabled_txt" value="$!bankcard.city" disabled>
+            </div>
+          </div> 
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>支行名称：</label>
+            <div class="controls">
+                <input type="text" id="bankBranch" name="bankBranch" class="in_txt disabled_txt" value="$!bankcard.bankBranch" disabled>
+            </div>
+          </div>
+         <div class="control-group">
+                <label class="control-label" for=""><i class="fc_r_ff">*</i>银行卡类型行：</label>
+                <div class="controls pos_rel">
+                 <input type="text" id="cardType" name="cardType" class="in_txt disabled_txt" value="$!bankcard.cardType" disabled>
+                </div>
+            </div>   
+            <div class="control-group">
+                <label class="control-label" for=""><i class="fc_r_ff">*</i>银行卡属性：</label>
+                <div class="controls pos_rel">
+                <input type="text" id="cardAttribute" name="cardAttribute" class="in_txt disabled_txt" value="$!bankcard.cardAttribute" disabled>
+                </div>
+            </div>
+    </form>
+</div>

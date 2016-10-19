@@ -1,0 +1,201 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title account-manage">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">账户设置</span>
+		</div>
+	</div>
+
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock " href="#springUrl('/my/accountManage.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/app-center.htm')">
+     	  	   	             <span class="subNavIcon qycp"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">应用产品</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/card-manage-index.htm')">
+     	  	   	             <span class="subNavIcon yhzh"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">银行账户</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+
+     	  	   <div class="account_set_right_main clearfix">
+
+     	  	        <div class="bankAccountList">
+							#set($cardType = "")
+							#set($loop_index = 1)
+							#foreach($info in $response.data.list)
+								#if($velocityCount <= 8)
+    								 #if($info.cardType == "1")
+    									#set($cardType="借记卡")
+    								 #elseif($info.cardType == "2")
+    									#set($cardType="贷记卡")
+									 #end
+									 #set($cardNo=$info.bankAccountNumMask)
+									 #set($end=$cardNo.length() - 4)
+									 #set($tailNo=$cardNo.substring($end))
+									 #if($info.bankcardId == $response.data.defaultCard)
+									 <div class="bankBox icons_list" data-bank="尾号为$tailNo的$!{info.bankName}储蓄卡" data-id="$!{info.bankcardId}">
+             	  	   	    	 	   <h3 class="tit_bg tit_bg_c${loop_index}">
+										   <span class="bankname icon $!{info.bankCode}" title="$!{info.bankName}">$!{info.bankName}</span>
+										   <span class="cardnum">**$tailNo</span>
+             	  	   	    	 	       <span class="del_card" href="#"></span>
+             	  	   	    	 	   </h3>
+                                       <p class="bankNumber"></p>
+									   <p class="select"><span class="fl def">默认银行卡</span><a class="fr bank_unbind" href="#"><i></i>解绑</a></p>
+									 </div>
+									 #else
+									 <div class="bankBox icons_list" data-bank="尾号为$tailNo的$!{info.bankName}储蓄卡" data-id="$!{info.bankcardId}">
+                                     <h3 class="tit_bg tit_bg_c${loop_index}">
+										 <span class="bankname icon $!{info.bankCode}" title="$!{info.bankName}">$!{info.bankName}</span>
+										 <span class="cardnum">**$tailNo</span>
+										 <span class="del_card" href="#"></span>
+                                     </h3>
+                                     <p class="bankNumber"></p>
+                                     <p class="select"><a href="#" class="fl color_f6 setDefaultBank">设为默认银行卡</a><a class="fr bank_unbind" href="#"><i></i>解绑</a></p>
+									 </div>
+									 #end
+									#set($loop_index = $loop_index + 1)
+								 	#if($loop_index == 4)
+								 		#set($loop_index = 1)
+								 	#end
+								#end
+							#end
+                             <div class="bankBox bankBoxNo">
+                                  <a href="#springUrl('/my/add-bank-index.htm')"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/add_card.gif" alt=""></a>
+                             </div>
+
+							 <input type="hidden" id="defaultCardId" name="defaultCardId" value="$!{response.data.defaultCard}"/>
+
+
+                       </div>
+
+     	  	   </div>
+
+     	  </div>
+     	  <!-- E 右边内容 -->
+		  <form class="" id="modifyCardForm" action="#springUrl('/my/modify-bank-index.htm')" method="POST">
+				<input type="hidden" id="operType" name="operType" value="update"/>
+				<input type="hidden" id="oldBankCardId" name="oldBankCardId" value=""/>
+		  </form>
+
+     </div>
+
+</div>
+</div>
+<script>
+$(function(){
+	$(".bankBox").each(function(index, element) {
+		$(this).hover(
+			function(){ $(this).addClass("addborder").find(".setDefaultBank").show(); },
+			function(){ $(this).removeClass("addborder").find(".setDefaultBank").hide(); }
+		);
+    });
+	
+	$(".setDefaultBank").click(function(){
+		var html = '<div class="bankNnfasten"><div class="bankNnfasten_box">';
+		html += '<p class="bank_line">确认设置' + $(this).parent().parent().attr("data-bank") + '为默认银行卡？</p>';
+		html += '<p class="btn_bankNnfasten_box"><input class="btn" type="button" value="确 认" id="btn_setDefaultBank" data-id="'+$(this).parent().parent().attr("data-id")+'"></p>';
+		html += '</div></div>';
+													
+		showWin('html', html, '', 500, 180, ' ', '', '');
+	});
+	
+	$("body").delegate("#btn_setDefaultBank","click",function(){
+		var $thisobj = $(this);
+		if($thisobj.val() == $thisobj.attr("data-placeholder")) {
+			$thisobj.val("");
+			$thisobj.removeClass("color_b3");
+		}
+		
+		var cardId = $(this).attr("data-id");
+		
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/setDefaultCard.htm')" ,
+            data: 'bankCardId='+cardId+'&defaultCardId='+$("#defaultCardId").val(),
+            success: function(response) {
+            	if(response.success){
+					alert("设置成功！");
+					window.location.href="#springUrl('/my/card-manage-index.htm')";
+            	} else {
+	            	alert(response.message);
+            	}
+            } ,
+            error: function(data) {
+				alert(response.message);
+            },
+            dataType: "json"
+        });
+		
+		closeSW();
+		
+	});
+	
+	$(".bank_unbind").click(function(){
+		var html = '<div class="bankNnfasten"><div class="bankNnfasten_box">';
+		html += '<p class="bank_line">确认解绑' + $(this).parent().parent().attr("data-bank") + '？</p>';
+		html += '<p class="btn_bankNnfasten_box"><input class="btn" type="button" value="确 认" id="btn_unbindBank" data-id="'+$(this).parent().parent().attr("data-id")+'"></p>';
+		html += '</div></div>';
+													
+		showWin('html', html, '', 500, 180, ' ', '', '');
+	});
+	
+	$("body").delegate("#btn_unbindBank","click",function(){
+		var $thisobj = $(this);
+		if($thisobj.val() == $thisobj.attr("data-placeholder")) {
+			$thisobj.val("");
+			$thisobj.removeClass("color_b3");
+		}
+		var cardId = $(this).attr("data-id");
+		
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/removeBankCard.htm')" ,
+            data: 'bankCardId='+cardId,
+            success: function(response) {
+            	if(response.success){
+					alert("解绑成功！");
+					window.location.href="#springUrl('/my/card-manage-index.htm')";
+            	} else {
+					alert(response.message);
+            	}
+            } ,
+            error: function(data) {
+				alert(response.message);
+            },
+            dataType: "json"
+        });
+		closeSW();
+		
+	});
+	
+	$(".ml10").click(function(){
+		var cardId = $(this).parent().parent().attr("data-id");	
+		$("#oldBankCardId").val(cardId);
+		$("#modifyCardForm").submit();
+	});
+	
+})
+</script>

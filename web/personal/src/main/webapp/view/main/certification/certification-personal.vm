@@ -1,0 +1,222 @@
+
+<!-- S 主要内容 -->
+<div class="wrap mt10">
+     
+     <div class="login_h1">实名认证</div>
+
+     <div class="login_main">
+     	  
+     	  <div class="login_flow">
+     	  	   <p class="lf_2_1"><span>1 身份信息</span><span>2 资金账户信息</span></p>
+		  </div>
+		  
+          <style type="text/css">.lhgcal_foot_time{display:none}</style>
+          <div class="login_content_wrap_t">
+          <div class="login_content clearfix">
+                <div id="tab1">
+					<div class="row_rank">
+                        <label class="row_label" for="">账户名：</label>
+                        <div class="row_con">$!response.data.loginName</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="row_rank">
+                    	<label class="row_label" for="">真实姓名：</label>
+                        <div class="row_con"><input id="realName" name="realName" type="text" class="login_input" value="$!response.data.realName" maxlength="50"></div>
+                        <div class="clear"></div>
+						<div class="pl190 h20 error"></div>
+                    </div>
+					
+				 	<div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>证件类型：</label>
+                         <div class="row_con">
+                              <div class="select_div fl">
+                                   <select name="cardtype" id="cardtype">
+										<option value="idCard">大陆居民身份证</option>
+                                        <option value="hkCard">港澳台公民身份证</option>
+                                        <option value="otherCard">其他</option>
+                                   </select>
+                              </div>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+				 
+					<div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>证件号：</label>
+                         <div class="row_con">
+                              <input id="idcard" name="idcard" type="text" class="login_input" maxlength="19">
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+					<div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>证件的正面：</label>
+						 <div class="row_con">
+                              <form id="form1" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                                    <input id="file1" type="text" class="login_input"  readonly="readonly">
+    								<input type="hidden" id="imageUrl1" name="imageUrl1" value="$!response.data.imageUrl1"/>
+                                    <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl1" forpath="file1"></div>
+                               <a class="viewImg zj" href="#" title="法定代表人身份证正面"></a>
+                               </form>
+                               <div class="msg"></div>
+    						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                        </div>
+                         <div class="clear"></div>
+                         <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>证件的反面：</label>
+						  <div class="row_con">
+                              <form id="form2" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                                    <input id="file2" type="text" class="login_input"  readonly="readonly">
+    								<input type="hidden" id="imageUrl2" name="imageUrl2" value="$!response.data.imageUrl2"/>
+                                    <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl2" forpath="file2"></div>
+                               <a class="viewImg zj" href="#" title="法定代表人身份证反面"></a>
+                               </form>
+                               <div class="msg"></div>
+    						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                
+                   
+                   <div class="certificateBtn"><div class="error h22 error_submit"></div><input class="btn_next btn_submit btn_submit1" type="button" value=""><input class="btn_fh ml20" type="button" value="" onclick="javascript:history.go(-1)"></div>
+                  </div>
+                  <!-- TAB1 -->
+          </div>
+          </div>
+     </div>
+     
+</div>
+</div>
+<!-- E 主要内容 -->
+
+<img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo.jpg" id="preimg" style="position: absolute; bottom: 0; left: -99999px; visibility: hidden; z-index: -1" />
+
+<script>
+var baseUrl = "${request.contextPath}/site/getFile.htm?fileName=";
+function successUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl){
+	$("#" + input_path_id).val(input_path);
+	$("#" + input_imgurl_id).val(input_imgurl);
+	
+	$("#" + input_path_id).parent().find(".viewImg").attr("href",baseUrl + input_imgurl).html('<img src="'+(baseUrl + input_imgurl)+'" style="width:45px; height:28px; border:0;" />').css("visibility","visible");
+	//encodeURIComponent(input_imgurl)
+	
+	$("#" + input_path_id).parent().show().parent().find(".msg").text("");
+}
+function errorUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl){
+	$("#" + input_path_id).val("");
+	
+	var tipObj = $("#" + input_path_id).parent().parent().parent().find(".error");
+	if(!tipObj.hasClass("error")) tipObj = $("#" + input_path_id).parent().parent().parent().parent().find(".error");
+		
+	tipObj.text("上传失败，请重新上传！");
+	$("#" + input_path_id).parent().find(".viewImg").attr("href","").html('').css("visibility","hidden");
+	
+	$("#" + input_path_id).parent().show().parent().find(".msg").text("");
+}
+function imgint(){
+	$("#file1,#imageUrl1,#file2,#imageUrl2").val("");
+	$(".viewImg").empty();
+}
+$(function(){
+	imgint();
+	
+	//上传图片
+	$("body").delegate(".btn_liulan","click",function(){
+		var pathid = $(this).attr("forpath");
+		var imgid = $(this).attr("forimg");
+		var jIframe = $(this).parent().parent().parent().find(".iframe_upload").contents();
+		
+		jIframe.find("#input_path_id").val(pathid);
+		jIframe.find("#input_imgurl_id").val(imgid);
+		jIframe.find("#file_select").click();
+		
+	});
+	
+	$('.viewImg').lightBox({
+				imageLoading: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-ico-loading.gif',
+				imageBtnClose: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-close.gif',
+				imageBtnPrev: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-prev.gif',
+				imageBtnNext: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-next.gif'
+			});
+	
+	$("#idcard").blur(function(){
+		var jThis = $(this);
+		var f=checkMust(jThis,jThis.parent().parent().find(".error"),"请输入您的证件号码！");
+		if(!f){return false;}
+		
+		var jCardtype = $("#cardtype");
+		var jTip = jThis.parent().parent().find(".error");
+		if(jCardtype.val() == "idCard") {
+			checkIdCard(jThis,jTip,"请输入18位身份证号码！");
+		}
+		else {
+			var value = jThis.val();
+			if(value.length > 19) { jTip.text("证件号码位数不能超过19位！");}
+		}
+	})
+	
+	$(".btn_submit1").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_next_disabled");
+		$(".error").text("");
+		
+		if($("#realName").val() == ""){
+			$("#realName").parent().parent().find(".error").html("请输入您的真实姓名!");
+			btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false;
+		}
+		
+		thisObj = $("#idcard");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请输入您的证件号码！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false; }
+		
+		var jCardtype = $("#cardtype");
+		if(jCardtype.val() == "idCard") {
+			flag = checkIdCard(thisObj,tipObj,"请输入18位身份证号码！");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_next_disabled");  return false; }
+		}
+		else {
+			var value = thisObj.val();
+			if(value.length > 19) { tipObj.text("证件号码位数不能超过19位！"); btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false;}
+		}
+		
+		thisObj = $("#file1");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传法定代表人的身份证正面图片！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false; }
+		
+		thisObj = $("#file2");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传法定代表人的身份证反面图片！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false; }
+		
+		jQuery.ajax({
+        	type: "post",
+    		url: "${request.contextPath}/my/certification-personal.htm",
+    		dataType: "json",
+    		data: {imageUrl1:$("#imageUrl1").val(),imageUrl2:$("#imageUrl2").val(),idcard:$("#idcard").val(),realName:$("#realName").val()},
+    		success: function(result){
+    			if (result.success) {
+    				window.location.href = '${request.contextPath}/my/go-account-certification-per.htm';
+    			}else{
+					$(".error_submit").html(result.message);
+					btn_submit.attr("disabled", false).removeClass("btn_next_disabled");
+				}
+    		},
+    		error: function(){
+    			$(".error_submit").html(G.sysError);
+    			btn_submit.attr("disabled", false).removeClass("btn_next_disabled");
+    		}
+        });
+		
+	});
+})
+
+
+
+</script>

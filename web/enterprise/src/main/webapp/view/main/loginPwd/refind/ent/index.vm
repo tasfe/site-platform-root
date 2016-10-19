@@ -1,0 +1,131 @@
+<div class="wrapbg">
+<div class="wrap">
+
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">找回登录密码</span>
+		</div>
+	</div>
+
+     <div class="login_main">
+     	  
+          <div class="login_content_wrap">
+          <div class="login_content clearfix">
+               <form id="find-loginpwd-form" name="find-loginpwd-form" class="" action="${request.contextPath}/my/refind/loginPwd/ent/goMain.htm" method="POST">
+				
+				<input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+				
+               <div class="row">
+	                <label class="row_label" for="">您的商户帐号：</label>
+	                <div class="row_con">
+	                     <input id="loginName" name="loginName" type="text" data-placeholder="请输入账户名" class="login_input placeholder ">
+	                </div>
+	                <div class="clear"></div>
+                    <div class="row_tip error"></div>
+                </div>
+
+                <div class="row row_yzm">
+	                <label class="row_label" for="">验证码：</label>
+	                <div class="row_con">
+	                     <div class="yzm_i" id="yzm_i">
+	                          <input id="captcha_value" name="captcha_value" type="text" data-placeholder="请输入验证码" class="placeholder" data-input="yzm_i" ><i class="yzm_rw"></i>
+	                     </div>
+	                     <img id="randImage" src="#springUrl('/pvc.htm')" alt="验证码" title="点击更新验证码" class="yzm_img"></div>
+                         <div class="row_tip error" id="captcha_error">$!response.message</div>
+	                </div>
+                    
+                <div class="pdlf170">
+	                 <input class="btn btn_submit" type="button" value="下一步">
+                </div> 
+				</form>
+          </div>
+          </div>
+
+     </div>
+     
+</div>
+</div>
+	
+<script>
+	function checkloginName(loginName, tip){
+		var name = $.trim(loginName.val());
+		loginName.val(name);
+		tip.text("");
+		
+		if(name == "" || name == loginName.attr("data-placeholder")){
+			tip.text("请输入注册的邮箱");
+			return false;
+		}
+		//RegExp("^(13[0-9]{9}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8})$").test(loginName)
+		if (!RegExp(regexEnum.email).test(name)){
+			tip.text("邮箱格式不正确");
+			return false;
+		}
+		
+		if(!ajaxCheckLoginNameIsExist(loginName, tip)){
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	function ajaxCheckLoginNameIsExist(loginName, tip){
+		var result=false;
+    	jQuery.ajax({      
+    	 	data:{
+    			loginName:loginName.val()
+    		},
+            type: "Post",   
+			async:false,
+            url: "${request.contextPath}/my/refind/loginPwd/ent/checkLoginNameIsExist.htm",     
+            dataType: "json",     
+            success: function(data) {
+    			if(data){
+					result = true;
+    			}else{
+					tip.text("账户名未注册");
+				}
+            },     
+            error: function(err) {     
+            }     
+        });   
+		return result;
+    };
+	
+	$(function(){
+		
+		$("#loginName").blur(function(){
+			checkloginName($(this),$(this).parent().parent().find(".error"));
+		});
+		
+		$("#captcha_value").blur(function(){
+			var code = $(this).val();
+			code = code == $(this).attr("data-placeholder") ? "" : code;
+			checkVerificationCode({code:code, tipObj:$("#captcha_error"), imgTipObj:$(".yzm_rw"), async:true, url:"#springUrl('/login/checkVerifiCode.htm')"});
+		});
+		
+		$(".btn_submit").click(function(){
+			var $btn_submit = $(this);
+			$btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+			
+			var flag = checkloginName($("#loginName"), $("#loginName").parent().parent().find(".error"));
+			
+			if(!flag) { $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			var code = $("#captcha_value").val();
+			if($("#captcha_value").attr("data-placeholder") != undefined){
+				code = code == $("#captcha_value").attr("data-placeholder") ? "" : code;
+			}
+			flag = checkVerificationCode({code:code, tipObj:$("#captcha_error"), imgTipObj:$(".yzm_rw"), async:false, url:"#springUrl('/login/checkVerifiCode.htm')"});
+			if(!flag) { $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			$("#find-loginpwd-form").submit();
+			
+		});
+		
+		
+	})
+</script>

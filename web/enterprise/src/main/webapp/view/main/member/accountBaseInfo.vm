@@ -1,0 +1,294 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title account-manage">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">账户设置</span>
+		</div>
+	</div>
+
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/accountManage.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/app-center.htm')">
+     	  	   	             <span class="subNavIcon qycp"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">应用产品</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/card-manage-index.htm')">
+     	  	   	             <span class="subNavIcon yhzh"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">银行账户</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+
+     	  	   <div class="account_set_right_con">
+     	  	   	    
+     	  	   	    <div class="set_right_info clearfix">
+     	  	   	    	 
+     	  	   	    	 <div class="account_set_personnel">
+     	  	   	    	 	  <ul class="set_personnel">
+     	  	   	    	 	  	  <li><span class="f14 b">公司名称：</span>$!{response.data.member.enterpriseName}</li>
+     	  	   	    	 	  	  <li><span class="f14 b">操作账号：</span>$!{response.data.memberOper}</li>
+     	  	   	    	 	  	  <li><span class="f14 b">商户账号：</span>$!{response.data.loginName}</li>
+     	  	   	    	 	  </ul>
+     	  	   	    	 	  <ul class="set_personnel_two">
+     	  	   	    	 	  	  <li class="info"><span>预留信息：</span><span id="left_mes">$!{response.data.summary}</span><span><input id="left_mes_input" class="login_input placeholder" type="text" value="$!{response.data.member.summary}" data-placeholder="请输入6-20位字符的预留信息！" style="display:none"></span><span><a href="#" class="ml20" id="modify_left_mes" style="display:none">修改</a><a href="#" class="ml20" id="set_left_mes" style="display:none">保存</a></span></li>
+     	  	   	    	 	  	  <!--<li class="mt10">签约到期时间：</li>-->
+     	  	   	    	 	  </ul>
+     	  	   	    	 </div>
+						 <!--
+     	  	   	    	 <div class="account_set_box clearfix">
+     	  	   	    	      <ul class="safety">
+     	  	   	    	      	   <li><span>安全等级：<i class="gradeIcon g1"></i>中</span><a href="#" class="ml40">安全提升</a></li>
+     	  	   	    	      </ul>
+     	  	   	    	 </div>
+						-->
+     	  	   	    	 <div class="account_set_box clearfix">
+     	  	   	    	 	  <ul class="serve">
+     	  	   	    	 	  	   <li class="mt20 f14 b">安全服务：</li>
+     	  	   	    	 	  	   <li class="ml30">
+     	  	   	    	 	  	         <div class="serveBox"> 
+											  #if ($!response.data.verify_mobile)
+											  <span class="photo t1"></span>
+     	  	   	    	 	  	         	  <span class="txt"><strong class="bold">手机绑定</strong><br><a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')" class="gray1">已绑定</a></span>
+											  #else
+											  <span class="photo t1_no"></span>
+											  <span class="txt"><strong class="bold">手机绑定</strong><br><a href="#springUrl('/my/go-set-mobilephone-verify.htm')">未绑定</a></span>
+											  #end
+     	  	   	    	 	  	         </div>
+     	  	   	    	 	  	   </li>
+								   
+								   <li>
+     	  	   	    	 	  	         <div class="serveBox">
+     	  	   	    	 	  	         	  
+											  #if ($!response.data.verify_name == 'checkPass')
+											  <span class="photo t2_no"></span>
+     	  	   	    	 	  	         	  <span class="txt"><strong class="bold">实名认证</strong><br><a href="#springUrl('/my/verifyAmount.htm')">金额认证</a></span>
+											  #elseif ($!response.data.verify_name == 'PASS')
+											  <span class="photo t2"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><a href="#springUrl('/my/certification-detail.htm')" class="gray1">已认证</a></span>
+											  #elseif ($!response.data.verify_name == 'init')
+											  <span class="photo t2"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><a href="#">认证中</a></span>
+											  #elseif ($!response.data.verify_name == 'checkReject')
+											  <span class="photo t2"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><a href="#springUrl('/my/go-enterprise-certification.htm')">重新认证</a></span>
+											  #else
+											  <span class="photo t2_no"></span>
+											  <span class="txt"><strong class="bold">实名认证</strong><br><a href="#springUrl('/my/go-enterprise-certification.htm')">未认证</a></span>
+											  #end
+     	  	   	    	 	  	         </div>
+     	  	   	    	 	  	   </li>
+     	  	   	    	 	  	   
+     	  	   	    	 	  	   <li>
+     	  	   	    	 	  	         <div class="serveBox">
+											  #if ($!response.data.cert == "true")
+											  <span class="photo t3"></span>
+     	  	   	    	 	  	         	  <span class="txt"><strong class="bold">永达盾</strong><br><a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')" class="gray1">已激活</a></span>
+											  #else
+											  <span class="photo t3_no"></span>
+											  <span class="txt"><strong class="bold">永达盾</strong><br><a href="#springUrl('/securityCenter/safetyDetails.htm')">未激活</a></span>
+											  #end
+     	  	   	    	 	  	         </div>
+     	  	   	    	 	  	   </li>
+								   
+								   <li>
+     	  	   	    	 	  	         <div class="serveBox">
+											  #if ($!response.data.verify_email)
+     	  	   	    	 	  	         	  <span class="photo t4"></span>
+     	  	   	    	 	  	         	  <span class="txt"><strong class="bold">邮箱绑定</strong><br><a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')" class="gray1">已绑定</a></span>
+											  #else
+											  <span class="photo t4"></span>
+     	  	   	    	 	  	         	  <span class="txt"><strong class="bold">邮箱绑定</strong><br><a href="#springUrl('/my/go-set-email.htm')">未绑定</a></span>
+											  #end
+     	  	   	    	 	  	         </div>
+     	  	   	    	 	  	   </li>
+     	  	   	    	 	  </ul>
+     	  	   	    	 </div>
+
+     	  	   	    	 <div class="serve_info clearfix">
+     	  	   	    	 	  <div>
+     	  	   	    	 	     <span class="si1">登录密码：</span>
+     	  	   	    	 	     <span class="si2">登录时需验证，保护账户信息</span>
+     	  	   	    	 	     <span class="si3"><a href="#springUrl('/my/reset-ent-login-passwd.htm')">修改登录密码</a></span>
+     	  	   	    	 	  </div>
+     	  	   	    	 	  <div>
+     	  	   	    	 	     <span class="si1">支付密码：</span>
+     	  	   	    	 	     <span class="si2">资金变动或账户信息变更时需验证，安全级别更高。</span>
+     	  	   	    	 	     <span class="si3"><a href="#springUrl('/my/reset-pay-passwd.htm')">修改支付密码</a> | <a href="#springUrl('/my/go-get-paypasswd-index.htm')">找回支付密码</a></span>
+     	  	   	    	 	  </div>
+     	  	   	    	 	  <div>
+     	  	   	    	 	     <span class="si1">永达盾：</span>
+								 #if ($!response.data.cert == "true")
+								 <span class="si2">已激活 </span>
+								 <span class="si3"><a href="" class="btn_h24_red">&nbsp;</a></span>
+								 #else
+								 <span class="si2">未激活 激活后只有在插入永达盾的情况下，才能进行涉及账户、资金变动的操作。</span>
+								 <span class="si3"><a href="#springUrl('/securityCenter/safetyDetails.htm')" class="btn_h24_red">激活</a></span>
+								 #end
+     	  	   	    	 	  </div>
+     	  	   	    	 	  <div>
+     	  	   	    	 	     <span class="si1">手机绑定：</span>
+								 #if ($!response.data.verify_mobile)
+     	  	   	    	 	     <span class="si2">您绑定的手机：$!response.data.verify_mobile</span>
+								 <span class="si3"><!--<a href="#springUrl('/my/go-unset-mobilephone.htm')">解绑</a> | --><a href="#springUrl('/my/go-reset-mobilephone.htm')" class="marl20">修改</a></span>
+								 #else
+								 <span class="si2">尚未手机认证</span>
+								 <span class="si3"><a href="#springUrl('/my/go-set-mobilephone-verify.htm')" class="btn_h24_red">绑定</a></span>
+								 #end
+     	  	   	    	 	  </div>
+     	  	   	    	 	  <div>
+     	  	   	    	 	     <span class="si1">邮箱绑定：</span>
+								 #if ($!response.data.verify_email)
+     	  	   	    	 	     <span class="si2">您绑定的邮箱为：$!response.data.verify_email</span>
+     	  	   	    	 	     <span class="si3"><a href="#springUrl('/my/go-unset-email.htm')">解绑</a> | <a href="#springUrl('/my/go-reset-email.htm')" class="marl20">修改</a></span>
+								 #else
+								 <span class="si2">尚未邮箱认证</span>
+     	  	   	    	 	     <span class="si3"><a href="#springUrl('/my/go-set-email.htm')" class="btn_h24_red">绑定</a></span>
+								 #end
+     	  	   	    	 	  </div>
+     	  	   	    	 </div>
+
+     	  	   	    </div>
+
+     	  	   	    <div class="infoCon_h1"><span class="fl_h1 fl">银行账户</span><a href="#springUrl('/my/card-manage-index.htm')" class="fr pr25">管理</a></div>
+
+     	  	   	    <div class="bankList">
+						#set($cardType = "")
+						#set($loop_index = 1)
+						#foreach($info in $response.data.list)
+							
+							#if($velocityCount <= 3)
+								 #if($info.cardType == "1")
+									#set($cardType="借记卡")
+								 #elseif($info.cardType == "2")
+									#set($cardType="贷记卡")
+								 #end
+     	  	   	    	 	
+     	  	   	    	 	#set($cardNo=$info.bankAccountNumMask)
+							#set($end=$cardNo.length() - 6)
+							#if($cardNo.length() - 6 > 0)
+								#set($tailNo=$cardNo.substring($end))
+							#else
+								#set($tailNo=$cardNo)
+							#end
+     	  	   	    	 	
+         	  	   	    	 <div class="bankBox icons_list">
+         	  	   	    	 	   <h3 class="tit_bg tit_bg_c${loop_index}">
+									   <span class="bankname icon $!{info.bankCode}" title="$!{info.bankName}">$!{info.bankName}</span>
+									   <span class="cardnum">$tailNo</span>
+									   <span class="del_card" href="#"></span>
+         	  	   	    	 	   </h3>
+                                   <p class="bankNumber"></p>
+							 </div>
+							#end
+						 	#set($loop_index = $loop_index + 1)
+						 	#if($loop_index == 4)
+						 		#set($loop_index = 1)
+						 	#end
+						 #end
+
+     	  	   	    </div>
+
+
+     	  	   </div>
+
+     	  </div>
+     	  <!-- S 右边内容 -->
+
+     </div>
+
+</div>
+</div>
+
+<script>
+$(function(){
+	jQuery.ajax({
+		type: "post",
+		url:"#springUrl('/my/toModifySummary.htm')",
+		data: "",
+		dataType: "JSON",
+		success: function(result) {
+			if (result.success) {
+				$("#modify_left_mes").show();
+			}
+			else{
+				$("#modify_left_mes").remove();
+				$("#set_left_mes").remove();
+				$("#left_mes_input").remove();
+			}
+		}
+	});
+
+	$(".serve_info div").each(function(index, element) {
+        $(this).hover(
+			function(){ $(this).addClass("hover"); },
+			function(){ $(this).removeClass("hover"); }
+		);
+    });
+    
+	$("#modify_left_mes").click(function(){
+		$(this).hide();
+		$("#left_mes").hide();
+		
+		$("#left_mes_input").show();
+		$("#set_left_mes").show();
+		return false;
+	});
+	$("#set_left_mes").click(function(){
+		var jBtnSave = $("#set_left_mes");
+		var jBtnModify = $("#modify_left_mes");
+		var jInput = $("#left_mes_input");
+		var jText = $("#left_mes");
+		var val = $.trim(jInput.val());
+		if(jInput.attr("data-placeholder") != undefined){
+			val = val == jInput.attr("data-placeholder") ? "" : val;
+		}
+		if(val == "" || val.length < 6 || val.length > 20){
+			alert("请输入6-20位字符的预留信息！");
+			return false;
+		}
+		jQuery.ajax({
+			type: "post",
+			url:"#springUrl('/my/modifySummary.htm')",
+			data: "summary="+val,
+			dataType: "JSON",
+			success: function(result) {
+				if (result.success) {
+					jInput.hide();
+					jBtnSave.hide();
+
+					jText.text(val).show();
+					jBtnModify.show();
+				}
+				else{
+					alert(result.message);
+				}
+			},
+			error: function(){
+				alert(G.sysError);
+			}
+		});
+		return false;
+	});
+})
+</script>

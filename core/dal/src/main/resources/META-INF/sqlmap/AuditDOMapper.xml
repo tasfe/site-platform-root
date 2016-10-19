@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.netfinworks.site.core.dal.daointerface.AuditDAO">
+	<resultMap id="BaseResultMap"
+		type="com.netfinworks.site.core.dal.dataobject.AuditDO">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="TRAN_VOUCHER_NO" property="tranVoucherNo"
+			jdbcType="VARCHAR" />
+		<result column="PAY_VOUCHER_NO" property="payVoucherNo"
+			jdbcType="VARCHAR" />
+		<result column="AUDIT_TYPE" property="auditType" jdbcType="VARCHAR" />
+		<result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+		<result column="MEMBER_ID" property="memberId" jdbcType="VARCHAR" />
+		<result column="OPERATOR_NAME" property="operatorName" jdbcType="VARCHAR" />
+		<result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+		<result column="AUDITOR_NAME" property="auditorName" jdbcType="VARCHAR" />
+		<result column="AUDITOR_ID" property="auditorId" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="AUDIT_DATA" property="auditData" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="GMT_CREATED" property="gmtCreated" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+		<result column="EXT" property="ext" jdbcType="VARCHAR" />
+		<result column="FEE" property="fee" jdbcType="DECIMAL" />
+		<result column="PAYEE_NO" property="payeeNo" jdbcType="VARCHAR" />
+		<result column="PAYEE_BANK_INFO" property="payeeBankInfo"
+			jdbcType="VARCHAR" />
+		<result column="FUNDOUT_GRADE" property="fundoutGrade"
+			jdbcType="CHAR" />
+		<result column="PAYEE_MEMBERID" property="payeeMemberId"
+			jdbcType="VARCHAR" />
+		<result column="TRAN_SOURCE_VOUCHER_NO" property="tranSourceVoucherNo"
+			jdbcType="VARCHAR" />
+		<result column="AUDIT_SUB_TYPE" property="auditSubType" jdbcType="VARCHAR" />
+		<result column="ORIG_TRAN_VOUCHER_NO" property="origTranVoucherNo"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, TRAN_VOUCHER_NO, PAY_VOUCHER_NO, AUDIT_TYPE, AMOUNT, MEMBER_ID,
+		OPERATOR_NAME, OPERATOR_ID, AUDITOR_NAME, AUDITOR_ID,
+		STATUS, AUDIT_DATA, REMARK, GMT_CREATED, GMT_MODIFIED,
+		EXT,FEE,PAYEE_NO,PAYEE_BANK_INFO,FUNDOUT_GRADE,PAYEE_MEMBERID,TRAN_SOURCE_VOUCHER_NO,
+		AUDIT_SUB_TYPE,ORIG_TRAN_VOUCHER_NO
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from T_ENT_AUDIT
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from T_ENT_AUDIT
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.netfinworks.site.core.dal.dataobject.AuditDO">
+		<selectKey resultType="java.lang.String" keyProperty="id"
+			order="BEFORE">
+			select to_char(sysdate,'yyyymm') || SEQ_T_ENT_AUDIT.nextval from dual
+		</selectKey>
+		insert into T_ENT_AUDIT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			<if test="tranVoucherNo != null">
+				TRAN_VOUCHER_NO,
+			</if>
+			<if test="payVoucherNo != null">
+				PAY_VOUCHER_NO,
+			</if>
+			<if test="auditType != null">
+				AUDIT_TYPE,
+			</if>
+			<if test="amount != null">
+				AMOUNT,
+			</if>
+			<if test="memberId != null">
+				MEMBER_ID,
+			</if>
+			<if test="operatorName != null">
+				OPERATOR_NAME,
+			</if>
+			<if test="operatorId != null">
+				OPERATOR_ID,
+			</if>
+			<if test="auditorName != null">
+				AUDITOR_NAME,
+			</if>
+			<if test="auditorId != null">
+				AUDITOR_ID,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="auditData != null">
+				AUDIT_DATA,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="gmtCreated != null">
+				GMT_CREATED,
+			</if>
+			<if test="gmtModified != null">
+				GMT_MODIFIED,
+			</if>
+			<if test="ext != null">
+				EXT,
+			</if>
+			<if test="fee != null">
+				FEE,
+			</if>
+			<if test="payeeNo != null">
+				PAYEE_NO,
+			</if>
+			<if test="payeeBankInfo != null">
+				PAYEE_BANK_INFO,
+			</if>
+			<if test="fundoutGrade != null">
+				FUNDOUT_GRADE,
+			</if>
+			<if test="payeeMemberId != null">
+				PAYEE_MEMBERID,
+			</if>
+			<if test="tranSourceVoucherNo != null">
+				TRAN_SOURCE_VOUCHER_NO,
+			</if>
+			<if test="auditSubType != null">
+				AUDIT_SUB_TYPE,
+			</if>
+			<if test="origTranVoucherNo != null">
+				ORIG_TRAN_VOUCHER_NO
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id,jdbcType=VARCHAR},
+			<if test="tranVoucherNo != null">
+				#{tranVoucherNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payVoucherNo != null">
+				#{payVoucherNo,jdbcType=VARCHAR},
+			</if>
+			<if test="auditType != null">
+				#{auditType,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="memberId != null">
+				#{memberId,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorName != null">
+				#{operatorName,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=VARCHAR},
+			</if>
+			<if test="auditorName != null">
+				#{auditorName,jdbcType=VARCHAR},
+			</if>
+			<if test="auditorId != null">
+				#{auditorId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="auditData != null">
+				#{auditData,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="gmtCreated != null">
+				#{gmtCreated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gmtModified != null">
+				#{gmtModified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ext != null">
+				#{ext,jdbcType=VARCHAR},
+			</if>
+			<if test="fee != null">
+				#{fee,jdbcType=DECIMAL},
+			</if>
+			<if test="payeeNo != null">
+				#{payeeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payeeBankInfo != null">
+				#{payeeBankInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="fundoutGrade != null">
+				#{fundoutGrade,jdbcType=CHAR},
+			</if>
+			<if test="payeeMemberId != null">
+				#{payeeMemberId,jdbcType=VARCHAR},
+			</if>
+			<if test="tranSourceVoucherNo != null">
+				#{tranSourceVoucherNo,jdbcType=VARCHAR},
+			</if>
+			<if test="auditSubType != null">
+				#{auditSubType,jdbcType=VARCHAR},
+			</if>
+			<if test="origTranVoucherNo != null">
+				#{origTranVoucherNo,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.netfinworks.site.core.dal.dataobject.AuditDO">
+		update T_ENT_AUDIT
+		<set>
+			<if test="tranVoucherNo != null">
+				TRAN_VOUCHER_NO = #{tranVoucherNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payVoucherNo != null">
+				PAY_VOUCHER_NO = #{payVoucherNo,jdbcType=VARCHAR},
+			</if>
+			<if test="auditType != null">
+				AUDIT_TYPE = #{auditType,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				AMOUNT = #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="memberId != null">
+				MEMBER_ID = #{memberId,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorName != null">
+				OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorId != null">
+				OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+			</if>
+			<if test="auditorName != null">
+				AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+			</if>
+			<if test="auditorId != null">
+				AUDITOR_ID = #{auditorId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="auditData != null">
+				AUDIT_DATA = #{auditData,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="gmtCreated != null">
+				GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="gmtModified != null">
+				GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ext != null">
+				EXT = #{ext,jdbcType=VARCHAR},
+			</if>
+			<if test="fee != null">
+				FEE = #{fee,jdbcType=DECIMAL},
+			</if>
+			<if test="payeeNo != null">
+				PAYEE_NO = #{payeeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payeeBankInfo != null">
+				PAYEE_BANK_INFO = #{payeeBankInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="fundoutGrade != null">
+				FUNDOUT_GRADE = #{fundoutGrade,jdbcType=CHAR},
+			</if>
+			<if test="payeeMemberId != null">
+				PAYEE_MEMBERID = #{payeeMemberId,jdbcType=VARCHAR},
+			</if>
+			<if test="tranSourceVoucherNo != null">
+				TRAN_SOURCE_VOUCHER_NO = #{tranSourceVoucherNo,jdbcType=VARCHAR},
+			</if>
+			<if test="auditSubType != null">
+				AUDIT_SUB_TYPE = #{auditSubType,jdbcType=VARCHAR},
+			</if>
+			<if test="origTranVoucherNo != null">
+				ORIG_TRAN_VOUCHER_NO = #{origTranVoucherNo,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<sql id="T_ENT_AUDIT_query_condition">
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="tranVoucherNo != null and tranVoucherNo.trim().length() != 0">
+				AND TRAN_VOUCHER_NO = #{tranVoucherNo,jdbcType=VARCHAR}
+			</if>
+			<if test="refundNo != null and refundNo.trim().length() != 0">
+				AND TRAN_VOUCHER_NO = #{refundNo,jdbcType=VARCHAR}
+			</if>
+			<if test="payVoucherNo != null and payVoucherNo.trim().length() != 0">
+				AND PAY_VOUCHER_NO = #{payVoucherNo,jdbcType=VARCHAR}
+			</if>
+			<if test="auditType != null and auditType.trim().length() != 0">
+				<if test="auditType == 'transfer'">
+			        <![CDATA[AND (AUDIT_TYPE = 'transfer_bank' OR AUDIT_TYPE = 'transfer_kjt' OR AUDIT_TYPE = 'transfer' OR AUDIT_TYPE = 'pay_to_card')]]>
+			    </if>
+			    <if test="auditType == 'payoff'">
+			        <![CDATA[AND (AUDIT_TYPE = 'payoff_kjt' OR AUDIT_TYPE = 'payoff_bank')]]>
+			    </if>
+			   <if test="auditType != 'transfer' and auditType !='payoff'">
+			        AND AUDIT_TYPE = #{auditType,jdbcType=VARCHAR}
+			   </if>
+			</if>
+			<if test="amount != null">
+				AND AMOUNT = #{amount,jdbcType=DECIMAL}
+			</if>
+			<if test="memberId != null and memberId.trim().length() != 0">
+				AND MEMBER_ID = #{memberId,jdbcType=VARCHAR}
+			</if>
+			<if test="operatorName != null and operatorName.trim().length() != 0">
+				AND OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR}
+			</if>
+			<if test="operatorId != null and operatorId.trim().length() != 0">
+				AND OPERATOR_ID = #{operatorId,jdbcType=VARCHAR}
+			</if>
+			<if test="auditorName != null and auditorName.trim().length() != 0">
+				AND AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR}
+			</if>
+			<if test="auditorId != null and auditorId.trim().length() != 0">
+				AND AUDITOR_ID = #{auditorId,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status.trim().length() != 0">
+				AND STATUS = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="auditData != null and auditData.trim().length() != 0">
+				AND AUDIT_DATA = #{auditData,jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null and remark.trim().length() != 0">
+				AND REMARK = #{remark,jdbcType=VARCHAR}
+			</if>
+			<if test="startDate != null and endDate != null">
+				<if test="queryByTime != null and queryByTime.trim() == 'gmtCreated'">
+			        <![CDATA[AND GMT_CREATED <= #{endDate}]]>
+			        <![CDATA[AND GMT_CREATED >= #{startDate}]]>
+			    </if>
+			    <if test="queryByTime != null and queryByTime.trim() == 'gmtModified'">
+			        <![CDATA[AND GMT_MODIFIED <= #{endDate}]]>
+			        <![CDATA[AND GMT_MODIFIED >= #{startDate}]]>
+			    </if>
+			</if>
+			<if test="gmtCreated != null">
+				AND GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP}
+			</if>
+			<if test="gmtModified != null">
+				AND GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP}
+			</if>
+			<if test="ext != null and ext.trim().length() != 0">
+				AND EXT like '%' || #{ext,jdbcType=VARCHAR}|| '%'
+			</if>
+			<if test="fee != null">
+				AND FEE = #{fee,jdbcType=DECIMAL}
+			</if>
+			<if test="payeeNo != null and payeeNo.trim().length() != 0">
+				AND PAYEE_NO like '%'||#{payeeNo,jdbcType=VARCHAR}||'%'
+			</if>
+			<if test="payeeBankInfo != null and payeeBankInfo.trim().length() != 0">
+				AND PAYEE_BANK_INFO = #{payeeBankInfo,jdbcType=VARCHAR}
+			</if>
+			<if test="fundoutGrade != null and fundoutGrade.trim().length() != 0">
+				AND FUNDOUT_GRADE = #{fundoutGrade,jdbcType=VARCHAR}
+			</if>
+			<if test="payeeMemberId != null and payeeMemberId.trim().length() != 0">
+				AND PAYEE_MEMBERID = #{payeeMemberId,jdbcType=VARCHAR}
+			</if>
+			<if test="tranSourceVoucherNo != null and tranSourceVoucherNo.trim().length() != 0">
+				AND TRAN_SOURCE_VOUCHER_NO = #{tranSourceVoucherNo,jdbcType=VARCHAR}
+			</if>
+			<if test="auditSubType != null and auditSubType.trim().length() != 0">
+				AND AUDIT_SUB_TYPE = #{auditSubType,jdbcType=VARCHAR}
+			</if>
+			<if test="origTranVoucherNo != null and origTranVoucherNo.trim().length() != 0">
+				AND ORIG_TRAN_VOUCHER_NO = #{origTranVoucherNo,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+	<select id="query" resultMap="BaseResultMap">
+		<include refid="PAGINATION.ORACLE_paginationStart" />
+		select
+		<include refid="Base_Column_List" />
+		from T_ENT_AUDIT
+		<if test="!fuzzy">
+			<include refid="T_ENT_AUDIT_query_condition" />
+		</if>
+		<if test="order">
+			order by GMT_CREATED desc
+		</if>
+		<include refid="PAGINATION.ORACLE_paginationEnd" />
+	</select>
+	<select id="count" resultType="java.lang.Integer">
+		select count(1)
+		from T_ENT_AUDIT
+		<if test="!fuzzy">
+			<include refid="T_ENT_AUDIT_query_condition" />
+		</if>
+	</select>
+</mapper>

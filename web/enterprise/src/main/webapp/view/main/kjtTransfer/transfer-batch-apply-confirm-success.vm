@@ -1,0 +1,83 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_zz" class="wrap">
+    <div class="page_title transfer">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">转账</span>
+        </div>
+        <div class="right fr"><a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=4')">转账记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_7_3.html&6,2')">转账常见问题</a></div>
+    </div>
+    <div class="zz_tab_link"><a href="${path}/transfer/toTransferKjt.htm?link=0204" class="tab_zz_kjt fl cur">转账到永达账户</a>
+		<a href="${path}/bTransfer/toTransferBank.htm" class="tab_zz_yh fl ">转账到银行账户</a></div>
+    <div class="pagebox pagebox1 pagezz relative">
+        <div class="step-wrap step-wrap2">
+            <span class="step-index">1</span>
+            <span class="step-name">转账信息</span>
+            <span class="s"></span>
+            <span class="step-index step-index-cur">2</span>
+            <span class="step-name step-name-cur">转账审核</span>
+            <span class="s"></span>
+            <span class="step-index">3</span>
+            <span class="step-name">转账成功</span>
+        </div>
+        <form class="zz_form_1">
+            <div class="boxbg1 w860">
+            	<div class="p40">
+                    <table cellpadding="0" cellspacing="0" border="0"  class="sqinfo" width="100%">
+                        <tr>
+                            <td class="tcenter"><i class="txsh_yq2"><span class="f16 b">批量转账到永达账户申请已提交</span></i></td>
+                        </tr>
+                    </table>
+                	<table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info f14">
+                    	<tr>
+                        	<td width="198" class="p169"><span class="b">转账人数：</span>$!{form.transferCount}人</td>
+                            <td width="206"><span class="b">转账金额：</span><span class="color_f6 b">$!{form.totalTransMoney}</span>元</td>
+                            <td width="287"><span class="b">服务费：</span><span class="b">$!{form.serviceCharge}</span>元</td>
+                        </tr>
+                        <tr>
+                            <td class="p169" ><span class="b">总额：</span><span class="color_f6 b">$!{form.totalMoney}</span>元</td>
+                            <!--<td  colspan="2"><span class="b">短信通知到：</span><span class="b">$!{form.mobile}</span></td>-->
+                        </tr>
+
+                    </table>
+                    <div class="mrlauto div_btn_submit"><input type="button" class="btn btn-bg J_btn_fanhui" value="返 回"></div>
+                </div>
+               
+                
+            </div>
+        </form>
+        <div><br /></div>
+        <!--<div class="faq_relevant">
+        	<h4>批量转账问题：</h4>
+            <dl>
+                <dt>什么是批量转账到账户？</dt>
+                <dd>答：您可以下载批量转账到账户的表格，在表格中可添加多个转账的永达账户，来实现您的转账需求。</dd>
+            </dl>
+            <dl>
+                <dt>什么是批量转账到银行卡？</dt>
+                <dd>答：您可以下载批量转账到银行的表格，在表格中可添加多个转账的银行卡，来实现您的转账需求。</dd>
+            </dl>
+            <dl>
+                <dt>批量转账到账户的总笔数，总金额限制？</dt>
+                <dd>答：批量转账到账户总笔数为999笔，总金额不受限制！</dd>
+            </dl>
+            <dl>
+                <dt>批量转账到银行卡的总笔数，总金额？</dt>
+                <dd>答：批量转账到银行卡总笔数为999笔，总金额不受限制！</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>
+        <!--<a href="javascript:void(0)" class="Collapse"></a>-->
+        
+    </div>
+  
+</div>
+</div>
+<script>
+$(function() {
+	$('.J_btn_fanhui').click(function(){
+		window.location.href = '$!{request.contextPath}/transfer/toTransferKjt.htm?link=0204';
+	});
+});
+</script>

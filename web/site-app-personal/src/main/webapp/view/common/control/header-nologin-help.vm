@@ -1,0 +1,7 @@
+<!--头部-->
+<div id="top">
+	<div class="wrap">
+        <div class="fl"><a href="${WEB_RESOURCE.enterWalletAddr}/index.htm">&gt;&nbsp;进入商户专业版</a></div>
+        <div class="fr"><a href="${request.contextPath}/login/page.htm">登录</a>|<a href="${request.contextPath}/register/main.htm">注册</a>|<a href="#springUrl('/help/helpcenter.htm')">帮助中心</a>|<a href="#springUrl('/customservice/index.htm')">客服中心</a>|<span class="kf">客服热线：<b>400-611-0909</b></span></div>
+    </div>
+</div>

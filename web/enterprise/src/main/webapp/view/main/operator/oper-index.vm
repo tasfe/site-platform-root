@@ -1,0 +1,124 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title operator">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">操作员</span>
+		</div>
+	</div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/operator/operator-index.htm?refresh=true')">
+     	  	   	             <span class="subNavIcon jsgl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">角色管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/operator/manage-index.htm')">
+     	  	   	             <span class="subNavIcon cygl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">成员管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+            <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1 pos_rel">角色管理<a class="role_tj" href="${request.contextPath}/my/operator/add-role.htm"></a></div>
+     	  	   <div class="account_set_right_main clearfix">
+                       
+                       <div class="role">
+
+								 #foreach($info in $response.data.list)
+								 <div class="roleBox" data-id="$!{info.roleId}" data-id2="$!{info.roleName}" data-id3="$!{info.memo}">
+                                      <ul>
+                                           <li class="roleBoxOne">
+										   <table width="100%" border="0" cellspacing="0" cellpadding="0" style="height:100px;">
+                                                <tr>
+                                            	    <td style=" vertical-align:middle; text-align:left; height:100px; overflow:hidden;word-wrap:break-word;word-break:break-all;">$!{info.roleName}</td>
+                                                </tr>
+                                           </table>
+										   </li>
+                                           <li class="roleBoxTwo">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="height:60px; vertical-align:middle; text-align:left;word-wrap:break-word;word-break:break-all;">
+                                                    <tr>
+                                                	    <td><strong class="bold">角色描述：</strong>$!{info.memo}</td>
+                                                    </tr>
+                                                </table>
+										   </li>
+										   #if($!{info.roleName} != "管理")
+                                           <li class="roleBoxThree"><div><input class="btn J_btn_xgxi" type="button" value="修改信息" data-appid="$!{info.appId}"><input class="btn btn-bg J_btn_sc1" type="button" value="删 除" data-appid="$!{info.appId}"></div></li>
+										   #end
+                                      </ul>
+                                 </div>
+								 #end
+                       </div>
+
+     	  	   </div>
+
+     	  </div>
+     	  <!-- E 右边内容 -->
+
+     </div>
+	 
+	 <form class="" id="modifyRoleForm" action="#springUrl('/my/operator/modify-role.htm')" method="POST">
+		<input type="hidden" id="mofifyType" name="mofifyType" value=""/>
+		<input type="hidden" id="roleId" name="roleId"/>
+		<input type="hidden" id="roleName" name="roleName"/>
+		<input type="hidden" id="memo" name="memo"/>
+    </form>
+
+</div>
+</div>
+<script>
+$(function(){
+	$(".roleBox").each(function(index, element) {
+        $(this).hover(
+			function(){$(this).addClass("select").find(".roleBoxThree").show();},
+			function(){$(this).removeClass("select").find(".roleBoxThree").hide();}
+		);
+    });
+	
+	$(".J_btn_xgxi").click(function(){
+		var jThis = $(this);
+		$("#roleId").val(jThis.parent().parent().parent().parent().attr("data-id"));
+		$("#roleName").val(jThis.parent().parent().parent().parent().attr("data-id2"));
+		$("#memo").val(jThis.parent().parent().parent().parent().attr("data-id3"));
+		$("#mofifyType").val("modifyFunc");
+		$("#modifyRoleForm").attr("action","#springUrl('/my/operator/modify-role.htm?sourceId="+jThis.data("appid")+"')");
+		$("#modifyRoleForm").submit();
+	});
+	
+	$(".J_btn_xgcy").click(function(){
+		$("#mofifyType").val("modifyOper");	
+		$("#modifyRoleForm").submit();
+	});
+	
+	$(".J_btn_sc1").click(function(){
+		var roleId = $(this).parent().parent().parent().parent().attr("data-id");
+		var html = '<div class="deleteRole">';
+		html += '<p>请确认是否要删除' + $(this).parent().parent().parent().find(".roleBoxOne").text() + '？</p>';
+		html += '</div>';
+		html += '<div class="btn_deleteRole" ><input type="button" value="确 认" class="btn J_btn_qr" data-id="'+roleId+'" data-appid="'+$(this).data("appid")+'"><input type="button" value="取 消" class="btn btn-bg J_btn_qx ml30"></div>';
+													
+		showWin('html', html, '', 500, 230, ' ', '', '');
+	});
+	$("body").delegate(".J_btn_qr","click",function(){
+		$("#roleId").val($(this).attr("data-id"));
+		$("#modifyRoleForm").attr("action","#springUrl('/my/operator/delete-role.htm?sourceId="+$(this).data("appid")+"')");
+		$("#modifyRoleForm").submit();
+	});
+	$("body").delegate(".J_btn_qx","click",function(){
+		closeSW();
+	});
+	
+})
+</script>

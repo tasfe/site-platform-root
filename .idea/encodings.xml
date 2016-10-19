@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/dal" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/domain" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/domain/main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/domainservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/domainservice/main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ext" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ext/integration" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ext/service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/enterprise" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/personal" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/site-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/site-app-personal" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

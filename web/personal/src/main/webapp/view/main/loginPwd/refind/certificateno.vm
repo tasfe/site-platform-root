@@ -1,0 +1,47 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>登陆密码找回</h2></div>
+     
+     <div class="safetyMain">
+     	 <form id="form" action="${request.contextPath}/my/refind/loginPwd/checkCertificateNoIsExist.htm" method="POST">
+			<input id="selectlogin" name="selectlogin" type="hidden" value="$!{selectlogin}">
+			<input id="loginName" name="loginName" type="hidden" value="$!{loginName}">
+		    <input id="membertype" name="membertype" type="hidden" value="$!{membertype}">
+         <div class="loginCenter">
+               
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">证件号：</span>
+                          <input id="CertificateNo" name="CertificateNo" type="text" class="inputtext w232 placeholder" value="" data-placeholder="请输入实名认证证件号">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error">$!{errorMsg}</div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form>
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		flag = checkMust($("#CertificateNo"),$("#CertificateNo").parent().parent().find(".error"),"请输入证件号");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+	
+		
+		$("form").submit();
+	});
+})
+</script>
+

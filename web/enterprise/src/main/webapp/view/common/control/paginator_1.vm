@@ -1,0 +1,104 @@
+
+	#set($totalItem = $!response.data.page.pageInfo.totalItem)
+	#set($pageCount = $!response.data.page.pageInfo.getTotalPage())
+	#set($currentPage = $!response.data.page.pageInfo.currentPage)
+	#set($isHaveData = $!totalItem > 0)
+	<div class="nav_page mt10"><a href="javascript:toQuerySubmit(1);">首页</a><a id="prevPage">上一页</a><i>第 $currentPage 页，共 #if($pageCount==0) 1 #else $pageCount #end 页</i>
+		<a id="nextPage">下一页</a><a href="javascript:toQuerySubmit($pageCount);">尾页</a><span class="ml10">转到</span>
+		<input type="text" class="input_go"  value="$currentPage" #if(!$isHaveData) disabled="disabled" #end><span>页</span><input type="button" class="btn_go" #if(!$isHaveData) disabled="disabled" #end></div>
+
+ <script language="javascript">	
+ $(function(){
+		var totalItem = '$!response.data.page.pageInfo.totalItem';
+		var pageSize = '$!response.data.page.pageInfo.pageSize';
+		var currentPage = '$!response.data.page.pageInfo.currentPage';
+		var pageCount = '$!response.data.page.pageInfo.getTotalPage()';
+		
+		var toQueryFn = function() {
+			var page = $(".input_go").val();
+			var patm=/^\d+$/;
+			if(!patm.test(page)){
+				alert("请输入要跳转的页"); 
+				$(".input_go").val(""); 
+				return false;
+			}
+			if(parseInt(page, 10) > parseInt(pageCount, 10)){
+				return toQuerySubmit(pageCount);
+			}
+			return toQuerySubmit(page);
+		}
+		
+		if(pageCount == 0){
+			pageCount=1;
+		}
+		if(!currentPage || totalItem == 0){
+			currentPage = 1;
+		}
+		
+		if(currentPage!=1){
+			$("#prevPage").attr("style","cursor:pointer");
+		}else{
+			$("#prevPage").css("color","gray");
+		}
+		
+		if(currentPage != pageCount){
+			$("#nextPage").attr("style","cursor:pointer");
+		}else{
+			$("#nextPage").css("color","gray");
+		}
+		
+		<!--上一页-->
+		$("#prevPage").click(function(){
+			if(currentPage!=1){
+				return toQuerySubmit(currentPage-1);
+			}
+		});
+		
+		<!--下一页 -->
+		$("#nextPage").click(function(){
+			if(currentPage != pageCount){
+				return toQuerySubmit(parseInt(currentPage)+1, 10);
+			}
+		});
+		$('.input_go').on('keypress', function(e){
+				var keyCode = e.which;  
+				if (keyCode == 46 || (keyCode >= 48 && keyCode <=57))
+					return true;
+				else  
+					return false;	
+		});
+		
+		$('.input_go').on('keyup', function(e){
+			var value = $(".input_go").val();
+			if (value) {
+				var value = parseInt(value, 10);
+				if (value  > pageCount) {
+					$(".input_go").val(pageCount);
+					return false;  
+				}
+				$(".input_go").val(value);
+			}
+		});
+	
+	    $('.input_go').bind('keydown', function (e) {
+            var key = e.which;
+            if (key == 13) {
+            	return toQueryFn();
+            }
+        });
+
+		
+		$(".btn_go").click(function(){
+			return toQueryFn();
+		});
+		
+ });
+</script>
+            
+           
+   
+ 
+    	
+
+    
+  

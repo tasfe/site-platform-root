@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>数字证书</h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               <div class="tx_step step step_3" style="margin-left:80px; padding-bottom:10px;"><i></i><span class="s1">验证身份</span><span class="s2">安装证书</span><span class="s3">激活成功</span></div>
+              <!--  <div class="usbKeyConT usbKeyConT2 stepFour">
+                    <span class="u1">验证身份</span>
+                    <span class="u2">输入手机校验码</span>
+                    <span class="u3">安装证书</span>
+                    <span class="u4">激活成功</span>
+               </div>
+               -->
+               
+               <div class="usbKeyCenter" style="margin:50px 0 30px 180px; ">
+                   <div class="loginTipsBox ml161" style=" height:auto;">
+                         <i class="tipsIcon succeed"></i>
+                         <p class="f16 bold mb10">数字证书已经安装成功!</p>
+                         <p>您的账户已受数字证书保护，当账户进行资金变动操作时（如：付款、确认收货等），<br>需要验证电脑上是否安装了您的数字证书。</p>
+                         <p class="mt30">若您在其他电脑上使用您的账户资金，需要在其他电脑上也安装您的数字证书。</p>
+                         <p class="mt5">您现在可以前往：<a href="#springUrl('/softcertActivate/showSoftDetails.htm')">管理数字证书</a><a class="ml10" href="#springUrl('/my/accountManage.htm')">安全中心</a></p>
+                    </div>
+               </div>
+               
+               <div class="usbKeyFaq">
+                    <h4>数字证书问题：</h4>
+                    <dl>
+                        <dt>永达互联网金融数字证书有什么作用？</dt>
+                        <dd>答：1、<b>加强保障：</b>将您的永达互联网金融账号与您使用的电脑进行绑定，即使对方窃取了您的密码，在其它的设备上也动不了您的资金，保障了您的资金安全。数字证书用户，如果在其他设备登录永达互联网金融账户，在设备没有安装数字证书的情况下，只能查询账户，不能进行任何操作，数字证书相当于为您的账户配置了一把“钥匙”，大大增强账户使用的安全性。<br><br>
+ 2、<b>提升限额：</b>使用永达互联网金融的数字证书，当您在使用永达互联网金融进行转账、提现等功能时可提升相应额度。</dd>
+                    </dl>
+					<dl>
+                        <dt>数字证书安装有哪些好处？</dt>
+                        <dd>答：申请了数字证书，在登录的时候会获取更高安全等级的身份认证，可以更好地保证您发送的信息不会在网上被篡改，即使丢失了账号和密码，您的账户、资金仍然能得到一定的安全保护。数字证书会将用户的出款、重要资料修改等行为控制在固定的电脑上进行，即使账号密码被盗取，没有证书，就无法操作账户内的资金。</dd>
+                    </dl>
+                   <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+                </div>
+               
+               
+               
+          </div>
+      
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+
+
+
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script> 
+
+</body>
+</html>

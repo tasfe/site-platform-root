@@ -1,0 +1,509 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_zz" class="wrap">
+	<div class="page_title transfer">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">转账</span>
+		</div>
+		<div class="right fr"><a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=4')">转账记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_7_3.html&6,2')">转账常见问题</a></div>
+	</div>
+    <div class="zz_tab_link">
+		<a href="${path}/transfer/toTransferKjt.htm?link=0204" class="tab_zz_kjt fl">转账到永达账户</a>
+		<a href="${path}/bTransfer/toTransferBank.htm" class="tab_zz_yh fl cur">转账到银行账户</a>
+	</div>
+    <div id="infoadd" class="pagebox pagebox1 pagezz relative">
+		<div class="step-wrap step-wrap2">
+			<span class="step-index step-index-cur">1</span>
+			<span class="step-name step-name-cur">转账信息</span>
+			<span class="s"></span>
+			<span class="step-index">2</span>
+			<span class="step-name">转账审核</span>
+			<span class="s"></span>
+			<span class="step-index">3</span>
+			<span class="step-name">转账成功</span>
+		</div>
+
+        <form class="bankTransferForm" action="${path}/bTransfer/toConfirmTransferBank.htm" method="post">
+            <div class="boxbg1 w860">
+                <div class="zz_pl_rt">批量转账到银行（单次最大支持999笔） <a href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/download/model-batch-bank-transfer.xls">下载模板</a> 模板更新于2016-3-3 | <a href="#" id="btn_a_drmb">导入模板</a></div>
+                <table cellpadding="0" cellspacing="0" border="0" class="sqinfo sqinfozz" style="margin:0;">
+                	<tr #if(${memberType} == "1") style="display:none" #end>
+                    	<td colspan="2" class="choice">
+                        	<label class="t1"><input type="radio" class="account_type" name="accountType" value="1" checked>转账到个人银行账户</label>
+                            <label class="t2"><input type="radio" class="account_type" name="accountType" value="0">转账到企业银行账户</label>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">收款方开户名：</td>
+                        <td><input name="recvAcctName" type="text" class="inputtext w232" id="name" maxlength="20"> <a style="color: #08c;" href="javascript:void(0)" class="f12" id="unfamiliarLink">选择生僻字</a>
+						</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">银行账号：</td>
+                        <td><input name="accountNo" type="text" class="inputtext w232 number" id="bank_account" maxlength="32"></td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">确认银行账号：</td>
+                        <td><input name="confirmAccountNo" type="text" class="inputtext w232 number" id="bank_account_check" maxlength="32"></td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">支行信息：</td>
+                        <td>
+							<input id="bankCode" name="bankCode" type="hidden" />
+							<input id="bankName" name="bankName" type="hidden" />
+							<input id="province" name="province" type="hidden" />
+							<input id="city" name="city" type="hidden" />
+							<input id="branchNo" name="branchNo" type="hidden" />
+							<input type="text" class="inputtext w232" id="bank_branch" readonly="true" />&nbsp;
+							<input name="branchName" type="hidden" id="hide_bank_branch" />
+							<input name="branchShortName" type="hidden" id="branchShortName" />
+							<input type="button" value="查询支行信息" class="cxzhxx" />
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td class="ttdms"></td>
+                        <td class="ttdms">
+                        <span class="color_66 f12">如：招商银行杭州高新支行，如果您无法确定，建议您致电银行客服询问。</span>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">转账金额：</td>
+                        <td><input name="transMoney" type="text" class="inputtext w232 money2" id="zz_money" maxlength="13"></td>
+                    </tr>
+					<!--
+                    <tr>
+                    	<td class="h3">手机号：</td>
+                        <td><input type="text" id="zz_mobile" name="mobile" class="inputtext w232 mobile2 number" maxlength="11"></td>
+                    </tr>
+					
+                    <tr>
+                    	<td class="ttdms"></td>
+                        <td class="ttdms"><label><input type="checkbox" class="checkboxdx" style="*vertical-align:-3px;_vertical-align:-4px;"><span class="f12">短信通知联系人</span></label></td>
+                    </tr>-->
+                    <tr>
+                    	<td class="h3">服务费：</td>
+                        <td><span class="b" id="servFeeText">0.00</span>元<input type="hidden" id="servFee" name="serviceCharge" value="0.222" /></td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">总额：</td>
+                        <td><span class="color_f6 b" id="total_money_text">0.00</span>元<input id="total_money" type="hidden" name="totalMoney" value="0" /></td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">备注：</td>
+                        <td><div class="select_div" ><select name="remarkType" id="remarks" style="width:150px;">
+                        <option value="1">劳务费</option>
+                        <option value="2">归还个人借款</option>
+                        <option value="3">奖励</option>
+                        <option value="4">债权转账</option>
+                        <option value="5">产权转让</option>
+                        <option value="6">产品购销</option>
+                        <option value="0">其他</option>
+                        </select></div></td>
+                    </tr>
+                    <tr style="display:none;" id="remark">
+                    	<td class="h3"></td>
+                        <td style="padding:0; height:auto;"><textarea class="area1 cutdown_words" name="remark" data-tip-place="1" maxlength="50"></textarea></td>
+                    </tr>
+                </table>
+                <div style="padding-left:379px;padding-top:5px;"><input type="checkbox" id="agree_xieyi" class="checkbox mr5"><label for="agree_xieyi">同意</label><a href="javascript:" id="xieyi">《转账到银行卡服务协议》</a></div>
+				<div id="submit_error" class="error" style="height:20px; line-height:20px; padding-left:379px;"></div>
+                <div class="btn_bottom_tx row3" style="padding-top:0;">
+					<input type="button" value="下一步" style="width:100px"  class="btn btn_submit">
+				</div>
+            </div>
+        </form>
+        <a href="#@" class="contact_friends_open">显示联系人</a>
+        <div class="contact_friends">
+            <div class="contact_friends_search">
+            <input type="text" data-placeholder="请输入您想搜索的联系人" value="" class="inputtext w192 placeholder" id="contact_friends_search_input">
+            <a href="#@" class="contact_friends_close">隐藏</a>
+            </div>
+            <div class="contact_friends_list_box">
+                <ul class="contact_friends_list">
+                </ul>
+            </div>
+        </div>
+		<br>
+		<!--<div class="faq_relevant">
+			<h4>转账问题：</h4>
+			<dl>
+				<dt>转账有哪几种分类？</dt>
+				<dd>答：转账是资金转移的一个过程，包括账户余额转到账户/银行账户、银行账户到账户余额<br />按资金转移的接收方不同，可以分为转账到账户和转账到银行账户<br />按一次可添加转账接收方个数可以分为批量转账和单笔转账</dd>
+			</dl>
+			<dl>
+				<dt>哪些情况操作员不能转账申请？</dt>
+				<dd>答：a) 永达商户账号被冻结，无法转账；<br />b) 永达商户账号被加入转账黑名单；<br />c) 永达商户账号没有开通转账服务；<br />d) 永达商户账号合同到期未续约；<br />e) 永达商户账号注销；<br />f) 操作员没有转账申请权限；<br />g) 账户可用余额不足；<br />h) 账户资金冻结；<br />i) 当天转账次数超限。</dd>
+			</dl>
+			<dl>
+				<dt>为什么转账不成功？</dt>
+				<dd>答：1、请检查您输入的转账信息是否正确<br />2、请检查您的网络是否稳定<br />3、请检查您转账金额是否超限<br />4、请检查您的余额是否足够<br />5、其他原因可拨打客服热线：0571-28276085</dd>
+			</dl>
+			<div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+		</div>-->
+        
+    </div>
+  
+</div>
+</div>
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/chosen.css" rel="stylesheet" type="text/css" />
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/chosen.jquery.js"></script>
+<script type="text/javascript">
+	function iframeOk(){
+		initYes();
+		closeSW();
+	}
+	function iframeCancel(){
+		initNo();
+		closeSW();
+	}
+	function initNo(){
+		$("#agree_xieyi").attr("checked", false);
+		$(".btn_submit").attr("disabled", true).addClass("btn_disabled");
+	}
+	function initYes(){
+		$("#agree_xieyi").attr("checked", true);
+		$(".btn_submit").attr("disabled", false).removeClass("btn_disabled");
+	}
+var avaBalance = $!{avaBalance};
+var canTransferMoney = avaBalance > 0 ? parseFloat(avaBalance) : 0;
+var fee = 0;
+
+//data 二维数组
+var contacts = [];
+var un=[
+		["a","奡靉叆"],["b","仌昺竝霦犇愊贲琲礴埗別骉錶"],["c","旵玚棽琤翀珵楮偲赪瑒篪珹捵茝鷐铖宬査嶒"],["d","耑昳菂頔遆珰龘俤叇槙璗惇"],["e","峩"],["f","仹汎沨昉璠雰峯洑茀渢棻棻頫"],["g","玍冮芶姏堽粿筦嘏釭"],["h","郃浛訸嗃瓛翃隺鋐滈翚翯竑姮葓皜袆淏皞翙銲鉷澒澔閤婳黃峘鸻鈜褘锽谹嫮"],["i",""],["j","冏泂劼莙濬暕珒椈珺璟競煚傑玦鑑瑨瑨琎勣寯烱浕斚倢瑴畯雋傢峤"],["k","凱堃蒯鹍崑焜姱衎鵾愷鎧"],["l","玏呂俍冧倞琍綝壘孋瓅璘粦琍麗樑秝鍊崚链镠皊箖菻竻鸰琭瓈騄浬瑠嶺稜欐昽"],["m","劢忞旻旼濛嫚媺铓鋩洺媌媔祃牻慜霂楙媄瑂"],["n","婻寗嫟秾迺柟薿枏"],["o",""],["p","芃玭玶罴毰珮蘋慿弸掽逄砯"],["q","玘佺耹踆骎啟蒨慬勍嵚婍璆碏焌駸綪锜荍釥嶔啓"],["r","汭瑈瑢讱镕婼叡蒻羢瀼"],["s[sh]","屾昇妽珅姼甡湦骦塽挻甦鉥燊遂陞莦湜奭佀聖骕琡"],["t","沺凃禔慆弢颋譚曈榃湉珽瑱橦镋渟黇頲畑媞鰧"],["u",""],["v",""],["w","卍彣炆溦娬韡暐偉湋妏硙珷娒"],["x","仚旴忺炘昍烜爔斅豨勲敩虓鈃禤燮瑄晞賢翾譞諕璿琇晛焮珣晅郤禼皛哓肸谞迿咲婞昫缐姁猇欻箮翛暁"],["y","乂冘弌贠伝伃杙沄旸玙玥垚訚堯溁嫈澐颺熤儀赟祎瑀湧燚嬿鋆嫄愔贇彧崟韻龑颙晹媖顒禕羕炀弇湲霙嫕浥飏峣曣億雲愔洢暘钖垟詠燿鹓歈貟瑩燏暎畇娫矞祐溳崯颍煬靷谳異軏繄"],["z[zh]","烝梽喆禛誌曌衠淽枬詟炤昝珘赒"]
+		];
+$(function(){
+	initNo();
+	
+	$("#xieyi").click(function(){
+		showWin("iframe","${request.contextPath}/view/xieyi/TransferToBankCardServiceAgreement.html","",960,600,"请阅读：《转账到银行卡服务协议》");
+	});
+	
+	$("#agree_xieyi").click(function(){
+		if($(this).is(":checked")){
+			$(".btn_submit").attr("disabled", false).removeClass("btn_disabled");
+		}else {
+			$(".btn_submit").attr("disabled", true).addClass("btn_disabled");
+		}
+	});
+	
+	int();
+	
+	$("#unfamiliarLink").click(function(){
+		var top=$(this).offset().top;
+		var left=$(this).offset().left;
+		$(".unfamiliar").css({"left":left-200,"top":top+11}).show();
+		$(".unfamiliar-spells a:first").addClass("selected");
+		return false;
+	});
+	
+	$(".unfamiliar-spells a").live("hover",function(){
+		$(this).addClass("selected").siblings().removeClass("selected");
+		$(".unfamiliar-words").empty();
+		var id=$(this).attr("data-id");
+		var str=un[id][1];
+		for(i=0;i<str.length;i++){
+			var html='<a style="z-index:10;" class="unfamiliar-word" href="javascript:void(0)">'+str.charAt(i)+'</a>'
+			$(".unfamiliar-words").append(html)			
+		}
+		return false;
+	});
+	$(".unfamiliar-words a").live("click",function(){
+		var v=$(this).text();
+		var t=$("#name").val();
+		var newval=t+v;
+		$(".unfamiliar").hide();
+		$("#name").val(newval);
+	});
+	$(document).bind('click',function(e){
+		var e = e || window.event; //浏览器兼容性
+		var elem = e.target || e.srcElement;
+		while (elem) { //循环判断至跟节点，防止点击的是div子元素
+			if (elem.id && elem.id=='unfamiliar') {return;}
+			elem = elem.parentNode;
+		}
+		
+		$('.unfamiliar').hide(); //点击的不是div或其子元素
+	}); 	
+
+	if($("#remarks").val()=="0"){$("#remark").show();}else{$("#remark").hide();}
+	$("#remarks").change(function(){
+		if($(this).val()=="0"){
+			$("#remark").show();
+		}else{
+			$("#remark").hide();$(".error").text("");
+		}
+	});
+	
+	// 初始化联系人
+    $.ajax({
+    	type: "POST",
+		url: "$!{path}/contacts/queryContacts.htm",
+		data: "contactType=1",
+		dataType: "JSON",
+		cache:false,
+		success: function(result){
+			contacts = result.messageObj;
+			initContactFriendsBank($(".contact_friends_list"), contacts);
+		}
+    });
+	
+	$("#contact_friends_search_input").keyup(function(){
+		var key = $.trim($(this).val());
+		initContactFriendsBank($(".contact_friends_list"), searchFromData(key, contacts, ['accountName','accountNoSummary']));
+	});
+	
+	$("body").delegate(".contact_friends_list li","click",function(){
+		var $this = $(this);
+		$("#name").val($this.find(".name").text());
+		showBanchInfos($this.attr("data-id"));
+	});
+
+	$(".contact_friends_open").click(function(){
+		$(this).hide();
+		$(".contact_friends").show();
+	});
+	$(".contact_friends_close").click(function(){
+		$(".contact_friends_open").show();
+		$(".contact_friends").hide();
+	});
+	
+	$("#zz_money").blur(function(){
+		$("#submit_error").text("");
+		var money = parseFloat($.trim($(this).val()));
+		if(parseFloat(money.toFixed(2)) > parseFloat(canTransferMoney.toFixed(2))){
+			$("#submit_error").text("您的转账金额已超限，请重新输入！");
+			return;
+		}
+		else if(money > 0){
+    		$.ajax({
+            	type: "POST",
+        		url: "$!{path}/bTransfer/queryServiceCharge.htm",
+        		data: "money=" + money,
+				async:false,
+				cache:false,
+        		dataType: "JSON",
+        		success: function(result){
+    				if (result && result.success) {
+						var servFee = parseFloat(result.message) || 0.00;
+						fee = servFee;
+    					$('#servFee').val(servFee.toFixed(2));
+    					$('#servFeeText').text(servFee.toFixed(2));
+						var totalMoney = parseFloat(money) + servFee;
+						totalMoney = totalMoney.toFixed(2);
+						$('#total_money').val(totalMoney);
+						$('#total_money_text').text(totalMoney);
+    				}
+        		}
+            });
+		}
+	});
+	
+	$(".cxzhxx").click(function(){
+		var accountType = $('.account_type:checked').val();
+		showBoxBankBranch({
+			"banks_url":"$!{path}/contacts/queryCorpBanks.htm?cardAttr=" + accountType, 
+			"provinces_url":"$!{path}/contacts/queryAllProvCities.htm",
+			"branches_url":"$!{path}/contacts/queryBranches.htm",
+			"outputTextObj":$('#infoadd #bank_branch'),
+			"outputIdObj":$('#infoadd #branchCode')
+		});
+	});
+	
+	$("#btn_a_drmb").click(function(){
+		var html = '<form class="upload_file" action="$!{path}/bTransfer/importBankBatchTransfer.htm" method="post" enctype="multipart/form-data">' 
+			+ '<div class="floatbox2"><div class="cont_info"><div class="sz_info">'
+			+ '<div style="display:inline-block;"><input type="text" class="inputtext w264 fl" id="file1" style="margin-right:6px;"> <div class="relative fl">'
+			+ '<input type="button" value="浏 览" class="btn_liulan">' 
+			+ '<input for="file1" id="file_select" name="batchFile" type="file" class="input_file" ></div></div>' 
+			+ '<div style="height:20px; line-height:20px;" class="error"></div>' 
+			+ '<p class="">模板更新于2015-4-23，请注意使用最新模板。</p>'
+			+ '<p class="">文件格式要求：xls、xlsx，仅支持最大单次<span class="b red">999</span>笔批量转账操作</p>'
+			+ '</div></div><div class="div_btn_submit"><input type="button" value="上 传" class="btn J_btn_upload"></div></div></form>';
+		showWin('html', html, '', 700, 300, '上传文件', '', '');
+	});
+	
+	$("body").delegate(".input_file","change",function(){
+		var $this = $(this);
+		var path = $this.val();
+		var txtid = $this.attr("for");
+		$("#" + txtid).val(path);
+		checkFile({
+			fileId: $this.attr("id"),
+			fileTextId: txtid,
+			fileType: "notimg",
+			path: path,
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: $this.parent().parent().find(".error")
+		});
+	}).delegate(".J_btn_upload","click",function(){
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_disabled");
+		var $tip = $btn_submit.parent().parent().find(".error");
+		$tip.text("");
+		
+		var $this = $("#file_select");
+		var flag = checkFile({
+			fileId: $this.attr("id"),
+			fileTextId: $this.attr("for"),
+			fileType: "notimg",
+			path: $this.val(),
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: $this.parent().parent().find(".error")
+		});
+		if(!flag) { $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		$(".upload_file").submit();
+	});
+	
+	$(".area1").blur(function(){
+		if($("#remarks").val()=="0"){
+			if($.trim($(this).val())==""){ $(".error").text("请输入备注信息！"); }
+			else { $(".error").text(""); }
+		}
+	});
+		
+	$(".btn_submit").click(function(){
+		var totalMoney = parseFloat($("#zz_money").val()) + parseFloat(fee);
+		if (parseFloat(totalMoney.toFixed(2)) > parseFloat(canTransferMoney.toFixed(2))) {
+			$("#submit_error").text("您的转账金额已超限，请重新输入！");
+			return;
+		}
+	
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$("#submit_error").text("");
+		
+		var $name = $("#name");
+		if($.trim($name.val())==""){ $("#submit_error").text("请输入收款方开户名"); $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var $bank_account = $("#bank_account");
+		if($.trim($bank_account.val())==""){ $("#submit_error").text("请输入银行账号"); $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var bankzz=/^\d{8,32}$/;
+		if(!bankzz.test($("#bank_account").val())){
+			$("#submit_error").text("请填写正确的银行账号（8~32位数字）"); $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		};
+		
+		var $bank_account_check = $("#bank_account_check");
+		if($.trim($bank_account_check.val())==""){ $("#submit_error").text("请输入银行账号"); $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		else if($.trim($bank_account_check.val()) != $.trim($bank_account.val())){ $("#submit_error").text("您两遍输入的银行账号信息不一致，请重新输入！"); $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var $bank_branch = $("#bank_branch");
+		if($.trim($bank_branch.val())==""){
+    		$("#submit_error").text("请输入支行信息"); 
+    		$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+    		return false; 
+		}
+		
+		var thisObj = $("#zz_money");
+		var value = thisObj.val();
+		if($.trim(thisObj.val())==""){
+    		$("#submit_error").text("请输入转账金额！");
+    		$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+    		return false; 
+		}
+		
+		/*
+		if($(".checkboxdx").is(":checked")){
+			thisObj = $("#zz_mobile");
+			value = thisObj.val();
+			if(value == ""){
+				$("#submit_error").text("请输入手机号码！"); 
+				$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+    			return false; 
+			}
+			else if (!RegExp(regexEnum.mobile).test(value)) {
+				 $("#submit_error").text("请输入正确的手机号码！"); 
+				 $btn_submit.attr("disabled", false).removeClass("btn_disabled");
+    			 return false; 
+			}
+		}
+		*/
+		var $remark = $(".area1");
+		if($("#remarks").val()=="0"){
+			if($.trim($remark.val())==""){ $(".error").text("请输入备注信息！"); $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		}
+		
+		var jBTransferForm = $(".bankTransferForm");
+		$.ajax({
+        	type: "POST",
+    		url: "$!{path}/bTransfer/validateLflt.htm",
+    		data: jBTransferForm.serialize(),
+			async: false,
+			cache: false,
+    		dataType: "JSON",
+    		success: function(result) {
+				if (result && result.success) {
+					jBTransferForm.submit();
+				} else {
+					$btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					$(".error").text(result.message);
+				}
+    		}
+        });
+	});
+	
+});
+function int(){
+	var html='<div class="unfamiliar" id="unfamiliar" style="width: 500px; z-index: 700; position: absolute; l"><div class="unfamiliar-spells"></div><div class="unfamiliar-words"></div></div>';
+	$("body").append(html);
+	$(un).each(function(i,items){
+		var html='<a data-id="'+i+'" title="'+items[0]+'" class="unfamiliar-spell" href="javascript:void(0)">'+items[0]+'</a>'
+		$(".unfamiliar-spells").append(html);
+	});
+	var str=un[0][1];
+	for(i=0;i<str.length;i++){
+		var html='<a style="z-index:10;" class="unfamiliar-word" href="javascript:void(0)">'+str.charAt(i)+'</a>'
+		$(".unfamiliar-words").append(html)			
+	}
+}
+
+function initContactFriendsBank($list, data){
+	if (!data || data.length == 0) {
+		$list.html('');
+		return;
+	}
+	var data_len = data.length;
+	var data_html = "";
+	for(var i = 0; i< data_len; i++){
+		var obj = data[i];
+		data_html += '<li data-id="' + obj.contactId + '"><span class="name">' + obj.accountName + '</span><span class="account">' 
+			+ obj.accountNoSummary + '&nbsp;&nbsp;' + obj.bankName + '</span></li>';
+	}
+	$list.html(data_html);
+}
+
+// 显示联系人
+function showBanchInfos(id) {
+	$.ajax({
+		type: 'post',
+        data:'contactId=' + id,
+        url:'$!{path}/contacts/querySingleContacts.htm',
+		dataType:'json',
+		cache: false,
+        success:function(result){
+			// 没有查询到联系人信息
+			if (!result || !result.messageObj) {
+        		return;
+			}
+			var data = result.messageObj;
+			$('#bankCode').val(data.bankCode);
+			$('#bankName').val(data.bankName);
+			$('#province').val(data.province);
+			$('#city').val(data.city);
+			$('#branchNo').val(data.branchNo);
+			$('#branchName').val(data.bankBranch);
+			$('#hide_bank_branch').val(data.bankBranch);
+			$('#branchShortName').val(data.bankBranch);
+			$('#bank_branch').val(data.bankBranch);
+			$("#bank_account").val(data.accountNo);
+			$("#bank_account_check").val(data.accountNo);
+        },
+        error:function (){}
+    });
+}
+</script>
+

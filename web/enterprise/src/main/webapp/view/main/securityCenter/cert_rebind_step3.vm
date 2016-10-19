@@ -1,0 +1,46 @@
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">永达盾</span>
+        </div>
+    </div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+
+              <div class="step-wrap">
+                  <span class="step-index">1</span>
+                  <span class="step-name">验证身份</span>
+                  <span class="s"></span>
+                  <span class="step-index">2</span>
+                  <span class="step-name">输入手机校验码</span>
+                  <span class="s"></span>
+                  <span class="step-index step-index-cur">3</span>
+                  <span class="step-name step-name-cur">激活成功</span>
+              </div>
+               
+               
+               <div class="usbKeyCenter" style="margin:0 0 20px 425px; padding-top:30px;">
+                    <div class="loginTipsBox">
+                           <i class="tipsIcon succeed"></i>
+                           <p class="f16 bold mb10">您的永达盾已激活成功!</p>
+                           <p>您的永达账户已得到永达盾的保护</p>
+                    </div>
+               </div>
+               <p style="text-align:center;">您现在可以：<a class="mr16" href="#springUrl('/securityCenter/safetyDetails.htm')">管理永达盾</a><a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')">安全中心</a></p>
+               <div class="usbKeyFaq">
+                    <h4>永达盾问题：</h4>
+                    <dl>
+                        <dt>激活后永达盾的有效期是多久？</dt>
+                        <dd>答：激活后默认永达盾的有效期为1年，永达盾失效后需要重新激活</dd>
+                    </dl>
+                    <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+                </div>
+          </div>
+     </div>
+</div>
+</div>

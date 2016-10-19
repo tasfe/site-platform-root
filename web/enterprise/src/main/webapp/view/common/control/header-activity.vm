@@ -1,0 +1,14 @@
+<div id="header">
+    <div class="wrap">
+        <div id="logo"><a href="${request.contextPath}/my/home.htm"><img alt="永达商户钱包" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo.jpg"></a><img class="logo_mp" alt="天天聚" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo_merchant.jpg"></div>
+    	#if($!session.getAttribute("CURRENT_ENTERPRISE_USER"))
+    		<div class="fr">
+    		您好，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName <a href="#springUrl('/logout.htm')" class="a">退出</a>|<span class="kf">客服热线：<b>0571-28276085</b></span>
+    		</div>
+        #else
+	        <div class="fr">
+	            <a href="${request.contextPath}/register/register-index.htm">注册</a><i> | </i><span>客服热线：<b>0571-28276085</b></span>
+	        </div>
+        #end
+    </div>
+</div>

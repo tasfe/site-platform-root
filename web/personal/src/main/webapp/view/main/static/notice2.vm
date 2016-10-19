@@ -1,0 +1,28 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/news.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrap mt30">
+     
+     <div class="newsHead">首页 &gt; 系统公告</div>
+
+     <div class="newsMain">
+     	 
+         <div class="newscontent">
+              
+              <h1 class="header">华夏银行系统升级公告<span class="time">2015年7月1日</span></h1>
+              
+              <p>尊敬的用户：</p>
+              <p>为了提供更优质、便捷的服务，华夏银行将于2015年7月3日23：30—7月5日00：30将进行系统升级维护，维护期间华夏银行将会暂停所有业务，请您妥善安排业务办理时间。</p>
+              <p>由此给您带来的不便敬请谅解。如有疑问，请咨询华夏银行24小时服务热线95577。</p>
+              <p>特此公告</p>
+              <p style="text-align:right;">永达互联网金融信息服务有限公司</p>
+              <p style="text-align:right;">2015-07-01</p>
+         
+        </div>
+        
+        <div class="btmBtn"><div><a class="btnLeft" href="#springUrl('/static/notice1.htm')"></a><a class="btnCenter" href="javascript:;" style="background:none; cursor:default;"></a><a class="btnRight" href="#springUrl('/static/notice3.htm')"></a></div></div>
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+

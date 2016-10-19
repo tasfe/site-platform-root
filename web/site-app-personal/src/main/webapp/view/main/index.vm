@@ -1,0 +1,333 @@
+<div id="banner_i">
+	<div id="flashs">
+       <div class="slideimg">
+		<!-- <div class="img" style="background-image:url('${WEB_RESOURCE.staticAddress}wallet/upload/images/ad_index_banner3.jpg'); display:block;"><a href="https://www.hairongyi.com/popularize.html" style="display:inline-block; width:100%; height:400px;" target="_blank"></a></div> -->
+			
+			<!-- <div class="img" style="background-image:url('${WEB_RESOURCE.staticAddress}wallet/upload/images/ad_index_banner4.jpg');"><a href="https://www.hairongyi.com/" style="display:inline-block; width:100%; height:400px;" target="_blank"></a></div> -->
+			
+			##<div class="img" style="display:block;background-image:url('${WEB_RESOURCE.staticAddress}wallet/upload/images/ad_index_banner7.jpg');"><a href="https://ent.kjtpay.com/activity/jsh.htm" style="display:inline-block; width:100%; height:400px;" target="_blank"></a></div>
+			
+			##<div class="img" style="background-image:url('${WEB_RESOURCE.staticAddress}wallet/upload/images/ad_index_banner2.jpg');"><a href="#" style="display:inline-block; width:100%; height:400px;" target="_blank"></a></div>
+			
+			##<div class="img" style="background-image:url('${WEB_RESOURCE.staticAddress}wallet/upload/images/ad_index_banner6.jpg');"><a href="https://www.hairongyi.com/" style="display:inline-block; width:100%; height:400px;" target="_blank"></a></div>
+			
+			##<div class="img" style="background-image:url('${WEB_RESOURCE.staticAddress}wallet/upload/images/ad_index_banner1.jpg');"><a href="#" style="display:inline-block; width:100%; height:400px;" target="_blank"></a></div>
+            
+            <span></span>
+        </div>
+        
+       <div class="slideimg_nav">
+        </div>
+        <div class="newclause"><a href="#springUrl('/static/service.htm')">永达互联网金融服务协议</a> | <a href="#springUrl('/static/privacy.htm')">隐私保护声明</a></div>
+       
+
+        <div class="wrap login_box slideArea">
+			<div class="black"></div>
+	        <div id="login_i" class="pr" style="background:#333 repeat scroll 0 0 rgba(0, 0, 0, 0.4); height:100%; overflow:hidden;">
+	             <form id="login_form">
+	                <h3>会员登录</h3>
+	                <div class="row"><input id="username" name="username" type="text" data-placeholder="请输入会员账号" value="" class="input1 placeholder"></div>
+	                <!--<div class="row"><input id="operator" type="text" data-placeholder="请输入操作员" value="" class="input1 placeholder"></div>-->
+                    <style type="text/css">
+					.ocx_style { left:12px; top:-80px; width:208px; }
+					</style>
+	                <div class="rowt relative" style="overflow:hidden; width:229px; height:29px; background:#fff; margin-bottom:4px;" id="index_pw"><input type="text" data-placeholder="请输入登录密码" value="" class="input1 placeholder" id="unSafePwInputOut"><input type="password" class="input1" id="unSafePwInput" name="unSafePwInput"  style="display:none;"><input name="password" type="hidden" id="password" /></div>
+	                <div class="row row_pw fl" style="width:230px;">
+                     	<a href="${request.contextPath}/my/refind/loginPwd/index.htm" class="fogetpw_help" title="点击可找回账户的登录密码"></a><a href="${request.contextPath}/my/refind/loginPwd/index.htm">忘记登录密码</a>
+	                    <input type="checkbox" id="checkbox_safepw" name="checkbox_safepw" checked="checked"><label style="float:left;"  for="checkbox_safepw">安全控件登录</label>
+						<a title="" class="fogetpw_help" href="#" style="float:left;"></a>
+	                </div>
+					<div class="row row_yzm fl" style="padding-bottom:0;width:230px;"><div class="yzm_i" id="yzm_i"><input id="vercode" name="vercode" type="text" data-placeholder="请输入验证码" value="" class="placeholder" data-input="yzm_i" ><i class="yzm_rw"></i></div><img id="randImage" src="#springUrl('/pvc.htm')" alt="验证码" title="点击更新验证码" class="yzm_img" style="width:90px;height:35px;"></div>
+					<div class="error fl" style="width:230px; line-height:18px;">　</div>
+	                <input type="button" value="" class="btn_login btn_submit">
+	                <div class="row row_zc"><a href="${request.contextPath}/register/main.htm" class="a1">免费注册</a><a href="${request.contextPath}/register/accountActive.htm">账户激活</a></div>
+					<input class="text" type="hidden" name="memberIdentity" id="memberIdentity" />
+	            </form>
+	        </div>
+		</div>
+          
+	</div>
+
+</div>
+
+<div class="wrap" id="products_services">
+    <h3 class="products_tit">
+        <span>产品服务</span>
+        <ul class="products_platform">
+			<li class="gfwx_li"><a href="#" class="gfwx"><i></i>官方微信</a><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/weixin_q.gif" alt="官方微信" style="display:none;"></li>
+            <li class="gfwx_li"><a href="#" class="gfwb"><i></i>官方微博</a><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/weibo_q.gif" alt="官方微博" style="display:none;"></li>
+        </ul>
+    </h3>
+    <div class="products_services_step1">
+    	<div class="d1">
+        	<p><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/index_cp1.gif" alt="如何使用永达互联网金融账户收款和付款"></p>
+			##<a href="#springUrl('/help/faq.htm?=FAQ_10_3.html')">快捷付款</a> <span class="color_c4">|</span> <a href="${request.contextPath}/static/wyzf.htm">网银付款</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_10_3.html')">AA收款</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_10_3.html')">他人代付</a> <span class="color_c4">|</span>&nbsp;&nbsp;<a href="#" class="amore">更多</a>
+        <a href="${request.contextPath}/static/wyzf.htm" target="_blank">网银付款</a> 
+        </div>
+        <div class="d2">
+        	<p><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/index_cp2.gif" alt="充值缴费、信用卡还款，无需等待"></p>
+			##<a href="#springUrl('/help/faq.htm?=FAQ_10_3.html')">手机充值</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_10_4.html')">信用卡还款</a> <span class="color_c4">|</span>&nbsp;&nbsp;<a href="#springUrl('/help/faq.htm?=FAQ_10_1.html')" class="amore">更多</a>
+            <a href="#springUrl('/help/faq.htm?=FAQ_10_3.html&8,2')" target="_blank">手机充值</a> 
+        </div>
+        <div class="d3">
+        	<p><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/index_cp3.gif" alt="帮您来理财收益行业领先"></p>
+        </div>
+    </div>
+    
+     <div class="products_services_step2">
+    	<div class="dd1">
+           <h3 class=""><span class="b1"><i></i>多重安全保障，让您的资金安全无忧</span></h3>
+		   ## <a href="#">密码控件</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_1.html')">实名认证</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_6.html')">数字证书</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_7.html')">快捷盾</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_1.html')">动态口令</a><br>
+		   ##<a href="#springUrl('/help/faq.htm?=FAQ_9_8.html')">手机校验码</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm')">安全密保</a>
+          <a href="#springUrl('/help/faq.htm?=FAQ_9_15.html&7,4')" target="_blank">密码控件</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_1.html&7,0')" target="_blank">实名认证</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_6.html&7,3')" target="_blank">数字证书</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_7.html&7,5')" target="_blank">快捷盾</a> <br>
+		  <a href="#springUrl('/help/faq.htm?=FAQ_9_8.html&7,6')" target="_blank">手机校验码</a>
+			
+        </div>
+        <!-- <div class="dd2">
+            ##<h3><span class="b2"><i></i>优惠活动</span><a href="#" class="amore" style="float:left; margin-left:142px; margin-top:2px;">更多 >></a></h3>
+			<h3><span class="b2"><i></i>优惠活动</span><a href="#" class="amore" style="float:left; margin-left:142px; margin-top:2px;"></a></h3>
+            <div class="" style="width:272px; height:50px;">
+                <a href="javascript:void(0)" class="lunbo_left" id="lunbo_prev"></a>
+               <div class="lunbodiv" id="lunbo_demo">
+                <ul class="lunbolist" >
+                   ## <li><a href="#"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/yhhd1.jpg"></a></li>
+                   ## <li><a href="#"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/yhhd1.jpg"></a></li>
+                    <li><a href="https://www.hairongyi.com/financing/sbtz/index.html?bidType=11" target="_blank"><img src="${WEB_RESOURCE.staticAddress}wallet/upload/images/ad_index_small_1.jpg"></a></li>
+					
+                </ul>
+                </div>
+               <a href="javascript:void(0)" class="lunbo_right" id="lunbo_next"></a>
+            </div>
+        </div> -->
+        <div class="dd3">
+            <h3><span class="b3"><i></i>玩转永达互联网金融</span><a href="#springUrl('/help/faq.htm')" class="fr amore" style="margin-top:2px;" target="_blank">更多 >></a></h3>
+          	<a href="#springUrl('/help/faq.htm?=FAQ_1_1.html&0,0')" target="_blank">注册</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_9_1.html&7,0')" target="_blank">实名认证</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_4_0.html&2,0')" target="_blank">充值</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_5_0.html&3,0')" target="_blank">转账</a> <span class="color_c4">|</span> <a href="#springUrl('/help/faq.htm?=FAQ_6_0.html&4,0')" target="_blank">提现</a><br>
+			
+        </div>
+    </div>
+
+</div>
+<script>
+var $imgs = $(".slideimg .img");
+var si_num = $imgs.length;
+var si_index = 0;
+function slideImg() {
+	$imgs.eq(si_index).fadeOut();
+	si_index++;
+	si_index = si_index >= si_num ? 0 : si_index;
+	$imgs.eq(si_index).fadeIn();
+
+	var $imgs_nav = $(".slideimg_nav a");
+	$imgs_nav.removeClass("cur").eq(si_index).addClass("cur");
+}
+function slideImgGo(index) {
+	if (si_index != index) {
+		$imgs.eq(si_index).fadeOut();
+		$imgs.eq(index).fadeIn();
+		var $imgs_nav = $(".slideimg_nav a");
+		$imgs_nav.removeClass("cur").eq(index).addClass("cur");
+
+		si_index = index;
+	}
+}
+function changeSlideImgWidth() {
+	var w = $(window).width();
+	w = w <= 1000 ? 1000 : "100%";
+	$(".slideimg").width(w);
+}
+$(function(){
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$("#index_pw").append(pgeditor.load(function(){$(".ocx_style").css("top", "10px");}));
+	pgeditor.pgInitialize(); //初始化控件
+	
+	$("#unSafePwInputOut").focus(function(){
+		$("#unSafePwInputOut").hide();
+		$("#unSafePwInput").show().focus();
+	});
+	$("#unSafePwInput").blur(function(){
+		if($(this).val() == ""){
+			$("#unSafePwInputOut").show();
+			$("#unSafePwInput").hide();
+		}
+	});
+	
+	$(".ocx_style").css("top", "10px");
+	$("#unSafePwInputOut").hide();
+	$("#unSafePwInput").hide().val("");
+	
+	$("#checkbox_safepw").click(function(){
+		if($(this).attr("checked") == "checked"){
+			$(".ocx_style").css("top", "10px");
+			$("#unSafePwInputOut").hide();
+			$("#unSafePwInput").hide();
+		}
+		else{
+			$(".ocx_style").css("top", "-100px");
+			$("#unSafePwInputOut").show();
+			$("#unSafePwInput").hide();
+		}
+	});
+	
+	var si_t = setInterval("slideImg()", 5000);
+	$(".slideimg, .slideArea").hover(
+		function () { clearInterval(si_t); },
+		function () { si_t = setInterval("slideImg()", 5000); }
+	);
+	var aHtml = "";
+	for(var i = 0; i < si_num; i++){
+		if(i==0)
+			aHtml += '<a href="javascript:void(0)" class="cur"></a>';
+		else
+			aHtml += '<a href="javascript:void(0)"></a>';
+	}
+	$(".slideimg_nav").html(aHtml);
+	$(".slideimg_nav a").each(function (index) {
+		$(this).click(function () {
+			slideImgGo(index)
+		});
+	})
+	var resizeTimerSlideImg = null;
+	$(window).resize(function () {
+		if ($.browser.msie) {
+			if (resizeTimerSlideImg) clearTimeout(resizeTimerSlideImg);
+			resizeTimerSlideImg = setTimeout("changeSlideImgWidth()", 300);
+		}
+	});
+	/*
+	$('#lunbo_demo').jCarouselLite({
+		btnPrev: '#lunbo_prev',
+		btnNext: '#lunbo_next',
+		visible:1,
+		scroll: 1,
+		auto: 800,
+		speed: 3000
+	});		
+	*/
+	$(".gfwx_li").hover(
+		function(){ $(this).find("img").show(); },
+		function(){ $(this).find("img").hide(); }
+	);
+	
+	$("#username").blur(function(){
+		var username = $.trim($("#username").val());
+		username = username == $(this).attr("data-placeholder") ? "" : username;
+		if(username == "" || username == $(this).attr("data-placeholder")){
+			$(".error").text("请输入账号信息");
+			return false;
+		}
+		if(RegExp(regexEnum.email).test(username)) {
+			$("#memberIdentity").val("EMAIL");
+		} else if (RegExp(regexEnum.mobile).test(username)) {
+			$("#memberIdentity").val("MOBILE");
+		}else{
+			$("#memberIdentity").val("LOGIN_NAME");
+		}
+	});
+	
+	$("#vercode").blur(function(){
+		var code = $(this).val();
+		code = code == $(this).attr("data-placeholder") ? "" : code;
+		checkVerificationCode({code:code, tipObj:$(".error"), imgTipObj:$(".yzm_rw"), async:true, url:"#springUrl('/login/checkVerifiCode.htm')"});
+	}).keydown(function(event){
+		if(event.keyCode ==13){
+			$(".btn_submit").click();
+		}
+	});
+	
+	function _submit(){
+		var jForm = $("#login_form");
+		var jBtnSubmit = $(".btn_submit");
+		jQuery.ajax({
+			url:"#springUrl('/login.htm')",
+			type:'post',
+			dataType:'json',
+			data:jForm.serialize(),
+			success:function(data, textStatus, jqXHR){
+				if(data.success) {
+					window.location.href = data.redirect;
+                } else {
+                	$(".error").html(data.message);
+                	$(".error").show();
+                	refreshVericode($("#randImage"));
+					$(".yzm_rw").removeClass("right").removeClass("wrong");
+					jBtnSubmit.attr("disabled", false).removeClass("btn_login_disabled");
+				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				jBtnSubmit.attr("disabled", false).removeClass("btn_login_disabled");
+				refreshVericode($("#randImage"));
+				$(".yzm_rw").removeClass("right").removeClass("wrong");
+				return false;
+			}
+		});
+	}
+	
+	$(".btn_submit").click(function(){
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_login_disabled");
+		$(".error").text("　");
+		
+		var $username = $("#username");
+		var username = jQuery.trim($username.val());
+		if(username == "" || username == $username.attr("data-placeholder")){
+			$(".error").text("请输入账号信息！");
+			
+			$btn_submit.attr("disabled", false).removeClass("btn_login_disabled");
+			return false;
+		}
+		if(RegExp(regexEnum.email).test(username)) {
+			$("#memberIdentity").val("EMAIL");
+		} else if (RegExp(regexEnum.mobile).test(username)) {
+			$("#memberIdentity").val("MOBILE");
+		}else{
+			$("#memberIdentity").val("LOGIN_NAME");
+		}
+		
+		if($("#checkbox_safepw").attr("checked") == "checked"){
+			if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+				var wid = pgeditor.settings.pgeWindowID;
+				pgeditor.pwdLength(function(){
+					if(outs[wid].length == 0){
+						$(".error").text("请输入密码！");
+						$btn_submit.attr("disabled", false).removeClass("btn_login_disabled");
+						return false;
+					}
+					
+					//产生随机数加密
+					getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+						//获得密文
+						setPwdResult(pgeditor,$('#password'),function(){
+							_submit();
+						});
+					}); 
+				});
+			}
+			else{
+				if (pgeditor.pwdLength() == 0) {
+					$(".error").text("请输入密码！");
+					$btn_submit.attr("disabled", false).removeClass("btn_login_disabled");
+					return false;
+				}
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor]); //产生随机数去加密
+				setPwdResult(pgeditor,$('#password'));
+				
+				_submit();
+			}
+		}
+		else{
+			//setPwdResult(pgeditor);
+			var $unSafePwInput = $("#unSafePwInput");
+			var unSafePwInput = $unSafePwInput.val();
+			if(unSafePwInput == "" || unSafePwInput == $unSafePwInput.attr("data-placeholder")){
+				$(".error").text("请输入密码");
+				$btn_submit.attr("disabled", false).removeClass("btn_login_disabled");
+				return false;
+			}
+			
+			_submit();
+		}
+	});
+	
+})
+</script>

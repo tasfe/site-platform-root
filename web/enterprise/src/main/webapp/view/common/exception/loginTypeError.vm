@@ -1,0 +1,22 @@
+<div class="wrapbg">
+<div id="" class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">登录</span>
+        </div>
+    </div>
+    <div class="pagebox" style=" height:287px; padding:0 52px; padding-top:42px;">
+    
+    	<p style="background:#f7f8f8;width:894px; padding:60px 0; text-align:center; font-weight:bold; color:#595757; font-size:16px;">您已登录特约商户！</p>
+        <div class="target_list">
+        <a href="${request.contextPath}/my/home.htm" style=" margin-right:122px;">返回特约商户首页</a><a href="${request.contextPath}/logoutAndRedirect.htm">退出特约商户，登录会员平台</a>
+        </div>
+        <style>
+        	.target_list { padding-top:54px; text-align:center;}
+			.target_list a:hover{ text-decoration:underline;}
+        </style>
+    </div>
+  
+</div>
+</div>

@@ -1,0 +1,325 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+
+    <div class="page_title"><h2>修改绑定邮箱</h2></div>
+
+    <div class="safetyMain">
+        <div class="cz_step step step_1" style="margin-left: 56px;"><i></i>
+            <span class="s1">验证身份</span>
+            <span class="s2" style="left: 396px;">修改邮箱</span>
+            <span class="s3" style="left: 653px;">修改成功</span>
+        </div>
+
+        <div class="loginCenter">
+
+            ##
+            <div class="login_limit">
+                ## <label>
+                ## <span class="f14 limitLeft">选择修改绑定邮箱的方式：</span>
+                ##
+                ##<div class="select_div mr16 fl">
+                    ## #if($!response.data.hasBindPhone =='true')
+                    ## <select id="type">
+                    ##
+                    ##<option value="1">支付密码+邮箱确认信</option>
+                    ##
+                    ##<option value="2">手机校验码+邮箱确认信</option>
+                    ##
+                    ##<option value="3">支付密码+手机校验码</option>
+                    ## </select>
+                    ## #else
+                    ## <select id="type">
+                    ##
+                    ##<option value="1">支付密码+邮箱确认信</option>
+                    ## </select>
+                    ## #end
+                    ##
+                ##</div>
+                ## </label>
+                ## <label class="ml5"></label>
+                ##
+                <div class="clear"></div>
+                ##
+                <div class="mainTips ml160 error"></div>
+                ##
+            </div>
+
+
+            <form id="moduleOne" action="" method="POST">
+                <input type="hidden" name="bizType" id="bizType" value="RESET_EMAIL"/>
+                <input type="hidden" name="mobilePhone" id="mobilePhone" value="$!response.data.mobile"/>
+                <input type="hidden" name="hasBindPhone" id="hasBindPhone" value="$!response.data.hasBindPhone"/>
+                <input type="hidden" name="loadNum" id="loadNum" value="$!response.data.loadNum"/>
+                <input type="hidden" name="type" id="type" value="$!response.data.type"/>
+                <input type="hidden" name="gopage" id="gopage" value="$!response.data.gopage"/>
+                <!--<input type="hidden" id="email" name="email" value="$!response.data.email"/>-->
+                <div class="login_limit" id="module1">
+                    <label>
+                        <span class="f14 limitLeft l_h30">支付密码：</span>
+
+                        <div class="pwdiv fl" id="pwdiv"><input name="password" type="hidden" id="password"/></div>
+                        <a class="f_12 marl10" href="#springUrl('/my/go-get-paypasswd-index.htm')">忘记密码？</a>
+                    </label>
+
+                    <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                    <div class="mainTips ml160 error" style="clear:both;">
+                        #if($!response.errors.error_passwd=='密码错误')
+                        <span>$!response.errors.error_passwd,还有$!response.errors.remainNum次输入机会</span>
+                        #else
+                        <span>$!response.errors.error_passwd</span>
+                        #end
+                    </div>
+                </div>
+                #if($!response.data.type == "dxmm")
+                <div class="login_limit" id="module3">
+                    <label>
+                        <span class="f14 limitLeft">手机号码：</span>
+                        <span class="f14">$!response.data.mobile</span>
+                        <a href="${request.contextPath}/my/changeBindPhone.htm" class="f14 ml30 orange">更换绑定手机</a>
+                    </label>
+                    <label class="ml5"></label>
+
+                    <div class="mainTips ml160 error"></div>
+
+                </div>
+                <div class="login_limit">
+                    <label><span class="f14 limitLeft">校验码：</span>
+                        <input type="text" class="inputtext w80" value="" id="sjyzm" name="mobileCaptcha">
+                        <input id="send_msg" class="btn_mfhq ml10" type="button" value="">
+                    </label>
+                    <label class="ml5"></label>
+
+                    <div class="mainTips ml160 error" id="model2Error"></div>
+                </div>
+                #end
+            </form>
+
+
+            <div id="module2" style="display:none">##
+                <form id="moduleTwo" action="${request.contextPath}/my/sendEmailToOrigBox.htm" method="POST">
+                    <input type="hidden" name="bizType" id="bizType" value="RESET_EMAIL"/>
+                    <input type="hidden" name="hasBindPhone" id="hasBindPhone" value="$!response.data.hasBindPhone"/>
+                    <input type="hidden" name="type" id="type" value="$!response.data.type"/>
+                    <input type="hidden" name="gopage" id="gopage" value="$!response.data.gopage"/>
+
+                    <div class="login_limit">
+                        <label>
+                            <span class="f14 limitLeft">手机号码：</span>
+                            <span class="f14">$!response.data.mobile</span>
+                            <a href="${request.contextPath}/my/changeBindPhone.htm" class="f14 ml30 orange">更换绑定手机</a>
+                        </label>
+                        <label class="ml5"></label>
+
+                        <div class="mainTips ml160 error"></div>
+                </form>
+            </div>
+            <div class="login_limit">
+                <label><span class="f14 limitLeft">校验码：</span>
+                    <input type="text" class="inputtext w80" value="" id="sjyzm" name="mobileCaptcha">
+                    <input id="send_msg" class="btn_mfhq ml10" type="button" value="">
+                </label>
+                <label class="ml5"></label>
+
+                <div class="mainTips ml160 error" id="model2Error"></div>
+            </div>
+        </div>
+
+        <div class="loginAmendBtn"><input class="btn_qr btn_submit" type="button" value=""></div>
+
+    </div>
+
+</div>
+
+</div>
+<!-- E 主要内容 -->
+
+<script>
+    var action1 = "${request.contextPath}/my/resetEmailByPwdAndEmailConfirm-active.htm";
+    var action3 = "${request.contextPath}/my/resetEmailByPwdAndMobile.htm";
+    $(function () {
+        var type = "$!response.data.type";
+        switch (type) {
+            case "yxmm":
+                $("#moduleOne").attr("action", action1);
+                $("#module1").show();
+                $("#module2").hide();
+                break;
+            case "dxyx":
+                $("#module1").hide();
+                $("#module2").show();
+                break;
+            case "dxmm":
+                $("#moduleOne").attr("action", action3);
+                $("#module1").show();
+                $("#module2").hide();
+                break;
+        }
+
+        var pgeditor = newPgeditor(1, '${response.data.ocx_skey}', '${response.data.ocx_enstr}');
+        window.pgeCtrl = pgeditor;
+        $(".pwdiv").append(pgeditor.load());
+        pgeditor.pgInitialize();
+
+        $(".btn_mfhq").click(function () {
+            $('#model2Error').html("");
+            countDown($(this), 60, "");
+            jQuery.ajax({
+                type: 'POST',
+                url: "#springUrl('/my/mobile/newSendMessage.htm')",
+                data: "bizType=RESET_EMAIL_BY_M",
+                success: function (response) {
+                    $("#model2Error").html(response.message);
+                },
+                error: function () {
+                    $("#model2Error").html(G.sysError)
+                },
+                dataType: "json",
+                error: function () {
+                    $('#model2Error').html(G.sysError);
+                }
+            });
+
+        });
+
+        /*$("#type").change(function(){
+         if($(this).val() == "1") { $("#moduleOne").attr("action", action1); $("#module1").show(); $("#module2").hide(); }
+         if($(this).val() == "2") { $("#module1").hide(); $("#module2").show(); }
+         if($(this).val() == "3") { $("#moduleOne").attr("action", action3); $("#module1").show(); $("#module2").hide(); }
+         });*/
+
+        function _submitDXMM(){
+            var jBtnSubmit = $(".btn_submit");
+            jQuery.ajax({
+                type: 'POST',
+                url: "#springUrl('/my/newValidMobileCaptcha.htm')",
+                data: "bizType=RESET_EMAIL_BY_M" + "&mobileCaptcha=" + $("#sjyzm").val(),
+                success: function (response) {
+                    if (!response.success) {
+                        $("#model2Error").html("手机验证码错误");
+                        jBtnSubmit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    } else {
+                        getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+                        setPwdResult(pgeditor, $('#password'));
+
+                        $("#moduleOne").submit();
+                    }
+                },
+                error: function () {
+                    jBtnSubmit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                },
+                dataType: "json"
+            });
+        }
+
+        $(".btn_submit").click(function () {
+            var btn_submit = $(this);
+            btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+            $(".error").text("");
+            var flag;
+
+            if (type == "yxmm") {
+                if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+                    var wid = pgeditor.settings.pgeWindowID;
+                    pgeditor.pwdLength(function(){
+                        if(outs[wid].length == 0){
+                            $("#password").parent().parent().parent().find(".error").text("请输入密码！");
+                            btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                            return false;
+                        }
+
+                        //产生随机数加密
+                        getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor],function(){
+                            //获得密文
+                            setPwdResult(pgeditor,$('#password'),function(){
+                                $("#moduleOne").submit();
+                            });
+                        });
+                    });
+                }
+                else{
+                    if (pgeditor.pwdLength() == 0) {
+                        $("#password").parent().parent().parent().find(".error").text("请输入密码！");
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+                    getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+                    setPwdResult(pgeditor, $('#password'));
+
+                    $("#moduleOne").submit();
+                }
+            }
+            else if (type == "dxyx") {
+                flag = checkMust($("#sjyzm"), $("#sjyzm").parent().parent().find(".error"), "请输入手机校验码");
+                if (!flag) {
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+                jQuery.ajax({
+                    type: 'POST',
+                    url: "#springUrl('/my/newValidMobileCaptcha.htm')",
+                    data: "bizType=RESET_EMAIL_BY_M" + "&mobileCaptcha=" + $("#sjyzm").val(),
+                    success: function (response) {
+                        if (!response.success) {
+                            $("#model2Error").html("手机验证码错误");
+                            btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                            return false;
+                        } else {
+                            $("#moduleTwo").submit();
+                        }
+                    },
+                    error: function () {
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    },
+                    dataType: "json"
+                });
+
+
+            }
+            else if (type == "dxmm") {
+                if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+                    var wid = pgeditor.settings.pgeWindowID;
+                    pgeditor.pwdLength(function(){
+                        if(outs[wid].length == 0){
+                            $("#password").parent().parent().parent().find(".error").text("请输入密码！");
+                            btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                            return false;
+                        }
+
+                        flag = checkMust($("#sjyzm"), $("#sjyzm").parent().parent().find(".error"), "请输入手机校验码");
+                        if (!flag) {
+                            btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                            return false;
+                        }
+
+                        //产生随机数加密
+                        getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+                            //获得密文
+                            setPwdResult(pgeditor,$('#password'),function(){
+                                _submitDXMM();
+                            });
+                        });
+                    });
+                }
+                else{
+                    if (pgeditor.pwdLength() == 0) {
+                        $("#password").parent().parent().parent().find(".error").text("请输入密码！");
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    flag = checkMust($("#sjyzm"), $("#sjyzm").parent().parent().find(".error"), "请输入手机校验码");
+                    if (!flag) {
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    _submitDXMM();
+                }
+            }
+        });
+    })
+</script>
+

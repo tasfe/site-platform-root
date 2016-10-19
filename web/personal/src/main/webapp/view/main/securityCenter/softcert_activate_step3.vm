@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>数字证书</h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               
+              <!--  <div class="usbKeyConT usbKeyConT2 stepThree">
+                    <span class="u1">验证身份</span>
+                    <span class="u2">输入手机校验码</span>
+                    <span class="u3">安装证书</span>
+                    <span class="u4">激活成功</span>
+               </div>
+               -->
+               <div class="tx_step step step_2" style="margin-left:80px; padding-bottom:10px;"><i></i><span class="s1">验证身份</span><span class="s2">安装证书</span><span class="s3">激活成功</span></div>
+               
+               <div class="usbKeyCenter" style="height:100px;">
+                   <div class="ml90 f14"> $!{message}</div>
+               </div>
+               <span id="tiperror" style="color:red; float:center"></span>
+               <div class="usbKeyFaq">
+                    <h4>数字证书问题：</h4>
+                    <dl>
+                        <dt>永达互联网金融数字证书有什么作用？</dt>
+                        <dd>答：1、<b>加强保障：</b>将您的永达互联网金融账号与您使用的电脑进行绑定，即使对方窃取了您的密码，在其它的设备上也动不了您的资金，保障了您的资金安全。数字证书用户，如果在其他设备登录永达互联网金融账户，在设备没有安装数字证书的情况下，只能查询账户，不能进行任何操作，数字证书相当于为您的账户配置了一把“钥匙”，大大增强账户使用的安全性。<br><br>
+ 2、<b>提升限额：</b>使用永达互联网金融的数字证书，当您在使用永达互联网金融进行转账、提现等功能时可提升相应额度。</dd>
+                    </dl>
+					<dl>
+                        <dt>数字证书安装有哪些好处？</dt>
+                        <dd>答：申请了数字证书，在登录的时候会获取更高安全等级的身份认证，可以更好地保证您发送的信息不会在网上被篡改，即使丢失了账号和密码，您的账户、资金仍然能得到一定的安全保护。数字证书会将用户的出款、重要资料修改等行为控制在固定的电脑上进行，即使账号密码被盗取，没有证书，就无法操作账户内的资金。</dd>
+                    </dl>
+                    <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+                </div>
+                <input type="hidden" id="position" name="position" value="$!{position}"/>
+                <input type="hidden" id="address" name="address" value="$!{address}"/>
+               
+               
+          </div>
+      
+     </div>
+     
+</div>
+<!-- E 主要内容-->
+
+
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/showwin.js"></script> 
+
+<form id="form2" action="#springUrl('/softcertActivate/softcertActive.htm')" method="post"><input type="hidden" id="certSn" name="certSn" /></form>
+<form id="error" action="#springUrl('/securityCenter/error.htm')" method="post"></form>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>		
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+<script>
+$(function(){
+	var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		html += '<div style="padding:0 27px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span class="f14 b">您即将从一个声称代表如下的证书颁发机构安装证书：</span><br><span class="f14 b">Kjtpay Trust NetWork</span></i></p>';
+		html += '<p>Windows不能确认证书是否来自“Kjtpay Trust NetWork”。您应该与“Kjtpay Trust NetWork”联系，以确认证书来源。下列数字证书将在过程中对您有帮助：</p>';
+		html += '<p>指纹（sha1）：89A2FB0E 332BA727 5FE712FE C669D746 125B1F32</p>';
+	
+		html += '<p>警告：<br>如果安装此根证书，windows将自动信任所有CA颁发的证书。安装未经指纹确认的证书有安全风险。如果单击“是”，则表示知道此风险。</p>';
+		html += '您想安装此证书吗？</div>';
+		html += '</div></div>';
+
+		
+		html += '<div class="div_btn_submit"><input type="button" class="btn_applyyes" style="margin-right:30px;"><input type="button" class="btn_applyno" onclick="closeSW();"></div></div>';
+		
+		
+		showWin('html', html, '', 611, 475, ' ', '', '');
+		
+		
+	$(".btn_applyyes").live("click",function(){
+		var csr = getCsr("soft");
+		var position = $("#position").val();
+		var address = $("#address").val();
+		$.ajax({
+			type:"POST",
+			url:"#springUrl('/softcertActivate/softcertApply.htm')",
+			async:true,
+			data:{"csr":csr, "position":position,"address":address},
+			dataType: "json",
+			success:function(restP){
+				if(restP.success){
+					if (restP.data.certSignBufP7.length > 0){
+						var flag = installCert(restP.data.certSignBufP7);
+						if(flag) {
+							$("#certSn").val(restP.data.certSerialNumber);
+							$("#form2").submit();
+						} 
+					}
+				} else {
+					//$("#tiperror").text(restP.message);
+					//closeSW();
+					$("#error").submit();
+				}
+			},
+			error:function(){/*alert("系统错误！");*/}
+		});
+	
+	})	
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<div id="top">
+	<div class="wrap">
+    	<div class="fr"><a href="${request.contextPath}/login/page.htm">登录</a><span class="color_a5">|</span><a href="${request.contextPath}/register/main.htm">注册</a><span class="color_a5">|</span><a href="#springUrl('/help/helpcenter.htm')">帮助中心</a><span class="color_a5">|</span><a href="#springUrl('/customservice/index.htm')">客服中心</a><span class="color_a5">|</span><span class="kf">客服热线：<b>400-611-0909</b></span></div>
+        <div class="fl"><a href="${WEB_RESOURCE.enterWalletAddr}/index.htm">&gt;&nbsp;进入商户专业版</a></div>
+        
+    </div>
+</div>
+
+<div id="header_i" class="no_bb">
+    <div class="wrap">
+        <h2 id="logo"><a href="#springUrl('/my/home.htm')"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/logo.jpg" alt="永达互联网金融永达互联网金融支付平台"></a><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/logo_merchant.jpg" alt="商户专业版" class="logo_mp"></h2>
+        <ul id="nav">
+            <li class="hoverli first hoverlia cur"><a href="${request.contextPath}/index.htm" class="hovera">首页</a></li>
+            <li class="hoverli">
+                <a href="${request.contextPath}/static/wyzf.htm" class="hovera"><i></i>产品服务</a>
+                <dl class="subnav">
+                    <dd><a href="${request.contextPath}/static/wyzf.htm">网银支付</a></dd>
+                   ##<dd><a href="#">信用支付</a></dd>
+                    ##<dd><a href="#">认证支付</a></dd>
+                   ## <dd><a href="#">托管支付</a></dd>
+                   ## <dd><a href="#">POS支付</a></dd>
+                    ##<dd><a href="#">代收支付</a></dd>
+                    ##<dd><a href="#">移动支付</a></dd>
+                    ##<dd><a href="#">投资理财</a></dd>
+                    ##<dd><a href="#">快捷支付</a></dd>
+                </dl>
+            </li>
+			<!--
+                <li class="hoverli">
+                    <a href="${request.contextPath}/static/wyzf.htm" class="hovera"><i></i>付款方式</a>
+                    <dl class="subnav">
+                        <dd><a href="${request.contextPath}/static/wyzf.htm">网银支付</a></dd>
+                        ##<dd><a href="#">信用支付</a></dd>
+                        ##<dd><a href="#">认证支付</a></dd>
+                       ## <dd><a href="#">托管支付</a></dd>
+                       ## <dd><a href="#">POS支付</a></dd>
+                        ##<dd><a href="#">代收支付</a></dd>
+                        ##<dd><a href="#">移动支付</a></dd>
+                        ##<dd><a href="#">投资理财</a></dd>
+                        ##<dd><a href="#">快捷支付</a></dd>
+                    </dl>
+                </li>
+			-->
+            <li class="hoverli last">
+                <a href="#springUrl('/help/faq.htm?=FAQ_9_1.html&7,0')" class="hovera">安全中心</a>
+            </li>
+			<li class="hoverli">
+                <div class="hoverdiv">｜</div>
+            </li>
+            <li class="hoverli last">
+                <a href="${WEB_RESOURCE.enterWalletAddr}/index.htm" class="hovera">商户版</a>
+            </li>
+        </ul>
+    </div>
+</div>

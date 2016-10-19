@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.ucs:ucs-core:1.1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/ucs/ucs-core/1.1.0-SNAPSHOT/ucs-core-1.1.0-20140623.111134-11.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/ucs/ucs-core/1.1.0-SNAPSHOT/ucs-core-1.1.0-20140623.111134-11-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/ucs/ucs-core/1.1.0-SNAPSHOT/ucs-core-1.1.0-20140623.111134-11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

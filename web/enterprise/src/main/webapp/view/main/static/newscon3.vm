@@ -1,0 +1,27 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/news.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrap mt30">
+     
+     <div class="newsHead">首页 &gt; 行业资讯</div>
+
+     <div class="newsMain">
+     	 
+         <div class="newscontent">
+              
+              <h1 class="header">国内首份跨境消费指数报告发布 仍以信用卡支付为主<span class="time">2014年09月19日</span></h1>
+              
+              <p>新华EDI与Visa公司18日联合发布《中国跨境消费年度指数报告(2014)》，这是国内首份跨境消费指数报告。报告称，电子支付在跨境消费过程中发挥了重要作用，支付的便利性和安全性直接影响跨境消费模式，电子支付是实现跨境消费的“最后一公里”。报告建议，加快电子支付基础设施尤其是二三线城市和部分四线城市电子支付基础设施建设，在这些地区加快电子支付基础设施建设的边际收益可能更高。</p>
+              <p>报告称，近两年来，中国居民出境旅游支出意愿呈现分散化特征，低端和高端旅游比例上升。从支付方式看，中国居民出境旅游支付方式仍以信用卡为主，现金支付在一定程度上挤压了借记卡的份额。初次出境的年轻游客和来自中国二三线城市的游客正成为出境旅游的主力。从中国居民出境旅游支出情况看，购物一直是出境游最主要的支出项目之一;从规模总量上看，美国仍是中国居民出境旅游零售购物支出最多的国家。</p>
+              <p>跨境旅游和跨境电子商务是当前跨境消费的最主要表现形式。在入境旅游方面，国内最具吸引力的三个省市是天津、北京和江苏，最具吸引力的三个城市是福州、泉州和南京。</p>
+         
+        </div>
+        
+        <div class="btmBtn"><div><a class="btnLeft" href="#springUrl('/static/newscon2.htm')"></a><a class="btnCenter" href="javascript:;" style="background:none; cursor:default;"></a><a class="btnRight" href="#"></a></div></div>
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/js.js"></script> 

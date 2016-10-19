@@ -1,0 +1,110 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>登录密码找回</h2></div>
+
+     <div class="safetyMain">
+     	 <form id="form" action="${request.contextPath}/my/refind/loginPwd/goMain.htm" method="POST"> 
+         <div class="loginCenter">
+			<input id="" name="" type="hidden" value="$!{errorMsg}"> 
+              <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">您的永达互联网金融会员帐号： </span>
+                          <input type="text" class="inputtext w232" value="" id="loginName" name="loginName" data-placeholder="请输入永达互联网金融账号">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               
+             <div class="login_limit">
+                   <label>
+                        <span class="f14 limitLeft">验证码：</span>
+                        <div class="yzm_i" id="yzm_i">
+                        <input id="captcha_value" name="imageVerifyCode" type="text" data-placeholder="请输入验证码" class="placeholder" data-input="yzm_i" ><i class="yzm_rw"></i>
+                        </div>
+                         <img  src="#springUrl('/pvc.htm')" alt="验证码" title="点击更新验证码"class="yzm_img">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error">$!response.message</div>
+               </div>
+               
+               <div class="loginAmendBtn"> 
+				<input class="c_btn_qr btn_submit" type="button" value="">
+			   </div>
+             
+         </div> 
+          </form>
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+		$("#login_find_type").change(function(){
+		if($(this).val() == "2") $(this).parent().parent().parent().find(".mainTips").text("将发送找回登录密码的验证码到您绑定的手机");
+		else $(this).parent().parent().parent().find(".mainTips").text("");
+	});
+		
+	
+	
+	$("#loginName").blur(function(){
+		var thisObj = $(this);
+		var tipObj = thisObj.parent().parent().find(".error");
+		tipObj.text("");
+		if(checkMust(thisObj, tipObj, "请输入您的永达互联网金融会员帐号！")){
+			if(!checkEmail(thisObj, tipObj, "") && !checkMobile(thisObj, tipObj, "")){
+				tipObj.text("账号格式不正确！");
+			}
+		}
+	});
+	
+	
+	$("#captcha_value").blur(function(){
+		var thisObj = $(this);
+		var code = thisObj.val();
+		if(thisObj.attr("data-placeholder") != undefined){
+			code = code == thisObj.attr("data-placeholder") ? "" : code;
+		}
+		checkVerificationCode({code:code, tipObj:thisObj.parent().parent().parent().find(".error"), imgTipObj:thisObj.parent().find(".yzm_rw"), url:"${request.contextPath}/my/refind/loginPwd/checkpicture.htm", async:true});
+	});
+	//checkEmail
+	//checkMobile
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("c_btn_qr_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#loginName");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入您的永达互联网金融会员帐号！");
+		
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("c_btn_qr_disabled"); return false;}
+		else {
+			if(!checkEmail(thisObj, tipObj, "") && !checkMobile(thisObj, tipObj, "")){
+				tipObj.text("账号格式不正确！");
+				btn_submit.attr("disabled", false).removeClass("c_btn_qr_disabled"); return false;
+			}
+		}
+		
+		thisObj = $("#captcha_value");
+		value = thisObj.val();
+		if(thisObj.attr("data-placeholder") != undefined){
+			value = value == thisObj.attr("data-placeholder") ? "" : value;
+		}
+		flag = checkVerificationCode({code:value, tipObj:thisObj.parent().parent().parent().find(".error"), imgTipObj:thisObj.parent().find(".yzm_rw"), url:"${request.contextPath}/my/refind/loginPwd/checkpicture.htm", async:false});
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("c_btn_qr_disabled"); return false;}
+		
+		$("form").submit();
+	});
+})
+</script>
+
+
+
+
+
+	

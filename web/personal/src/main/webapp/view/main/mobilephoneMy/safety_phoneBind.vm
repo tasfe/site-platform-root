@@ -1,0 +1,80 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>手机绑定</h2></div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginCenter">
+              <form action="${request.contextPath}/my/go-set-mobilephoneByValidPayPwd.htm" method="POST">
+              <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft l_h30">请输入支付密码：</span>
+                          <div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;">
+					#if($!response.data.error_passwd=='密码错误')
+					<span>$!response.data.error_passwd,还有$!response.data.remainNum次输入机会</span>
+				#else
+					<span>$!response.data.error_passwd</span>
+					#end
+				   </div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$(".pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+
+        if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+            var wid = pgeditor.settings.pgeWindowID;
+            pgeditor.pwdLength(function(){
+                if(outs[wid].length == 0){
+                    $(".error").text("请输入密码！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                //产生随机数加密
+                getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+                    //获得密文
+                    setPwdResult(pgeditor,$('#password'),function(){
+                        $("form").submit();
+                    });
+                });
+            });
+        }
+        else{
+            if (pgeditor.pwdLength() == 0) {
+                $(".error").text("请输入密码！");
+                btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                return false;
+            }
+
+            getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+            setPwdResult(pgeditor,$('#password'));
+
+            $("form").submit();
+        }
+
+	});
+})
+</script>

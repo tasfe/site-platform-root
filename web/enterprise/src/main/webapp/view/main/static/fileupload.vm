@@ -1,0 +1,59 @@
+<form id="file_form" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+	<input id="file_select" name="file_select" type="file" >
+	
+	<input id="input_path_id" name="input_path_id" type="hidden" value="${response.data.input_path_id}" >
+	<input id="input_path" name="input_path" type="hidden" value="${response.data.input_path}" >
+	<input id="input_imgurl_id" name="input_imgurl_id" type="hidden" value="${response.data.input_imgurl_id}" >
+	
+	<input id="input_imgurl" name="input_imgurl" type="hidden" value="${response.data.input_imgurl}" >
+	<input id="success" name="success" type="hidden" value="${response.data.success}" >
+</form>
+
+<img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo.jpg" id="preimg" style="position: absolute; bottom: 0; left: -99999px; visibility: hidden; z-index: -1" />
+
+<script>
+$(function(){
+	var jParent = $(window.parent.document);
+	
+	$("#file_select").change(function(){
+		var thisobj = $(this);
+		var path = thisobj.val();
+		$("#input_path").val(path);
+		
+		var input_path_id = $("#input_path_id").val();
+		var input_imgurl_id = $("#input_imgurl_id").val();
+		
+		var tipObj = jParent.find("#" + input_path_id).parent().parent().parent().find(".error");
+		if(!tipObj.hasClass("error")) tipObj = jParent.find("#" + input_path_id).parent().parent().parent().parent().find(".error");
+		
+		var flag = checkFile({
+			fileId: thisobj.attr("id"),
+			fileTextId: $("#input_path_id").val(),
+			fileType: "img",
+			path: path,
+			previewImgId: 'preimg',
+			format: "jpg|jpeg|bmp|JPG|JPEG|BMP",
+			maxSize: 3 * 1024 * 1024,
+			$tip: tipObj
+		});
+		if (!flag) { jParent.find("#" + input_path_id).val(""); jParent.find("#" + input_imgurl_id).val(""); return;}
+		
+		jParent.find("#" + input_path_id).parent().hide().parent().find(".msg").text("正在上传，请稍等...");
+		
+		$("#file_form").submit();
+	});
+	
+	var success = $("#success").val();
+	var input_path_id = $("#input_path_id").val();
+	var input_path = $.trim($("#input_path").val());
+	var input_imgurl_id = $("#input_imgurl_id").val();
+	var input_imgurl = $.trim($("#input_imgurl").val());
+	
+	if(success == "true"){
+		window.parent.successUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl);
+	}
+	else if(success == "false"){
+		window.parent.errorUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl);
+	}
+})
+</script>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <link rel="stylesheet" href="css/swiper.min.css">
+  <link rel="stylesheet" href="css/pullToRefresh.css" />
+  <title>发现</title>
+  <style>
+  .shuaxinList li{
+    list-style-type:none;
+  }
+  </style>
+</head>
+<body>
+<div class="yd-wrap faxianWrap" id="wrapper">
+   <ul class="shuaxinList">
+        <!--<li>
+           <div class="finderItem" data-link="#">
+             <div class="finderItemInfo">
+                <h2 class="index-floorF1Title">测试<span class="finder-label label-xianshi">&nbsp;</span></h2>
+                <h3 class="index-floorF1Desc finderDesc">这是描述</h3>
+              </div>    
+              <div class="finderImg">
+                <img src="http://ossweb-img.qq.com/images/lol/web201310/skin/big78000.jpg"/>
+              </div>
+            </div>
+        </li>
+         <li>
+           <div class="finderItem" data-link="#">
+             <div class="finderItemInfo">
+                <h2 class="index-floorF1Title">测试<span class="finder-label label-xianshi">&nbsp;</span></h2>
+                <h3 class="index-floorF1Desc finderDesc">这是描述</h3>
+              </div>    
+              <div class="finderImg">
+                <img src="http://ossweb-img.qq.com/images/lol/web201310/skin/big78000.jpg"/>
+              </div>
+            </div>
+        </li>-->
+    </ul>
+  <!--右上角label标签class列表
+      限时：label-xianshi
+      热门：label-remen
+      推荐：label-tuijian
+      特惠：label-tehui
+  -->
+  <!-- 
+   <div class="finderItem" data-link="#">
+    <div class="finderItemInfo">
+      <h2 class="index-floorF1Title">测试<span class="finder-label label-xianshi">&nbsp;</span></h2>
+      <h3 class="index-floorF1Desc finderDesc">这是描述</h3>
+    </div>    
+    <div class="finderImg">
+      <img src="http://ossweb-img.qq.com/images/lol/web201310/skin/big78000.jpg"/>
+    </div>
+  </div>
+  <div class="finderItem" data-link="#">
+    <div class="finderItemInfo">
+      <h2 class="index-floorF1Title">测试<span class="finder-label label-remen">&nbsp;</span></h2>
+      <h3 class="index-floorF1Desc finderDesc">这是描述</h3>
+    </div>    
+    <div class="finderImg">
+      <img src="http://ossweb-img.qq.com/images/lol/web201310/skin/big78000.jpg"/>
+    </div>
+  </div>-->
+</div>
+
+
+<div class="bottomNav">
+  <div class="bottomNavItem" id="J_ShouYe">
+    <span class="bottomNavIcon icon-shouye"></span>
+    <span class="bottomNavText">首页</span>
+  </div>
+  <div class="bottomNavItem" id="J_FaXian">
+    <span class="bottomNavIcon icon-faxian faxian-active"></span>
+    <span class="bottomNavText">发现</span>
+  </div>
+  <div class="bottomNavItem" id="J_WoDe">
+    <span class="bottomNavIcon icon-wode"></span>
+    <span class="bottomNavText">我的</span>
+  </div>
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/pullToRefresh.js"></script>
+<script>
+ var wHeight=$(window).height();
+  wHeight=wHeight-60;
+  $(".faxianWrap").height(wHeight);
+
+    var J_FX = $("#wrapper"),
+            currentPage = 1,
+            ids = ",";
+
+    function loadData(reload){
+        if(reload){
+            currentPage = 1;
+            ids = ",";
+        }
+
+        // 获取发现活动信息
+        tools.ajaxSubmit({
+            "url": gurl + "/getActivityLimit",
+            "data": {"currentPage":currentPage,"pageSize":10},
+            "suc_suc": function(response){
+                // 已登录 则填值
+                var data = response.data.msgList;
+                var _html = "";
+                sessionStorage.setItem("msgListLength",data.length);
+                for(var i = 0, len = data.length; i < len; i++){
+                    var _data = data[i];
+                    // 如果记录未显示
+                    if(ids.indexOf("," + _data.id + ",") < 0) {
+                        ids += _data.id + ",";
+                        if (_data.status == "Y") {
+                            _html += '<li><div class="finderItem" data-link="' + _data.activityContent + '"><div class="finderItemInfo">'
+                                    + '<h2 class="index-floorF1Title">' + _data.title + '<span class="finder-label label-' + _data.label + '">&nbsp;</span></h2>'
+                                    + '<h3 class="index-floorF1Desc finderDesc">' + _data.intro + '</h3></div>'
+                                    + '<div class="finderImg"><img src="' + _data.image + '"/></div>'
+                                    + '</div></li>';
+                        }
+                    }
+                }
+                if(!reload){
+                    J_FX.find(".shuaxinList").append(_html);
+                }
+                else{
+                    J_FX.find(".shuaxinList").html(_html);
+                }
+
+                currentPage++;
+
+                $(".finderItem").unbind().click(function(){
+                    window.location.href = $(this).data("link");
+                });
+
+            },
+            "complete": function(){
+                wrapper.refresh();
+            }
+        });// ajaxSubmit
+    }
+
+    refresher.init({
+        id: "wrapper",
+        pullDownAction: Refresh,
+        pullUpAction: Load
+    });
+    var msgListLength=sessionStorage.getItem("msgListLength");
+    msgListLength=parseInt(msgListLength);
+    if(msgListLength<=10){
+      $(".pullUpLabel").text("没有更多数据");
+    }
+    // 重新开始
+    function Refresh() {
+        loadData(true);
+    }
+    Refresh();
+    // 加载新内容
+    function Load() {
+        loadData();
+    }
+</script>
+</body>
+</html>

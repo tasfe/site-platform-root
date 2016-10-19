@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <title>我的测试</title>
+  <style>
+  .scroll{position:absolute; overflow:scroll; -webkit-overflow-scrolling: touch; top:0; left:0; bottom:0; right:0}
+  </style>
+</head>
+<body style="display: block;">
+<div class="yd-wrap meWrap scroll" style="overflow:scroll">
+  <header id="J_GoUserInfo" class="me-header">
+    <div class="me-userInfo">
+      <div class="me-userHeader">
+        <img id="J_HeadPic" src="#" >
+      </div>
+      <div id="J_Account" class="me-userMobile">-</div>
+    </div>
+  </header>
+  <section class="me-walletInfo">
+    <div id="J_BalanceInfo" data-href="moneydetail.html" class="me-walletInfoItem me-walletInfoItemFirst">
+      <span id="J_Balance" class="me-walletInfoNumber">0.00</span>
+      <span class="me-walletInfoTitle">余额</span>
+    </div>
+    <div id="J_BankCardInfo" class="me-walletInfoItem">
+      <span id="J_BankCardNum" class="me-walletInfoNumber">0</span>
+      <span class="me-walletInfoTitle">银行卡</span>
+    </div>
+  </section>
+  <div class="me-contentList">
+    <div class="me-list">
+      <ul class="yd-itemList itemMarginLeft">
+        <li id="me-baodan"><i class="icon-me icon-baodan">&nbsp;</i>我的保单<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+        <li id="me-youka"><i class="icon-me icon-youka">&nbsp;</i>我的油卡<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+        <li id="me-xiaoxi"><i class="icon-me icon-xiaoxi">&nbsp;</i>消息中心<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+        <li id="me-wenti"><i class="icon-me icon-wenti">&nbsp;</i>常见问题<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+      </ul>
+    </div>
+    <div class="me-list" style="margin-top:2%">
+      <ul class="yd-itemList itemMarginLeft">
+        <li id="me-shezhi"><i class="icon-me icon-shezhi">&nbsp;</i>设置<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+      </ul>
+    </div>
+
+<div class="me-list">
+    <ul class="yd-itemList">
+      <li><span class="leftTitle">账号</span><input type="tel" class="yd-input-noBorder input-pointer" placeholder="请输入手机号" id="signUpMobile" /></li>
+      <li><span class="leftTitle">验证码</span><input type="text" class="yd-input-noBorder input-pointer" placeholder="验证码" id="signUpYzm"/><span class="yd-layouts-right"><img alt="验证码" data-for="signUpYzm" id="J_ImgYzm" src="" /></span></li>
+      <li><span class="leftTitle">校验码</span><input type="tel" class="yd-input-noBorder" style="width:45%" placeholder="6位校验码" name="" id="authCode"/><span class="sendMsg yd-layouts-right sendMsgGray" id="sendMsg" send="send" onClick="return false;" style="margin-top:7px">获取短信</span></li>
+    </ul>
+   </div>
+
+  </div>
+</div>
+<div class="bottomNav">
+  <div class="bottomNavItem" id="J_ShouYe">
+    <span class="bottomNavIcon icon-shouye"></span>
+    <span class="bottomNavText">首页</span>
+  </div>
+  <div class="bottomNavItem" id="J_FaXian">
+    <span class="bottomNavIcon icon-faxian"></span>
+    <span class="bottomNavText">发现</span>
+  </div>
+  <div class="bottomNavItem" id="J_WoDe">
+    <span class="bottomNavIcon icon-wode wode-active"></span>
+    <span class="bottomNavText">我的</span>
+  </div>
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/event.js"></script>
+<script>
+
+var overscroll = function(el) {
+      el.addEventListener('touchstart', function() {
+        var top = el.scrollTop
+          , totalScroll = el.scrollHeight
+          , currentScroll = top + el.offsetHeight;
+        //If we're at the top or the bottom of the containers
+        //scroll, push up or down one pixel.
+        //
+        //this prevents the scroll from "passing through" to
+        //the body.
+        if(top === 0) {
+          el.scrollTop = 1;
+        } else if(currentScroll === totalScroll) {
+          el.scrollTop = top - 1;
+        }
+      });
+      el.addEventListener('touchmove', function(evt) {
+        //if the content is actually scrollable, i.e. the content is long enough
+        //that scrolling can occur
+        if(el.offsetHeight < el.scrollHeight)
+          evt._isScroller = true;
+      });
+    }
+    overscroll(document.querySelector('.scroll'));
+    document.body.addEventListener('touchmove', function(evt) {
+      //In this case, the default behavior is scrolling the body, which
+      //would result in an overflow.  Since we don't want that, we preventDefault.
+      if(!evt._isScroller) {
+        evt.preventDefault();
+      }
+});
+var wHeight=$(window).height();
+wHeight=wHeight-60;
+$(".meWrap").height(wHeight);
+
+</script>
+</body>
+</html>

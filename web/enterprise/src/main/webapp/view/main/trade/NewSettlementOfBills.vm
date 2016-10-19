@@ -1,0 +1,132 @@
+<script>
+var date;
+var year;
+var month;
+$(function(){
+	$('#year').die('change').live('change',changeMonth);
+	$('#year').empty();
+	$('#month').empty();
+	var starYear=2015;
+	//获取当前年月
+	date=new Date();
+	year=date.getFullYear();
+	month=date.getMonth()+1;
+	for(var i=starYear;i<=year;i++){
+		if(i==year){
+			//选中当前年份
+			$('#year').append('<option selected="selected">'+i+'</option>');
+		}else{
+			$('#year').append('<option>'+i+'</option>');
+		}
+	}
+	create(month);
+});
+	//改变年份
+	function changeMonth(){
+		$('#month').empty();
+		//当前年份
+		if($('#year').val()==year){
+			create(month);
+		}else{//其他年份
+			for(var i=1;i<=12;i++){
+				$('#month').append('<option>'+i+'</option>');
+			}
+		}
+	}
+	//生成当前年份的月份
+	function create(month){
+		for(var i=1;i<=month;i++){
+			if(i==month){
+				$('#month').append('<option selected="selected">'+i+'</option>');
+			}else{
+				$('#month').append('<option>'+i+'</option>');
+			}
+		}
+	}
+</script>
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title settlement">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">对账单下载</span>
+		</div>
+	</div>
+  <div class="pagebox dzddown" style="height:370px;">
+  	<div style="height:28px; padding:25px 0 20px 0;">
+    	<form>
+        <label class="label1 fl f14" style="width:100px;">起止日期：</label>
+		<div style="float:left; margin-top:5px;">
+        <select id="year"></select> 年
+        <select id="month"></select>
+        月
+		</div>
+		<input type="button" class="btn J_btn_chaxun ml30 fl" value="查 询">
+        </form>
+    </div>
+    <div class="jsdzdtit" style="">
+        <span class="b" style="margin-right:30px;">日结算对账单</span>
+        <i class="i">◆</i>
+    </div>
+    <div class="timelist"></div>
+  </div>
+</div>
+</div>
+<script>
+	var currentAjax = null; 
+	function query(){		
+		//方法就是将XHR对象指向currentAjax，再调用currentAjax的.abort()来中止请求
+		currentAjax = $.ajax({
+			url:"#springUrl('/my/all-settlement1.htm')",
+			type:'POST',
+			dataType:'json',
+			data:{'year':$('#year').val(),'month':$('#month').val()},
+			success:function(data, textStatus, jqXHR){
+				$('.timelist').empty();
+				$('.jsdzdtit').children('i').nextAll().remove();
+				var year=data.year;
+				var month=data.month;
+				if(data.year==undefined || data.year==null || data.month==undefined || data.month==null || data.days==undefined || data.days==null){
+					alert("系统繁忙，请稍后再试");
+					return;
+				}
+				if(data.existMonth!=undefined && data.existMonth!=null){
+					var day=0;
+					var url="/my/"+year+"/"+month+"/"+day+"/settlement-bill-download.htm";
+					$('.jsdzdtit').children('i').after('<a style="cursor:pointer;text-decoration:underline;" href="'+url+'">月结算对账单</a>');
+				}else{
+					$('.jsdzdtit').children('i').after('<span class="span">月结算对账单</span>');
+				}
+				for(var j=1;j<=data.days;j++){
+					var str=data.arr[j-1];
+					var day=j;
+					if(str!=null && str=='1'){
+						var url="/my/"+year+"/"+month+"/"+day+"/settlement-bill-download.htm";
+						$('.timelist').append('<a style="cursor:pointer" href="'+url+'">'+month+'月'+j+'日</a>');
+					}else{
+						$('.timelist').append('<span class="span">'+month+'月'+j+'日</span>');
+					}
+				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				$('.timelist').empty();
+				$('.jsdzdtit').children('i').nextAll().remove();
+				$('.timelist').append('系统繁忙，请不要频繁点击，稍后再试,');
+			}
+		});
+	}
+	function stopAjax(){  
+        //如若上一次AJAX请求未完成，则中止请求  
+        if(currentAjax) {currentAjax.abort();}  
+    }  
+	$(function(){
+		stopAjax();
+		query();
+    	//点击查询
+     	$('.J_btn_chaxun').unbind('click').bind('click',function(){
+			stopAjax();
+    		query();
+    	});
+	});
+	
+</script>

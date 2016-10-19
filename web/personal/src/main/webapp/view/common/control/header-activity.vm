@@ -1,0 +1,15 @@
+
+<div id="header">
+    <div class="wrap">
+        <div id="logo"><a href="${request.contextPath}/my/home.htm"><img alt="永达互联网金融永达互联网金融支付平台" src="${WEB_RESOURCE.staticAddress}wallet/common/images/logo.jpg"></a><img class="logo_mp" alt="" src="${WEB_RESOURCE.staticAddress}wallet/common/images/logo_merchant.jpg"></div>
+    	#if($!session.getAttribute("CURRENT_PERSONAL_USER"))
+    		<div class="fr">
+    		您好，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).memberName <a href="#springUrl('/logout.htm')" class="a">退出</a>|<span class="kf">客服热线：<b>400-611-0909</b></span>
+    		</div>
+        #else
+	        <div class="fr">
+	            <a href="${request.contextPath}/login/page.htm">登录</a><i> | </i><a href="${request.contextPath}/register/main.htm">注册</a><i> | </i><span>客服热线：<b>400-611-0909</b></span>
+	        </div>
+        #end
+    </div>
+</div>

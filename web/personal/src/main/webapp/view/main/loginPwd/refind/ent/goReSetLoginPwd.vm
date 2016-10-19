@@ -1,0 +1,139 @@
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/PassGuardCtrl.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/passwordOcx.js"></script>
+<link href="${WEB_RESOURCE.staticAddress}wallet/css/ocx.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//密码控件js
+if(navigator.userAgent.indexOf("MSIE")<0){
+    navigator.plugins.refresh();
+}
+var pgeditor = new jQuery.pge({
+      pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",
+      pgeId: "_ocx_password",//控件ID
+      pgeEdittype: 0,//控件类型,0星号,1明文
+      pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+      pgeEreg2: "[\\s\\S]{6,12}", //输入完毕后字符类型判断条件
+      pgeMaxlength: 12,//允许最大输入长度
+      pgeTabindex: 2,//tab键顺序
+      pgeClass: "ocx_style",//控件css样式
+      pgeInstallClass: "ocx_style",//针对安装或升级
+      pgeOnkeydown:"FormSubmit()",//回车键响应函数
+      tabCallback:"_ocx_password_confrim"
+});
+ 
+var pgeditorConfrim = new jQuery.pge({
+      pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",//控件文件目录
+      pgeId: "_ocx_password_confrim",//控件ID
+      pgeEdittype: 0,//控件类型,0星号,1明文
+      pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+      pgeEreg2: "[\\s\\S]{6,12}", //输入完毕后字符类型判断条件
+      pgeMaxlength: 12,//允许最大输入长度
+      pgeTabindex: 2,//tab键顺序
+      pgeClass: "ocx_style",//控件css样式
+      pgeInstallClass: "ocx_style",//针对安装或升级
+      pgeOnkeydown:"FormSubmit()",//回车键响应函数
+      tabCallback:"_ocx_password"
+});
+
+ 
+ window.onload = function(){  
+    pgeditor.pgInitialize();//初始化控件
+	pgeditorConfrim.pgInitialize();
+	jQuery.ajax({
+      url: "${request.contextPath}/ocx/generateRandomKey.htm",
+      type: "POST",
+   	  async: false,
+      success: function(result){
+            pgeditor.pwdSetSk(result);
+    		pgeditorConfrim.pwdSetSk(result);//需用2个控件时使用
+      }
+	});  
+ }  
+</script>
+
+
+
+<div class="zhanghu_infor">
+     <!-- S 流程 -->
+     <div class="findFlow-login">
+          <p class="findFlow-one" style="display:none;"></p>
+          <p class="findFlow-two"></p>
+          <p class="findFlow-three" style="display:none;"></p>
+     </div>
+     <!-- E 流程 -->
+     <div class="wrap">
+             <div class="account_number_manager">
+                    <div class="user_ibox">
+                            <h2 class="h2_titform"><em>登录密码找回</em>你正在重置你的登录密码</h2>
+                            <form action="${request.contextPath}/my/refind/loginPwd/ent/reSetLoginPwd.htm" method="POST">    	
+                                    <div class="form-horizontal center_form clearfix">                                
+										<div class="control-group">
+                                            <label class="control-label" for="payPassword">输入新密码：</label>
+                                            <div class="controls">
+												<input class="in_txt" type="hidden" id="loginPwd" name="loginPwd" value=""/>
+												<script type="text/javascript">
+                                    				pgeditor.generate()
+                                    			</script>
+												#if($!{errorMsg})
+                                                   <label class="error">$!errorMsg </label>
+                                                #end
+                                            </div>
+                                        </div>   
+                                        <div class="control-group">
+                                            <label class="control-label" for="payPassword">再次输入新密码：</label>
+                                            <div class="controls">
+												<input class="in_txt" type="hidden" id="reLoginPwd" name="reLoginPwd" value=""/>
+												<script type="text/javascript">
+                                    				pgeditorConfrim.generate()
+                                    			</script>
+                                            </div>
+                                        </div>   
+                                        <div class="control-group">                
+                                            <div class="controls">
+                                              <button id="submit" type="submit" class="btn_h40_red bold">提  交</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                            
+                            
+                    </div>                                                          
+              </div>
+     </div>
+</div>
+<script >
+ 	$("#submit").click(function(){
+ 	$(".error").remove();
+	if(pgeditor.pwdLength()==0){
+    	$("#_ocx_password").parent().append('<label class="error">新密码不能为空</label>');
+       	$("#_ocx_password").focus();
+       	return false;
+    }
+  
+   	if(pgeditor.pwdValid()==1){
+    	$("#_ocx_password").parent().append('<label class="error">新密码只能为6-12位</label>');
+       	$("#_ocx_password").focus();
+       	return false;
+    }  
+
+	if(pgeditorConfrim.pwdLength()==0){
+    $("#_ocx_password_confrim").parent().append('<label class="error">确认密码不能为空</label>');
+       	$("#_ocx_password_confrim").focus();
+       	return false;
+    }
+  
+  	if(pgeditorConfrim.pwdValid()==1){
+    $("#_ocx_password_confrim").parent().append('<label class="error">确认密码只能为6-12位</label>');
+       	$("#_ocx_password_confrim").focus();
+       	return false;
+    }  
+
+	if(pgeditor.pwdHash()!=pgeditorConfrim.pwdHash()){
+	   $("#_ocx_password").parent().append('<label class="error">两次密码输入不一致</label>');
+       $("#_ocx_password").focus();
+	   return false;
+	}
+        setPwdResult(pgeditor,$('#loginPwd'));
+        setPwdResult(pgeditorConfrim,$('#reLoginPwd'));
+    return true;
+ });
+</script>

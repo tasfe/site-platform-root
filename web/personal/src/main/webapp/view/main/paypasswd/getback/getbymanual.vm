@@ -1,0 +1,330 @@
+<!--通过人工找回  -->
+<link href="${WEB_RESOURCE.staticAddress}wallet/css/plugin/jquery-ui-1.10.3.custom.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen"  id="theme_date">
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/plugin/jquery-ui-1.10.3.custom.min.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/plugin/jquery.ui.datepicker-zh-CN.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/personal/js/ajaxfileupload.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/personal/js/getbackpasswd.js${WEB_RESOURCE.staticVersion}"></script>
+
+<div class="wrap">
+    <h2 class="h2_titform"><em>人工服务申请表</em>审核结果将以邮件的方式通知到您填写的邮箱里</h2>
+    <form class="" action="/my/confirm-manual.htm" method="POST" enctype="multipart/form-data" name="form1" id="getbymanual-form">
+    	<div class="form-horizontal center_form clearfix">
+    	<div class="control-group">
+                #if($response.data.state =="checkReject")
+                <span class="warn_tip marl55 pngFixBg">您上次提交的申请认证信息未通过审核，请您提交正确的认证信息。</span>
+                #end
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="cardType"><i class="fc_r_ff">*</i>证件类型：</label>
+                <div class="controls">
+                  <span class="con_txt14">身份证</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="idCardType"><i class="fc_r_ff">*</i>身份证类型：</label>
+                <div class="controls">
+                  <span class="con_txt14">二代身份证</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="certificationFront"><i class="fc_r_ff">*</i>身份证正面：</label>
+                <div class="controls pos_rel">
+                  <span class="btn_h30 bold">点击上传</span>
+                  <input class="uplod_file" name="frontFile" id="frontFile" type="file"  onchange="frontFileUpload();" />
+                  <em class="file_only">只能上传2MB以内，jpg、jpeg、gif、bmp、png等格式的图片。</em>
+                  <input type="hidden" id="frontImagUrl" name="frontImagUrl" value=""/>
+                  <input type="hidden" id="backImagUrl" name="backImagUrl" value=""/>
+                </div>
+                 <div class="view_img" id="imgDiv" ><img id="uploadImage" width="200" height="100" src="${WEB_RESOURCE.staticAddress}wallet/image/photo_bg.png"></div>
+                 <div class="controls pos_rel">
+                    <span id="frontFile_tip">#springMessageText($!response.errors.file_is_empty,"")  #springMessageText($!response.errors.file_is_not_image,"")</span>
+                </div>
+
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="certificationBack"><i class="fc_r_ff">*</i>身份证背面：</label>
+                <div class="controls pos_rel">
+                  <span class="btn_h30 bold">点击上传</span>
+                   <input class="uplod_file" name="backFile" id="backFile" type="file" onchange="backFileUpload();" onclick="backFileClick();" />
+                  <em class="file_only">只能上传2MB以内，jpg、jpeg、gif、bmp、png等格式的图片。</em>
+                </div>
+
+                 <div class="view_img" id="imgBackDiv"><img id="uploadImageBack" width="200" height="100" src="${WEB_RESOURCE.staticAddress}wallet/image/photo_bg.png"></div>
+                <div class="controls pos_rel">
+                    <span id="backFile_tip">#springMessageText($!response.errors.file_is_empty,"")  #springMessageText($!response.errors.file_is_not_image,"")</span>
+                </div>
+
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="dateSelect"><i class="fc_r_ff">*</i>身份证到期时间：</label>
+                <div class="controls">
+                    <input name="overDate" id="overDate" onfocus="blurClick();" class="date-picker in_txt" type="text" value="$!response.data.startDate" readonly="">
+                  	<label class="label_changqi"><input name="timeType" id="timeType"  onfocus="focusClick();" type="checkbox" value="2"> 长期</label>
+                  <font color="red"><span id="dateFormat">#springMessageText($!response.errors.date_format_is_not_right,"")</span></font>
+                </div>
+
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="email"><i class="fc_r_ff">*</i>邮箱：</label>
+                <div class="controls">
+                  <input type="text" id="email" name="email" value="$!response.data.email" onfocus="emailClick();" onblur="emailblurClick();"  class="in_txt"><font color="red"><span id="emailFormat"> &nbsp; #springMessageText($!response.errors.email_is_not_empty,"")</span></font>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="hr_line"><b class="f_14">以下内容为选填:</b>&nbsp;&nbsp;<span class="fc_9">请尽可能的填写更多真实资料，这将有助于提高申请通过率</span></div>
+    	<div class="form-horizontal center_form clearfix">
+            <div class="control-group">
+                <label class="control-label" for="withdrawalCardId">我使用过提现服务：</label>
+                <div class="controls">
+                  <input type="text" id="withdrawalCardId" name="withdrawalCardId" onfocus="withdrawClick();" onblur="withdrawClick();" maxlength="19" class="in_txt"><span id="withdraw_tip"></span>
+                  <p class="f_12 fc_9">请在此输入您的提现银行卡号</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="rechargeCardId">我使用过充值服务：</label>
+                <div class="controls">
+                  <input type="text" id="rechargeCardId" name="rechargeCardId" maxlength="19" onblur="cardClick();" class="in_txt"><span id="recharge_tip"></span>
+                  <p class="f_12 fc_9">请在此输入您的充值银行卡号</p>
+
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="authName">我使用过实名认证服务：</label>
+                <div class="controls">
+                  <input type="text" id="authName" name="authName" maxlength="8" onblur="cardClick();" class="in_txt"><span id="authName_tip"></span>
+                  <p class="f_12 fc_9">请在此输入您的实名认证的姓名</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls" id="showDiv">
+                  <button id="getBackPayPassWordButton" type="button" class="btn_h40_red bold" onclick="return submitForm();">提  交</button>
+                </div>
+            </div>
+
+        </div>
+	</form>
+</div>
+
+<script language="JavaScript">
+ $(window).resize(function() {
+	$(".date-picker").datepicker( "hide" );
+	$(".date-picker").blur();
+});
+	$(function(){
+		$('.date-picker').datepicker( {
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			dateFormat: 'yy-mm-dd',
+			minDate: new Date()
+		});
+	});
+  var frontError = '<label class="error">请选择身份证正面图片！</label>';
+  var backError = '<label class="error">请选择身份证背面图片！</label>';
+function backFileClick(){
+ var frontFile = $("#frontImagUrl").val();
+     if(jQuery.isEmpty(frontFile)) {
+          $("#frontFile_tip").html(frontError);
+      } else {
+          $("#frontFile_tip").html("");
+       }
+}
+function blurClick(){
+        var backFile = $("#backImagUrl").val();
+        if(jQuery.isEmpty(backFile)) {
+            $("#backFile_tip").html(backError);
+        } else {
+            $("#backFile_tip").html("");
+        }
+ $("input[name='timeType']").attr("checked",false);
+ $("#dateFormat").html("");
+}
+function focusClick(){
+    var backFile = $("#backImagUrl").val();
+      if(jQuery.isEmpty(backFile)) {
+            $("#backFile_tip").html(backError);
+       } else {
+            $("#backFile_tip").html("");
+       }
+    $("#overDate").val("");
+    $("#dateFormat").html("");
+}
+function emailClick(){
+if($("#overDate").val()==""&&$("#timeType").attr('checked')==undefined){
+$("#dateFormat").html('<label class="error">日期不能为空！</label>');
+}if($("#overDate").val()!=""||$("#timeType").attr('checked')!=undefined){
+$("#dateFormat").html("");
+}}
+function emailblurClick(){
+if($("#email").val()!=""&&!$("#email").val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)){
+ $("#emailFormat").html('<label class="error">邮箱格式有误！</label>');
+}if($("#email").val()!=''&&$("#email").val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)){
+ $("#emailFormat").html('');
+}if($("#email").val()==''){
+ $("#emailFormat").html('<label class="error">邮箱不能为空！</label>');
+}}
+function withdrawClick(){
+if($("#email").val()==''){
+ $("#emailFormat").html('<label class="error">邮箱不能为空！</label>');
+}
+ var cardDraw=$("#withdrawalCardId").val();
+ if(!jQuery.isNumeric(cardDraw)&&cardDraw!=''){
+ $("#withdraw_tip").html('<label class="error">输入的信息格式不正确，请重新输入！</label>');
+}if(jQuery.isNumeric(cardDraw)||cardDraw==''){
+ $("#withdraw_tip").html('');
+}}
+function cardClick(){
+ var cardRech=$("#rechargeCardId").val();
+ var reg = /^[\u4e00-\u9fa5]+$/i;
+ if(!jQuery.isNumeric(cardRech)&&cardRech!=''){
+ $("#recharge_tip").html('<label class="error">输入的信息格式不正确，请重新输入！</label>');
+ }if(jQuery.isNumeric(cardRech)||cardRech==''){
+ $("#recharge_tip").html('');
+ }if(reg.test($("#authName").val())||$("#authName").val()==''){
+ $("#authName_tip").html('');
+ }if(!reg.test($("#authName").val())&&$("#authName").val()!=''){
+ $("#authName_tip").html('<label class="error">姓名格式错误！</label>');
+ }
+}
+function frontFileUpload(){
+	$("img[id='uploadImage']").attr("src","${WEB_RESOURCE.staticAddress}wallet/img/loading.gif");
+	var imgUrl="${WEB_RESOURCE.staticAddress}wallet/image/photo_bg.png";
+   jQuery.ajaxFileUpload({
+        type: 'post',
+        url:'/my/uploadFrontFile.htm',
+        secureuri:false,
+        fileElementId:'frontFile',
+        dataType:'text',
+        success:function(data, status){
+            data = data.replace("<PRE>", '');
+            data = data.replace("</PRE>", '');
+            data = data.replace("<pre>", '');
+            data = data.replace("</pre>", '');
+            var baseUrl="/site/getFile.htm?filePath=";
+            if(jQuery.browser.chrome){
+
+             if(data.substring(59,60)==0){
+                $("img[id='uploadImage']").attr("src", baseUrl+encodeURIComponent(data.substring(61)));
+                $("#frontImagUrl").val(data.substring(61));
+                $("#frontFile_tip").html("");
+                }if(data.substring(59,60)==1){
+                	$("img[id='uploadImage']").attr("src",imgUrl);
+                	$("#frontImagUrl").val("");
+                	jQuery.dialog({
+						title: "提示",
+			            lock: true,
+			            height: 100,
+						width:200,
+			            content: data.substring(61),
+			            ok:function(){}
+		            });
+            //   jQuery.dialog(data.substring(61), function(){});
+                }
+            }else{
+            if(data.substring(0, 1) == 0){
+                $("img[id='uploadImage']").attr("src", baseUrl+encodeURIComponent(data.substring(2)));
+                $("#frontImagUrl").val(data.substring(2));
+                $("#frontFile_tip").html("");
+            }if(data.substring(0, 1) == 1){
+            	$("img[id='uploadImage']").attr("src",imgUrl);
+            	$("#frontImagUrl").val("");
+            	jQuery.dialog({
+						title: "提示",
+			            lock: true,
+			            height: 100,
+						width:200,
+			            content: data.substring(2),
+			            ok:function(){}
+		            });
+            //jQuery.dialog(data.substring(2), function(){});
+            }
+         }
+
+        },
+        error:function(data, status, e){
+            $('#imgDiv').html('图片上传失败，请重试！！');
+            $("#frontImagUrl").val("");
+        }
+    });
+
+}
+function backFileUpload(){
+	$("img[id='uploadImageBack']").attr("src","${WEB_RESOURCE.staticAddress}wallet/img/loading.gif");
+	var imgUrl="${WEB_RESOURCE.staticAddress}wallet/image/photo_bg.png";
+   jQuery.ajaxFileUpload({
+        type: 'post',
+        url:'/my/uploadBackFile.htm',
+        secureuri:false,
+        fileElementId:'backFile',
+        dataType:'text',
+        success:function(data, status){
+            data = data.replace("<PRE>", '');
+            data = data.replace("</PRE>", '');
+            data = data.replace("<pre>", '');
+            data = data.replace("</pre>", '');
+            var baseUrl="/site/getFile.htm?filePath=";
+            if(jQuery.browser.chrome){
+
+             if(data.substring(59,60)==0){
+                $("img[id='uploadImageBack']").attr("src", baseUrl+encodeURIComponent(data.substring(61)));
+                $("#backImagUrl").val(data.substring(61));
+                $("#backFile_tip").html("");
+                }if(data.substring(59,60)==1){
+                	$("img[id='uploadImageBack']").attr("src",imgUrl);
+                	$("#backImagUrl").val("");
+                	jQuery.dialog({
+						title: "提示",
+			            lock: true,
+			            height: 100,
+						width:200,
+			            content: data.substring(61),
+			            ok:function(){}
+		            });
+                	//jQuery.dialog(data.substring(61), function(){});
+                }
+            }else{
+            if(data.substring(0, 1) == 0){         //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
+                $("img[id='uploadImageBack']").attr("src", baseUrl+encodeURIComponent(data.substring(2)));
+                $("#backImagUrl").val(data.substring(2));
+                $("#backFile_tip").html("");
+            }if(data.substring(0, 1) == 1){
+            	$("img[id='uploadImageBack']").attr("src",imgUrl);
+            	$("#backImagUrl").val("");
+            	jQuery.dialog({
+						title: "提示",
+			            lock: true,
+			            height: 100,
+						width:200,
+			            content: data.substring(2),
+			            ok:function(){}
+		            });
+            	//jQuery.dialog(data.substring(2), function(){});
+            }
+         }
+
+        },
+        error:function(data, status, e){ //服务器响应失败时的处理函数
+            $('#imgBackDiv').html('图片上传失败，请重试！！');
+            //$("img[id='uploadImageBack']").attr("src",imgUrl);
+            $("#backImagUrl").val("");
+                //jQuery.dialog({
+				//		title: "提示",
+			    //        lock: true,
+			    //        height: 100,
+				//		width:200,
+			    //        content: "上传图片过大！",
+			    //        ok:function(){}
+		        //    });
+        }
+    });
+}
+</script>

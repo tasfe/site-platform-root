@@ -1,0 +1,28 @@
+<toolbox>
+	<xhtml>true</xhtml>
+	<tool>
+		<key>stringUtil</key>
+		<scope>application</scope>
+		<class>com.netfinworks.common.lang.StringUtil</class>
+	</tool>
+	<tool>
+		<key>dateUtil</key>
+		<scope>application</scope>
+		<class>com.netfinworks.common.util.DateUtil</class>
+	</tool>
+	<tool>
+		<key>authTokenHolder</key>
+		<scope>application</scope>
+		<class>com.netfinworks.site.web.common.auth.AuthTokenHolder</class>
+	</tool>
+	<tool>
+		<key>moneyUtil</key>
+		<scope>application</scope>
+		<class>com.netfinworks.site.core.common.util.MoneyUtil</class>
+	</tool>
+	<tool>
+		<key>jsonUtil</key>
+		<scope>application</scope>
+		<class>com.netfinworks.site.web.common.util.JSONUtil</class>
+	</tool>
+</toolbox>

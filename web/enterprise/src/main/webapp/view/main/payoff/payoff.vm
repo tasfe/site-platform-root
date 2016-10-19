@@ -1,0 +1,116 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="appcenter" class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">代发工资</span>
+        </div>
+        <div class="right fr"><a href="#springUrl('/static/dfgz.htm')">什么是代发工资</a> | <a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=6')">代发工资记录</a> | <a href="#springUrl('/help/faq.htm')">常见问题</a></div>
+    </div>
+    <div class="pagebox pagebox1 pagedfgz">
+    	<div class="step step_1"><i></i><span class="s1">上传模板</span><span class="s2">代发工资审核</span><span class="s3">代发工资完成</span></div>
+    	 <form class="upload_file" action="$!{path}/payoff/importBatchPayoff.htm" method="post" enctype="multipart/form-data">
+            <div class="boxbg1">
+            	<div style="padding:0 0 30px 44px">
+                    <div class="zz_pl_rt">代发工资 <a href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/download/dfgz.xls">下载模板</a></div>
+                    <div class="color_59 b f14">代发工资</div>
+                    <table cellpadding="0" cellspacing="0" border="0" class="p20">
+                    	<tr>
+                        	<td width="60">可用余额：</td>
+                            <td width="129"><span class="color_f6 f14 b" style="">$!{availableBalance}</span>元</td>
+                            <!--<td width="144">离签约到期时间还有<span>1000</span>天</td>
+                            <td><a href="#">马上续约</a></td>-->
+                        </tr>
+                    </table>
+                    
+                    <div>
+						上传文件： <input type="text" class="inputtext w264" id="file1">&nbsp;<div class="relative inline"><input type="button" value="浏 览" class="btn_liulan"><input for="file1" id="file_select" name="batchFile" type="file" class="input_file" ></div> <p class="color_b3" style="padding-top:5px;padding-left:66px;">文件格式：xls、xlsx，代发工资一次最多支持发放999笔工资</p><div style=" height:30px; line-height:30px;padding-left:66px; padding-top:5px;" class="error"></div>
+                    </div>
+                   
+                    <div class="div_btn_submit"><input type="button" value="上 传" class="btn J_btn_upload btn_submit"></div>
+                    
+                    <!--<div class="bank_limit_title">费率说明</div>
+                    <div class="bank_limit_des">
+                
+                    <table cellpadding="0" cellspacing="0" border="0" class="table_des">
+                    <tr>
+                    	<th width="190">单笔限额(元)</th>
+                        <th width="190">每日限额(元)</th>
+                        <th width="190">需要满足的条件</th>
+                        <th width="190">备注</th>
+                    </tr>
+                    <tr>
+                    	<td>1万</td>
+                        <td>1万</td>
+                        <td class="text_l">已开通手机短信认证<br><a href="#">如何开通？</a></td>
+                        <td class="text_l" rowspan="3">2012年2月8日起，邮储银行“在线支付”关闭信用卡向支付宝账户充值的服务，请使用邮储储蓄卡进行充值。</td>
+                    </tr>
+                    <tr>
+                    	<td>20万</td>
+                        <td>20万</td>
+                        <td class="text_l">办理电子令牌<br><a href="#">如何办理？</a></td>
+                    </tr>
+                    <tr>
+                    	<td>200万</td>
+                        <td>200万</td>
+                        <td class="text_l">办理USB-KEY及开通短信服务<br><a href="#">如何办理？</a></td>
+                    </tr>
+                    </table>
+                    </div>-->
+                    </div>
+            </div>
+        </form>
+       		
+        
+        <div class="faq_relevant">
+        	<h4>代发工资问题：</h4>
+            <dl>
+            	<dt>什么是代发工资？</dt>
+                <dd>答：是永达推出的增值服务，是指您可以通过永达账户来为您公司员工发放工资、奖金等薪资的服务。</dd>
+            </dl>
+           <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+$(function(){
+	$("#file1").val("");
+	$("#file_select").val("");
+	
+	$("body").delegate(".input_file","change",function(){
+		var $thisobj = $(this);
+		var path = $thisobj.val();
+		var txtid = $thisobj.attr("for");
+		$("#" + txtid).val(path);
+		checkFile({
+			fileId: $thisobj.attr("id"),
+			fileTextId: txtid,
+			fileType: "notimg",
+			path: path,
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: $thisobj.parent().parent().find(".error")
+		});
+	}).delegate(".J_btn_upload","click",function(){
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_disabled");
+		var $tip = $btn_submit.parent().parent().find(".error");
+		$tip.text("");
+		
+		var $thisobj = $("#file_select");
+		var flag = checkFile({
+			fileId: $thisobj.attr("id"),
+			fileTextId: $thisobj.attr("for"),
+			fileType: "notimg",
+			path: $thisobj.val(),
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: $thisobj.parent().parent().find(".error")
+		});
+		if(!flag) { $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		$(".upload_file").submit();
+	});
+
+})
+</script>

@@ -1,0 +1,39 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/safety.css" rel="stylesheet" type="text/css">
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">邮件客服</span>
+        </div>
+    </div>
+
+     <div class="safetyMain">
+     	 #if($!response.success) 
+         <div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">$!response.data.email用户，您好！</p>
+				   <p>非常感谢您给我们公司提出的宝贵意见！</p>
+              </div>
+              
+         </div> 
+		 #else
+		<div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">尊敬的用户，对不起!</p>
+				   <p>$!response.message</p>
+              </div>
+              
+         </div> 
+		 #end
+
+
+     </div>
+     
+</div>
+</div>

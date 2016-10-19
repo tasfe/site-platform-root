@@ -1,0 +1,73 @@
+<div class="wrapbg">
+    <div id="money_cz" class="wrap">
+        <div class="page_title transaction">
+            <div class="title fl">
+                <i class="icon fl"></i>
+                <span class="tt fl">订单信息</span>
+            </div>
+        </div>
+        #foreach ($!tradeInfo in $!response.data.page.infos)
+        <div class="pagebox "> 
+                   <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+                       <tr>
+                          <td class="tab_w">交易订单号</td>
+                          <td class="tab_w2">$!tradeInfo.fundoutOrderNo<br></td>
+                          <td class="tab_w">交易类型</td>
+                          <td class="Detail_tab_no tab_w2">委托付款到银行卡</td>
+                       </tr>
+                          <tr class="cl">
+                          <td class="tab_w">创建时间</td>
+                          <td class=" tab_w2">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime)</td>
+                          <td class="tab_w">交易金额（元）</td>
+                          <td class="Detail_tab_no tab_w2">$!moneyUtil.getAmount($!tradeInfo.amount)</td>
+                       </tr>
+                       <tr>
+                          <td class="tab_w">服务费（元）</td>
+                          <td class="tab_w2">$!moneyUtil.getAmount($!tradeInfo.fee)</td>
+                          <td class="tab_w">总金额（元）</td>
+    	                  <td class="Detail_tab_no tab_w2">$response.data.sum</td>
+                       </tr>
+                       <tr>
+                          <td class="tab_w">支付账户</td>
+                          <td class="tab_w2">$!response.data.loginName2</td>
+                          <td class="tab_w">支付时间</td>
+                          <td class="Detail_tab_no tab_w2">$!dateUtil.getNewFormatDateString($!tradeInfo.successTime)</td>
+                       </tr>
+
+                       <tr class="cl">
+                          <td class="tab_w">备注</td>
+                          <td class=" tab_w2">$!tradeInfo.tradeMemo</td>
+                          <td class="tab_w">状态</td>
+                          <td class="Detail_tab_no tab_w2">
+                          <span>
+    		                  #if($!tradeInfo.status == "submitted")
+    				                                    处理中## 原来是-已提交，原型
+                              #elseif($!tradeInfo.status == "failed")
+    				                                    失败
+                              #elseif($!tradeInfo.status == "success")
+    				                                    出款成功
+    		                  #end
+    		              </span>
+    		              </td>
+                       </tr>       
+                   </table>
+        </div>
+			<div class="table_div">
+               <h3>交易对象</h3>
+            </div>
+        <div class="pagebox5">
+        <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+               <td class="tab_w">账户名称</td>
+		       <td class=" tab_w2">$!tradeInfo.name</td>
+               <td  class="tab_w">帐号</td>
+               <td class="Detail_tab_no tab_w2"><p>$!{tradeInfo.branchName}</p>$!{tradeInfo.cardNo}</td>
+           </tr>
+        </table>
+        </div>
+        #end
+		<div class="fun_btn relative">
+		    <input type="button" value="返 回" class="btn btn-bg" onClick="goBackOrClose();">
+		</div>
+	</div>
+</div>

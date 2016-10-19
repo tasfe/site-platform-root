@@ -1,0 +1,37 @@
+<div class="wrapbg">
+     <div class="wrap">
+          <div class="page_title">
+               <div class="title fl">
+                    <i class="icon fl"></i>
+                    <span class="tt fl">商户注册</span>
+               </div>
+          </div>
+
+          <div class="login_main">
+
+               <div class="step-wrap">
+                    <span class="step-index">1</span>
+                    <span class="step-name">验证账户名</span>
+                    <span class="s"></span>
+                    <span class="step-index">2</span>
+                    <span class="step-name">完善账户信息</span>
+                    <span class="s"></span>
+                    <span class="step-index step-index-cur">3</span>
+                    <span class="step-name step-name-cur">完成注册</span>
+               </div>
+
+               #if($!response.success)
+               <div class="login_tip clearfix">
+                    <p class="pdlf350 f16 bold pos_rel"><span class="ico_suc mr16"></span>恭喜您，您的永达账户注册成功！</p>
+
+                    <p class="pdlf280 pdt50 f14">您可以马上进行<a class="red bold" href="#springUrl('/my/go-enterprise-certification.htm')">实名认证</a>使用永达账户的专业支付服务。或进入<a class="bold" href="#springUrl('/my/home.htm')">首页</a></p>
+               </div>
+               #else
+               <div class="login_tip clearfix">
+                    <p class="pdlf350 f16 bold pos_rel"><span class="ico_err mr16"></span>对不起，您的永达账户注册失败！</p>
+                    <p class="pdlf280 pdt50 f14"></p>
+               </div>
+               #end
+          </div>
+     </div>
+</div>

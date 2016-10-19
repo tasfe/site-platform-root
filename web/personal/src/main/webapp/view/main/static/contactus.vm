@@ -1,0 +1,40 @@
+<div id="" class="wrap">
+	<div class="page_title">
+    	<div class="fr page_title_right"></div>
+    	<h2>联系我们</h2>
+    </div>
+    <div class="pagebox relative" style=" padding-top:42px; padding-left:35px;   padding-bottom:55px;">
+    	<div style="width:284px; padding-bottom:10px; border-bottom:1px dashed #d8d8d8;">
+    	<h3 class="f14 b" style="margin-bottom:17px;">永达互联网金融信息服务有限公司</h3>
+        <p class="l_h24">联系电话：0571-28950188<br>
+        联系传真：0571-28950188<br>
+        联系地址：浙江省杭州市下城区东新路江南巷11号5楼<br>
+        邮编：310004
+        </p>
+        </div>
+        <div style="width:284px;padding-top:20px; padding-bottom:10px; border-bottom:1px dashed #d8d8d8;">
+        <h3 class="f12 b" style="line-height:16px; margin-bottom:15px;"><i class="contactus_icon1" style=" float:left; width:16px; height:16px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/icon_lxwm1.jpg) no-repeat; margin-right:7px; "></i>商务合作</h3>
+        <p class="l_h24">联系电话：0571-28950118<br>
+		联系邮箱：BD@kjtpay.com
+        </p>
+        </div>
+
+		<div style="padding-top:20px;">
+		<h3 class="f12 b" style="line-height:16px; margin-bottom:15px;"><i class="contactus_icon1" style=" float:left; width:16px; height:16px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/icon_lxwm2.jpg) no-repeat; margin-right:7px; "></i>联系客服</h3>
+        <p class="l_h24">热线电话：400-611-0909<br>
+		联系邮箱：service@kjtpay.com
+        </p>
+        </div>
+
+		<div class="fr map " style=" ">
+        
+        
+                <div style=" position:absolute; top:43px; left:420px; width:520px; height:360px; border:1px solid #d8d8d8;" id="dituContent">
+					<img src="${WEB_RESOURCE.staticAddress}wallet/common/images/map.png"> 
+                </div>
+        </div>
+    </div>
+    
+    
+  
+</div>

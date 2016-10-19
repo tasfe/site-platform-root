@@ -1,0 +1,14 @@
+
+<head>
+  <title>抽奖活动</title>
+  <style type="text/css">
+    *{
+      margin:0; 
+      padding:0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/activity.jpg" style="max-width: 1920px; width: 100%; min-width: 1000px;" />
+</body>

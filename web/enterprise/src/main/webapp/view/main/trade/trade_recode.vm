@@ -1,0 +1,165 @@
+<div class="wrapbg">
+<div class="trade_all">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl"></span>
+        </div>
+    </div>
+                        #parse("common/control/menu.vm")
+                             <ul class="select_by_time">
+                                <li>
+                                       时间：
+                                       <input type="text" name="searchStartDate" id="searchStartDate" class="date-picker"  readonly="" value="$!response.data.queryStartTime"/>
+                                       至
+                                       <input type="text" name="searchEndDate" id="searchEndDate" class="date-picker"  readonly="" value="$!response.data.queryEndTime"/>
+                                        <input  type="button" id="search" class="btn_h24" value="搜索"/>
+                                </li>
+                             </ul>
+
+                         <table class="list_check_table business_record"-->
+                           <colgroup>
+                                    <col width="150px">
+                                    <col width="350px">
+                                    <col width="180px">
+                                    <col width="160px">
+                                    <col width="180px">
+                            </colgroup>
+                            <tr>
+	                            <th class="time">创建时间</th>
+	                            <th>名称&nbsp;|&nbsp;交易号</th>
+	                            <th>对方</th>
+	                            <th>金额</th>
+	                            <th>状态</th>
+                            </tr>
+                            #set ($i=1)
+                            #set($tradeType = "")##交易类型
+                            #set($tradeStatus = "")##交易状态
+                            #set($plusminus ="")##正负
+                            #set($moneycolor="")
+                            #foreach($info in $response.data.list)
+                                #if($i%2 != 0)
+                                    #set ($odd="")
+                                #else
+                                    #set ($odd="on")
+                                #end
+                                #set($i=$i+1)
+
+                                #if($info.tradeType=="PREPAY_ACQUIRING")
+                                      ## 下订收单交易 显示红色
+                                       #set($moneycolor="money ff5f40")
+                                #elseif($info.tradeType=="INSTANT_TRASFER")
+                                		#set($moneycolor="")
+                                #else
+                                  	   #set($moneycolor="fc_green")
+                                #end
+
+
+                                #if(${info.orderState} == "100")
+                                   #set($tradeStatus="待支付")
+                                   #set($moneycolor="money")
+                                #elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+                                   #set($tradeStatus="处理中")
+                                #elseif(${info.orderState} == "201")
+                                    #set($tradeStatus="付款成功")
+                                #elseif($info.orderState == "999")
+                                   #set($tradeStatus="交易关闭")
+                                #end
+
+                                #if($info.tradeType == "INSTANT_TRASFER")
+                                    #if($info.orderState == "301" || $info.orderState == "401")
+                                       #set($tradeStatus="转账成功")
+                                    #end
+                                    #if($info.orderState == "998")
+                                       #set($tradeStatus="转账失败")
+                                    #end
+                                #else
+                                    #if($info.orderState == "301")
+                                       #set($tradeStatus="交易成功")
+                                    #elseif($info.orderState == "401")
+                                       #set($tradeStatus="交易结束")
+                                    #end
+                                 #end
+
+                                   #if($info.memberId == $info.buyerId)
+                                    	#set($plusminus ="-")
+                                   #elseif($info.memberId == $info.sellerId)
+                                   		#set($plusminus ="+")
+                                   #end
+
+                            <tr class=$odd>
+                               <td class="time">$!dateUtil.getNoSecondDateString(${info.gmtSubmit})</td>##交易提交时间
+                               #if($info.tradeType=="PREPAY_ACQUIRING")
+                               <td>订金<br>$!info.tradeVoucherNo</td>
+                               #else
+                               <td>$!{info.tradeMemo}<br>$!info.tradeVoucherNo</td>
+                               #end
+                               #if($info.memberId == $info.buyerId)
+                                    <td>$!info.sellerName</td>
+                                 #else
+                                 	<td>$!info.buyerName</td>
+                                 #end
+                                <td class='${moneycolor}'>
+                                  #if($moneyUtil.getAmount($!info.payAmount) == "0.00")
+                                     --
+                                  #else
+                                    $!{plusminus}$!{moneyUtil.getAmount($!info.payAmount)}
+                                  #end
+                               </td>
+                               <td>$!{tradeStatus}</td>
+                            </tr>
+                            #end
+                            #if(!$response.data.list || $response.data.list.size()<=0)
+                            <tr>
+                            	<td colspan="10">无交易信息！</td>
+                            </tr>
+                            #end
+                         </table>
+                        #parse("common/control/paginator.vm")
+         </div>
+     </div>
+   <form id="withdrawForm" name="withdrawForm" action="/my/all-trade.htm" method="post">
+    <input type="hidden" name="queryStartTime" id="queryStartTime" value="$!response.data.queryStartTime">
+    <input type="hidden" name="queryEndTime" id="queryEndTime" value="$!response.data.queryEndTime">
+     <input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+    </form>
+<script type="text/javascript">
+ $(window).resize(function() {
+	$(".date-picker").datepicker( "hide" );
+	$(".date-picker").blur();
+});
+			 $(function(){
+
+				   //时间控件
+					  $('.date-picker').datepicker({
+						maxDate: new Date()
+					  });
+
+              });
+
+   function toQuerySubmit(currentPage){
+        $("#currentPage").val(currentPage);
+        $("#withdrawForm").submit();
+  }
+       $("#search").click(function(){
+			  var star=$("#searchStartDate").val();
+			  var end=$("#searchEndDate").val();
+			  if(end < star)  {
+				 jQuery.dialog({
+						 title: "消息",
+						 lock: true,
+			             content: "输入的截止时间必须大于起始时间！",
+						 height: 110,
+						 width:300,
+			             ok:function(){}
+						 });
+				  return false;
+			  }else{
+				$("#queryStartTime").val(star);
+				$("#queryEndTime").val(end);
+				$("#currentPage").val(1);
+				$("#withdrawForm").submit();
+				return true;
+			  }
+           });
+	</script>

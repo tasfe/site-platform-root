@@ -1,0 +1,16 @@
+#set($page_title = '权限操作拒绝')
+<div class="wrapbg">
+    <div class="wrap">
+        <div class="busy_box">
+            <span class="busy_icobg"></span>
+            <h3 class="h3">对不起，您没有权限做此操作！</h3>
+            <p class="p"><a href="#springUrl('/my/home.htm')">返回钱包首页</a></p>
+        </div>
+        <!--div class="busy_box">
+            <h3 class="h3">错误信息</h3>
+
+            <p class="p">$!response.message</p>
+            <p class="p">$!error</p>
+        </div-->
+    </div>
+</div>

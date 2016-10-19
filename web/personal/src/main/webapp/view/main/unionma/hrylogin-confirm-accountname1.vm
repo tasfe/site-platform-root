@@ -1,0 +1,186 @@
+ <link href="${WEB_RESOURCE.staticAddress}wallet/common/css/account2.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrap">
+     <div class="safetyMain">
+		<div class="usbKeyCon_tips w655px">
+						因系统升级，为提升您的帐号安全，请完成以下信息确认。完成后，您将可以继续使用永达互联网金融的服务。
+                 </div>
+				 <div class="content w697px">
+		<div class="title">请设置您的登录名</div>	
+				 <p class="f12">设置后，请使用您设置的登录名进行登录。您也可以在安全中心-登录名修改中进行登录名的修改</p>
+				</div>
+	<div class="verify_con">
+	
+         <div class="loginCenter">
+              <form class="from1" id="nameupdateForm" name="nameupdateForm" action="${request.contextPath}/my/hrylogin-set-name.htm" method="post">
+				<div class="login_limit">
+                   <label><span class="f14 limitLeft">账户名：</span>
+                     <input type="text" class="inputtext w232" name="accountname" value="" id="accountname">
+                   </label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160">
+                <span></span>
+				</div>
+               </div>
+			   
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">校验码：</span>
+                     <input type="text" class="inputtext w80" value="" name="mobileCaptcha" id="sjyzm">
+                     <input class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error" id="codeError">$!{response.message}</div>$!response.data.validCode_error
+				</div>
+				<input type="hidden" name="bizType"  id="bizType" value="ACC_UPD_TOEMAIL"/>
+				<input  type="hidden" name="Mid" id="Mid" value="$!{response.data.Mid}"/>
+				<input  type="hidden" name="hry" id="hry" value="hry1"/>
+				<input  type="hidden" name="memberIdentity" id="memberIdentity" value="$!{response.data.memberIdentity}"/>
+           <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+			  </div>
+         </div>      
+         </div> 
+</div>
+  <!-- E 主要内容 -->
+  <script type="text/javascript">
+
+$(function(){
+
+
+$("#accountname").blur(function(){
+		var username = $.trim($("#accountname").val());
+		$("#username").val(username);
+		if(username == "" || username == $(this).attr("data-placeholder")){
+			$(".error").text("请输入账号信息");
+			return false;
+		}
+		if(!RegExp(regexEnum.email).test(username) && !RegExp(regexEnum.mobile).test(username)){
+			$(".error").text("您输入的手机或邮箱格式不正确！");
+			return false;
+		}else{
+			$(".error").text("　");
+		}
+		var regPattern_email = /^(\w)+(\.\w+)*@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+		var regPattern_mobile = /^[1]([3][0-9]{1}|([4][7]{1})|([5][0-3|5-9]{1})|([8][0-9]{1}))[0-9]{8}$/;
+		if(regPattern_email.test(username)) {
+			$("#memberIdentity").val("EMAIL");
+			$("#bizType").val("ACC_UPD_TOEMAIL");
+			var usernameTipObj = $(this).parent().parent().parent().find(".error");
+		checkAccount({cmd:"register", username:username, tipObj:usernameTipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:1});//type 2 邮箱
+		} else if (regPattern_mobile.test(username)) {
+			$("#memberIdentity").val("MOBILE");
+			$("#bizType").val("ACC_UPD_TOPHONE");
+			var usernameTipObj = $(this).parent().parent().parent().find(".error");
+		checkAccount({cmd:"register", username:username, tipObj:usernameTipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:2});//type 2 邮箱
+		}
+		
+	});
+
+$(".btn_mfhq").click(function(){
+		var jThis = $(this);
+		var Mid="$!{response.data.Mid}";
+		var sendObject= $.trim($("#memberIdentity").val());;
+		var thisObj = $("#accountname");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var value = $.trim(thisObj.val());
+		tipObj.text("");
+		if (value == "") {
+		$(".error").text("请输入账号信息");
+		return false;
+		}else if(sendObject == 'MOBILE'){
+				if (!RegExp(regexEnum.mobile).test(value)){
+						$(".error").text("您输入的手机格式不正确！");
+						return false; 
+					}
+				var flag =	checkAccount({cmd:"register", username:value, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:2});//type 2 邮箱
+		}else if(sendObject== 'EMAIL'){
+				if (!RegExp(regexEnum.email).test(value)){
+					$(".error").text("您输入的邮箱格式不正确！"); return false;
+				}
+				var flag =checkAccount({cmd:"register", username:value, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:1});//type 2 邮箱
+		}else if(sendObject== ""){
+			$(".error").text("您输入的手机或邮箱格式不正确！"); return false;
+		}
+		if(!flag){
+			return false;
+		}
+		$("#codeError").html("");
+		countDown(jThis,60,"");
+		if(sendObject == 'MOBILE'){
+			$.ajax({
+					url: '#springUrl('/my/login-send-mobile.htm')',
+					type: 'post',
+					data: "mobile=" + $("#accountname").val() + "&bizType=" + $("#bizType").val()+"&Mid="+Mid,
+					dataType: "json",
+					success: function(result) {
+						if (!result || !result.success) {
+							if(result.message != ""){
+								$('#captchaDiv .error').text(result.message);	
+							}else{
+								$('#captchaDiv .error').text('获取验证码失败!');	
+							}
+						} else {
+							$('#captchaDiv .error').text('验证码发送成功!');
+						}
+					},
+					error:function(){$('#captchaDiv .error').text(G.sysError)}
+				});
+		}else if(sendObject== 'EMAIL'){
+				$.ajax({
+						url: '#springUrl('/my/login-send-mail.htm')',
+						type: 'post',
+						data: "email=" + $("#accountname").val() + "&bizType=" + $("#bizType").val()+"&Mid="+Mid,
+						dataType: "json",
+						success: function(result) {
+							if (!result || !result.success) {
+								if(result.message != ""){
+									$('#captchaDiv .error').text(result.message);	
+								}else{
+									$('#captchaDiv .error').text('获取验证码失败!');	
+								}
+							} else {
+								$('#captchaDiv .error').text('验证码发送成功!');								
+							}
+						},
+						error:function(){$('#captchaDiv .error').text(G.sysError)}
+					});
+		}
+	});
+$(".btn_submit").click(function(){
+    var username = $.trim($("#accountname").val());
+		$("#username").val(username);
+		if(username == "" || username == $(this).attr("data-placeholder")){
+			$(".error").text("请输入账号信息");
+			return false;
+		}
+		if(!RegExp(regexEnum.email).test(username) && !RegExp(regexEnum.mobile).test(username)){
+			$(".error").text("您输入的手机或邮箱格式不正确！");
+			return false;
+		}else{
+			$(".error").text("　");
+		}
+		var regPattern_email = /^(\w)+(\.\w+)*@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+		var regPattern_mobile = /^[1]([3][0-9]{1}|([4][7]{1})|([5][0-3|5-9]{1})|([8][0-9]{1}))[0-9]{8}$/;
+		if(regPattern_email.test(username)) {
+			$("#memberIdentity").val("EMAIL");
+			$("#bizType").val("ACC_UPD_TOEMAIL");
+			var usernameTipObj = $(this).parent().parent().parent().find(".error");
+			var flag =checkAccount({cmd:"register", username:username, tipObj:usernameTipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:1});//type 2 邮箱
+			if(!flag){
+				return false;
+			}
+		} else if (regPattern_mobile.test(username)) {
+			$("#memberIdentity").val("MOBILE");
+			$("#bizType").val("ACC_UPD_TOPHONE");
+			var usernameTipObj = $(this).parent().parent().parent().find(".error");
+			var flag =checkAccount({cmd:"register", username:username, tipObj:usernameTipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:2});//type 2 邮箱
+			if(!flag){
+				return false;
+			}
+		}
+		flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().parent().find(".error"),"请输入校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		$("#nameupdateForm").submit();
+	});
+})
+</script>

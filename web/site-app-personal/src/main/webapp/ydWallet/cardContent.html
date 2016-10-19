@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <title>银行卡详情</title>
+</head>
+<body>
+
+<div id="J_Page1" class="yd-wrap getPwWrap" style="z-index:1;display: none;">
+  <div class="yd-wrap cardContentWrap" style="display:block;">
+    <div id="J_BankType" class="bankContentTitle">
+    <span class="bankCardIcon">
+      <i id="J_BankCode" class="yd-icon bank-icon">&nbsp;</i>
+    </span>
+      <div class="bankCardIf">
+        <div id="J_BankName" class="bankCardIfTitle"></div>
+        <div id="J_BankAccountNum" class="bankCardIfType"></div>
+      </div>
+    </div>
+  </div>
+  <div class="c-tip" style="margin:3%">
+    限额
+  </div>
+  <div class="me-list">
+    <ul class="yd-itemList itemMarginLeft">
+      <li>单笔（元）<span class="yd-layouts-right" id="J_SingleLimit"></span></li>
+      <li>单日（元）<span class="yd-layouts-right" id="J_DailyLimit"></span></li>
+      <li>单月（元）<span class="yd-layouts-right" id="J_MonthLimit"></span></li>
+    </ul>
+  </div>
+  <div class="me-list" style="margin-top:5%">
+    <ul class="yd-itemList">
+      <li id="J_CardUnbind" data-id="" class="unBindBtn">解绑</li>
+    </ul>
+  </div>
+</div>
+
+<div id="J_Page2" class="yd-wrap getPwWrap upInAnimation" style="z-index:2;display:none">
+  <div class="c-tip" style="text-align:center; margin-left:0px;">
+    删除尾号为<span id="J_CardNum"></span>的银行卡
+  </div>
+  <div class="payPasswordInputWrap">
+    <input type="password" class="yd-input-noBorder" placeholder="是支付密码，不是登录密码" name="" id="payPassword" ydType="password"  inputtype="normal" notnull="notnull" style="width:230px;margin-left:15px;"/><span class="yd-layouts-right"><i class="yd-icon icon-pw1" password="hide" id="passwordEye">&nbsp;</i></span>
+  </div>
+  <div class="yd-btn-big yd-btn-disabled" id="J_BtnSubmit">确定</div>
+  <div class="getPassword yd-layouts-right link-getpwd" id="J_GoGetPwd">忘记密码</div>
+  <div class='dialogWrap' style='display:none'>
+  </div>
+  <!--弹窗说明-->
+  <div class="dialog-cardInfo animationBounceIn" style="display:none" id="ydWx-diaLog">
+    <h2 class="dialog-alertTitle" style="min-height:60px; width:90%; padding-bottom:2%; text-align:left; font-weight:normal; font-size:16px" id="ydWx-diaLogText">提示</h2>
+    <div class='diaLog-alertBtnArea' style="width:300px"><div class='diaLogBtn closeDiaLog-alert' style="width:150px; font-weight:bold; border-right:1px solid #E5E5E5">重新输入</div><div class='diaLogBtn link-getpwd' style="width:149px" id="pwd-getPwd">忘记密码</div></div>
+  </div>
+</div>
+
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script>
+  var J_BankType = $("#J_BankType"),
+          J_BankCode = $("#J_BankCode"),
+          J_BankName = $("#J_BankName"),
+          J_BankAccountNum = $("#J_BankAccountNum"),
+          J_SingleLimit = $("#J_SingleLimit"),
+          J_DailyLimit = $("#J_DailyLimit"),
+          J_MonthLimit = $("#J_MonthLimit"),
+          id = tools.getQueryString("id"),
+          cardnum = "";
+
+  // 获取银行详细 未考虑缓存数据
+  tools.ajaxSubmit({
+    "type": "GET",
+    "url": gurl + "/bankcard/detail/" + id,
+    "suc_suc": function(response){
+      $("#J_Page1").show();
+      var data = response.data;
+      var cardtypeClass = "",
+              detail = data.detail,
+              limit = data.limit;
+
+      switch (detail.cardType){
+        case 1:
+          cardtypeClass = "dcCard";
+          break;
+        case 2:
+          cardtypeClass = "ccCard";
+          break;
+        case 3:
+          cardtypeClass = "ccCard";
+          break;
+        case 4:
+          cardtypeClass = "ccCard";
+          break;
+        default :
+          cardtypeClass = "";
+      }
+
+      J_BankType.addClass(cardtypeClass);
+      J_BankCode.addClass(detail.bankCode);
+      J_BankName.text(detail.bankName);
+      cardnum = detail.bankAccountNumMask;
+      cardnum = cardnum.substring(cardnum.length - 4);
+      J_BankAccountNum.text("尾号" + cardnum);
+      $("#J_CardNum").text(cardnum);
+
+      if(tools.isNull(limit)){
+        J_SingleLimit.text(tools.limit("不限"));
+        J_DailyLimit.text(tools.limit("不限"));
+        J_MonthLimit.text(tools.limit("不限"));
+      }
+      else{
+        J_SingleLimit.text("￥" + tools.limit(limit[0].singleLimit));
+        J_DailyLimit.text("￥" + tools.limit(limit[0].dailyLimit));
+        J_MonthLimit.text("￥" + tools.limit(limit[0].monthLimit));
+      }
+    }
+  });// ajaxSubmit
+
+  $("#J_CardUnbind").click(function(){
+    // 是否设置过支付密码 未考虑缓存数据
+    tools.ajaxSubmit({
+      "type": "GET",
+      "url": gurl + "/member/info",
+      "suc_suc": function(response){
+        if(response.data.isSetPayPwd == "true"){
+          //window.location.href = "payPassword.html?time=" + new Date().getTime() + "&id="+ id + "&cardnum=" + cardnum;
+          $("#J_Page2").show();
+        }
+        else{
+          window.location.href = linkPre + "/setPwd.html?time=" + new Date().getTime();
+        }
+      }
+    });// ajaxSubmit
+
+  });
+
+  // 支付密码
+  //$("#J_CardNum").text(cardnum);
+
+  $("#J_BtnSubmit").click(function(){
+    if($(this).hasClass("yd-btn-disabled")){
+      return false;
+    }
+    var pwd=$("#payPassword").val();
+    if(pwd ==""){
+      yonda.Tip("支付密码不能为空！");
+      return false
+    }
+
+    tools.ajaxSubmit({
+      "url": gurl + "/bankcard/remove/" + tools.getQueryString("id"),
+      "data": {"payPwd":pwd},
+      "suc_suc": function(response){
+        yonda.Tip("解绑银行成功！");
+        setTimeout(function(){
+          history.back();
+          //window.location.href = "cardList.html?time=" + new Date().getTime();
+        },1200);
+      },
+      "suc_err": function(response){
+        pwdErrorDiaLog(response.message);
+      }
+    });// ajaxSubmit
+
+  });
+
+  $(".link-getpwd").click(function(){
+    //弹窗内找回密码按钮事件
+    window.location.href = linkPre + "/resetPwd.html?time=" + new Date().getTime();
+  });
+</script>
+</body>
+</html>

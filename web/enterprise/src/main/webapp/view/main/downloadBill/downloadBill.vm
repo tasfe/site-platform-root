@@ -1,0 +1,196 @@
+<!--所有用户所有信息-->
+    <div class="zhanghu_infor background_none">
+            <div class="wrap">
+                     
+                     <div class="trade_all">
+                         <div class="tab">
+                               <em class="icon_left"></em>
+                               <em class="icon_right"></em>
+                               <ul class="clearfix">
+                                       <li class="navitem cur">
+                                          <s class="yj_l"></s><a href="#" hidefocus="true">支付流水</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#" hidefocus="true">订单结算</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#" hidefocus="true">退款流水</a><s class="yj_r"></s><b></b>
+                                      </li>   
+                                      <a class="fr" href="javascript:goBackOrClose();" >返回</a>
+                               </ul>  
+                                                           
+                         </div>
+                         
+                         
+                         <ul class="select_by_time clearfix">
+                            <li class="fr">
+                                <a target="_blank" href="#springUrl('/my/downloadToExcel.htm')" class="btn_h24">下载该表格</a>
+                            </li>
+                                                       <li>
+
+                                时间：
+                                       <input name="startDate" class="datepicker_start" type="text" placeholder="请选择起始日期..." readonly="">
+                                 至
+                                      <input name="endDate" class="datepicker_end" type="text" placeholder="请选择截止日期..." readonly="">
+                                        <button id="search" class="btn_h24" type="submit">搜索</button>
+                            </li>
+                         </ul>
+                         <table class="bill_table" >
+                           <colgroup>
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">                                     
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="90px">
+                            </colgroup>          
+                           <tr >                                              
+                               <th>钱包交易订单号</th>
+                               <th>商户订单ID</th>
+                               <th>付款方账号</th>
+                               <th>收款方账号</th>
+                               <th>商品名称</th>
+                               <th>订金金额</th>
+                               <th>付款金币</th>
+                               <th>付款金额</th>
+                               <th>交易提交时间</th>
+                               <th>交易时间</th>
+                               <th>支付状态 </th>
+                            </tr>                            
+                            <tr>                                              
+                               <td>2013091902004938188</td>
+                               <td>2013091902004938188</td>
+                               <td>2013091902004938188</td>
+                               <td>01137826048813780688 </td>
+                               <td>晶晶测试店铺床垫</td>
+                               <td>50</td>
+                               <td>50000</td>
+                               <td>1000</td>
+                               <td>2013-09-19 02:00:49</td>
+                               <td>2013-09-19 08:00:49</td>
+                               <td>已完成</td>
+                            </tr>
+                        </table>
+                        
+                        <table class="bill_table" style="display:none;">
+                          <colgroup>
+                                    <col width="125px">
+                                    <col width="125px">
+                                    <col width="125px">
+                                    <col width="125px">                                     
+                                    <col width="125px">
+                                    <col width="125px">
+                                    <col width="125px">
+                                    <col width="125px">
+                           </colgroup>          
+                           <tr >                                              
+                               <th>钱包交易订单号</th>
+                               <th>商户订单ID</th>
+                               <th>订金金额</th>
+                               <th>付款金币</th>
+                               <th>付款金额</th>
+                               <th>佣金款</th>
+                               <th>金币款</th>
+                               <th>交易结束时间</th>
+                            </tr>                            
+                            <tr>                                              
+                               <td>2013091902004938188</td>
+                               <td>011378260488137806882</td>
+                               <td>50</td>
+                               <td>5000</td>
+                               <td>2000</td>
+                               <td>400</td>
+                               <td>6000</td>
+                               <td>2013-09-19 08:00:49</td>
+                               
+                            </tr>
+                        </table>
+                        <table class="bill_table"  style="display:none;">
+                           <colgroup>
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">                                     
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="90px">
+                            </colgroup>          
+                           <tr >                                              
+                               <th>钱包交易订单号</th>
+                               <th>商户退单ID</th>
+                               <th>商户订单ID</th>
+                               <th>商品名称</th>
+                               <th>退款金额</th>
+                               <th>退担保金额</th>
+                               <th>退金币金额</th>
+                               <th>退订金金额</th>
+                               <th>退款提交时间 </th>
+                               <th>退款时间</th>
+                               <th> 退款状态 </th>
+                              
+                            </tr>                            
+                            <tr>                                              
+                               <td>2013091902004938188</td>
+                               <td>2013091902004938188</td>
+                               <td>2013091902004938188</td>
+                               <td>晶晶测试店铺床垫</td>
+                               <td>1000</td>
+                               <td>100</td>
+                               <td>6000</td>
+                               <td>50</td>
+                               <td>2013-09-19 02:00:49</td>
+                               <td>2013-09-19 08:00:49</td>
+                               <td>已完成</td>
+                            </tr>
+                        </table>
+                         <div class="page">
+                                    <span class="page_no">上一页</span>
+                                    <span class="pg_cur">1</span>
+                                    <a href="">2</a>
+                                    <a href="">3</a>
+                                    <a href="">4</a>
+                                    <a href="">5</a>
+                                    <a class="next" href="">下一页</a>
+                                    <p class="pg_skip">
+                                                到第
+                                                <input type="text" id="" class="pg_jump" name="">
+                                                页
+                                                <button class="confirm" type="submit">确   定</button>
+                                    </p>
+                     </div>
+             </div>
+        </div>
+        <link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/css/date/classic.date.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen"  id="theme_date">
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/css/date/classic.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen"  id="theme_date">
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/plugin/picker.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/plugin/picker.date.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/plugin/zh_CN.js${WEB_RESOURCE.staticVersion}"></script>
+
+ <script type="text/javascript">
+	$(function(){
+		$(".trade_all .tab li").click(function(){
+			$(this).addClass("cur").siblings().removeClass("cur");
+				var i=$(this).index();
+				$(".trade_all .bill_table").eq(i).show().siblings(".bill_table").hide();
+					});
+					
+					var $startDate = $(".datepicker_start").pickadate({
+                            max: new Date()
+                        });
+                        pickerStart = $startDate.pickadate("picker");
+                         var $endDate = $(".datepicker_end").pickadate({
+                             max: new Date()
+                        });
+                        pickerEnd = $endDate.pickadate("picker");
+					
+						});
+ </script>

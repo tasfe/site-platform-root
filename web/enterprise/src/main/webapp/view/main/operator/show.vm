@@ -1,0 +1,49 @@
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/safectrl.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/safectrl_utils.js${WEB_RESOURCE.staticVersion}"></script>
+
+<div class="user_infor_all">
+   </div>    
+        
+        <div class="zhanghu_infor">
+            <div class="wrap">
+                     <div class="account_number_manager">
+                     
+                            <div class="user_ibox">
+                                
+                                
+                                    <h2 class="h2_titform"><em>操作员管理 - 查看详细</em></h2>
+                                    
+                                            <div class="form-horizontal center_form clearfix"> 
+                                                 <div class="control-group">
+                                                    <label class="control-label" for="payPassword"><i class="fc_r_ff">*</i>操作员账号：</label>
+                                                    <div class="controls l-hg30">
+														$!{operatorVO.loginName}
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="payPassword"><i class="fc_r_ff">*</i>操作员姓名：</label>
+                                                    <div class="controls l-hg30">
+														${operatorVO.nickName}
+                                                    </div>
+                                                </div> 
+                                                <div class="control-group">                
+                                                    <div class="controls">
+													  <!-- <input type="button" id="goUpdate" class="btn_h40_red bold" value="修 改" />-->
+													  <input type="button" id="goSetPermission" class="btn_h40_red bold" value="权 限 设 置" />
+													  <input type="button" onclick="goBackOrClose();" class="btn_h40_gray bold marl10" value="返   回" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </form>
+                                        
+                            </div>                                                          
+                      </div>
+             </div>
+        </div>
+		
+<script type="text/javascript">
+	$("#goSetPermission").click(function(){
+		location.href="${request.contextPath}/my/operator/goSetPermission.htm?operatorId=${operatorVO.operatorId}";
+	
+	});
+</script>

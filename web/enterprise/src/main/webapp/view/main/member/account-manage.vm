@@ -1,0 +1,105 @@
+<div class="user_infor_all">
+    <div class="wrap">
+         <div class="nav_top">
+            <div class="photo_box">
+              #if($response.data.member.faceImageUrl && $response.data.member.faceImageUrl != "null")
+	         	 	<img width="76" height="76" src="${WEB_RESOURCE.plateImageUrl}/$!response.data.member.faceImageUrl">
+        	  #end
+            </div>
+            <div class="edit_box">
+                <h2>欢迎您，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName</h2>
+                <ul class="clearfix">
+                #*<li>上次登录时间为：$!response.data.member.lastLoginTime  </li>*#
+                </ul>
+
+            </div>
+         </div>
+    </div>
+        <div class="zhanghu_infor">
+            <div class="wrap">
+                     <div class="account_number_manager">
+                            <div class="trade_all mart30">
+                                 <div class="tab">
+                                       <em class="icon_left"></em>
+                                       <em class="icon_right"></em>
+                                       <ul class="clearfix">
+                                               <li class="navitem cur">
+                                                  <s class="yj_l"></s>基本信息<s class="yj_r"></s><b></b>
+                                               </li>
+                                       </ul>
+                                 </div>
+                                 <div class="manager_infor">
+                                      <h2>用户名：$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName</h2>
+                                      <ul class="clearfix">
+                                          <li>邮箱：$!response.data.email </li>
+                                          <li class="empty"> |</li>
+                                          #*<li>上次登录时间为：$!response.data.member.lastLoginTime   </li>*#
+                                     </ul>
+                                 </div>
+                             </div>
+                             <div class="div_empty">
+                             </div>
+                             <div class="trade_all">
+                                 <div class="tab">
+                                       <em class="icon_left"></em>
+                                       <em class="icon_right"></em>
+                                       <ul class="clearfix">
+                                               <li class="navitem cur">
+                                                  <s class="yj_l"></s>安全设置<s class="yj_r"></s><b></b>
+                                               </li>
+                                       </ul>
+                                 </div>
+                                 <div class="manager_infor set_safe bor_b clearfix">
+                                      <p class="name"><span class="ico_suc"></span>支付密码</p>
+                                      <p class="detail">在支出资金时需要输入的密码，建议您定期更改支付密码以保护账户安全。</p>
+                                      <p><a href="#springUrl('/my/reset-pay-passwd.htm')" class="btn_h24_red">修改支付密码</a><a href="#springUrl('/my/go-get-paypasswd-index.htm')">忘记支付密码</a></p>
+                                 </div> 
+                                 <div class="manager_infor set_safe bor_b clearfix">
+                                      <p class="name"><span class="ico_suc"></span>登录密码</p>
+                                      <p class="detail">登录时需要输入的密码，建议您定期更改登录密码以保护账户安全。</p>
+                                      <p><a href="#springUrl('/my/reset-ent-login-passwd.htm')" class="btn_h24_red">修改登录密码</a></p>
+                                 </div>
+                                 
+                                 ##if($!response.data.card=="Y")
+                                 <!--<div class="manager_infor set_safe bor_b clearfix">
+                                          <p class="name"><span class="ico_warn pngFixBg"></span>完善银行卡信息</p>
+                                          <p class="detail">为保证您的交易安全，公司用户必须完善公司银行卡信息方可提现。</p>
+                                          <p><a href="#springUrl('/my/finishCardInfo.htm')" class="btn_h24_red">立即完善</a></p>
+                                 </div>-->
+
+                                 ##else
+                                  <!--<div class="manager_infor set_safe bor_b clearfix">
+                                          <p class="name"><span class="ico_suc pngFixBg"></span>完善银行卡信息</p>
+                                          <p class="detail">为保证您的交易安全，公司用户必须完善公司银行卡信息方可提现。</p>
+                                          <p><span class="kefu_txt">信息修改请联系客服：0571-28276085</span></p>
+								  </div>-->
+								 ##end
+								 <div class="manager_infor set_safe bor_b clearfix">
+									#if ($!response.data.verify_mobile)
+										<p class="name"><span class="ico_suc"></span>手机验证</p>
+										<p class="detail">已绑定手机（$!response.data.verify_mobile）</p>
+										<p><a href="/my/go-unset-mobilephone.htm">解绑</a><a href="/my/go-reset-mobilephone.htm" class="marl20">修改</a></p>
+									#else
+										<p class="name"><span class="ico_warn pngFixBg"></span>尚未手机认证</p>
+										<p class="detail">绑定手机后，您即可享受永达丰富的手机服务，如手机找回密码等。</p>
+										<p><a href="/my/go-set-mobilephone.htm" class="btn_h24_red">立即认证</a></p>
+									#end  
+                                 </div>
+								 <div class="manager_infor set_safe bor_b clearfix">
+									#if ($!response.data.verify_email)
+										<p class="name"><span class="ico_suc"></span>邮箱验证</p>
+										<p class="detail">已绑定邮箱（$!response.data.verify_email）</p>
+										<p><a href="/my/go-unset-email.htm">解绑</a><a href="/my/go-reset-email.htm" class="marl20">修改</a></p>
+									#else
+										<p class="name"><span class="ico_warn pngFixBg"></span>尚未邮箱认证</p>
+										<p class="detail">绑定后可以使用邮箱登录、找回密码等。</p>
+										<p><a href="/my/go-set-email.htm" class="btn_h24_red">立即认证</a></p>
+									#end  
+                                 </div>
+                             </div>
+                             <div class="div_empty">
+                             </div>
+                      </div>
+             </div>
+        </div>
+    </div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<title>永达商户钱包</title>
+	<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/style.css" rel="stylesheet" type="text/css">
+	<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/account.css" rel="stylesheet" type="text/css">
+	<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/helpcenter.css" rel="stylesheet" type="text/css">
+		
+	<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script>
+    <script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/js.js"></script>
+  </head>
+ 
+<body>
+	<div class="container">
+		#if($!session.getAttribute("CURRENT_ENTERPRISE_USER"))
+			#parse("/common/control/header-login-help.vm")
+		#else
+			#parse("/common/control/header-nologin-help.vm")
+		#end
+
+		$screen_content
+
+		#parse("/common/control/footer-new.vm")
+    </div>
+</body>
+</html>

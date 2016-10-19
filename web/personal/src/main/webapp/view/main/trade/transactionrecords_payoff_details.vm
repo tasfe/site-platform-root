@@ -1,0 +1,90 @@
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2>代发工资详情</h2>
+      </div>
+    <div class="pagebox">
+    	<form id="form_search">
+    
+        <div class="pagebox5 mt10" style="border-top:0;">
+	#foreach ($!tradeInfo in $!response.data.page.infos)
+        <table cellspacing="0" cellpadding="0" border="0" class="Detail_tab">
+      <tbody><tr>
+        <td class="tab_w">交易订单号</td>
+        <td class="tab_w2">$tradeInfo.orderId<br></td>
+        <td>状态</td>
+        <td>
+			#if($!tradeInfo.state=="待支付")
+		          #set($state="处理中")
+		    #elseif($!tradeInfo.state=="付款成功")
+		          #set($state="处理中")
+			#elseif($!tradeInfo.state=="转账成功")
+				#set($state="出款成功")
+			#elseif($!tradeInfo.state=="交易完成")
+			      #set($state="出款成功")
+			 #elseif($!tradeInfo.state=="交易关闭")
+				#set($state="关闭")
+			#end
+			$state
+		</td>
+      </tr>
+      <tr class="cl">
+        <td>创建时间</td>
+        <td>$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime)<br></td>
+        <td>交易类型</td>
+        <td class="Detail_tab_no">代发工资到账户</td>
+        </tr>
+      <tr>
+	    <td>交易对方</td>
+	    <td width="168" style="text-align:left;"><div class="ellipsis w168">$!tradeInfo.buyerName</div></td>
+        <td>交易金额（元）</td>
+	    <td width="140">$!moneyUtil.getAmount($!tradeInfo.transferAmount)</td>
+      </tr>
+      <tr class="cl">
+        <td>服务费（元）</td>
+        <td>$!moneyUtil.getAmount($!tradeInfo.payeeFee)</td>
+        <td class="cl">实际金额（元）</td>
+        <td class="cl Detail_tab_no">$!moneyUtil.getAmount($!tradeInfo.transferAmount)</td>
+        </tr>
+		<!--
+		<tr >
+        <td> 支付类型</td>
+        <td>网银支付</td>
+        <td>支付账户</td>
+        <td class="Detail_tab_no">招商银行</td>
+        </tr>
+		-->
+
+    </tbody></table>
+	#end
+    <div class="div_btn_submit"><input type="button" class="btn_fanhui" onClick="history.back(-1);return false;"></div>
+        </div>
+		<div class="faq_relevant" style="padding:40px 40px 0;">
+                <h4>转账问题：</h4>
+            <dl>
+            	<dt>转账到永达互联网金融账户需要手续费吗？</dt>
+                <dd>答：永达互联网金融账户到账户转账是不收取手续费的。</dd>
+            </dl>
+            <dl>
+            	<dt>哪些情况下不能转账转出？</dt>
+                <dd>答：a)会员账户被冻结，无法转出<br>
+&nbsp;&nbsp;&nbsp;&nbsp;b)会员账户被加入转账黑名单<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c)会员账户后台注销；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d)会员账户未实名认证；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;e)当天转账次数超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f)当天会员支持的各种支付方式（余额、认证、快捷）次数、金额超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;g)转账收款方为未实名认证的个人或者企业会员；
+</dd>
+            </dl>
+            <dl>
+            	<dt>转账到银行卡和提现有什么区别？</dt>
+                <dd>答：<b>转账到卡：</b>是指将用户永达互联网金融账户余额或者储蓄卡中的钱转入自己或者他人的储蓄卡中。<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>提现：</b>是指把永达互联网金融账户的钱转到账户本人的储蓄卡中。</dd>
+            </dl>
+              <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+        
+    </form>
+    </div>
+
+</div>
+

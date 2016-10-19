@@ -1,0 +1,222 @@
+<!--解绑手机号码-->
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/PassGuardCtrl.js"></script>
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/css/ocx.css" rel="stylesheet" type="text/css" /> 
+<script>
+ //密码控件js
+ if(navigator.userAgent.indexOf("MSIE")<0){
+    navigator.plugins.refresh();
+ }
+ var pgeditor = new jQuery.pge({
+  pgePath: "${WEB_RESOURCE.staticAddress}enterpriseWallet/ocx/",
+  pgeId: "_ocx_password",//控件ID
+  pgeEdittype: 0,//控件类型,0星号,1明文
+  pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+  pgeEreg2: "[\\s\\S]{6,12}", //输入完毕后字符类型判断条件
+  pgeMaxlength: 12,//允许最大输入长度
+  pgeTabindex: 2,//tab键顺序
+  pgeClass: "ocx_style",//控件css样式
+  pgeInstallClass: "ocx_style",//针对安装或升级
+  pgeOnkeydown:"FormSubmit()",//回车键响应函数
+     tabCallback:"_ocx_password2"
+ });
+ var pgeditor2 = new jQuery.pge({
+  pgePath: "${WEB_RESOURCE.staticAddress}enterpriseWallet/ocx/",//控件文件目录
+  pgeId: "_ocx_password2",//控件ID
+  pgeEdittype: 0,//控件类型,0星号,1明文
+  pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+  pgeEreg2: "[\\s\\S]{6,12}", //输入完毕后字符类型判断条件
+  pgeMaxlength: 12,//允许最大输入长度
+  pgeTabindex: 2,//tab键顺序
+  pgeClass: "ocx_style",//控件css样式
+  pgeInstallClass: "ocx_style",//针对安装或升级
+  pgeOnkeydown:"FormSubmit()",//回车键响应函数
+     tabCallback:"_ocx_password3"
+ });
+ window.onload = function(){  
+    pgeditor.pgInitialize();//初始化控件
+	pgeditor2.pgInitialize();
+ }  
+</SCRIPT>
+<div class="zhanghu_infor">
+    <div class="wrap min_height6">
+    	<div class="user_ibox">
+            <h2 class="h2_titform"><em>解绑手机</em></h2>
+    		<div class="form-horizontal center_form clearfix">
+        		<div class="control-group">
+                    <label class="control-label" for="payPassword">选择解绑方式：</label>
+                    <div class="controls">
+                      <select class="select" id="unsetType" name="unsetType">
+                            <option value="useMobile" #if($!response.data.useType == 'useMobile') selected #end)>使用手机</option>
+        					#if($!response.data.email.length() > 0)<option value="useEmail" #if($!response.data.useType == 'useEmail') selected #end>使用邮箱</option>#end
+                       </select>
+                    </div>
+                </div>
+        		<div id="useMobile" style="display:none" class="control-group">
+        			<form id="unset-mobile-form" name="unset-mibilePhone-form" class="" action="/my/unset-mobilephone-usemobilephone.htm" method="POST">
+            			<input type="hidden" name="bizType"  id="bizType" value="$!response.data.mobileType"/>
+    					<input type="hidden" name="useType"  id="useType" value="$!response.data.useType"/>
+    					<input type="hidden" name="mobile_password"  id="mobile_password"/>
+    					<div class="control-group">
+            				<label class="control-label" for="mobile"><i class="fc_r_ff"></i>已绑定手机号码：</label>
+                            <div class="controls pos_rel">
+                                 <label id="mobile" name="mobile" >$!response.data.mobile</label>
+                            </div>
+            			</div>
+            			<div class="control-group">
+                            <label class="control-label" for="verifyCode"><i class="fc_r_ff">*</i>手机验证码：</label>
+                            <div class="controls verify_code">
+                              <input style="width:85px;" type="text" id="mobileCaptcha" name="mobileCaptcha" class="in_txt"><span id="send_msg" style="width:100px;" class="btn_h30 btn_suffix">发送短信校验码</span><span id="mobileCaptchaTip" class="suc_tip" hidden="true"></span>
+            					 <p id="mobileCaptcha_error"></p>
+            					 #if($!response.data.mobileCaptcha_error.length() > 0)
+                                    <label id="mobileCaptcha_error1" class="error">#springMessageText($!response.data.mobileCaptcha_error, "")</label>
+            					 #end
+            				</div>
+                        </div>
+                		#parse("main/ocx/password.vm")
+                        <div class="control-group">
+                            <div class="controls">
+                               <input id="unset_mobile_submit" type="button" class="btn_h40_red bold" value="立即解绑">
+                            </div>
+                        </div>
+        			</form>
+                </div>
+    			<div id="useEmail" style="display:none" class="control-group">
+    				<form id="unset-email-form" name="unset-email-form" class="" action="/my/go-unset-mobilephone-active.htm" method="POST">
+                        <input type="hidden" name="bizType"  id="bizType" value="$!response.data.emailType"/>
+    					<input type="hidden" name="useType"  id="useType" value="$!response.data.useType"/>
+    					<input type="hidden" name="email_password"  id="email_password"/>
+    					<div class="control-group">
+            				<label class="control-label" for="email"><i class="fc_r_ff"></i>已绑定邮箱：</label>
+                            <div class="controls pos_rel">
+                                 <label id="email" name="email" >$!response.data.email</label>
+                            </div>
+        				</div>
+        				#parse("main/ocx/confirmPassword.vm")
+                        <div class="control-group">
+                            <div class="controls">
+                               <input id="unset_email_submit" type="button" class="btn_h40_red bold" value="立即解绑">
+                            </div>
+                        </div>
+                	</form>
+                </div>
+    		</div>
+         </div>
+    </div>
+</div>
+<script type="text/javascript">
+jQuery.ajaxSetup({ cache: false }); 
+$("#mobileCaptchaTip").hide();
+$(function(){
+	if ($("#unsetType").val() == 'useMobile') {
+		$("#useEmail").hide();
+		$("#useMobile").show();
+	} else if ($("#unsetType").val() == 'useEmail') {
+		$("#useMobile").hide();
+		$("#useEmail").show();
+	}
+});
+$("#send_msg").click(function(){
+	        if($("#send_msg").attr("disabled")) {
+	            return;
+	        }
+	        $('#send_msg').countDown({
+	            text:"秒后重新获取",
+	            endText:"发送短信校验码",
+	            isDisabled:true,
+	            count:120
+	        });
+         jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+			cache:false,
+            success: function(response) {
+             if(response.success) {
+	             if($("#back-mobileCaptcha")) {
+	                $("#back-mobileCaptcha").hide();
+	             }
+				$("#mobileCaptchaTip").html("校验码已发送");
+                $("#mobileCaptchaTip").show();
+             } else {
+                $("#mobileCaptchaTip").html("若长时间未收到校验码，请联系客服 0571-28276085");
+				$("#mobileCaptchaTip").show();
+             }
+            } ,
+            dataType: "json"
+        });
+  });
+$("#mobileCaptcha").focus(function(){
+	$("#mobileCaptcha_error").html('');
+	$("#mobileCaptcha_error1").hide();
+});
+//表单提交
+$("#unset_mobile_submit").click(function() {
+	$("#mobileCaptcha_error").html('');
+	$("#mobileCaptcha_error1").hide();
+	var mobileCaptcha = $("#mobileCaptcha").val();
+	if(mobileCaptcha == '') {
+		$("#mobileCaptcha_error").html('<label  class="error">短信验证码不能为空!</label>');
+        return false;
+	}
+	if(pgeditor.pwdLength()==0){
+    $("#password_error").html('<label class="error">支付密码不能为空</label>');
+       $("#_ocx_password").focus();
+       return false;
+     }
+    if(pgeditor.pwdValid()==1){
+    $("#password_error").html('<label class="error">支付密码不符合要求，请输入6-12位字符或数字</label>');
+       $("#_ocx_password").focus();
+       return false;
+    }  
+    jQuery.ajax({
+    	url: "#springUrl('/ocx/generateRandomKey.htm')",
+			type: "POST",
+       		async: false,
+          	success: function(result){
+          	pgeditor.pwdSetSk(result);
+          }
+       });
+    setPwdResult(pgeditor,$('#mobile_password'));
+
+	$("#unset-mobile-form").submit();
+    $("#unset_mobile_submit").attr("disabled", "disabled");
+    return true;
+});
+//表单提交
+$("#unset_email_submit").click(function() {
+	if(pgeditor2.pwdLength()==0){
+    	$("#confirm_password_error").html('<label class="error">支付密码不能为空</label>');
+        $("#_ocx_password").focus();
+        return false;
+    }
+    if(pgeditor2.pwdValid()==1){
+    	$("#confirm_password_error").html('<label class="error">支付密码不符合要求，请输入6-12位字符或数字</label>');
+    	$("#_ocx_password").focus();
+       	return false;
+    }  
+	jQuery.ajax({
+		url: "#springUrl('/ocx/generateRandomKey.htm')",
+      	type: "POST",
+   		async: false,
+      	success: function(result){
+    	pgeditor2.pwdSetSk(result);
+      }
+   	});
+
+    setPwdResult(pgeditor2,$('#email_password'));
+
+	$("#unset-email-form").submit();
+    $("#unset_email_submit").attr("disabled", "disabled");
+    return true;
+});
+$("#unsetType").change(function(){
+	if ($(this).val() == 'useMobile') {
+		$("#useEmail").hide();
+		$("#useMobile").show();
+	} else if ($(this).val() == 'useEmail') {
+		$("#useMobile").hide();
+		$("#useEmail").show();
+	}
+	$("input[name='useType']").val($(this).val())
+});
+</script>

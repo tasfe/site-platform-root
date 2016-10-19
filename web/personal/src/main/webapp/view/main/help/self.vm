@@ -1,0 +1,91 @@
+
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/helpcenter.css" rel="stylesheet" type="text/css">
+<div class="wrap">
+  <div class="page_title">
+    <h2></h2>
+  </div>
+  <div class="helpcenter_nav">
+    <ul>
+      <li><a href="#springUrl('/help/helpcenter.htm')" >帮助中心首页</a></li>
+      <li><a href="javascript:" style="cursor: default;">功能演示</a></li>
+      <li><a href="#springUrl('/help/faq.htm')">常见问题</a></li>
+      <li><a href="#springUrl('/help/self.htm')" class="cur" >自助服务</a></li>
+    </ul>
+  </div>
+  <div class="mt30 ">
+    
+    
+    <div class="helpcont helpcontw998">
+      <div class="helpbox">
+        <h3 class="helpboxh3">常见自助服务</h3>
+        <ul class="methodslistzz">
+          <li> 
+            <p class="f14 b"><i class="zz1"></i>找回登录密码</p>
+            <p class="p2">忘记登录密码，请使用手机、<br>
+安全保护问题或客服人工方式找回。 </p>
+            <a href="#springUrl('/my/refind/loginPwd/index.htm')" class="btn_ms">马上找回</a> </li>
+          <li>
+            <p class="f14 b"><i class="zz2"></i>找回支付密码</p>
+            <p class="p2">忘记支付密码，请使用手机、<br>
+              安全保护问题或客服人工方式找回。 </p>
+            <a href="#springUrl('/my/go-get-paypasswd-index.htm')" class="btn_ms">马上找回</a> </li>
+          <li> 
+            <p class="f14 b"><i class="zz3"></i>电话客服</p>
+            <p class="p2">手机号码已变更或无法使用，<br>
+              请及时进行更换操作。</p>
+          </li>
+          <li class="nob" style="width:250px;">
+            <p class="f14 b"><i class="zz4"></i>客户投诉</p>
+            <p class="p2">证书无法使用，请使用手机、<br>
+              邮箱或客服人工方式取消。</p>
+            <a href="javascript:" class="btn_ms btn_ms_diabled">立即投诉</a> </li>
+        </ul>
+      </div>
+      <!--helpbox  -->
+      <div class="helpbox helpcontw998">
+      <h3 class="helpboxh3">常见自助服务</h3>	
+        <div class="helplistbox">
+          <div class="helplistboxdiv" style="border-bottom:1px solid #e1e1e1;">
+          		<p class="p1">
+                	<b>密码自助</b><br>
+                    <a href="#springUrl('/my/refind/loginPwd/index.htm')">找回登录密码</a><a href="#springUrl('/my/go-get-paypasswd-index.htm')">找回支付密码</a>
+                </p>
+          </div>
+          <div class="helplistboxdiv" style="border-bottom:1px solid #e1e1e1;">
+          		<p class="p1">
+                    <b>账户自助</b><br>
+                    <a href="#springUrl('/register/main.htm')">注册</a><a href="#springUrl('/my/go-reset-email.htm')">修改邮箱</a><a href="#springUrl('/my/go-unset-email.htm')">取消邮箱绑定</a><a href="#springUrl('/my/go-reset-mobilephone.htm')">修改手机绑定</a><!--<a href="#springUrl('/my/go-unset-mobilephon.htm')">取消手机绑定</a>--><a href="#springUrl('/register/main.htm')">激活账户</a>
+                </p>          
+          </div>
+		  <!--
+          <div class="helplistboxdiv nob">
+          		<p class="p1">
+                    <b>证书自助</b><br>
+                    <a href="#springUrl('/softcertActivate/step1.htm')">申请数字证书</a><a href="#springUrl('/softcertActivate/step1.htm')">取消数字证书</a><a href="#springUrl('/hardcertRebind/step1.htm')">激活快捷盾</a><a href="#springUrl('/hardcertUnbind/step1.htm')">解绑快捷盾</a><br>
+                </p>
+          </div>
+		  -->
+        </div>
+      </div>
+      <!--helpbox  -->
+      
+      
+    </div>
+    <!--helpcont --> 
+    
+    
+  </div>
+  <!-- mt30 --> 
+  
+</div>
+<script>
+$(function(){
+	$(".methodslistzz li").hover(function(){
+		$(this).addClass("hover")
+	},function(){
+		$(this).removeClass("hover")
+	})
+})
+</script>
+

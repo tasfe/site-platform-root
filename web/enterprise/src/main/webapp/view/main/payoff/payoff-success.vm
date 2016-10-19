@@ -1,0 +1,46 @@
+<div class="wrapbg">
+<div id="appcenter" class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">代发工资</span>
+        </div>
+        <div class="right fr"><a href="#springUrl('/static/dfgz.htm')">什么是代发工资</a> | <a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=6')">代发工资记录</a> | <a href="#springUrl('/help/faq.htm')">常见问题</a></div>
+    </div>
+    <div class="pagebox pagebox1 pagedfgz">
+    	<div class="step step_3"><i></i><span class="s1">上传模版</span><span class="s2">代发工资审核</span><span class="s3">代发工资完成</span></div>
+        <form class="zz_form_1">
+            <div class="boxbg1 w860">
+            	<div class="p40">
+                    <table cellpadding="0" cellspacing="0" border="0"  class="sqinfo" width="100%">
+                        <tr>
+                            <td class="tcenter"><i class="txsh_wq2"><span class="f16 b">代发工资操作成功</span></i></td>
+                            </td>
+                        </tr>
+                    </table>
+                	<table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info f14">
+                    	<tr>
+                        	<td width="140" class="p169"><span class="b">转账笔数：</span>$!{form.transferCount}</td>
+                            <td width="180"><span class="b">转账金额(元)：</span><span class="color_f6 b">$!{form.transMoney}</span>元</td>
+                            <td width="137"><span class="b">服务费笔数：</span><span class="b">$!{form.feeCount}</span></td>
+                            <td><span class="b">服务费(元)：</span><span class="b">$!{form.serviceCharge}</span>元</td>
+                        </tr>
+                        <tr>
+                            <td class="p169" colspan="3"><span class="b">总金额(元)：</span><span class="color_f6 b">$!{form.totalMoney}</span>元</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+        
+        <div class="faq_relevant">
+        	<h4>代发工资问题：</h4>
+            <dl>
+            	<dt>什么是代发工资？</dt>
+                <dd>答：是永达推出的增值服务，是指您可以通过永达账户来为您公司员工发放工资、奖金等薪资的服务。</dd>
+            </dl>
+             <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>
+    </div>
+</div>
+</div>

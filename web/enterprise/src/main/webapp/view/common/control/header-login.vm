@@ -1,0 +1,41 @@
+<!--已登录头部-->
+#parse("/common/control/ie6.vm")
+<div class="header">
+	<div class="top_nav">
+    	<div class="wrap">
+        <span class="fc_c fr">
+        	#if($!session.getAttribute("CURRENT_ENTERPRISE_USER"))
+       			 <i class="fc_6">你好，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName</i> <a href="#springUrl('/logout.htm')" class="a">退出</a>
+        	#end
+        |<a href="#springUrl('/my/home.htm')" class="a">我的钱包</a>
+        |<a href="${WEB_RESOURCE.staticAddress}enterpriseWallet/help/help-merchant-dlzc-1.html" class="a" target="view_windowbz">帮助中心</a></span>
+        </div>
+    </div>
+    <div class="logo_nav">
+        <h1 class="logo"><a href="#springUrl('/my/home.htm')"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/image/logo_online.png"></a></h1>
+    	<ul class="nav">
+            <li class="nav_li">
+            	<a class="a_nav" href="#springUrl('/my/home.htm')">我的钱包</a>|
+            </li>
+            <li class="nav_li">
+                <a class="a_nav" href="#springUrl('/my/all-trade.htm')">交易记录</a>|
+            </li>
+            <li class="nav_li">
+				<a class="a_nav" href="#springUrl('/my/accountManage.htm')">帐号管理</a>|
+            </li>
+			<li class="nav_li">
+				<a class="a_nav" href="#springUrl('/my/operator/manage.htm')">操作员管理</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+$(function(){
+	$(".nav_li").hover(
+		function(){$(this).find(".sl-shadow").show();$(this).find(".angle").show();},
+		function(){$(this).find(".sl-shadow").hide();$(this).find(".angle").hide();}
+	);
+
+})
+
+</script>

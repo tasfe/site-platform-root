@@ -1,0 +1,98 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_zz" class="wrap">
+    <div class="page_title transfer">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">转账</span>
+        </div>
+        <div class="right fr"><a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=4')">转账记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_7_3.html&6,2')">转账常见问题</a></div>
+    </div>
+    <div class="zz_tab_link">
+        <a href="${path}/transfer/toTransferKjt.htm?link=0204" class="tab_zz_kjt fl">转账到永达账户</a>
+		<a href="${path}/bTransfer/toTransferBank.htm" class="tab_zz_yh fl cur">转账到银行账户</a>
+    </div>
+    <div class="pagebox pagebox1 pagezz relative">
+        <div class="step-wrap step-wrap2">
+            <span class="step-index">1</span>
+            <span class="step-name">转账信息</span>
+            <span class="s"></span>
+            <span class="step-index">2</span>
+            <span class="step-name">转账审核</span>
+            <span class="s"></span>
+            <span class="step-index step-index-cur">3</span>
+            <span class="step-name step-name-cur">转账成功</span>
+        </div>
+
+        <form class="zz_form_1">
+            <div class="boxbg1">
+            		<table cellpadding="0" cellspacing="0" border="0"  class="sqinfo" width="100%">
+                        <tr>
+                            <td class="tcenter"><i class="txsh_wq2"><span class="f16 b">你的转账已成功！</span></i></td>
+                        </tr>
+                    </table>
+                    
+                	<table cellpadding="0" cellspacing="0" border="0"  class="sqinfo zzdyhk">
+                    <tr>
+                    	<td class="h3">开户名：</td>
+                        <td colspan="3">$!{bankAcctInfo.realName}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">银行账号：</td>
+                        <td>$!{form.accountNo}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">开户行：</td>
+						<td>$!{bankAcctInfo.bankName}&nbsp;$!{form.branchShortName} </td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">金额：</td>
+                        <td colspan="3"><span class="color_f6 b">$!{form.transMoney}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">服务费：</td>
+                        <td colspan="3"><span class="b">$!{form.serviceCharge}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">总额：</td>
+                       	<td colspan="3"><span class="color_f6 b">$!{form.totalMoney}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">备注：</td>
+                        <td colspan="3">$!{form.remark}</td>
+                    </tr>
+                </table>    
+                <form id="addContactsForm" action="$!{path}/contacts/toContactsHome.htm" method="post">
+    				#foreach($transfer in ${transferList})
+    					<div class="mrlauto lxr_info">
+    						<span class="s1">$!{transfer.contact}
+    							<input type="hidden" name="kjtContacts" value="$!{transfer.contact}" class="inputtext w138">
+    						</span>
+    						<span class="s2">联系人备注：</span>
+    						<input type="text" name="kjtContactsRemark" class="inputtext w138">&nbsp;
+    						<input type="submit" value="保存至联系人" class="savelxr">
+    					</div>
+    				#end
+				</form>                                    
+            </div>
+        </form>
+        <br>
+        <!--<div class="faq_relevant">
+            <h4>转账问题：</h4>
+            <dl>
+                <dt>转账有哪几种分类？</dt>
+                <dd>答：转账是资金转移的一个过程，包括账户余额转到账户/银行账户、银行账户到账户余额<br />按资金转移的接收方不同，可以分为转账到账户和转账到银行账户<br />按一次可添加转账接收方个数可以分为批量转账和单笔转账</dd>
+            </dl>
+            <dl>
+                <dt>哪些情况操作员不能转账申请？</dt>
+                <dd>答：a) 永达商户账号被冻结，无法转账；<br />b) 永达商户账号被加入转账黑名单；<br />c) 永达商户账号没有开通转账服务；<br />d) 永达商户账号合同到期未续约；<br />e) 永达商户账号注销；<br />f) 操作员没有转账申请权限；<br />g) 账户可用余额不足；<br />h) 账户资金冻结；<br />i) 当天转账次数超限。</dd>
+            </dl>
+            <dl>
+                <dt>为什么转账不成功？</dt>
+                <dd>答：1、请检查您输入的转账信息是否正确<br />2、请检查您的网络是否稳定<br />3、请检查您转账金额是否超限<br />4、请检查您的余额是否足够<br />5、其他原因可拨打客服热线：0571-28276085</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>-->
+    </div>
+</div>
+</div>

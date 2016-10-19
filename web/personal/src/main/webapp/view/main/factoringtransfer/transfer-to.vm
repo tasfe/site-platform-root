@@ -1,0 +1,171 @@
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.json.js"></script>
+<style>
+.color_b3{ color:#333 !important;}
+.color_b4{ color:#b3b3b3 !important;}
+</style>
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>保理还款</h2></div>
+ 
+     <div class="safetyMain">
+     	 <form method="post">
+         <div class="loginCenter">
+              <div class="usbKeyCon_tips" style=" width:420px; margin-left:107px;">使用此业务，还款将进入对方保理账户。</div>
+              <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">还款对象：</span>
+                          <input type="text" class="inputtext w232" value="" id="repaymentaccount"/><span class="color_b4"> 请输入对方的永达互联网金融帐号</span>
+ 
+                   </label>
+                   <label class="ml5"></label>
+                    <div class="mainTips ml160 error error0" style="display:none"></div>
+                   <div class="mainTips ml160 error error1"></div>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">还款金额：</span>
+                          <input type="text" class="inputtext w232 money2" value="" maxLength="10" id="repaymentmoney"/>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error error2"></div>
+               </div>
+               <div style="padding-left:178px;"> <input class="btn_haikuan btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form> 
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	var submitBtn  = $(".btn_submit"),
+		error0     = $('.error0'),
+		error1     = $('.error1'),
+		error2     = $('.error2'),
+		isValid    = true,
+		contact    = $("#repaymentaccount"),
+		money      = $("#repaymentmoney");
+			
+	var cleanErrorFn = function(){
+		error1.text('');
+		error2.text('');
+	};
+	
+	var contactBlurFn = function() {
+		var contactVal = $.trim(contact.val());
+		contact.val(contactVal);
+		cleanErrorFn();		
+		error1.hide();
+		error0.show();
+		error0.removeClass("color_b3");
+
+		if (!contactVal) {
+			error0.hide();
+			error1.show();
+			error1.text("请输入还款对象");
+			isValid = false;
+			return;
+		}
+		
+		var params = {accountNo: contactVal};
+		var succFn = function(response) {
+			var success = response.success,
+        		url		= response.redirect,
+        		data    = response.data,
+        		message = response.message;
+        		
+    		cleanErrorFn();
+    		
+        	if (success) {
+        		var name = data.targetName;
+        		isValid = true;
+        		error0.text(name).addClass("color_b3");
+        	} else {
+        		isValid = false;
+    			error0.text(message).removeClass("color_b3");
+        	}
+        	
+		};
+		
+		var failFn = function() {
+			error2.text("获取账号信息失败");
+		};
+		
+		$.ajax({
+            url  	 : '${request.contextPath}/factoringtransfer/getEnteriseName.htm',
+			type 	 : 'GET',
+			data 	 : params,
+            success  : succFn,
+			error	 : failFn
+		});	
+		
+	};
+	
+	var submitBtnFn = function() {
+		var contactVal = $.trim(contact.val()),
+			moneyVal   = $.trim(money.val()),
+			b 		   = true;
+		
+		cleanErrorFn();
+		
+		if (!contactVal) {
+			b = false;
+			error1.text("请输入还款对象");
+		}
+		if (!moneyVal) {
+			b = false;
+			error2.text("请输入还款金额");
+		}
+		if (moneyVal <= 0) {
+			b = false;
+			error2.text("还款金额必须大于0");
+		}
+		
+		if (!isValid)
+			return;
+		
+		if (!b)
+			return;
+			
+		var transferList 	 = [{contact : contactVal, money : moneyVal}],
+			transferListJSON = $.toJSON(transferList),
+			params 			 = {transferList:transferListJSON};
+		
+		var succFn = function(response) {
+        	var success = response.success,
+        		url		= response.redirect,
+        		message = response.message;
+        	
+        	cleanErrorFn();
+        	
+        	if (success) {
+        		window.location.href = url;
+        	} else {
+        		error2.text(message);
+        	}
+        };
+        
+        var failFn = function(response){ 
+        	cleanErrorFn();
+			error2.text("转账失败");
+		};
+		
+		
+		$.ajax({
+            url  	 : '${request.contextPath}/factoringtransfer/confirmTransfer.htm',
+			type 	 : 'POST',
+			data 	 : params,
+            success  : succFn,
+			error	 : failFn
+		});
+	};
+	
+	contact.blur(contactBlurFn);
+	submitBtn.click(submitBtnFn);
+});
+</script>
+</body>
+</html>

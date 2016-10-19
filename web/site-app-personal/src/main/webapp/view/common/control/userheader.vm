@@ -1,0 +1,100 @@
+<!--头部-->
+ <div class="user_infor_all">
+        <div class="wrap">
+             <div class="nav_top">
+                <div class="photo_box">
+                	#if($response.data.member.faceImageUrl && $response.data.member.faceImageUrl != "null")
+                 	 	<img width="76" height="76" src="${WEB_RESOURCE.plateImageUrl}/$!response.data.member.faceImageUrl">
+                	#end
+                </div>
+                <div class="edit_box">
+					<input id="memberType" name="memberType" type="hidden" value="$!response.data.member.memberType.getCode()"/>
+                    <h2>欢迎您，<span id="user_show" >$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).memberName</span></h2>
+                    <ul class="clearfix">
+                    	#if($!response.data.member.mobileStar)
+	                        <li>手机号：$!response.data.member.mobileStar </li>
+	                        <li class="empty"> |</li>
+                        #end
+                        #*<li>上次登录时间为：$!response.data.member.lastLoginTime </li>
+                        <li class="empty"> |</li>*#
+                        #if($!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).nameVerifyStatus.getCode() == "NOT_FOUND")
+                            <li name="renzhen_no" class="renzhen_no">
+	                              <b class="pngFixBg"></b>
+	                             <span class="voteMsg"><i class="pngFixBg"></i>尚未实名认证</span>
+                            </li>
+                        #elseif($!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).nameVerifyStatus.getCode() == "init" || $!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).nameVerifyStatus.getCode() == "auditPass")
+                            <li name="renzhen_review" class="renzhen_no">
+	                              <b class="pngFixBg"></b>
+	                             <span class="voteMsg"><i class="pngFixBg"></i>实名认证审核中</span>
+                            </li>
+                        #elseif($!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).nameVerifyStatus.getCode() == "PASS" || $!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).nameVerifyStatus.getCode() == "checkPass")
+	                        <li name="renzhen_pass" class="renzhen_pass">
+	                              <b class="pngFixBg"></b>
+	                             <span class="voteMsg"><i class="pngFixBg"></i>已通过实名认证</span>
+	                        </li>
+                        #elseif($!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).nameVerifyStatus.getCode() == "checkReject" || $!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).nameVerifyStatus.getCode() == "auditReject")
+                            <li name="renzhen_nopass" class="renzhen_no">
+                                <b class="pngFixBg"></b>
+                                <span class="voteMsg"><i class="pngFixBg"></i>未通过实名认证</span>
+                            </li>
+                        #else
+                          <li name="renzhen_no" class="renzhen_no">
+                              <b class="pngFixBg"></b>
+                             <span class="voteMsg"><i class="pngFixBg"></i>尚未实名认证</span>
+                          </li>
+                        #end
+                    </ul>
+             </div>
+        </div>
+    </div>
+</div>
+<div class="zhanghu_infor">
+    <div class="wrap">
+             <div class="choose">
+                  <b class="left_radius"></b>
+                  <b class="right_radius"></b>
+                  <span class="sp">账户余额：<b class="fc_r_ff">$!response.data.member.account.availableBalance</b> 元</span>
+                  <span class="sp">冻结余额：<b class="fc_r_ff">$!response.data.member.account.frozenBalance</b> 元</span>
+                  <a class="btn_h30_red bold" href="#springUrl('/my/recharge.htm')" >充  值</a>
+                  <a class="btn_h30 bold padding_30" href="#springUrl('/my/withdraw.htm')" >提  现</a>
+                  <a class="btn_h30 bold padding_30" href="#springUrl('/my/transfer.htm')" >转  账</a>
+                  <span class="card_fr">银行卡：<i>$!response.data.member.bankCardCount</i>张<a href="#springUrl('/my/bankCardManage.htm')">管理</a></span>
+             </div>
+              <div class="div_empty">
+             </div>
+
+   <script type="text/javascript">
+$(function(){
+	var memberType = $("#memberType").val();
+	var verifyUrl = "";
+	if (memberType == 1) {
+		verifyUrl = "#springUrl('/my/nameverify.htm')";
+		$("li[name='renzhen_no']").css("cursor","pointer");
+        $("li[name='renzhen_no']").click(function() {
+        	window.location.href=verifyUrl;
+        });
+    	$("li[name='renzhen_review']").css("cursor","pointer");
+        $("li[name='renzhen_review']").click(function() {
+        	window.location.href=verifyUrl;
+        });
+    	$("li[name='renzhen_pass']").css("cursor","pointer");
+        $("li[name='renzhen_pass']").click(function() {
+        	window.location.href=verifyUrl;
+        });
+    	$("li[name='renzhen_nopass']").css("cursor","pointer");
+        $("li[name='renzhen_nopass']").click(function() {
+        	window.location.href=verifyUrl;
+        });
+	} else if (memberType == 2) { 
+		verifyUrl = "#springUrl('/my/go-enterprise-certification.htm')";
+		$("li[name='renzhen_no']").css("cursor","pointer");
+        $("li[name='renzhen_no']").click(function() {
+        	window.location.href=verifyUrl;
+        });
+    	$("li[name='renzhen_nopass']").css("cursor","pointer");
+        $("li[name='renzhen_nopass']").click(function() {
+        	window.location.href=verifyUrl;
+        });
+	}
+});
+</script>

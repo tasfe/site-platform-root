@@ -1,0 +1,110 @@
+<div class="wrapbg">
+  <div id="money_cz" class="wrap">
+    <div class="page_title audit">
+      <div class="title fl">
+        <i class="icon fl"></i>
+        <span class="tt fl">转账审核详情</span>
+      </div>
+    </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>转账信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">交易订单号</td>
+          <td class="tab_w2">$!response.data.transId<br></td>
+          <td  class="tab_w">批次号（仅批量转账）</td>
+          <td  class="Detail_tab_no tab_w2">$!response.data.batchNo</td>
+        </tr>
+        <tr class="cl">
+          <td>创建时间</td>
+          <td >$!response.data.createTime<br /></td>
+          <td >交易类型</td>
+          <td class="Detail_tab_no">转账-永达账户</td>
+        </tr>
+        <tr  >
+          <td>交易金额（元）</td>
+          <td >$!response.data.amount</td>
+          <td>服务费（元）</td>
+          <td class="Detail_tab_no">$!response.data.fee</td>
+        </tr>
+        <tr class="cl">
+          <td>总金额（元）</td>
+          <td >$!response.data.totalAmount</td>
+		  <td>短信通知</td>
+		  <td class="Detail_tab_no">$!response.data.isSend</td>
+        </tr>
+        <tr  >
+          <td>付费理由</td>
+          <td>$!response.data.memo<br></td>
+		  <td>状态</td>
+		  <td class="Detail_tab_no">#if($!response.data.status == "1")
+			待审核
+          #elseif($!response.data.status == "2")
+			审核通过
+		  #else
+			审核拒绝
+		  #end</td>
+		  
+        </tr>
+      </table>
+    </div>
+        <div class="table_div">
+      <h3>收款方信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">账户名称</td>
+        <td class="tab_w2">$!response.data.payeeAccountName</td>
+        <td  class="tab_w">帐号</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.payeeNo</td>
+      </tr>
+    </table>
+    </div>
+
+    <div class="table_div">
+      <h3>申请信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">申请时间</td>
+          <td class="tab_w2">$!response.data.createTime</td>
+          <td  class="tab_w">申请操作员</td>
+          <td  class="Detail_tab_no tab_w2">$!response.data.operatorName</td>
+        </tr>
+      </table>
+    </div>
+	#if($!response.data.status!="1")
+    <div class="table_div">
+      <h3>审核信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">审核时间</td>
+        <td class="tab_w2">$!response.data.auditTime</td>
+        <td  class="tab_w">审核操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.auditorName</td>
+      </tr>
+      <tr>
+        <td class="tab_w">审核结果</td>
+		#if($!response.data.status=="2")
+			<td class="tab_w2">审核通过</td>
+		#elseif($!response.data.status=="3")
+			<td class="tab_w2">审核拒绝</td>
+		#else
+			<td class="tab_w2"></td>
+		#end
+        <td  class="tab_w">审核说明</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.remark</td>
+      </tr>
+    </table>
+    </div>
+	#end
+  </div>
+</div>
+</div>

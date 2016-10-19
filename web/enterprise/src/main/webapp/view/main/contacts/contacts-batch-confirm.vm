@@ -1,0 +1,146 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="account_contacts" class="wrap">
+	<div class="page_title contacts">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">联系人导入信息确认</span>
+		</div>
+	</div>
+    <div class="pagebox relative pagecontacts">
+    	<div class="table_div">
+            <table border="0" cellspacing="0" cellpadding="0" class="table1">
+              <tbody>
+              <tr>
+                <th width="124">开户名</th>
+                <th width="116">收款开户银行</th>
+                <th width="161">收款银行所在省市</th>
+                <th width="117">收款支行</th>
+                <th width="227">收款银行帐号</th>
+                <th width="232">备注</th>
+              </tr>
+            </tbody>
+            </table>
+           </div> 
+          <table border="0" cellspacing="0" cellpadding="0" class="table1">
+             <tbody class="zzkjt_info2">
+             #foreach($contact in ${sessionPage.dataList})
+             <tr class="jcontext">
+            	<td width="124">$!{contact.accountName}</td>
+                <td width="116">$!{contact.bankName}</td>
+                <td width="161">$!{contact.province}-$!{contact.city}</td>
+                <td width="117">$!{contact.bankBranch}</td>
+                <td width="227">$!{contact.accountNo}</td>
+                <td width="232">$!{contact.memo}</td>
+             </tr>
+			 #end
+             <tr class="nbb">
+			   #if($sessionPage.dataList && $sessionPage.dataList.size()>0)
+               <td colspan="6">
+				#set($sessionPageUrl = $!{request.contextPath}+'/contacts/getSessionPage.htm')
+                #parse("/common/control/session-page.vm")
+               </td>
+			   #else
+				<td colspan="6"></td>
+			   #end
+             </tr>
+           </tbody>
+           </table>
+           <div class="btn_bottom_tx row3 p40">
+			   <input type="button" value="确 认" class="btn" id="sub_file" style="margin-right:30px;">
+				<input type="button" value="取 消" class="btn btn-bg" id="sub_file2">
+				<input type="hidden" value="" id="sub_file3">
+		   </div>
+    	</div>
+    </div>
+</div>
+<script>
+var time = 3;  
+$(function(){
+	$("#sub_file").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+
+		jQuery.ajax({
+            type:'post', 
+            data: '', 
+            url:"$!{path}/contacts/confirmBatchContacts.htm",
+			dataType:'json',
+            success:function(result){
+				if (result && result.success) {
+					if(result.message == "batchError"){
+						window.location.href="$!{path}/contacts/importBatchError.htm";
+					}else{				
+    					var html = '<div class="floatbox2">';
+                		html += '<table cellpadding="0" cellspacing="0" border="0" width="100%">';
+                		html += '<tr><td style="text-align:center;"><i class="txsh_wq2"><span class="f16 b">银行联系人导入成功！</span></i></tr>';
+                		html += '</table>';
+                		//html += '</div></div>';
+                		html += '<div class="div_btn_submit"><span class="red" id="number">3</span>秒后将自动返回<a href="$!{path}/contacts/toContactsHome.htm">联系人管理</a>页面</div></div>';
+                		
+                		showWin('html', html, '', 700, 200, ' ', '', '');
+						goUrlByTime({$obj:$("#number"), time:3, url:"$!{path}/contacts/toContactsHome.htm"});
+					}
+				} else {
+					$("#sub_file3").click();
+				}
+            },
+            error:function (){         
+				$("#sub_file3").click();
+            }
+        });
+	});
+	
+	$("#sub_file2").click(function(){
+		window.location.href="$!{path}/contacts/toContactsHome.htm";
+	});
+	
+	$("#sub_file3").click(function(){
+		var html = '<div class="floatbox2">';
+		html += '<table cellpadding="0" cellspacing="0" border="0" width="100%">';
+		html += '<tr><td style="text-align:center;"><i class="zzffwqfm" style="line-height:48px;"><span class="f16 b tip_title">银行联系人导入失败！</span></i></tr>';
+		html += '</table>';
+		//html += '</div></div>';
+		html += '<div class="div_btn_submit"><span class="red" id="number">3</span>秒后将自动返回<a href="$!{path}/contacts/toContactsHome.htm">联系人管理</a>页面</div></div>';
+		
+		showWin('html', html, '', 700, 200, ' ', '', '');
+		goUrlByTime({$obj:$("#number"), time:3, url:"$!{path}/contacts/toContactsHome.htm"});
+	});
+});
+function number(){  
+	window.setTimeout("number()",1000);  
+	if(time >= 0){  
+	   var obj = document.getElementById("number"); 
+	   if (!obj) return; 
+	   obj.innerHTML = "";  
+	   obj.innerHTML = ""+time+"";
+	   time--;  
+	}  else{
+		location.href="$!{path}/contacts/toContactsHome.htm";
+	}
+}  
+
+// 显示分页数据
+function showPageDataList(dataList) {
+	if (!dataList || dataList.length == 0) {
+		return;
+	}
+	
+	var jtable = $('.zzkjt_info2');
+	jtable.find('.jcontext').remove();
+	var len = dataList.length;
+	for (var i=len-1; i<len; i--) {
+		var contact = dataList[i];
+		var tdHtml = '<tr class="jcontext">'
+			+ '<td width="124">' + contact.accountName + '</td>'
+			+ '<td width="116">' + contact.bankName + '</td>'
+			+ '<td width="161">' + contact.province + '-' + contact.city + '</td>'
+			+ '<td width="117">' + contact.bankBranch + '</td>'
+			+ '<td width="227">' + contact.accountNo + '</td>'
+			+ '<td width="232">' + contact.memo + '</td></tr>';
+				
+		jtable.prepend(tdHtml);
+	}
+}
+
+</script>

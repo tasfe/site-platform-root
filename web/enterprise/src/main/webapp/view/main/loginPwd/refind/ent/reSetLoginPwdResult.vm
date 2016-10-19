@@ -1,0 +1,32 @@
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">找回登录密码</span>
+        </div>
+    </div>
+
+     <div class="safetyMain">
+     	 
+         <div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">登录密码修改成功！</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至<a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')">首页</a></p>
+              
+              </div>
+              
+         </div>
+          
+     </div>
+     
+</div>
+</div>
+<script>
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:3, url:"#springUrl('/securityCenter/safetyIndex.htm?link=0500')"});
+})
+</script>

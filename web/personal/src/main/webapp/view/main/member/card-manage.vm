@@ -1,0 +1,93 @@
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2>管理银行卡</h2>
+      </div>
+    <div class="pagebox relative">
+    	<div class="" style=" height:500px;  width:100%;">
+        	<div class="bakcardmanagediv"> 	
+                <div class="assets_bankcardlist bakcardmanage bankcardmanage icons_list">
+                    <ul>
+                        <li>
+                            <div>
+								#if($response.data.info.cardType == "1")
+            						#set($cardType="借记卡")
+            					#elseif($response.data.info.cardType == "2")
+            						#set($cardType="贷记卡")
+								#end
+								#set($cardNo=$response.data.info.bankAccountNumMask)
+            					#set($end=$cardNo.length() - 6)
+            					#if($cardNo.length() - 6 > 0)
+            						#set($tailNo=$cardNo.substring($end))
+            					#else
+            						#set($tailNo=$cardNo)
+            					#end
+								<span class="bankcardbgimg ${response.data.info.bankCode}_s"></span>
+								<span class="bankcardbgimgicon icon ${response.data.info.bankCode}"></span>
+                                <span class="s1">$!{response.data.info.bankName}</span><span class="s2">$tailNo</span>
+                                <span class="s3">$cardType</span>
+                                <span class="ss"><span class="ssbg"></span></span>
+                                 #if($response.data.defaultCard == 'true')
+								<span class="mr">默认银行卡</span>
+								 #else
+								<span class="mr"></span>
+								 #end
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--<input type="button" class="btn_liulan" id="btn_del" data-bank="尾号为$tailNo的$!{response.data.info.bankName}储蓄卡" data-id="$!{response.data.info.bankcardId}" value="删除银行卡">-->
+            </div>
+            <div class="moneyservice" style="">
+            	<ul class="moneyservicelist">
+                	<li>
+                    	<span class="p1"><i class="icon_money"></i><span class="f14 b">资金管理</span></span><span class="color_b3">使用此卡进行资金操作</span><span class="p2"><a href="#springUrl('/my/recharge.htm')" target="_blank">充值</a><span class="p15">|</span><a href="#springUrl('/cash/toCashing.htm')" target="_blank">提现</a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    	
+    </div>
+
+</div>
+	
+<script>
+$(function(){
+	$("#btn_del").click(function(){
+		var html = '<div class="bankNnfasten"><div class="bankNnfasten_box">';
+		html += '<p class="bank_line">确认解绑' + $(this).attr("data-bank") + '？</p>';
+		html += '<p class="btn_bankNnfasten_box"><input class="btn_bankNnfasten" type="button" value="" id="btn_unbindBank" data-id="'+$(this).attr("data-id")+'"></p>';
+		html += '</div></div>';
+													
+		showWin('html', html, '', 500, 220, ' ', '', '');
+	});
+	
+	$("body").delegate("#btn_unbindBank","click",function(){
+		var $thisobj = $(this);
+		if($thisobj.val() == $thisobj.attr("data-placeholder")) {
+			$thisobj.val("");
+			$thisobj.removeClass("color_b3");
+		}
+		var cardId = $(this).attr("data-id");
+		
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/removeBankCard.htm')" ,
+            data: 'bankCardId='+cardId,
+            success: function(response) {
+            	if(response.success){
+					window.location.href="#springUrl('/my/accountInfo.htm?link=0102')";
+            	} else {
+	            	$(".error").html(response.message);
+            	}
+            } ,
+            error: function(data) {
+               $(".error").html(response.message);
+            },
+            dataType: "json"
+        });
+		closeSW();
+		
+	});
+})
+</script>

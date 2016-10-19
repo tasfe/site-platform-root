@@ -1,0 +1,7 @@
+<!--无须登录头部-->
+<div class="login-header">
+    <div class="logo_nav">
+        <h1 class="logo"><a href="#springUrl('/index.htm')">
+        <img src="${WEB_RESOURCE.staticAddress}wallet/image/logo-login.png"></a></h1>
+    </div>
+</div>

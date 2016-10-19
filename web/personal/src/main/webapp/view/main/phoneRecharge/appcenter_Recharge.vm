@@ -1,0 +1,487 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+	<div class="inner_banner1">
+     	  <a target="_blank" href=""><img src=""></a>
+		  <i title="关闭"></i>
+     </div>
+     <div class="page_title">
+    	<h2></h2>
+      </div>
+    <div class="pagebox0nb">
+    	<div class="app_cont_l">
+        	<h3 class="h3"><a href="#springUrl('/my/appcenter.htm?link=0500')">应用中心</a></h3>
+            <ul class="app_nav">
+            	##<li>
+                ##<a href="#"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app1-s.gif">AA收款</a>
+                ##</li>
+                <li>
+                <a href="#springUrl('/my/phoneRecharge.htm')" class="cur"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app2-s.gif">手机充值</a>
+                </li>
+                ##<li>
+                ##<a href="#"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app3-s.gif">信用卡还款</a>
+                ##</li>
+            </ul>
+        </div>
+        <style>
+		.w232{width: 218px;}	
+		#js_id_mobile{font-family: Tahoma;font-size: 14px;font-weight: 400;}
+		.sqinfo td{ padding:0; line-height:28px;}
+		.mobile_info{ float:left; line-height:28px; padding-left:16px; color:#a6a6a6; font-size:12px;}
+		
+		.advoice{ width:218px; height:auto; padding:0 7px; overflow:hidden; background-color:#fff; border:1px solid #8398ac; left:250px; position: absolute; top:107px;font-family: Tahoma; display:none; z-index:50;}
+		.advoice li.item-wrap{padding: 0;}
+		.advoice li a.item {color: #333333; display: block; font-size: 16px; font-weight: 400; height: 30px; line-height: 30px; overflow: hidden; padding-bottom: 1px;padding-right: 20px; text-align: left;}
+		.advoice li a.item strong{ font-weight:bold;}
+		.advoice li a.item:hover{ background:#fbfbfb;}
+		
+		.tb-wt-denom li { float: left; overflow: hidden; padding-right: 10px; }
+		.tb-wt-denom li span { border: 1px solid #a3a3a3; cursor: pointer; display: block; font-size: 14px; font-weight: 600; height: 30px; line-height: 30px; margin: 1px;  width:70px; text-align: center; }
+		.tb-wt-denom li span strong{font-weight: 600;}
+		.tb-wt-denom li.tb-wt-drop{ width:auto;}
+		.tb-wt-denom .tb-wt-active span { border: 2px solid #ff6600; margin: 0; }
+		.tb-wt-denom .tb-wt-drop span { padding-left: 10px; padding-right: 20px; position: relative; width: 64px; }
+		.tb-wt-denom .tb-wt-drop s { -moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none; border-color: #555 #fff #fff; border-image: none; border-style: solid; border-width: 4px; height: 0; overflow: hidden; position: absolute; right: 7px; top: 14px; width: 0; }
+	
+		.tb-wt-denom-list{display:none; float:left; width:95px;font-size: 14px; background:#fff; border: 1px solid #afafaf; line-height: 24px; position: absolute; top:162px; left:419px; z-index: 999; }
+		.tb-wt-denom-list li{ float:left;}
+		.tb-wt-denom-list li a{ float:left; display: inline; width:82px; line-height: 32px; padding-left: 12px;   cursor: pointer;  vertical-align: top; color:#4e4e4e; }
+		.tb-wt-denom-list li a:hover { background:#d1d1d1; }
+	
+		
+		.tb-wt-txt{color:#ff6600; font-size:16px;font-family:arial;}
+		.tb-wt-txt strong{font-weight: 400; margin-left:2px;}
+
+		.ImmediatelyRecharge{ display:inline-block; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/ljcz.gif) 0 0 no-repeat; width:100px; height:37px; cursor:pointer;}
+		
+		</style>
+        <div class="app_cont_r relative">
+        	<form id="recharge"  action="${request.contextPath}/my/now-rechage.htm" method="post" onkeypress="if(event.keyCode==13||event.which==13){return false;}">
+        	<table cellpadding="0" cellspacing="0" border="0" class="sqinfo f14" width="100%" style=" margin-top:80px;">
+            	<tr>
+                	<td class="tcright" width="250">充值号码：</td>
+                    <td>
+                    	<input type="text" autocomplete="off" name="phoneNo" class="inputtext w232 placeholder fl" id="js_id_mobile" data-placeholder="支持全国移动联通电信" maxlength="11"  value=""><span id="mobile_info" class="mobile_info"></span>
+                        <div id="js_id_history_panel">
+                        <ul id="phone_auto_complete" style="" class="advoice">
+                        </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                	<td></td>
+                    <td><div class="error"></div></td>
+                </tr>
+                <tr>
+                	<td class="tcright">面值：</td>
+                    <td>
+                    <div class="tb-wt-denom">
+                    	<div class="tb-wt-content">
+                    	<ul>
+                        	<li class="tb-wt-active"><span><strong>50</strong>元</span></li>
+                            <li><span><strong>100</strong>元</span></li>
+                            <li class="tb-wt-drop" id="tb-wt-drop"><span><strong>其他面值</strong><s></s></span></li>
+                        </ul>
+                        </div>
+                    </div>
+                    
+                    <ul class="tb-wt-denom-list">
+                        
+                    </ul>
+                        
+                    <input type="hidden" id="rechargeMoney" name="rechargeMoney" value="">
+					<input type="hidden" id="paymentMoney" name="paymentMoney" value="">
+					<input type="hidden" id="address" name="address" value="">
+					<input type="hidden" id="province" name="province" value="">
+                    </td>
+                </tr>
+                <tr>
+                	<td></td>
+                    <td><div class="error"></div></td>
+                </tr>
+                <tr>
+                	<td class="tcright">售价：</td>
+                    <td>
+                    	<div class="tb-wt-txt">
+                        	<span>¥</span>
+                            <strong></strong>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                	<td></td>
+                    <td><div class="error"></div></td>
+                </tr>
+                <tr>
+                	<td class="tcright"></td>
+                    <td><input type="button" class="ImmediatelyRecharge" id="ImmediatelyRecharge"></td>
+                </tr>
+            </table>
+        	</form>
+        </div>
+    </div>
+
+</div>
+
+<script>
+//手机正则
+var regMobile=/^1[0-9]{10}$/;
+//历史号码
+var hisNumber=$!{phoneList};
+//面值售价
+var pricestype=$!{pricestype};
+
+/*[
+	{denomination:"10",minprice:"9.00",maxprice:"9.90"},
+	{denomination:"20",minprice:"19.00",maxprice:"19.90"},
+	{denomination:"30",minprice:"29.00",maxprice:"29.90"},
+	{denomination:"50",minprice:"49.00",maxprice:"49.90"},
+	{denomination:"100",minprice:"99.00",maxprice:"99.90"},
+	{denomination:"200",minprice:"199.00",maxprice:"199.90"},
+	{denomination:"300",minprice:"299.00",maxprice:"299.90"},
+	{denomination:"500",minprice:"499.00",maxprice:"499.90"}
+];*/
+
+var Mobileinfo=${Mobileinfo};
+var bindMobile="${mobile}";
+var str="";
+var currentAjax = null;  
+function startAjax(){  
+    //方法就是将XHR对象指向currentAjax，再调用currentAjax的.abort()来中止请求  
+    currentAjax = $.ajax({
+    			type: "get",
+    			url: "#springUrl('/my/phoneNo.htm')",
+    			data: "phoneNo=" + $("#js_id_mobile").val(),
+    			dataType: "JSON",
+    			success: function(result) {
+					$(".error:last").text("");
+    				if (result && result.success) {
+    					Mobileinfo=result;
+    					$("#mobile_info").text(Mobileinfo.address);
+    					$("#address").val(Mobileinfo.address);
+						$("#province").val(Mobileinfo.province);
+						$("#tb-wt-drop").hide();
+    					$("#tb-wt-drop span strong").text("其他面值").removeClass("tb-wt-active");
+    					var html="";
+    					$(Mobileinfo.types).each(function(i,item){
+    						if(parseFloat(item.denomination)!=50&&parseFloat(item.denomination)!=100){
+    							html+="<li><a href='javascript:'><strong>"+item.denomination+"</strong>元</a></li>";
+								$("#tb-wt-drop").show();
+    						}
+    					});
+    					$("#js_id_mobile").parent().parent().next().find(".error").text("");
+    					$(".tb-wt-denom-list").empty().append(html);
+    					$(".tb-wt-content li").eq(0).click();
+    					str=Mobileinfo.mobile;
+    				}else{
+    					Mobileinfo=result;
+    					$("#mobile_info").text("");
+    					$("#address").val("");
+						$("#province").val("");
+    					$("#js_id_mobile").parent().parent().next().find(".error").text(Mobileinfo.message);
+    				}
+    			},
+    			error: function(){
+    				//$(".error:last").html(G.sysError);
+    			}
+    		});
+}  
+function stopAjax(){  
+    //如若上一次AJAX请求未完成，则中止请求  
+    if(currentAjax) {currentAjax.abort();}  
+}  
+
+$(function(){
+	if(bindMobile!=""){
+		$("#js_id_mobile").val(bindMobile).removeClass("color_b3")
+	}else{
+		$("#js_id_mobile").val("支持全国移动联通电信").addClass("color_b3");
+	};
+	
+	var s=$(".tb-wt-content li.tb-wt-active strong").text();
+	price(s.replace("元",""));
+	
+	if(Mobileinfo!=""){
+		$("#mobile_info").text(Mobileinfo.address);
+		$("#address").val(Mobileinfo.address);
+		$("#province").val(Mobileinfo.province);
+		$("#tb-wt-drop").hide();
+		$("#tb-wt-drop span strong").text("其他面值").removeClass("tb-wt-active");
+		var html="";
+		$(Mobileinfo.types).each(function(i,item){
+			if(parseFloat(item.denomination)!=50&&parseFloat(item.denomination)!=100){
+				html+="<li><a href='javascript:'><strong>"+item.denomination+"</strong>元</a></li>";
+				$("#tb-wt-drop").show();
+			}
+		});
+		$(".tb-wt-denom-list").empty().append(html);
+		$(".tb-wt-content li").eq(0).click();
+	}else{
+		$("#tb-wt-drop").hide();
+		$("#tb-wt-drop span strong").text("其他面值").removeClass("tb-wt-active");
+		var html="";
+		$(pricestype).each(function(i,item){
+			if(parseFloat(item.denomination)!=50&&parseFloat(item.denomination)!=100){
+				html+="<li><a href='javascript:'><strong>"+item.denomination+"</strong>元</a></li>";
+				$("#tb-wt-drop").show();
+			}
+		})
+		$(".tb-wt-denom-list").empty().append(html);
+		$(".tb-wt-content li").eq(0).click();
+	}
+	
+	$("#js_id_mobile").focus(function(){
+		var length=$(this).val().length;
+		if(length>1){
+			$("#phone_auto_complete").empty();
+			var v=$(this).val();
+			var li="";
+			var n=0;
+			if(hisNumber!=""){
+    			$(hisNumber).each(function(i,item){
+    				if(item.indexOf(v)==0&&n<10){
+    					n++;
+    					li+='<li class="item-wrap"><a data-value="'+item+'" title="'+item+'" href="#none" class="item">'+item.replace(v,"<strong>"+v+"</strong>")+'</a></li>';
+    				}
+    			});
+    			$("#phone_auto_complete").append(li);
+    			if(li!=""){$("#phone_auto_complete").show();}else{$("#phone_auto_complete").hide();}
+			}
+		}
+		
+	});
+	
+	
+	//手机号输入时
+	$("#js_id_mobile").keyup(function(){
+		$(".error:last").text("");
+		stopAjax();
+		var length=$(this).val().length;
+		$("#mobile_info").text("");
+		$("#address").val("");
+		$("#province").val("");
+		$(this).parent().parent().next().find(".error").text("");
+		var s=$(".tb-wt-content li.tb-wt-active strong").text();
+		price(s.replace("元",""));
+		
+		if(length>1){
+			$("#phone_auto_complete").empty();
+			var v=$(this).val();
+			var li="";
+			var n=0;
+			if(hisNumber!=""){
+    			$(hisNumber).each(function(i,item){
+    				if(item.indexOf(v)==0&&n<10){
+    					n++;
+    					li+='<li class="item-wrap"><a data-value="'+item+'" title="'+item+'" href="#none" class="item">'+item.replace(v,"<strong>"+v+"</strong>")+'</a></li>';
+    				}
+    			});
+    			$("#phone_auto_complete").append(li);
+    			if(li!=""){$("#phone_auto_complete").show();}else{$("#phone_auto_complete").hide();}
+			}
+		};
+		if(length<11){str="";}
+
+		
+		if(length==11){
+			var type=regMobile.test(v);
+			if(!type){
+				$(this).parent().parent().next().find(".error").text("请输入正确的手机号码");
+				return false;
+			};
+			if(str==$("#js_id_mobile").val()){
+    			$("#mobile_info").text(Mobileinfo.address);
+        		$("#address").val(Mobileinfo.address);
+				$("#province").val(Mobileinfo.province);
+    			return false;
+			}
+			
+			startAjax();
+			
+		};
+		
+	
+	});
+	
+	
+	//历史号码点击
+	$("#phone_auto_complete").delegate("a","click",function(){
+		$("#js_id_mobile").val($(this).attr("data-value"));
+		$("#phone_auto_complete").hide();
+		$("#js_id_mobile").parent().parent().next().find(".error").text("");
+		$("#js_id_mobile").keyup();
+	});
+	
+	//手机输入框失去焦点
+	$("#js_id_mobile").blur(function(){
+		
+		var v=$(this).val();
+		if(v==""||v=="支持全国移动联通电信"){
+			return false;
+		}else{
+			var type=regMobile.test(v);
+			if(!type){
+				$(this).parent().parent().next().find(".error").text("请输入正确的手机号码");
+				return false;
+			}
+		}
+
+		
+		/*Mobileinfo=${Mobileinfo};
+		
+		Mobileinfo={
+			success:true,mobile:"13073619698",message:"",address:"浙江杭州中国联通",types:[{denomination:"10",price:"9.6"},{denomination:"20",price:"19.8"},{denomination:"30",price:"29.8"},{denomination:"50",price:"49.8"},{denomination:"100",price:"99.8"},{denomination:"200",price:"199.8"},{denomination:"300",price:"299.8"},{denomination:"500",price:"499.8"}]
+		};
+		$("#mobile_info").text(Mobileinfo.address);
+		$("#tb-wt-drop span strong").text("其他面值").removeClass("tb-wt-active");
+		var html="";
+		$(Mobileinfo.types).each(function(i,item){
+			if(parseFloat(item.denomination)!=50&&parseFloat(item.denomination)!=100){
+				html+="<li><a href='javascript:'><strong>"+item.denomination+"</strong>元</a></li>";
+			}
+		});
+		$(".tb-wt-denom-list").empty().append(html);
+		$(".tb-wt-content li").eq(0).click();
+		*/
+		
+		
+	});
+	
+	
+	//面值选择
+	$(".tb-wt-content li").click(function(){
+		/*if($("#js_id_mobile").val()==""||$("#js_id_mobile").val()=="支持全国移动联通电信"){
+			$("#js_id_mobile").parent().parent().next().find(".error").text("请输入手机号码");
+			return false;
+		}
+		if(!regMobile.test($("#js_id_mobile").val())){
+			$("#js_id_mobile").parent().parent().next().find(".error").text("请输入正确的手机号码");
+			return false;
+		}*/
+		var v=$(this).index();
+		if(v==2){
+			$(".tb-wt-denom-list").show();
+		}else{
+			$(this).addClass("tb-wt-active").siblings().removeClass("tb-wt-active");
+			s=$(this).text();
+			price(s.replace("元",""));
+		}
+	});
+	
+	//其他面值选择
+	$(".tb-wt-denom-list").delegate("a","click",function(){
+		var s=$(this).text();
+		$(".tb-wt-denom-list").hide();
+		$(".tb-wt-drop span strong").text(s);
+		$(".tb-wt-drop").addClass("tb-wt-active").siblings().removeClass("tb-wt-active");
+		price(s.replace("元",""));
+	});
+	
+	//点击页面其他部分隐藏浮层；
+	documentClick();
+	
+	//提交
+	$("#ImmediatelyRecharge").click(function(){
+		if($("#js_id_mobile").val()==""||$("#js_id_mobile").val()=="支持全国移动联通电信"){
+			$("#js_id_mobile").parent().parent().next().find(".error").text("请输入手机号码");
+			return false;
+		}
+		if(!regMobile.test($("#js_id_mobile").val())){
+			$("#js_id_mobile").parent().parent().next().find(".error").text("请输入正确的手机号码");
+			return false;
+		};
+		if(Mobileinfo!=""&&!Mobileinfo.success){
+			$("#js_id_mobile").parent().parent().next().find(".error").text(Mobileinfo.message);
+			return false;
+		}
+		if($("#address").val()=="" ||$("#address").val()==null)
+		{
+		    $("#js_id_mobile").parent().parent().next().find(".error").text("手机号码信息查询异常");
+			return false;
+		}
+		if($("#rechargeMoney").val()=="" ||$("#rechargeMoney").val()==null)
+		{
+		    $("#js_id_mobile").parent().parent().next().find(".error").text("手机号码信息查询异常");
+			return false;
+		}
+		if($("#paymentMoney").val()=="" ||$("#paymentMoney").val()==null)
+		{
+		    $("#js_id_mobile").parent().parent().next().find(".error").text("手机号码信息查询异常");
+			return false;
+		}
+		$("#recharge").submit();
+
+	})
+	
+	$(".inner_banner1 i").click(function(){
+		$(this).parent().fadeOut();
+	});
+})
+
+
+
+
+//面值选择售价
+function price(value){
+	value=parseFloat(value);
+	var jmobile=$("#js_id_mobile").val();
+	if(jmobile==""||jmobile=="支持全国移动联通电信"){
+		$(pricestype).each(function(i,item){
+			if(parseFloat(item.denomination)==value){
+				$(".tb-wt-txt strong").text(""+item.minprice+"-"+item.maxprice+"");
+			}
+		})
+	}else if(jmobile!=""){
+		
+		if(jmobile.length<11){
+			$(pricestype).each(function(i,item){
+				if(parseFloat(item.denomination)==value){
+					$(".tb-wt-txt strong").text(""+item.minprice+"-"+item.maxprice+"");
+				}
+			});
+		};
+		if(jmobile==Mobileinfo.mobile&&Mobileinfo.success){
+    		$("#rechargeMoney").val(value);
+			$("#address").val(Mobileinfo.address);
+    		$(Mobileinfo.types).each(function(i2,item2){
+    			if(parseFloat(item2.denomination)==value){
+    				$(".tb-wt-txt strong").text(""+item2.price+"");
+    				$("#paymentMoney").val(""+item2.price+"");
+    			}
+    		});
+    	}else{
+			$(pricestype).each(function(i,item){
+				if(parseFloat(item.denomination)==value){
+					$(".tb-wt-txt strong").text(""+item.minprice+"-"+item.maxprice+"");
+				}
+			});
+		}
+	} 
+	
+	
+}
+
+//点击页面其他部分隐藏浮层
+function documentClick(){
+	$(document).bind('click',function(e){
+		var e = e || window.event; //浏览器兼容性
+		var elem = e.target || e.srcElement;
+		while (elem) { //循环判断至跟节点，防止点击的是div子元素
+			if (elem.id &&elem.id=='js_id_mobile') {return;}
+			elem = elem.parentNode;
+		}
+		$("#phone_auto_complete").hide();
+	});
+	$(document).bind('click',function(e){
+		var e = e || window.event; //浏览器兼容性
+		var elem = e.target || e.srcElement;
+		while (elem) { //循环判断至跟节点，防止点击的是div子元素
+			if (elem.id && elem.id=='tb-wt-drop') {return;}
+			elem = elem.parentNode;
+		}
+		$('.tb-wt-denom-list').hide(); //点击的不是div或其子元素
+	}); 
+}
+
+</script>
+

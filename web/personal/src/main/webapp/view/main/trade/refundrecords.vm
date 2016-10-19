@@ -1,0 +1,156 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+      </div>
+    <div class="pagebox">
+    	<form id="form_search" action="${request.contextPath}/my/all-refund1.htm" method="post">
+        <input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<div class="search_row pl30 mt10">
+        	<label class="fl  b" style="margin-top:7px;">起止时间：</label>
+            <div class="data_div mr16 fl"><input class="datapick" type="text" value="$!response.data.startDate" id="startDate" name="startDate" readonly="readonly"><span>至</span><input class="datapick" type="text" value="$!response.data.endDate" id="endDate" name="endDate" readonly="readonly"></div>
+            <ul class="data_range fl"><li class="data_range_week" data-value="7">一周内</li><li class="data_range_month" data-value="30">一个月内</li><li class="data_range_quarter" data-value="90">三个月内</li><li class="data_range_year" data-value="365">一年内</li><input type="hidden" class="data_range_value"></ul>
+        </div>
+
+		<div class="search_row">
+        	<input type="button" value="" class="btn_chaxun ml30">
+        </div>
+        <div class="tools"><a href="#" class="tools_dc gray1 fr ml20">导出下载</a></div>
+        
+        <div class="table_div">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+           <th width="75">创建时间</th>
+		   <th width="220">退款订单号</th>
+            <th width="220">原交易订单号</th>
+            <th width="120">收入<em>（元）</em></th>
+            <th width="100">状态</th>
+			<th width="">操作</th>
+          </tr>
+        </table>
+        </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+			#set ($i=1)
+         #foreach ($!tradeInfo in $!response.data.page.infos)
+              #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time" width="75">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtSubmit) </td>
+                <td width="220">$!tradeInfo.tradeVoucherNo</td>
+                <td width="220">$!tradeInfo.tradeSourceVoucherNo</td>
+                <td  width="120"><span class="green f14 bold">$!moneyUtil.getAmount($!tradeInfo.payAmount)</span></td>
+                #if($!tradeInfo.status == 100)
+                     <td width="10"><span>待支付</span></td>
+                #elseif($!tradeInfo.status == 101 || $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+                     <td width="97"><span>支付中</span></td>
+                #elseif($!tradeInfo.status == 201)
+                     <td width="97"><span>付款成功</span></td>
+                #elseif($!tradeInfo.status == 301 || $!tradeInfo.status == 401)
+                     <td width="97"><span>交易成功</span></td>
+                #elseif($!tradeInfo.status == 900 || $!tradeInfo.status == 901)
+                     <td width="97"><span>退款中</span></td>
+                #elseif($!tradeInfo.status == 951)
+                     <td width="97"><span>退款成功</span></td>
+                #elseif($!tradeInfo.status == 952)
+                     <td width="97"><span>退款失败</span></td>
+                #elseif($!tradeInfo.status == 999)
+                     <td width="97"><span>交易关闭</span></td>
+                #else
+                    <td width="97"><span>$!tradeInfo.status</span></td>
+				#end
+				<td><a href="${request.contextPath}/my/refundDetail.htm?tradeVoucherNo=$!tradeInfo.tradeVoucherNo" >查看详情</a></td>
+			</tr>
+        #end
+        #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+           <tr>
+               <td colspan="10">无退款信息！</td>
+           </tr>
+        #end
+        <tr class="noborder">
+           <td colspan="6">
+           	
+            <div>#parse("common/control/pagePost.vm")</div>
+           </td>
+        </tr>
+        </table>
+		<div class="faq_relevant" style="padding:40px 40px 0;">
+				<!--<h4>交易记录问题：</h4>
+                <dl>
+                    <dt>1.我还能用信用卡在淘宝购物么？</dt>
+                    <dd>答：您在带有信用卡小标识的店铺购物，可以直接使用信用卡快捷（含卡通）、网银进行信用卡支付，支付限额为您的卡面额度。在没有信用卡标识的店铺购物时，您可以使用信用卡快捷（含卡通）、网银进行信用卡支付，月累计支付限额不超过500元。</dd>
+                </dl>
+                <dl>
+                    <dt>1.我还能用信用卡在淘宝购物么？</dt>
+                    <dd>答：您在带有信用卡小标识的店铺购物，可以直接使用信用卡快捷（含卡通）、网银进行信用卡支付，支付限额为您的卡面额度。在没有信用卡标识的店铺购物时，您可以使用信用卡快捷（含卡通）、网银进行信用卡支付，月累计支付限额不超过500元。</dd>
+                </dl>
+                <dl>
+                    <dt>1.我还能用信用卡在淘宝购物么？</dt>
+                    <dd>答：您在带有信用卡小标识的店铺购物，可以直接使用信用卡快捷（含卡通）、网银进行信用卡支付，支付限额为您的卡面额度。在没有信用卡标识的店铺购物时，您可以使用信用卡快捷（含卡通）、网银进行信用卡支付，月累计支付限额不超过500元。</dd>
+				</dl>-->
+                <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+        
+    </form>
+	<form id="withdrawForm" action="${request.contextPath}/my/all-refund-download.htm" method="post">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<input  type="hidden" value="$!response.data.startDate" id="startDate" name="startDate" >
+	    <input  type="hidden" value="$!response.data.endDate" id="endDate" name="endDate">
+	</form>
+    </div>
+
+</div>
+
+<script>
+function toQuerySubmit(currentPage){
+       	 $("#currentPage").val(currentPage);
+       	 $("#form_search").submit();
+}
+
+var dayRang = 367;
+function doSearch() {
+	var beginDateObj = $('#startDate');
+	var endDateObj = $('#endDate');
+	var beginDateValue = beginDateObj.val();
+	var endDateValue = endDateObj.val();
+	if (beginDateValue != "" || endDateValue != "") {
+		if (beginDateValue == "") { alert("开始时间为空！"); return false; }
+		else if (endDateValue == "") { alert("结束时间为空！"); return false; }
+		else {
+			if (compareDate(beginDateValue, endDateValue) < 0) {
+				alert("起始时间不能大于结束时间！");
+				return false;
+			}
+			else {
+				var maxdate = GetDateRangStr(((beginDateValue).split(" "))[0], dayRang-1);
+				maxdate = getDateValue(maxdate);
+				var enddate = getDateValue(((endDateValue).split(" "))[0]);
+				if (compareDate(enddate, maxdate) < 0) {
+					alert("请选择一年内您要查询的记录！");
+					return false;
+				}
+			}
+		}
+	}
+	$("#form_search").submit();
+}
+$(function(){
+	setClearStartDate('#startDate', '#endDate', dayRang);
+	setClearEndDate('#startDate', '#endDate', dayRang);
+	$(".data_range_week").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_7", "h:m"); });
+	$(".data_range_month").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_31", "h:m"); });
+	$(".data_range_quarter").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_92", "h:m"); });
+	$(".data_range_year").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_367", "h:m"); });
+	$(".btn_chaxun").click(function(){
+		doSearch();
+	});
+	$(".tools_dc").click(function(){
+		$('#withdrawForm').submit();
+	});
+})
+
+</script>

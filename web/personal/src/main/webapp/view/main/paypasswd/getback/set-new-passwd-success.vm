@@ -1,0 +1,29 @@
+<!--设置支付新密码成功-->
+<div class="min_height6">
+#if($response.success==true&&$response.message!="1")
+<div class="user_done_success">
+          <i class="right_sign"></i>
+          <ul>
+              <li class="tit">人工服务申请表已提交，请耐心等待！</li>
+              <li>人工审核预计会在2个工作日内完成，审核结果将以邮件的方式通知到您。</li>
+              <li class="last"><a href="#springUrl('/my/home.htm')" >返回钱包首页</a></li>
+         </ul>
+</div>
+#elseif($response.success==false&&$response.message!="1")
+<div class="user_done_success">
+          <i class="ico_err"></i>
+          <ul>
+              <li class="tit">对不起，申请提交失败！</li>
+              <li class="last"><a href="#springUrl('/my/home.htm')">返回钱包首页</a></li>
+          </ul>
+    </div>
+    #elseif($response.message=="1"&&$response.success==false)
+<div class="user_done_success">
+          <i class="right_sign"></i>
+          <ul>
+              <li class="tit">对不起，您已经提交了申请！</li>
+              <li class="last"><a href="#springUrl('/my/home.htm')">返回钱包首页</a></li>
+          </ul>
+    </div>
+#end
+</div>

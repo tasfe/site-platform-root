@@ -1,0 +1,62 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>登录名修改</h2></div>
+	<div class="safetyMain">
+       
+		 #if($!response.data.type=="IDcardError")
+             <div class="logiAmend_succeed">
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">操作失败!</p>
+                   <p class="f16  mb10">$!{response.data.msg}</p>
+                
+                   <p><em class="red time_left">3</em>秒后会自动跳转至
+					<a href="${request.contextPath}/my/home.htm?link=0101">交易记录</a></p>
+              </div>
+         </div>  
+		 #elseif($!response.data.type=="captcha")
+             <div class="logiAmend_succeed">
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">操作失败!</p>
+                   <p class="f16  mb10">$!{response.data.msg}</p>
+                
+                   <p><em class="red time_left">3</em>秒后会自动跳转至
+					<a href="${request.contextPath}/my/home.htm?link=0101">我的永达互联网金融</a></p>
+              </div>
+         </div> 
+		 #elseif($!response.data.type=="success")
+             <div class="logiAmend_succeed">
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">操作成功!</p>
+                   <p class="f16  mb10">$!{response.data.msg}</p>
+                
+                   <p><em class="red time_left">3</em>秒后会自动跳转至
+					<a href="${request.contextPath}/my/home.htm?link=0101">我的永达互联网金融</a></p>
+              </div>
+         </div> 
+		#else
+             <div class="logiAmend_succeed">
+              <div class="loginTipsBox">
+                 <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">操作失败!</p>
+                   <p class="f16  mb10">$!{response.data.msg}</p>
+                
+                   <p><em class="red time_left">3</em>秒后会自动跳转至
+					<a href="${request.contextPath}/my/home.htm?link=0101">我的永达互联网金融</a></p>
+              </div>
+         </div>  
+		  #end
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+	
+<script type="text/javascript">
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:3, url:"#springUrl('/my/home.htm?link=0101')"});
+});
+</script>

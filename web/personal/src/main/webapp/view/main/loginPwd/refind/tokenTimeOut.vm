@@ -1,0 +1,15 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     <div class="page_title"><h2>登陆密码找回</h2></div>
+     <div class="safetyMain">  
+         <div class="safetyMainBlock">
+         <style>
+         .pdl185{padding-left:270px;}
+         </style>
+             <p class="f16 bold mb15 pdl185">验证邮箱已超时,请<a href="#springUrl('/my/refind/loginPwd/index.htm')" id="loginEmail">重新找回登录密码</a>！</p>
+                   
+		     <p class="error pdl185"></p>
+		 </div> 
+     </div>
+     
+</div>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.vfsso:vfsso-cas-core:1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/vfsso/vfsso-cas-core/1.0.0-SNAPSHOT/vfsso-cas-core-1.0.0-20160920.072537-5.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/vfsso/vfsso-cas-core/1.0.0-SNAPSHOT/vfsso-cas-core-1.0.0-20160920.072537-5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/vfsso/vfsso-cas-core/1.0.0-SNAPSHOT/vfsso-cas-core-1.0.0-20160920.072537-5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

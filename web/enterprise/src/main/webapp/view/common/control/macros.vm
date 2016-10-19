@@ -1,0 +1,11 @@
+#macro( showTime $value)
+	$!dateUtil.getNewFormatDateString($value)
+#end
+#macro( fieldMessage $controlId $message)
+	#if($stringUtil.isNotBlank($message))
+	<script type="text/javascript">
+	$('$controlId').addClass("error");
+	</script>
+	<span class="help-inline">$message</span>
+	#end
+#end

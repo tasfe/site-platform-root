@@ -1,0 +1,330 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title operator">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">操作员</span>
+		</div>
+	</div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/operator/operator-index.htm?refresh=true')">
+     	  	   	             <span class="subNavIcon jsgl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">角色管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/operator/manage-index.htm')">
+     	  	   	             <span class="subNavIcon cygl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">成员管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+            <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1 pos_rel">添加成员</div>
+     	  	   <div class="account_memberMain_con clearfix">
+                    <form id="add-oper-form" name="add-oper-form" class="" action="${request.contextPath}/my/operator/addOperator.htm" method="POST">
+                    <div class="addMemberCon">
+
+						<div class="main_limit">
+							<span class="f14 limitLeft">填写成员基本信息</span>
+							<span class="f14 ml10 show_text"></span>
+						</div>
+
+						<div class="addMember_limit">
+							<label><span class="f14 limitLeft">用户帐号：</span>
+								<input type="text" class="inputtext w232 cutdown_words" id="loginName" name="loginName" value="" maxlength="25"  data-tip-place="2">
+							</label>
+							<div class="error h22 pl152 tip"></div>
+						</div>
+
+						<div class="addMember_limit">
+							<label><span class="f14 limitLeft">用户名称：</span>
+								<input type="text" class="inputtext w232 cutdown_words" id="nickName" name="nickName" value="" maxlength="25"  data-tip-place="2">
+							</label>
+							<div class="error h22 pl152 tip"></div>
+						</div>
+
+						<div class="addMember_limit">
+							<label><span class="f14 limitLeft">联系方式：</span>
+								<input type="text" class="inputtext w232 number" id="phone" name="contact" value="" maxlength="11"  data-tip-place="2">
+							</label>
+							<div class="error h22 pl152 tip"></div>
+						</div>
+
+						<div class="addMember_limit">
+							<label><span class="f14 limitLeft">帐号状态：</span>
+								<div class="addSelect_div">
+									<select>
+										<option value="0">启用</option>
+										<option value="1">禁用</option>
+									</select>
+								</div>
+							</label>
+							<div class="error h22 pl152 clear"></div>
+						</div>
+
+						<div class="main_limit" style="border-top: 1px solid #ccc; padding-top: 10px;">
+							<span class="f14 limitLeft">填写成员密码信息</span>
+							<span class="f14 ml10 show_text"></span>
+						</div>
+
+						<div class="addMember_limit" id="pwdiv_login_pw">
+							<label><span class="f14 limitLeft">登录密码：</span>
+								<div class="pwdiv fl" style="width:246px;"><input name="loginPwd" type="hidden" id="loginPwd" data-type="22" /></div>
+							</label>
+							<div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+							<div class="error h22 pl152 clear"></div>
+						</div>
+
+						<div class="addMember_limit" id="pwdiv_login_pw2">
+							<label><span class="f14 limitLeft">确认登录密码：</span>
+								<div class="pwdiv fl" style="width:246px;"><input name="loginPwdConfirm" type="hidden" id="loginPwdConfirm" data-type="22" /></div>
+							</label>
+							<div class="error h22 pl152 clear"></div>
+						</div>
+
+						<div class="addMember_limit" id="pwdiv_pay_pw">
+							<label><span class="f14 limitLeft">支付密码：</span>
+								<div class="pwdiv fl" style="width:246px;"><input name="payPwd" type="hidden" id="payPwd" data-type="22" /></div>
+							</label>
+							<div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+							<div class="error h22 pl152 clear"></div>
+						</div>
+
+						<div class="addMember_limit" id="pwdiv_pay_pw2">
+							<label><span class="f14 limitLeft">确认支付密码：</span>
+								<div class="pwdiv fl" style="width:246px;"><input name="payPwdConfirm" type="hidden" id="payPwdConfirm" data-type="22" /></div>
+							</label>
+							<div class="error h22 pl152 clear"></div>
+						</div>
+
+						<div class="main_limit" style="border-top: 1px solid #ccc; padding-top: 10px;">
+							<span class="f14 limitLeft">分配角色信息</span>
+							<span class="f14 ml10 show_text"></span>
+						</div>
+
+						<div class="addMember_limit">
+							<span class="f14 limitLeft">分配角色：</span>
+							#foreach($info in $response.data.allRoleList)
+							<label><span class="checkbox"><input type="checkbox" name="rolebox" class="mr5" id="$info.roleId" value="$info.roleId"/>$info.roleName</span></label>
+							#end
+							<div class="error h22 pl152 clear"></div>
+						</div>
+
+						<div class="addMember_limit "> <span class="f14 fd limitLeft">备注：</span>
+							<textarea  cols="45" rows="5"  id="remark" name="remark"></textarea>
+						</div>
+
+						<div class="error h22" id="submit_error" style="padding-left:155px;"></div>
+                             <div class="btn_addMember">
+                                  <input class="btn btn_submit" type="button" value="确 认"><input class="btn btn-bg J_btn_qx ml30" type="button" value="取 消">
+                             </div>
+							 
+							 <input type="hidden" value="0" id="status" name="status">
+							 <input type="hidden" value="add" id="operType" name="operType">
+							 <input type="hidden" id="role_add" name="role_add">
+
+                    </div>
+					</form>
+     	  	   </div>
+
+     	  </div>
+     	  <!-- E 右边内容 -->
+
+     </div>
+
+</div>
+</div>
+<script>
+$(function(){
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$("#pwdiv_login_pw .pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+
+	var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	$("#pwdiv_login_pw2 .pwdiv").append(pgeditor1.load());
+	pgeditor1.pgInitialize();
+
+	var pgeditor2 = newPgeditor(3,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	$("#pwdiv_pay_pw .pwdiv").append(pgeditor2.load());
+	pgeditor2.pgInitialize();
+
+	var pgeditor3 = newPgeditor(4,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	$("#pwdiv_pay_pw2 .pwdiv").append(pgeditor3.load());
+	pgeditor3.pgInitialize();
+
+	window.setInterval(function(){checkPwStrongPG(pgeditor, $('#pwdiv_login_pw').find('.error'), $('#pwdiv_login_pw').find('.gradeIcon'), $('#pwdiv_login_pw').find('.gradeText'));},1000); //实时显示密码强度
+	window.setInterval(function(){checkPwStrongPG(pgeditor2, $('#pwdiv_pay_pw').find('.error'), $('#pwdiv_pay_pw').find('.gradeIcon'), $('#pwdiv_pay_pw').find('.gradeText'));},1000); //实时显示密码强度
+
+	$("#nickName").blur(function(){
+		if($(this).val()==""){
+			$(this).parent().parent().find(".error").text("请输入用户姓名");
+		}
+	});
+
+	$("#loginName").blur(function(){
+		if($(this).val()==""){
+			$(this).parent().parent().find(".error").text("请输入用户帐号");
+		}else{
+			if(!checkLoginName()){
+				$(this).parent().parent().find(".tip").addClass("error").text("用户帐号已存在!");	
+			}
+		}
+	});
+	
+	function checkPhone(){
+		var value = $.trim($("#phone").val()),
+		J_Error = $("#phone").parent().parent().find(".error");
+		J_Error.text("");
+		
+		if (value == "") {
+			J_Error.text("请输入联系方式");
+			return false;
+		}
+		else if (!RegExp(regexEnum.mobile).test(value)){
+			J_Error.text("您输入的联系方式格式错误，请重新输入！");
+			return false;
+		}
+		return true;
+	}
+	
+	$("#phone").blur(function(){
+		checkPhone();
+	});
+	
+	function checkLoginName(){
+		var flag = true;
+		jQuery.ajax({
+			type: 'post',
+	        url: "#springUrl('/my/operator/checkLoginName.htm')",
+	        data: {loginName:$("#loginName").val()},
+			dataType: "json",
+			async:false,
+	        success: function(restP) {
+	        	if(!restP.success) {
+					flag = false;
+				}
+	        },
+			error:function(){
+				flag = false;	
+			}
+		});	
+		return flag;
+	}
+	
+	$(".addSelect_div").click(function(){
+		var selOption = $('.addSelect_div option:selected');
+		$("#status").val(selOption.val());
+	});
+	
+	$(".J_btn_qx").click(function(){
+		window.location.href = "#springUrl('/my/operator/manage-index.htm')";
+	});
+
+	function _submit(){
+		var btn_submit = $(".btn_submit");
+		if($("input[name='rolebox']:checked").length > 1){
+			$('#submit_error').text("只能选择一个角色！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+			return false;
+		}
+
+		var checkbox_checked = $(".mr5:checked");
+		var checkbox_checked_len = checkbox_checked.length;
+		var newIds = "";
+		for(var i = 0; i < checkbox_checked_len; i++){
+			if(i == 0) newIds = checkbox_checked.eq(i).val();
+			else newIds += "," + checkbox_checked.eq(i).val();
+		}
+		$("#role_add").val(newIds);
+
+		$("#add-oper-form").submit();
+	}
+
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		$("#submit_error").text("");
+
+		if($("#loginName").val()==""){
+			$("#loginName").parent().parent().find(".error").text("请输入用户账号");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+
+		if($("#nickName").val()==""){
+			$("#nickName").parent().parent().find(".error").text("请输入用户名称");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+
+		if( !checkPhone() ){
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		if(!checkLoginName()){
+			$("#loginName").parent().parent().find(".tip").addClass("error").text("用户帐号已存在!");	
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+
+		var jsonSubmit = {
+			jBtnSubmit:btn_submit,
+			cssClass:"btn_disabled",
+			urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+		};
+		var pgeditors = [
+			{
+				jPwInput:pgeditor,
+				jInput:$("#loginPwd"),
+				jTip:$("#pwdiv_login_pw").find(".error"),
+				txtEmpty:"请输入登录密码！",
+				txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外"
+			},
+			{
+				jPwInput:pgeditor1,
+				jInput:$("#loginPwdConfirm"),
+				jTip:$("#pwdiv_login_pw2").find(".error"),
+				txtEmpty:"请输入登录密码！",
+				numCompareEqual:0,
+				txtCompareEqual:"您输入的两次登录密码不一致，请重新输入！"
+			},
+			{
+				jPwInput:pgeditor2,
+				jInput:$("#payPwd"),
+				jTip:$("#pwdiv_pay_pw").find(".error"),
+				txtEmpty:"请输入支付密码！",
+				txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外"
+			},
+			{
+				jPwInput:pgeditor3,
+				jInput:$("#payPwdConfirm"),
+				jTip:$("#pwdiv_pay_pw2").find(".error"),
+				txtEmpty:"请输入支付密码！",
+				numCompareEqual:2,
+				txtCompareEqual:"您输入的两次支付密码不一致，请重新输入！",
+				numCompareUnEqual:0,
+				txtCompareUnEqual:"支付密码不能与登录密码相同，请重新输入！"
+			}
+		];
+		checkPgeditor({
+			jsonSubmit:jsonSubmit,
+			pgeditors:pgeditors,
+			callback:function(){
+				_submit();
+			}
+		});
+	});
+})
+</script>

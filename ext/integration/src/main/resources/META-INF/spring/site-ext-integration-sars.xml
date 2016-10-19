@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+  
+     <!--风控验证服务环境信息-->
+      <bean name="sarsEngineContext" id="sarsEngineContext" class="com.netfinworks.sars.rules.engine.EngineContext">
+        <!-- Sars 客户端配置, 以下保留的是最小配置，注释掉的是可以选配置，注释中给出的都是默认值 -->
+        <!-- 接入点 接入时，不同业务的接入点请联系风控架构师确认 -->
+        <property name="checkPoints">
+            <util:list>               
+                <value>CP301</value>
+                <value>CP201</value>
+            </util:list>
+        </property>
+        <!-- 本地存放策略规则的位置 如果不配置，本地是不会存储放在本地执行的策略的. 如果配置了该目录，必须保证该目录可读写 -->
+        <property name="path" value="${sars.work.path}" />
+        <!-- 同步策略和同步调用远端默认使用通道，默认为Soap. 该参数只在同时配置有Venus和（ruleServerWSDL，sarsServerWsdl）时才有用。Venus和WSDL如果只配置了其中一个，则该参数无作用。
+            value值[Soap]，sars-client-withoutvenus中Venus无效。 <property name="defaultSyncChannel" value="Soap" -->
+        <!-- 规则策略服务器的WSDL 客户端是通过访问该WSDL来同步本地策略的 -->
+        <property name="ruleServerWSDL" value="${sars.ruleserver.wsdl}" />
+        <!-- Sars 调用远端的Web Service的配置 -->
+        <property name="sarsServerWsdl" value="${sars.server.wsdl}" />
+        <!-- Sars 服务端 MQ 配置 -->
+        <property name="sarsServerMqEnvironment">    
+            <props>
+                <prop key="java.naming.factory.initial">${netfinworksmq.sars.naming.factory.initial}</prop>
+                <prop key="java.naming.provider.url">${netfinworksmq.sars.naming.provider.url}</prop>
+                <prop key="java.naming.security.principal">${netfinworksmq.sars.naming.security.principal}</prop>
+                <prop key="java.naming.security.credentials">${netfinworksmq.sars.naming.security.credentials}</prop>
+            </props>
+        </property>
+        <property name="sarsServerMqDestination" value="com.netfinworks.rms.verify" />
+    </bean>
+    
+    <!--风控验证服务-->
+   <bean id="sarsService" class="com.netfinworks.sars.client.api.SarsServiceFactory" factory-method="newSarsService">
+        <constructor-arg ref="sarsEngineContext" />
+   </bean>
+    
+	
+
+</beans>

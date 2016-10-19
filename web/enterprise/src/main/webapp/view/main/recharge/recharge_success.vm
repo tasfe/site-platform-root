@@ -1,0 +1,7 @@
+    <div class="user_done_success">
+          <i class="right_sign pngFixBg"></i>
+          <ul>
+              <li class="tit">恭喜您，充值成功！</li>
+              <li class="last"><a href="#springUrl('/my/home.htm')" target="_blank">返回钱包首页</a></li>
+          </ul>
+    </div>

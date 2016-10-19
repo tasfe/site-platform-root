@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<parent>
+		<groupId>com.netfinworks.site</groupId>
+		<artifactId>site-core-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>site-core-common</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<name>site core common</name>
+	<description>site application</description>
+
+	<packaging>jar</packaging>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netfinworks.common</groupId>
+			<artifactId>netfinworks-common-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>  
+			<groupId>org.springframework</groupId>  
+			<artifactId>spring-context-support</artifactId>  
+		</dependency>
+		<dependency>
+			<groupId>com.meidusa.toolkit</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.netfinworks.vfsso</groupId>
+			<artifactId>vfsso-cas-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netfinworks.ucs</groupId>
+			<artifactId>ucs-support-annotation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netfinworks.vfsso</groupId>
+			<artifactId>vfsso-session-repo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.iTrus.certAPI</groupId>
+			<artifactId>iTrusCertAPI_jdk15</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+  			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>commons-httpclient</groupId>
+		  <artifactId>commons-httpclient</artifactId>
+		  <version>3.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.kinggrid.bcprov</groupId>
+		  <artifactId>bcprov-jdk15on</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>org.bouncycastle</groupId>
+		  <artifactId>bcmail-jdk15</artifactId>
+		  <version>1.45</version>
+		</dependency>
+	</dependencies>
+</project>

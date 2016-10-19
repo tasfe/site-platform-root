@@ -1,0 +1,132 @@
+<div class="wrapbg">
+<div class="wrap pt30">
+  <div class="helpcenter_nav">
+    <ul>
+      <li><a class="a9 cur" href="#springUrl('/help/helpcenter.htm')">帮助中心首页</a></li>
+      <li><a class="a9" href="#springUrl('/help/functiondemo.htm')">功能演示</a></li>
+      <li><a class="a9" href="#springUrl('/help/faq.htm')">常见问题</a></li>
+      <li><a class="a9" href="#springUrl('/help/self.htm')">自助服务</a></li>
+    </ul>
+  </div>
+  <div class="helpcenter-con clearfix">
+    <div class="helpleft">
+      <div class="helpleftnav">
+        <div class="helpleftnav_top"></div>
+        <div class="helpleftnav_cont"> 
+          <h3><a href="#springUrl('/help/self.htm')">更多</a>常用自助服务</h3>
+            <ul class="ul1">
+                <li><a href="${request.contextPath}/my/refind/loginPwd/ent/index.htm">找回登录密码</a></li>
+                <li><a href="#springUrl('/my/go-get-paypasswd-index.htm')">找回支付密码</a></li>
+                <li><a href="${request.contextPath}/register/register-index.htm">注册</a></li>
+                <li><a href="#springUrl('/my/go-reset-email.htm')">修改邮箱</a></li>
+                <li><a href="#springUrl('/my/go-reset-mobilephone.htm')">修改手机绑定</a></li>
+                <li><a href="${request.contextPath}/register/register-index.htm">激活账户</a></li>
+                <li><a href="#springUrl('/securityCenter/safetyDetails.htm')">激活永达盾</a></li>
+				<li class="nob"><a href="#springUrl('/help/self.htm#czscxz')">下载操作手册</a></li>
+            </ul>
+        </div>
+        <div class="helpleftnav_bot"></div>
+      </div>
+      <!-- helpleftnav  -->
+      <div class="fl" style="margin-top:20px;"><a href="#springUrl('/help/functiondemo.htm')"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/helpcenter/ys.gif"></a></div>
+    </div>
+    <!-- helpleft -->
+    
+    <div class="helpcont">
+    
+    
+      <div class="helpbox">
+        <h3 class="helpboxh3">各类常见自助服务</h3>
+        <ul class="methodslist">
+          <li> <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/helpcenter/icon1.png">
+            <p class="f14 b">在线客服</p>
+            <p class="p2">实时QQ聊天<br>
+              只需QQ登录状态，<br>
+              直接交谈 </p>
+            <a href="javascript:;" class="btn2">马上联系</a> </li>
+          <li> <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/helpcenter/icon2.png">
+            <p class="f14 b">邮件客服</p>
+            <p class="p2">提出您的意见，<br>
+              我们会做的更好！ </p>
+            <a href="javascript:;" class="btn2" id="sendemail">发送邮件</a> </li>
+          <li> <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/helpcenter/icon3.png">
+            <p class="f14 b">电话客服</p>
+            <p class="p2">7*24小时<br>
+              客服热线：0571-28276085 </p>
+          </li>
+          <li class="nob"> <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/helpcenter/icon4.png">
+            <p class="f14 b" style="color:#a8a8a8;">客户投诉</p>
+            <p class="p2" style="color:#c2c2c2;">提出您的意见，<br>
+              我们会做的更好！ </p>
+            <a href="javascript:" class="btn2" id="sendlitig">提交投诉</a>
+          </li>
+        </ul>
+      </div>
+      <!--helpbox  -->
+      <div class="helpbox">
+        <h3 class="helpbox3">
+          <div class="fr">各类常见问题</div>
+          <ul class="helpclasslist">
+            <li><a href="javascript:void(0)" class="cur">账户类</a></li>
+            <li><a href="javascript:void(0)">操作类</a></li>
+            <li><a href="javascript:void(0)">付款类</a></li>
+            <li><a href="javascript:void(0)">安全类</a></li>
+            <!--<li><a href="faq.htm">更多</a></li>-->
+          </ul>
+       	</h3>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_1_2.html&0,0">· 注册？</a></li>
+            <li><a href="faq.htm?=FAQ_2_2.html&1,0">· 实名认证？</a></li>
+            <li><a href="faq.htm?=FAQ_3_0.html&2,0">· 登录？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_6_1_1.html&5,0">· 如何添加角色？</a></li>
+            <li><a href="faq.htm?=FAQ_6_2_1.html&5,1">· 如何添加成员？</a></li>
+            <li><a href="faq.htm?=FAQ_5_0.html&4,0">· 如何添加联系人？</a></li>
+            <li><a href="faq.htm?=FAQ_4_2_1.html&3,0">· 如何添加银行卡？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_7_1_3.html&6,0">· 如何充值？</a></li>
+            <li><a href="faq.htm?=FAQ_7_3_3.html&6,2">· 如何转账？</a></li>
+            <li><a href="faq.htm?=FAQ_7_4.html&6,3">· 如何批量转账？</a></li>
+            <li><a href="faq.htm?=FAQ_7_2_6.html&6,1">· 如何提现？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_8_1_1.html&7,0">· 修改登录密码？</a></li>
+            <li><a href="faq.htm?=FAQ_8_1_2.html&7,0">· 找回登录密码？</a></li>
+            <li><a href="faq.htm?=FAQ_8_2_1.html&7,1">· 修改支付密码？</a></li>
+            <li><a href="faq.htm?=FAQ_8_2_2.html&7,1">· 找回支付密码？</a></li>
+            <li><a href="faq.htm?=FAQ_8_11_3.html&7,9">· 如何激活永达盾？</a></li>
+            <li><a href="faq.htm?=FAQ_8_11_4.html&7,9">· 如何解绑永达盾？</a></li>
+          </ul>
+        </div>
+      </div>
+      <!--helpbox  --> 
+      
+    </div>
+    <!--helpcont --> 
+    
+  </div>
+  <!-- mt30 --> 
+  
+</div>
+</div>
+<script>
+$(function(){
+	$(".helpclasstab").eq(0).show();
+	$(".helpclasslist a").click(function(){
+		$(this).addClass("cur").parent().siblings().find("a").removeClass("cur");
+		$(".helpclasstab").hide();
+		var i=$(this).parent().index();
+		
+		$(".helpclasstab").eq(i).show();
+	});
+});
+</script>

@@ -1,0 +1,121 @@
+<!--已登录头部-->
+<div id="header" >
+    <div class="wrap">
+        <div class="top">
+            欢迎您 <a href="#springUrl('/my/accountManage.htm?link=0102')"><span class="username_header">$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).loginName</span></a> <a href="#springUrl('/logout.htm')" class="a9">退出</a> <span class="s">|</span> <a href="#springUrl('/help/helpcenter.htm')" target="_blank" class="a9">帮助中心</a> <span class="s">|</span> <a href="#springUrl('/customservice/index.htm')" class="a9">客服中心</a> <span class="s">|</span> 客服热线：<span class="dh">0571-28276085</span>
+        </div>
+    </div>
+</div>
+
+<div id="nav_con">
+    <div class="wrap">
+        <div id="logo" class="fl">
+            <a class="fl" href="#springUrl('/my/home.htm?link=0101')"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo.png" alt="永达商户钱包"></a>
+            <img class="logo_merchant fl" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/logo_merchant.png" alt="商户中心">
+        </div>
+
+        <ul class="fr">
+            <li class="hoverli hoverli_cur cur">
+                <a href="#springUrl('/my/home.htm?link=0101')" class="hovera">我的账户<i></i></a>
+                <ul class="subnav">
+                    <li class="cur"><a href="#springUrl('/my/home.htm?link=0101')"><span>首页</span></a></li>
+                    <li><a href="#springUrl('/my/accountManage.htm?link=0102')"><span>账户设置</span></a></li>
+                    <li><a href="#springUrl('/contacts/toContactsHome.htm?link=0103')"><span>联系人</span></a></li>
+                    <li><a href="#springUrl('/my/operator/operator-verify.htm?link=0104')"><span>操作员</span></a></li>
+                </ul>
+            </li>
+            <li class="hoverli">
+                <a href="#springUrl('/overview/toOverview.htm?link=0201')" class="hovera">资金管理<i></i></a>
+                <ul class="subnav">
+                    <li><a href="#springUrl('/overview/toOverview.htm?link=0201')"><span>资金总览</span></a></li>
+                    <li><a href="#springUrl('/recharge/toInputMoney.htm?link=0202')" target="_blank"><span>充值</span></a></li>
+                    <li><a href="#springUrl('/transfer/toTransferKjt.htm?link=0204')"><span>转账</span></a></li>
+                    <li><a href="#springUrl('/cash/toInputCashInfo.htm?link=0203')"><span>提现</span></a></li>
+                </ul>
+            </li>
+            <li class="hoverli">
+                <a href="#springUrl('/my/all-audit.htm?shStatus=1&link=0301')" class="hovera">审核管理<i></i></a>
+                <ul class="subnav">
+                    <li><a href="#springUrl('/my/all-audit.htm?shStatus=1&link=0301')"><span>我的待审核</span></a></li>
+                    <li><a href="#springUrl('/my/all-audit.htm?auditType=transfer&link=0302')"><span>转账审核</span></a></li>
+                    <li><a href="#springUrl('/my/all-audit.htm?auditType=refund&link=0303')"><span>退款审核</span></a></li>
+                    <li><a href="#springUrl('/my/all-audit.htm?auditType=withdraw&link=0304')"><span>提现审核</span></a></li>
+                    ##<li><a href="#springUrl('/my/all-audit.htm?auditType=payoff&link=0305')"><span>应用审核</span></a></li>
+                </ul>
+            </li>
+            <li class="hoverli">
+                <a href="#springUrl('/my/TransactionRecords.htm?link=0401')" class="hovera">交易管理<i></i></a>
+                <ul class="subnav">
+                    <li><a href="#springUrl('/my/TransactionRecords.htm?link=0401')"><span>交易记录</span></a></li>
+                    <li><a href="#springUrl('/my/pay-detail.htm?link=0402')"><span>收支明细</span></a></li>
+                    <li><a href="#springUrl('/my/applicationRecord.htm?link=0403')"><span>申请记录</span></a></li>
+                    <li><a href="#springUrl('/my/all-settlement1.htm?link=0404')"><span>对账单下载</span></a></li>
+                    <li><a href="#springUrl('/my/pos-settlement1.htm?link=0405')"><span>云+交易对账单</span></a></li>
+                    <!--<li><a href="#springUrl('/my/all-ertrade.htm?link=0405')"><span>电子回单</span></a></li>-->
+                </ul>
+            </li>
+            <!--<li class="hoverli">
+                <a href="#springUrl('/my/TransactionRecords.htm?link=####')" class="hovera">POS交易管理<i></i></a>
+                <ul class="subnav">
+                    <li><a href="#springUrl('/my/TransactionRecords.htm?link=####')"><span>交易记录</span></a></li>
+                    <li><a href="#springUrl('/my/pay-detail.htm?link=####')"><span>结算对账单</span></a></li>
+                </ul>
+            </li>-->
+            <li class="hoverli">
+                <a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')" class="hovera">安全中心<i></i></a>
+            </li>
+            <li class="hoverli">
+                <a href="#springUrl('/appCenter/toAppCenter.htm?link=0600')" class="hovera">应用中心<i></i></a>
+                <ul class="subnav">
+                    <li><a href="#springUrl('/appCenter/toAppCenter.htm?link=0600')"><span>应用中心</span></a></li>
+                    <li><a href="#springUrl('/appCenter/goods.htm?link=0601')"><span>商品管理</span></a></li>
+                </ul>
+            </li>
+            <!--<li class="hoverli">
+                <a href="#springUrl('/downloadCenter/todownloadCenter.htm?link=0700')" class="hovera">下载中心<i></i></a>
+                <ul class="subnav">
+                    <li><a href="#springUrl('/my/downList.htm?link=0702')"><span>电子回单下载</span></a></li>
+                </ul>
+            </li>-->
+
+        </ul>
+    </div>
+</div>
+<div id="nav_con_2"><div class="wrap"></div></div>
+#set($linkCode=$session.getAttribute("link"))
+
+<script type="text/javascript">
+	var linkCode = '$!{linkCode}';
+	$(function() {
+		if (!linkCode) {
+			return;
+		}
+		$('#nav_con .hoverli_cur').removeClass('hoverli_cur').removeClass('cur');
+		$('#nav_con .subnav .cur').removeClass('cur');
+		$('#nav_con .hoverli').each(function() {
+			if (hasCurLinkCode($(this))) {
+				$(this).addClass('hoverli_cur').addClass('cur');
+			}
+		});
+	});
+	
+	function hasCurLinkCode(jHoverli) {
+		if (!linkCode) {
+			return false;
+		}
+		
+		var res = false;
+		var liHref = jHoverli.find('a').attr('href');
+		if (liHref && liHref.indexOf(linkCode) >= 0) {
+			jHoverli.addClass('hoverli_cur').addClass('cur');
+		}
+		jHoverli.find('.subnav a').each(function() {
+			var aHref = $(this).attr('href');
+			if (aHref != undefined && aHref.indexOf(linkCode) >= 0) {
+				$(this).parent().addClass('cur');
+				res = true;
+			}
+		});
+		return res;
+	}
+</script>

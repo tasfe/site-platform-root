@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>永达互联网金融喊你充话费啦！</title>
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/style.css" rel="stylesheet" type="text/css">
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script>
+<style>
+#header a:hover{ text-decoration:underline;}
+.activitybox1{ width:100%; height:358px; background:url(${WEB_RESOURCE.staticAddress}wallet/upload/images/20150126/listbg1.jpg) center top no-repeat;}
+.activitybox2{ width:100%; height:314px; background:url(${WEB_RESOURCE.staticAddress}wallet/upload/images/20150126/listbg2.jpg) center top no-repeat;}
+.activitybox3{ width:100%; height:169px; background:url(${WEB_RESOURCE.staticAddress}wallet/upload/images/20150126/listbg3.jpg) center top no-repeat;}
+.activitybox4{ width:100%; height:169px; background:url(${WEB_RESOURCE.staticAddress}wallet/upload/images/20150126/listbg4.jpg) center top no-repeat;}
+.activitybox5{ width:100%; height:221px; background:url(${WEB_RESOURCE.staticAddress}wallet/upload/images/20150126/listbg5.jpg) center top no-repeat;}
+.activitybox6{ width:100%; height:408px; background:url(${WEB_RESOURCE.staticAddress}wallet/upload/images/20150126/listbg6.jpg) center top no-repeat;}
+.userinfo{ width:1000px; padding-top:86px; font:14px/38px "微软雅黑"; color:#5a0202; text-align:center;word-wrap:break-word;word-break:keep-all;
+}
+.userinfo span{ margin:0 20px;}
+#footer{margin-top:0;}
+</style>
+</head>
+<body>
+<div class="container">
+	#parse("/common/control/header-activity.vm")		
+	$screen_content
+	#parse("/common/control/footer-new.vm")
+</div>
+</body>
+</html>

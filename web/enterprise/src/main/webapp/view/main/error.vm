@@ -1,0 +1,22 @@
+<div class="wrapbg">
+<div id="" class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">出错了</span>
+        </div>
+    </div>
+    <div class="pagebox pagebox1" style=" height:280px; padding-top:95px;">
+        <table cellpadding="0" cellspacing="0" border="0"  class="sqinfo" width="100%">
+            <tr>
+				#if($!response.message != "") 
+                <td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">$!response.message</span><br><span class="color_66 f12">如有疑问请致电：<span class="b">0571-28276085</span>,或者选择在线咨询！</span></i></td>
+				#else
+				<td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">对不起，系统繁忙，请稍候再试！</span><br><span class="color_66 f12">如有疑问请致电：<span class="b">0571-28276085</span>,或者选择在线咨询！</span></i></td>
+				#end
+            </tr>
+        </table>
+        <div class="btn_bottom_tx row3"><input type="button" value="返 回" class="btn btn-bg" onClick="goBackOrClose();"></div>
+    </div>
+</div>
+</div>

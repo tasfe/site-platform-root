@@ -1,0 +1,61 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="account_contacts" class="wrap">
+    <div class="page_title contacts">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">联系人导入失败</span>
+        </div>
+    </div>
+    <div class="pagebox relative pagecontacts">
+    	<div class="table_div">
+            <table border="0" cellspacing="0" cellpadding="0" class="table1">
+              <tbody>
+              <tr>
+                <th width="124">行号</th>
+                <th width="1053">错误信息</th>
+              </tr>
+            </tbody>
+            </table>
+           </div> 
+          <table border="0" cellspacing="0" cellpadding="0" class="table1">
+             <tbody class="zzkjt_info2">
+             #foreach($contact in ${sessionPage.dataList})
+             <tr class="jcontext">
+            	<td width="124">$!{contact.contactId}</td>
+                <td width="1053">$!{contact.memo}</td>
+             </tr>
+			 #end
+             <tr class="nbb">
+               <td colspan="2">
+				#set($sessionPageUrl = $!{request.contextPath}+'/contacts/getSessionErrorPage.htm')
+                #parse("/common/control/session-page.vm")
+               </td>
+             </tr>
+           </tbody>
+           </table>
+		   
+		   <div class="btn_bottom_tx row3 p40"></div>
+    	</div>
+    </div>
+</div>
+<script>
+// 显示分页数据
+function showPageDataList(dataList) {
+	if (!dataList || dataList.length == 0) {
+		return;
+	}
+	
+	var jtable = $('.zzkjt_info2');
+	jtable.find('.jcontext').remove();
+	var len = dataList.length;
+	for (var i=len-1; i<len; i--) {
+		var contact = dataList[i];
+		var tdHtml = '<tr class="jcontext">'
+			+ '<td width="124">' + contact.contactId + '</td>'
+			+ '<td width="853">' + contact.memo + '</td>';
+				
+		jtable.prepend(tdHtml);
+	}
+}
+</script>

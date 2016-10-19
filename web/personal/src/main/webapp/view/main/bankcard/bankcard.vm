@@ -1,0 +1,64 @@
+<!--我的银行卡-->
+<div class="wrap min_height6">
+    <h2 class="h2_titform"><em>我的银行卡</em></h2>
+    <div class="card_list clearfix">
+    	<ul class="card_ul icons_list">
+			#foreach ($!bankcard in $!response.data.banks)
+				<li>
+                	#set ($icon="icon " + $!bankcard.bankCode)
+	                <div class="box_li">
+	                	<h3 class="tit_bg"><span title="$!bankcard.bankName" class="$icon">$!bankcard.bankName</span><a class="del_card" id="$!bankcard.bankcardId" href="javascript:void(0);">×</a></h3>
+	                    <p>$!bankcard.bankAccountNumMask</p>
+	                    <p>$!bankcard.realName  
+                        
+                        #if($response.data.member.memberType.getCode() == "2")
+                            #if($bankcard.cardAttribute == "0")
+                                （对公）
+                            #else
+                                （对私）
+                            #end
+                        #end
+                        </p>
+	                </div>
+                </li>
+            #end
+        	<li id="addBank" class="add_card"></li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="del_bank_dialog" id="delBankDialog">
+	<span class="wram_icobg"></span>
+    <h2>确定删除该银行卡么？</h2>
+</div>
+#parse("/main/bankcard/addBankcard.vm")
+<script>
+$(function(){
+	$(".card_ul li").hover(
+		function(){$(this).addClass("hover");},
+		function(){$(this).removeClass("hover");}
+	);
+
+	//删除银行卡
+	$(".del_card").click(function(){
+		var bankcardId = $(this).attr("id");
+		jQuery.dialog({
+			title:"提示",
+			lock: true,
+			content:document.getElementById("delBankDialog"),
+			ok:function(){
+                if(bankcardId) {
+                    window.location.href="/my/deleteBankCard.htm?bankcardid="+bankcardId
+                } else {
+                    alert("请选择需要删除的银行卡");
+                }
+            },
+			cancelVal:"取消",
+			cancel:function(){}
+		});
+	});
+
+});
+
+</script>

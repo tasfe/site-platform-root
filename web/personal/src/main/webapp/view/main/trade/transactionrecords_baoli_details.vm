@@ -1,0 +1,146 @@
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+		#foreach ($!tradeInfo in $!response.data.page.infos)
+			#if($!tradeInfo.state=="转账成功" ||$!tradeInfo.state=="交易完成")
+    	<div class="fr mt5"><a class="color_66 mt10 dzdzd dzdzd1" href="javascript:">查看交易回单</a></div>
+    	#if($!tradeInfo.plamId=="1")##plamId=1表示卖方
+    		#if($!tradeInfo.payeeFee!="0.00")
+    		<div class="fr mt5"><a class="color_66 mt10 dzdzd dzdzd2" href="javascript:" style="width:120px;">查看服务费回单</a></div>
+    		#end
+    	#else
+    		#if($!tradeInfo.payerFee!="0.00")
+    		<div class="fr mt5"><a class="color_66 mt10 dzdzd dzdzd2" href="javascript:" style="width:120px;">查看服务费回单</a></div>
+    		#end
+		#end
+		#end
+    	<h2>保理交易详情</h2>
+      </div>
+    <div class="pagebox">
+    	<form id="form_search">
+    
+        <div class="pagebox5 mt10" style="border-top:0;">
+        <table cellspacing="0" cellpadding="0" border="0" class="Detail_tab">
+      <tbody><tr>
+        <td class="tab_w">交易订单号</td>
+        <td class="tab_w2">$tradeInfo.orderId<br></td>
+        <td class="tab_w">商户订单号</td>
+        <td class="Detail_tab_no tab_w2">$tradeInfo.tradeSourceVoucherNo</td>
+      </tr>
+      <tr class="cl">
+        <td>创建时间</td>
+        <td>$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime)<br></td>
+        <td>交易类型</td>
+		#if($tradeInfo.TradeType=="INSTANT_TRASFER")
+			#if($tradeInfo.bizProductCode=="10250")
+				#set($tradeType="保理代扣")
+			#elseif($tradeInfo.bizProductCode=="10251")
+				#set($tradeType="保理还款")
+			#elseif($tradeInfo.bizProductCode=="10252")
+				#set($tradeType="保理放贷")
+			#else
+				#set($tradeType ="普通转账交易")
+			#end
+		#elseif($tradeInfo.TradeType=="INSTANT_ACQUIRING")
+			#set($tradeType ="即时到账收单交易")
+		#elseif($tradeInfo.TradeType=="ENSURE_ACQUIRING")
+			#set($tradeType ="担保收单交易")
+		#elseif($tradeInfo.TradeType=="PREPAY_ACQUIRING")
+			#set($tradeType ="下订收单交易")
+		#elseif($tradeInfo.TradeType=="REFUND_ACQUIRING")
+			#set($tradeType ="收单退款交易")
+		#else
+			#set($tradeType =$tradeInfo.TradeType)
+	   #end
+        <td class="Detail_tab_no">$!tradeType</td>
+        </tr>
+      <tr>
+        #if($!tradeInfo.buyId == $!response.data.member.memberId)
+		   <td>交易对方</td>
+		   <td width="168" style="text-align:left;">$!tradeInfo.sellerName $!response.data.sellAccountType</td>
+           <td>交易金额（元）</td>
+		   <td width="140">$!moneyUtil.getAmount($!tradeInfo.transferAmount)</td>
+        #elseif($!tradeInfo.sellId == $!response.data.member.memberId)
+		   <td>交易对方</td>
+		   <td width="168" style="text-align:left;">$!tradeInfo.buyerName $!response.data.buyAccountType</td>
+           <td>交易金额（元）</td>
+		   <td width="140">$!moneyUtil.getAmount($!tradeInfo.transferAmount)</td>
+		#end
+        </tr>
+      <tr class="cl">
+        <td>服务费（元）</td>
+        <td>$!moneyUtil.getAmount($!tradeInfo.payeeFee)</td>
+        <td class="cl">实际金额（元）</td>
+        <td class="cl Detail_tab_no">$!response.data.sum</td>
+        </tr>
+      <tr >
+        <td>支付时间</td>
+        <td>$!dateUtil.getNewFormatDateString($!tradeInfo.gmtPaid)</td>
+        <td>支付账户</td>
+        <td class="Detail_tab_no">$!tradeInfo.buyerName $!response.data.buyAccountType</td>
+        </tr>
+      <tr class="cl">
+        <td>状态</td>
+         <td width="75">
+		#if($!tradeInfo.state=="待支付")
+	          #set($state="处理中")
+	    #elseif($!tradeInfo.state=="付款成功")
+	          #set($state="处理中")
+		#elseif($!tradeInfo.state=="转账成功")
+			#set($state="成功")
+		#elseif($!tradeInfo.state=="交易完成")
+		      #set($state="成功")
+		 #elseif($!tradeInfo.state=="交易关闭")
+			#set($state="失败")
+		#elseif($!tradeInfo.state=="转账失败")
+			#set($state="失败")
+		#end
+		$state
+        </tr>
+
+    </tbody></table>
+	#end
+    <div class="div_btn_submit"><input type="button" class="btn_fanhui" onClick="history.back(-1);return false;"></div>
+        </div>
+		<div class="faq_relevant" style="padding:40px 40px 0;">
+                <h4>转账问题：</h4>
+            <dl>
+            	<dt>转账到永达互联网金融账户需要手续费吗？</dt>
+                <dd>答：永达互联网金融账户到账户转账是不收取手续费的。</dd>
+            </dl>
+            <dl>
+            	<dt>哪些情况下不能转账转出？</dt>
+                <dd>答：a)会员账户被冻结，无法转出<br>
+&nbsp;&nbsp;&nbsp;&nbsp;b)会员账户被加入转账黑名单<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c)会员账户后台注销；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d)会员账户未实名认证；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;e)当天转账次数超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f)当天会员支持的各种支付方式（余额、认证、快捷）次数、金额超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;g)转账收款方为未实名认证的个人或者企业会员；
+</dd>
+            </dl>
+            <dl>
+            	<dt>转账到银行卡和提现有什么区别？</dt>
+                <dd>答：<b>转账到卡：</b>是指将用户永达互联网金融账户余额或者储蓄卡中的钱转入自己或者他人的储蓄卡中。<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>提现：</b>是指把永达互联网金融账户的钱转到账户本人的储蓄卡中。</dd>
+            </dl>
+              <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+        
+    </form>
+    </div>
+
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".dzdzd1").click(function(){
+		var html = '<div style="width:700px; margin:0 auto 20px;"><div style="text-align:right; padding-bottom:5px;"><a href="${request.contextPath}/downImage.htm?tradeType=${response.data.tradeType}&flag=1&sign=trade" class="a_5A5A5A">下载</a></div>';
+		html += '<div id="dzdzd_xq" style="height:472px;"><img src="${request.contextPath}/SingleReceipt.htm?tradeType=${response.data.tradeType}&flag=1&sign=trade" alt="电子对账单"></div></div>';
+		showWin('html', html, '', 810, 'auto', ' ', '', '');
+	});
+	$(".dzdzd2").click(function(){
+		var html = '<div style="width:700px; margin:0 auto 20px;"><div style="text-align:right; padding-bottom:5px;"><a href="${request.contextPath}/downImage.htm?tradeType=${response.data.tradeType}&flag=1&sign=fee" class="a_5A5A5A">下载</a></div>';
+		html += '<div id="dzdzd_xq" style="height:472px;"><img src="${request.contextPath}/SingleReceipt.htm?tradeType=${response.data.tradeType}&flag=1&sign=fee" alt="电子对账单"></div></div>';
+		showWin('html', html, '', 810, 'auto', ' ', '', '');
+	});
+})
+</script>

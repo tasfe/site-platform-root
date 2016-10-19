@@ -1,0 +1,101 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">支付密码找回</span>
+		</div>
+	</div>
+
+     <div class="safetyMain">
+     	 <form id="find-paypwd-form" name="find-paypwd-form" class="" action="${request.contextPath}/my/reset-paypasswd-check.htm" method="POST">
+         <div class="loginCenter">
+			
+			<input type="hidden" id="isNameVerify" name="isNameVerify" value="$response.data.isNameVerify" />
+			<input type="hidden" name="isBindPhone"  id="isBindPhone" value="$response.data.isBindPhone" />
+			  #if($response.data.isNameVerify == "true")
+              <div class="login_limit">
+                   <label><span class="f14 limitLeft">营业执照号：</span>
+                     <input type="text" id="licenseNo" name="licenseNo" class="inputtext w232" value="">
+                   </label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error">$!response.data.licenseError</div>
+               </div>
+			  #end
+			  #if($response.data.isBindPhone == "true" && $response.data.isCertActive != "yes")
+               <div class="login_limit" id="captchaDiv">
+                   <label><span class="f14 limitLeft">手机校验码：</span>
+                     <input type="text" id="phoneVerifyCode" name="phoneVerifyCode" class="inputtext w80 fl" value="">
+					<input id="send_msg" class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error" id="mobileCaptchaTip">$!response.data.mobileError</div>
+              </div>
+			  #end
+		   <div class="red" style="margin-left:160px; margin-bottom:20px;" id="errorMsg"></div>
+		   <div id="needUpdataKjd" class="mb15" style="margin-left:160px;display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</div>
+           <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确 认"></div>
+			<input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+         </div> 
+		 </form>
+     </div>
+</div>
+</div>
+<OBJECT id="ukeyadmin" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+#if($!{response.data.isCertActive} == 'yes')
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+#end
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>	
+<script type="text/javascript">
+$(function(){
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+	
+	$(".btn_mfhq").click(function(){
+		var jThis = $(this);
+		sendPhoneCode({
+			jBtn:jThis,
+			jTip:$('#mobileCaptchaTip'),
+			url:"#springUrl('/my/mobile/sendMessage.htm')",
+			txtSuccess:"校验码已发送",
+			txtFail:"若长时间未收到校验码，请联系客服 0571-28276085"
+		});
+	});
+
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		var isNameVerify = $("#isNameVerify").val();
+		var isBindPhone = $("#isBindPhone").val();
+		var flag;
+		if(isNameVerify == "true"){
+    		flag = checkMust($("#licenseNo"),$("#licenseNo").parent().parent().find(".error"),"请输入营业执照！");
+    		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+    		//flag = isValidBusCode($("#licenseNo").val());
+    		//if(!flag) { $("#licenseNo").parent().parent().find(".error").text("请输入正确的营业执照号码！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		}
+		if($("#phoneVerifyCode").attr("id") == "phoneVerifyCode"){
+		flag = checkMust($("#phoneVerifyCode"),$("#phoneVerifyCode").parent().parent().find(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+
+		}
+		$("#find-paypwd-form").submit();
+	});
+
+	#if($!{response.data.isCertActive} == 'yes')
+	// 检查提醒证书更新
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+	// 检查证书
+	selectVerifyStyle("#springUrl('/certActive/getCertSns.htm')");
+	// 检查永达盾是否插入
+	intervalCheckUSB();
+	#else
+	$("#captchaDiv").show();
+	#end
+
+})
+
+</script>

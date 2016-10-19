@@ -1,0 +1,378 @@
+#set($path = ${request.contextPath})
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+    </div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/accountSetting.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/securityInfo.htm')">
+     	  	   	             <span class="subNavIcon aqsz"></span>
+                             <span class="subNavTxt">安全设置</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/contacts/toContactsHome.htm')">
+     	  	   	             <span class="subNavIcon lxr"></span>
+                             <span class="subNavTxt">联系人</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1">添加银行联系人</div>
+               <div class="account_set_right_con_100">
+               		<div class="bankcx_xz" style="padding-left:263px; padding-top:40px;"></div>
+					<form id="modifycontactbankform">
+                 <table cellpadding="0" cellspacing="0" border="0" class="bankcx tab2" >
+                    <tr><td width="354" class="text_l b f14">开户名：</td><td>$!{response.data.mc.accountName}</td></tr>
+                    <tr><td class="text_l b f14">开户支行：</td><td><input type="text" class="inputtext w198" id="bankBranch" name="bankBranch" value=""> <input type="button" value="查询支行信息" class="cxzhxx" ></td></tr>
+                    <tr><td class="text_l b f14">银行账号：</td><td><input type="text" class="inputtext w198" id="accountNo" name="accountNo" value=""></td></tr>
+                    <tr><td class="text_l b f14">联系手机：</td><td><input type="text" class="inputtext w198" id="mobile" name="mobile" value="$!{response.data.mc.mobile}"></td></tr>
+                    <tr><td class="text_l b f14">备注：</td><td><input type="text" class="inputtext w198" id="memo" name="memo" maxlength="20" value="$!{response.data.mc.memo}"></td></tr>
+                    
+                    <tr><td style="padding:0; height:24px;"></td><td style="padding:0;height:24px;"><div class="error h22"></div></td></tr>
+                </table>
+				
+				
+				<input type="hidden" id="contactId" name="contactId" value="$!{response.data.mc.contactId}"/>
+				<input type="hidden" id="accountName" name="accountName" value="$!{response.data.mc.accountName}"/>
+				<input type="hidden" id="bankCode" name="bankCode" class="bankCode"/>
+    			<input type="hidden" id="bankName" name="bankName" class="bankName"/>
+    			<input type="hidden" name="province" class="province"/>
+    			<input type="hidden" name="city" class="city"/>
+    			<input type="hidden" name="branchCode" id="branchCode" value="" class="branchCode"/>
+				</form>
+				<div class="div_btn_submit"> <input type="button" class="btn_qr btn_sumbit"><input type="button" class="btn_qx ml30" onclick="history.go(-1);return false;"></div>
+                    
+               </div>
+
+
+     	  </div>
+     	  <!-- S 右边内容 -->
+
+     </div>
+
+</div>
+<script>
+
+$(function(){	
+
+
+	$("#mobileNo").blur(function(){
+		var value=$("#mobileNo").val();
+		if(value == ""){
+			$(".error").text("请输入手机号");
+		}else if(!RegExp("^(13[0-9]{9}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8})$").test(value)){
+			$(".error").text("手机号码格式有误");
+		}else{
+			$(".error").text("");
+		}
+	})
+
+	$(".btn_sumbit").click(function(){
+	
+		var bankBranch=$("#bankBranch").val();
+		var accountNo=$("#accountNo").val();
+		var mobile=$("#mobile").val();
+		var memo=$("#memo").val();
+		
+		var err=true;
+		$(".tab2 .error").text("");
+		if(bankBranch==""){$(".tab2 .error").text("请输入联系人的支行信息");return false;}
+		if(accountNo==""){$(".tab2 .error").text("请输入银行账户信息");err=false;}
+		if(mobile==""){$(".tab2 .error").text("请输入手机号码");err=false;}
+		if(memo==""){$(".tab2 .error").text("请输入备注");err=false;}
+
+		if(err==false){return false;}
+		
+		var paramStr = getParamStr($("#modifycontactbankform").serializeArray());	
+		
+		jQuery.ajax({
+            type:'post', 
+            data: paramStr,   
+			cache:false,
+            url:"$!{path}/contacts/modifyContact.htm",                           
+            success:function(data){
+				window.location.href="#springUrl('/contacts/toContactsHome.htm')";	
+            },
+            dataType:'json',
+            error:function (){                
+				$(".tab2 .error").text("修改银行卡联系人失败！"); 
+            }
+        });
+			
+			
+
+	});
+	
+	$(".cxzhxx").click(function(){
+		var html = '<div id="branchFloat" class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		html += '<div class="bankcx_xz" style="display:none;"><label><input type="radio" name="infoType" value="0" checked>地区查询</label>'
+			+ '<label><input type="radio" name="infoType" value="1">行号查询</label><a href="#">什么是行号？</a></div>';
+		html += '<table id="addrTable" cellpadding="0" cellspacing="0" border="0" class="bankcx">';
+		html += '<tr><td width="184" class="text_l">开户银行：</td><td><div class="select_div">'
+			+ '<select name="bankSeq" id="bankName2">'
+				+ '<option value="-1">--请选择--</option></select></div></td></tr>';
+		html += '<tr><td class="text_l">地区：</td>';
+		html += '<td><div class="select_div" style="margin-right:10px;">'
+			+ '<select name="bankSeq" id="province" >'
+				+ '<option value="-1">--请选择省份--</option></select></div>'
+			+ '<div class="select_div"><select name="bankSeq" id="city">'
+				+ '<option value="-1">--请选择城市--</option></select></div></td></tr>';
+		html += '<tr><td class="text_l">开户网点：</td><td class="pt10">'
+		+ '<select name="bankSeq" id="subBranch" class="chzn-select w232" >'
+		+ '<option value="-1">--请选择--</option></select></td></tr>';
+		html += '</table>';
+		html += '<table id="branchCodeTable" style="display:none" cellpadding="0" cellspacing="0" border="0" class="bankcx">'
+			+ '<tr><td width="184" class="text_l">支行行号：</td><td><input name="branchCode" class="inputtext w232 placeholder" data-placeholder="请输入行号并点击查询" />&nbsp;&nbsp;'
+				+ '<a href="javascript:void(0)" click="queryBranch()">查询</a>'
+			+'</td></tr>'
+			+ '<tr><td width="184" class="text_l">支行名称：</td><td><input name="bankBranch" class="inputtext w232" readonly="true" /></td></tr>'
+			+ '</table>';
+		html += '</div></div>';
+		html += '<div class="div_btn_submit"><input type="button" class="btn_qr branch_qr">'
+			+ '<input type="button" class="btn_qx ml30" onclick="closeSW();"></div></div>';
+		
+		showWin('html', html, '', 700, 400, '查询支行信息', '', '');
+		$("#branchFloat #subBranch").chosen();
+		// 初始化可选择的银行信息
+    	initCorpBanks('branchFloat');
+    	
+    	// 初始化所有省市、支行
+    	initProvinces('branchFloat');
+		
+		// 地区、行号切换事件
+		$('input[name="infoType"]').bind('change', function() {
+			if ($(this).is(':checked')) {
+				var radioVal = $(this).val();
+				if (radioVal == 0) {
+					$('#branchFloat #addrTable').show();
+					$('#branchFloat #branchCodeTable').hide();
+				} else {
+    				$('#branchFloat #addrTable').hide();
+    				$('#branchFloat #branchCodeTable').show();
+    			}
+			} 
+		});
+		
+		// 初始化行号
+		$('#branchFloat input[name="branchCode"]').focus();
+		
+		$("#bankName2").live("change",function(){
+        	// 初始化所有省
+        	$("#province").val("-1");
+    		//初始化城市
+			$("#city").html('<option value="-1">--请选择城市--</option>');
+			$("#subBranch").html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+		});
+		$("#city").bind('change', function() {
+    		initBranches("branchFloat", $("#bankName2").val(), $(this).val());
+    	});
+		
+		// 初始化查询支行信息确认事件
+		$('#branchFloat .branch_qr').bind('click', function() {
+			var infoType = $('#branchFloat input:checked[name="infoType"]').val();
+			if (0 == infoType || '0' == infoType) {
+				// 地区查询
+				
+				if($("#bankName2").val()==""||$("#bankName2").val()=="-1"){
+					alert("请选择您的开户银行");return false;
+				}
+				if($("#province").val()==""||$("#province").val()=="-1"){
+					alert("请选择您开户银行所在地区");return false;
+				}
+				if($("#city").val()==""||$("#city").val()=="-1"){
+					alert("请选择您开户银行所在地区");return false;
+				}
+				if($("#subBranch").val()==""||$("#subBranch").val()=="-1"){
+					alert("请输入您的开户银行支行名称");return false;
+				}
+				
+				var jBranch = $('#branchFloat #subBranch option:selected');
+				var bankBranch = $('#branchFloat #bankName2 option:selected');
+				var provBranch = $('#branchFloat #province option:selected');
+				var cityBranch = $('#branchFloat #city option:selected');
+
+				$('#bankBranch').val(jBranch.text());
+				$('#bankName').val(bankBranch.text());
+				$('#bankCode').val(bankBranch.val());
+				
+				$('.bankName').val(bankBranch.text());
+				$('.bankCode').val(bankBranch.val());
+				$('.province').val(provBranch.text());
+				$('.city').val(cityBranch.text());
+				$('.branchCode').val(jBranch.attr("for2"));
+				
+				
+				
+				
+			} else {
+				if($('#branchFloat input[name="branchCode"]').val()==""){
+					alert("请输入银行账号信息");
+					return false;
+				}else if(!RegExp(regexEnum.bankcard).test($('#branchFloat input[name="branchCode"]').val())){
+					alert("请输入8-26位数字组成的银行账号信息！");
+					return false;
+				}
+				
+				if($('#branchFloat input[name="bankBranch"]').val()==""){
+					alert("请查询支行信息");
+					return false;
+				}
+				$('#bankBranch').val($('#branchFloat input[name="bankBranch"]').val());
+				$('#branchCode').val($('#branchFloat input[name="branchCode"]').val());
+			}
+			closeSW();
+		});
+	});
+	
+})
+
+// 显示银行列表
+function initCorpBanks(pDivId) {
+	jQuery.ajax({
+    	type: "get",
+		url: "$!{path}/contacts/queryCorpBanks.htm",
+		data: "",
+		cache:false,
+		dataType: "JSON",
+		success: function(result) {
+			if (result && result.success) {
+				var bankArr = result.messageObj;
+				var optHtml = '';
+				var len = bankArr.length;
+				for (var i=0; i<len; i++) {
+					optHtml += '<option value="' + bankArr[i].bankId + '">' + bankArr[i].bankName + '</option>'
+				}
+				
+				var jBank = $('#' + pDivId + ' #bankName2');
+				jBank.append(optHtml);
+				selOneOption(jBank, 'text', $("#bankName2").val());
+			}
+		}
+    });
+}
+
+// 显示省份列表
+var provArr = null;
+function initProvinces(pDivId) {
+	jQuery.ajax({
+    	type: "get",
+		url: "$!{path}/contacts/queryAllProvCities.htm",
+		data: "",
+		cache:false,
+		dataType: "JSON",
+		success: function(result) {
+			if (result && result.success) {
+				// 省份
+				provArr = result.messageObj;
+				var jprov = $('#' + pDivId + ' #province');
+				jprov.html('<option value="-1">--请选择省份--</option>');
+				
+				var provOptHtml = '';
+				var len = provArr.length;
+				for (var i=0; i<len; i++) {
+					provOptHtml += '<option value="' + provArr[i].provId + '">' + provArr[i].provShortName + '</option>'
+				}
+				jprov.append(provOptHtml).bind('change', function() {
+					initCities(pDivId, $(this).val());
+					$("#subBranch").html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+					selOneOption($(this), 'text', $("#province").val());
+				});
+			}
+		}
+    });
+}
+
+// 根据省份初始化该省下的市
+function initCities(pDivId, provId) {
+	var len = provArr.length;
+	for (var i=0; i<len; i++) {
+		if (provId == provArr[i].provId) {
+			showCities(pDivId, provArr[i].cityInfos);
+		}
+	}
+}
+
+// 显示城市
+function showCities(pDivId, cityInfos) {
+	var jCity = $('#' + pDivId + ' #city');
+	jCity.html('<option value="-1">--请选择城市--</option>');
+
+	var len = cityInfos.length;
+	var cityOptHtml = '';
+	for (var i=0; i<len; i++) {
+		cityOptHtml += '<option value="' + cityInfos[i].cityId + '">' + cityInfos[i].cityShortName + '</option>'
+	}
+	jCity.append(cityOptHtml);
+	selOneOption(jCity, 'text', $("#city").val());
+}
+
+// 初始化某市某某银行的支行
+function initBranches(pDivId, bankCode, cityId) {
+	jQuery.ajax({
+    	type: "get",
+		url: "$!{path}/contacts/queryBranches.htm",
+		data: "cityId=" + cityId + "&bankCode=" + bankCode,
+		cache:false,
+		dataType: "JSON",
+		success: function(result) {
+			if (result && result.success) {
+				var jBranch = $('#' + pDivId + ' #subBranch');
+				var branchArr = result.messageObj;
+				jBranch.html('<option value="-1">--请选择支行--</option>');
+				
+				var optHtml = '';
+				var len = branchArr.length;
+				for (var i=0; i<len; i++) {
+					optHtml += '<option value="' + branchArr[i].branchId  + '" for2="' + branchArr[i].branchNo + '">' + branchArr[i].branchName + '</option>'
+				}
+				jBranch.append(optHtml);
+				selOneOption(jBranch, 'text', $("#subBranch").val());
+				jBranch.trigger("liszt:updated");
+			}
+		}
+    });
+}
+
+// 选中指定的选项
+function selOneOption(jSelectObj, type, value) {
+	if(!jSelectObj || !type || !value) {
+		return;
+	}
+	
+	jSelectObj.find('option').each(function() {
+		var jOpt = $(this);
+		if (type == 'text') {
+			if (jOpt.text() == value) {
+				jOpt.attr("selected",true);
+			}
+		} else {
+			if (jOpt.val() == value) {
+				jOpt.attr("selected",true);
+			}
+		}
+	});
+}
+
+
+
+
+
+</script>

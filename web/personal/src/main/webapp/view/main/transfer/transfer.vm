@@ -1,0 +1,113 @@
+<!--会员转账-->
+<div class="min_height6">
+<div class="wrap">
+    <div class="recharge_bar">
+        <span class="sp">转账账户：<b>$!response.data.member.memberName</b></span><span class="sp">账户可用余额：<b class="fc_r_ff">$!response.data.accountBalance</b> 元</span>
+        <span class="right_span"><a href="#springUrl('/my/all-transfer.htm')">查询转账记录</a></span>
+    </div>
+
+    <form id="transferForm" class="form-horizontal recharge_form" action="/my/transfer-confirm.htm" method="POST">
+    	  <input type="hidden" id="platformType" name="platformType" value="1"/>
+          <div class="control-group">
+            <label class="control-label" for="identityNo"><i class="fc_r_ff">*</i>收款人手机/邮箱：</label>
+            <div class="controls pos_rel">
+              <input type="text" id="identityNo" name="identityNo" class="in_txt" value="$!response.data.identityNo">
+               #if($response.errors.email_mobile_error)
+                    <label id="mobile_not_exist" class="error">#springMessageText($!response.errors.email_mobile_error,"")</label>
+               #elseif($response.message)
+                    <label id="mobile_not_exist" class="error"> #springMessageText($!response.message,"")</label>
+               #end
+              <span class="placeholder">请在此输入收款人手机/邮箱</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>转账金额(元)：</label>
+            <div class="controls pos_rel">
+              <input type="text" id="transferNum" name="transferNum" class="in_txt" value="$!response.data.transferNum" maxlength="9">
+              #if($response.errors.moneynum_error)
+                    <label id="moneynum_error" class="error">#springMessageText($!response.errors.moneynum_error,"")</label>
+               #end
+              <span class="placeholder">请在此输入您的转账金额</span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">转账说明：</label>
+            <div class="controls">
+              <input type="text" id="transferInfo" name="transferInfo" class="in_txt" value="$!response.data.transferInfo" maxlength="20">
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls f_12">
+              <input name="msn" name="msn" type="checkbox" value="Y"> 免费给收款人发送短信通知
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="controls"><input id="transfer_submit" type="submit" class="btn_h40_red bold" value="去付款" /></div>
+          </div>
+        </form>
+</div>
+</div>
+
+<script type="text/javascript">
+QJW.placeHolder("placeholder","in_txt")
+
+$("#paypwdCaptcha").focus(function(){
+    $("#paypwdCaptchaTip").html("");
+});
+
+jQuery.validator
+            .addMethod(
+               "isEmailOrMobile",
+               function(value, element) {
+                  var regPattern = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$|^1\d{10}$/;
+                  return regPattern.test(value);
+               });
+
+$("#transferForm").validate({
+//onfocusout: false,
+	onfocusout : function(element) {
+		$(element).valid();
+	},
+    rules:{
+            identityNo:{
+                 required:true,
+                 isEmailOrMobile:true,
+                 notEqualTo:"$!response.data.member.loginName"
+            }
+            ,transferNum:{
+                required:true,
+                positive:true,
+                max:20000
+            },
+            transferInfo:{
+            	maxlength: 20
+            }
+
+    },
+    messages : {
+		identityNo : {
+		    required : "不能为空，请填写",
+		    isEmailOrMobile : "错误的手机或邮箱"
+		}
+	}
+
+});
+
+$("#mobile").blur(function(){
+    QJW.passWordLeng($(this).val());
+
+});
+$("#identityNo").focus(function(){
+    $("#mobile_not_exist").remove();
+
+});
+$("#transferNum").keyup(function(){
+    QJW.passWordLeng($(this).val());
+    //alert($(this).val());
+});
+
+$("#mobile").focus(function() {
+     $("#mobile_not_exist").remove();
+})
+</script>

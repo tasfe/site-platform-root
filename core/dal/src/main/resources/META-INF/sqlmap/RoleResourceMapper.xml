@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RoleResource">
+  <resultMap id="BaseResultMap" type="com.netfinworks.site.core.dal.dataobject.RoleResourceDO">
+    <id column="ROLE_CODE" jdbcType="VARCHAR" property="roleCode" />
+    <id column="RESOURCE_CODE" jdbcType="VARCHAR" property="resourceCode" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+	
+  <sql id="Base_Column_List">
+    ROLE_CODE, RESOURCE_CODE, GMT_CREATE
+  </sql>
+	
+  <select id="loadAll" resultMap="BaseResultMap">
+	  select 
+	  <include refid="Base_Column_List" />
+	  from tr_role_resource
+  </select>
+
+  <insert id="insert" parameterType="com.netfinworks.site.core.dal.dataobject.RoleResourceDO">
+    insert into tr_role_resource (
+	 <include refid="Base_Column_List" />
+      )
+    values (#{roleCode}, #{resourceCode}, #{gmtCreate})
+  </insert>
+	
+  <delete id="deleteByRoleCode" parameterType="java.lang.String">
+	  delete from tr_role_resource where role_code = #{roleCode}
+  </delete>
+
+</mapper>

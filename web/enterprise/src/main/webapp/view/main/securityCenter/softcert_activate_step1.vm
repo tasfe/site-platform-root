@@ -1,0 +1,242 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">数字证书</span>
+		</div>
+	</div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+			  <div class="step-wrap">
+				  <span class="step-index step-index-cur">1</span>
+				  <span class="step-name step-name-cur">验证身份</span>
+				  <span class="s"></span>
+				  <span class="step-index">2</span>
+				  <span class="step-name">安装证书</span>
+				  <span class="s"></span>
+				  <span class="step-index">3</span>
+				  <span class="step-name">激活成功</span>
+			  </div>
+
+               <div class="usbKeyCenter">
+               			<form action="#springUrl('/softcertActivate/step2.htm')" method="post">
+                           <div class="login_limit hg40">
+                                 <label><span class="f14 limitLeft">企业名称：</span>
+                                  <span class="f14">$!{enterpriseName}</span>
+                                 </label>
+                                 <label class="ml5"></label>
+                           </div>
+                           
+                           <div class="login_limit">
+                               <label><span class="f14 limitLeft">法人身份证号：</span>
+                                 <input type="text" class="inputtext w232" value="" id="idcard" name="idcard">
+                               </label>
+                               <div class="c86 f12" style="padding-left:160px; width:480px;">请填入与您真实姓名一致的身份证号码。</div>
+                               <div class="mainTips ml160 error">$!{buscodeMessage}</div>
+                           </div>
+                           
+                           <div class="login_limit">
+                               <span class="f14 limitLeft">使用地点：</span>
+                               	<div class="select_div mr16 fl">
+                                   <select id="addrselect" name="position">
+                                        <option value="1">办公室</option>
+                                        <option value="2">家里</option>
+                                        <option value="3">学校宿舍</option>
+                                        <option value="4">自习室</option> 
+                                        <option value="-1">自定义</option>                                    
+                                   </select>
+                              </div>
+                                 <input type="text" class="inputtext w232" value="" id="address" name="address" maxlength=64>
+                               <div class="c86 f12" style=" clear:both;padding-left:160px; width:480px;">当您在不同的电脑上安装了证书时，“使用地点”方便您查看、删除不同的证书。</div>
+                               <div class="mainTips ml160 error"></div>
+                           </div>
+                          <!--
+                           <div class="login_limit">
+			                   <label><span class="f14 limitLeft">绑定的手机号码：</span>
+                                  <span class="f14">$!{mobile}</span>
+                                 </label>
+                                 
+			                   ##<div class="c86 f12" style="padding-left:160px; width:480px;">永达互联网金融已向此手机发送了校验码短信，请查看您的手机短信！</div>
+			                   <label class="ml5"></label>
+			                   <div class="mainTips ml160 error"></div>
+			               </div>
+
+			               <div class="login_limit">
+			                   <label><span class="f14 limitLeft">校验码：</span>
+			                     <input type="text" class="inputtext w80" value="" id="sjyzm" name="authCode">
+			                     <input class="btn_mfhq ml10" type="button" value="">
+			                   </label>
+			                   <div class="c86 f12" style="padding-left:160px; width:480px;"></div>
+			                   <label class="ml5"></label>
+			                   <div class="authCodeTip error clear h22" id="authCodeTip" style="padding-left:160px;">$!{authCodeMessage}</div>
+			               </div>
+						  -->
+                           <div class="login_limit">
+			                   <label>
+			                          <span class="f14 limitLeft">支付密码：</span>
+			                          <div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div>
+			                   </label>
+			                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+			                   <div class="mainTips ml160 error" style="clear:both;">$!{passwordmessage}</div>
+			               </div>
+                           
+                           
+                       <!--
+                       	<div class="login_limit" style="display:none">
+                               <label><span class="f14 limitLeft">校验码：</span>
+                                 <div id="yzm_i" class="yzm_i"><input type="text" data-input="yzm_i" class="placeholder color_b3" data-placeholder="请输入验证码" name="captcha_value" id="captcha_value"><i class="yzm_rw"></i></div><img class="yzm_img" title="点击更新验证码" alt="验证码" src="#springUrl('/pvc.htm')">
+                               </label>
+                               <div class="c86 f12" style="padding-left:160px; width:480px;">请输入右侧图中的4位字符。</div>
+                               <div class="mainTips ml160 error h22" id="cError">$!{imageMessage}</div>
+                           </div>
+						-->
+						
+                           <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确 认"></div>
+                           </form>
+               
+               </div>
+               
+               <div class="usbKeyFaq">
+                    <h4>数字证书问题：</h4>
+				   <dl>
+					   <dt>永达账户数字证书有什么作用？</dt>
+					   <dd>答：1、<b>加强保障：</b>将您的永达账户与您使用的电脑进行绑定，即使对方窃取了您的密码，在其它的设备上也动不了您的资金，保障了您的资金安全。数字证书用户，如果在其他设备登录永达账户，在设备没有安装数字证书的情况下，只能查询账户，不能进行任何操作，数字证书相当于为您的账户配置了一把“钥匙”，大大增强账户使用的安全性。<br><br>
+						   2、<b>提升限额：</b>使用永达账户的数字证书，当您在使用永达账户进行转账、提现等功能时可提升相应额度。</dd>
+				   </dl>
+				   <dl>
+					   <dt>数字证书安装有哪些好处？</dt>
+					   <dd>答：申请了数字证书，在登录的时候会获取更高安全等级的身份认证，可以更好地保证您发送的信息不会在网上被篡改，即使丢失了账号和密码，您的账户、资金仍然能得到一定的安全保护。数字证书会将用户的出款、重要资料修改等行为控制在固定的电脑上进行，即使账号密码被盗取，没有证书，就无法操作账户内的资金。</dd>
+				   </dl>
+                    <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+                </div>
+               <input type="hidden" name="bizType"  id="bizType" value="CERT_APPLY"/>
+          </div>
+     </div>
+</div>
+</div>
+<!--<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.cookie.js${WEB_RESOURCE.staticVersion}"></script>-->
+<script>
+function btnDoOrNot(flag){
+	stopCountDown($(".btn_mfhq")); 
+	if(flag){
+		$(".btn_submit").attr("disabled", false).removeClass("btn_disabled");
+		$(".btn_mfhq").attr("disabled", false).removeClass("btn_mfhq_disabled").val("");
+	}
+	else{
+		$(".btn_submit").attr("disabled", true).addClass("btn_disabled");
+		$(".btn_mfhq").attr("disabled", true).addClass("btn_mfhq_disabled").val("免费获取");
+	}
+}
+$(function(){
+	
+	btnDoOrNot(false);
+
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$(".pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+		
+	//免费获取手机验证码
+	$(".btn_mfhq").click(function(){
+		var jThis = $(this);
+		sendPhoneCode({
+			jBtn:jThis,
+			jTip:$('.authCodeTip'),
+			url:"#springUrl('/my/mobile/sendMessage.htm')",
+			txtSuccess:"校验码已发送",
+			txtFail:"若长时间未收到校验码，请联系客服 0571-28276085"
+		});
+	});
+	
+	$("#idcard").blur(function () {
+		var jTip =  $(this).parent().parent().find(".error");
+		var flag = checkMust($(this), jTip, "请输入您的身份证号码！");
+		if(flag)
+		flag = checkIdCard($(this), jTip, "请输入正确的身份证号码！");
+		if(flag) {
+			var value = $(this).val();
+			jTip.text("");
+			jQuery.ajax({
+	            type: 'POST',
+	            url: "#springUrl('/softcertActivate/idcard.htm')" ,
+				data: "idcard=" + value,
+	            success: function(response) {
+	             if(response.success) {
+					btnDoOrNot(true);		
+	             } else {
+	                btnDoOrNot(false);
+	                jTip.text("身份验证失败！");
+	             }
+	            } ,
+				cache: false,
+				error:function(){jTip.text(G.sysError);btnDoOrNot(true);},
+	            dataType: "json"
+	        });
+		}
+		else btnDoOrNot(false);
+	});
+	
+	if($("#addrselect").val()=="-1"){$("#address").show();}else{$("#address").hide()}
+	$("#addrselect").change(function(){
+		if($(this).val()=="-1"){$("#address").show();}else{$("#address").hide()}
+	})
+	
+	$("#address").blur(function(){
+		var tipObj = $(this).parent().find(".error");
+		tipObj.text("");
+		if($.trim($(this).val()).length > 32) tipObj.text("地址长度超出了32位！");
+	});
+	
+			
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+
+		var thisObj = $("#idcard");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入您的身份证号码！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		flag = checkIdCard(thisObj, tipObj, "请输入正确的身份证号码！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		if($("#addrselect").val()=="-1"){
+			thisObj = $("#address");
+			tipObj = thisObj.parent().find(".error");
+			tipObj.text("");
+			flag = checkMust(thisObj, tipObj, "请输入您的使用地址！");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			if($.trim(thisObj.val()).length > 64){
+				tipObj.text("地址长度超出了64位！");
+				btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+			}
+		}
+
+		var jsonSubmit = {
+			jBtnSubmit:btn_submit,
+			cssClass:"btn_disabled",
+			urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+		};
+		var pgeditors = [
+			{
+				jPwInput:pgeditor,
+				jInput:$("#password"),
+				jTip:$(".pwdiv").parent().parent().find(".error"),
+				txtEmpty:"请输入支付密码！"
+			}
+		];
+		checkPgeditor({
+			jsonSubmit:jsonSubmit,
+			pgeditors:pgeditors,
+			callback:function(){
+				$("form").submit();
+			}
+		});
+	});
+})
+</script> 
+

@@ -1,0 +1,284 @@
+/* 全局样式 */
+*{
+  margin:0px;
+  padding:0px;
+  font-family:"Helvetica Neue",Helvetica,STHeiTi,Arial,sans-serif;
+}
+input,button,select,textarea{outline:none}
+/* dialog弹窗 */
+/* 仿ios */
+.dialogWrap{
+  display:block;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#000;
+  opacity:0.3;
+  z-index:999;
+  top:0px;
+  left:0px;
+}
+.diaLog-alert{
+  display:block;
+  position:fixed;
+  top:10%;
+  left:50%;
+  margin-left:-160px;
+  width:320px;
+  min-height:250px;
+  opacity:0.9;
+  z-index:999999;
+  background:#FFF;
+  border-radius:10px;
+  border:1px solid #E5E5E5;
+}
+.dialog-alertTitle{
+  font-size:17px;
+  text-align:center;
+  line-height:20px;
+  width:300px;
+  margin:0 auto;
+  margin-top:15px;
+}
+.diaLog-alertDesc{
+  width:300px;
+  height:160px;
+  line-height:15px;
+  font-size:15px;
+  overflow:hidden;
+  margin:0 auto;
+  margin-top:15px;
+}
+.diaLog-alertBtnArea{
+  width:320px;
+  border-top:1px solid #E5E5E5;
+}
+.diaLogBtnLeft{
+  display:inline-block;
+  float:left;
+  width:159.5px;
+  border-right:1px solid #E5E5E5;
+  text-align:center;
+  color:#369FFF;
+  height:42px;
+  line-height:42px
+}
+.diaLogBtnRight{
+ display:inline-block;
+ float:left;
+ width:159.5px;
+ text-align:center;
+ color:#369FFF;
+ height:42px;
+ line-height:42px
+}
+.diaLogBtn{
+ display:inline-block;
+ width:320px;
+ text-align:center;
+ color:#369FFF;
+ height:42px;
+ line-height:42px
+}
+.yd-tip{
+  display:block;
+  position:fixed;
+  width:90%;
+  height:50px;
+  font-size:13px;
+  line-height:50px;
+  overflow:hidden;
+  color:#FFF;
+  background:#000;
+  opacity:0.75;
+  top:20%;
+  left:50%;
+  margin-left:-45%;
+  border-radius:10px;
+  text-align:center;
+  z-index:9999999999;
+}
+/* 布局 */
+.yd-layouts-left{
+  float:left;
+  margin-left:5px;
+}
+.yd-layouts-center{
+  margin:0 auto;
+}
+.yd-layouts-right{
+  float:right;
+  margin-right:5px;
+}
+.blockWrap{
+  display:block;
+  margin-top:65px;
+  background:#FFF;
+  border-top:1px solid #E5E5E5;
+  border-bottom:1px solid #E5E5E5;
+  z-index:2;
+}
+.bottom-logo{
+  display:block;
+  position:fixed;
+  width:50%;
+  bottom:2%;
+  left:50%;
+  margin-left:-25%;
+  height:25px;
+  text-align:center;
+  z-index:1;
+}
+.bottom-logo img{
+  width:49px;
+  height:27px;
+  vertical-align: middle;
+}
+.logoInfo{
+  color:#CCC;
+  font-size:13px;
+  margin-left:5px;
+}
+/* 便捷属性 */
+.yd-block{
+  display:block;
+}
+.yd-inlineBlock{
+  display:inline-block;
+}
+.yd-weight{
+  font-weight:bold;
+}
+.yd-text-big{
+  font-size:19px;
+}
+.yd-icon{
+  display:inline-block;
+  width:30px;
+  height:30px;
+}
+/* 组件 */
+.yd-itemList{
+
+}
+.yd-itemList b{
+  font-weight:normal;
+}
+.yd-itemList li{
+  list-style-type:none;
+  height:50px;
+  line-height:50px;
+  border-bottom:1px solid #E5E5E5;  
+}
+.yd-itemList li:last-child{
+  border:none;
+}
+.yd-input-noBorder{
+  width:300px;
+  height:39px;
+  line-height:39px;
+  font-size:16px;
+  border:none;
+}
+.yd-checkbox{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background:url(../images/checkbox.png) no-repeat;
+  background-position: center center;
+  background-size:39% 39%;
+}
+.yd-checkboxSelected{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background:url(../images/checkbox_select.png) no-repeat;
+  background-position: center center;
+  background-size:39% 39%;
+}
+.yd-btn-big{
+  width:90%;
+  height:45px;
+  line-height:45px;
+  margin:0 auto;
+  margin-top:15px;
+  margin-bottom:15px;
+  border-radius:6px;
+  background:#369EFF;
+  color:#FFF;
+  text-align:center;
+  transition:0.3s all ease;
+}
+.yd-btn-disabled{
+  background:#E0E0E0;
+}
+.yd-btnLoading{
+  display:none;
+}
+.yd-btnLoading img{
+  margin-top:12px;
+}
+.yd-btn-big:active{
+  background:#3571A9;
+}
+.yd-btn-disabled:active{
+  background:#E0E0E0;
+}
+.yd-bottomBtnList{
+  position:fixed;
+  display:none;
+  width:100%;
+  bottom:0px;
+  left:0px;
+  background:#E5E5E5;
+  z-index:9999999;
+}
+.yd-bottomBtn{
+  background:#FFF;
+  border-bottom:1px solid #CCC;
+  color:#000;
+  text-align:center;
+  font-size:15px;
+  height:35px;
+  line-height:35px;  
+}
+.yd-bottomBtnClose{
+  margin-top:7px;
+  border-top:1px solid #CCC;
+  border-bottom:1px solid #CCC;
+}
+/* CSS3 动画 */
+.animationBounceIn{
+-webkit-animation:bounceIn .5s .2s ease both;
+-moz-animation:bounceIn .5s .2s ease both;}
+@-webkit-keyframes bounceIn{
+0%{opacity:0;
+-webkit-transform:scale(.3)}
+50%{opacity:1;
+-webkit-transform:scale(1.05)}
+70%{-webkit-transform:scale(.9)}
+100%{-webkit-transform:scale(1)}
+}
+@-moz-keyframes bounceIn{
+0%{opacity:0;
+-moz-transform:scale(.3)}
+50%{opacity:1;
+-moz-transform:scale(1.05)}
+70%{-moz-transform:scale(.9)}
+100%{-moz-transform:scale(1)}
+}
+.animationUpTo{
+-webkit-animation:fadeInUp .3s .2s ease both;
+-moz-animation:fadeInUp .3s .2s ease both;}
+@-webkit-keyframes fadeInUp{
+0%{opacity:1;
+-webkit-transform:translateY(600px)}
+100%{opacity:1;
+-webkit-transform:translateY(0)}
+}
+@-moz-keyframes fadeInUp{
+0%{opacity:1;
+-moz-transform:translateY(600px)}
+100%{opacity:1;
+-moz-transform:translateY(0)}
+}

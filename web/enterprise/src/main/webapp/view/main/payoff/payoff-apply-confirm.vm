@@ -1,0 +1,178 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="appcenter" class="wrap">
+	<div class="page_title">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">代发工资</span>
+		</div>
+		<div class="right fr"><a href="#springUrl('/static/dfgz.htm')">什么是代发工资</a> | <a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=6')">代发工资记录</a> | <a href="#springUrl('/help/faq.htm')">常见问题</a></div>
+	</div>
+    <div class="pagebox pagebox1 pagedfgz">
+    	<div class="step step_2"><i></i><span class="s1">上传模版</span><span class="s2">代发工资审核</span><span class="s3">代发工资完成</span></div>
+        <div class="bank_cooper_title">代发工资申请确认：</div>
+        <form class="zz_form_1" action="${path}/payoff/confirmBatchPayoffApply.htm" method="post">
+            <div class="boxbg1 w860">
+            	<div class="p49" style=" padding-bottom:0;">
+                	<table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info f14">
+						<tr>
+                        	<td width="122"><span class="b">转账笔数：$!{transferPerCount}</span></td>
+                            <td width="236"><span class="b">转账金额（元）：</span><span class="color_f6 b">$!{form.transMoney}</span>元</td>
+                            <td width="155"><span class="b">服务费笔数：</span><span class="b">$!{form.feeCount}</span></td>
+                            <td><span class="b">服务费（元）：</span><span class="b">$!{form.serviceCharge}</span>元</td>
+                        </tr>
+                        <tr>
+                        	<td colspan="4"><span class="b">总金额（元）：</span><span class="color_f6 b">$!{form.totalMoney}</span>元</td>
+                        </tr>
+                    </table>
+                    
+                    <table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info2">
+                    	<tr>
+                        	<th width="50">序号</td>
+                            <th width="350">收款人信息</td>
+                            <th width="86">金额(元)</td>
+                            <th width="100">服务费(元)</td>
+                            <th width="171">备注</td>
+                        </tr>
+                        #foreach($transfer in ${sessionPage.dataList})
+							#if($transfer.payoffType == 0)
+								<tr class="jcontext">
+                                	<td>$!{transfer.orderNo}</td>
+                                    <td>$!{transfer.kjtTransfer.kjtAccountName}&nbsp;($!{transfer.kjtTransfer.kjtAccount})</td>
+                                    <td>$!{transfer.kjtTransfer.transferAmount}</td>
+        							<td>$!{transfer.serviceCharge}</td>
+                                    <td class="text_l">$!{transfer.kjtTransfer.remark}</td>
+                                </tr>
+                            #else
+                                <tr class="jcontext">
+                                	<td>$!{transfer.orderNo}</td>
+                                    <td>$!{transfer.bankTransfer.accountName}&nbsp;($!{transfer.bankTransfer.bankName}&nbsp;
+										$!{transfer.bankTransfer.branchBankName}&nbsp;$!{transfer.bankTransfer.accountNo})</td>
+                                    <td>$!{transfer.bankTransfer.transferAmount}</td>
+        							<td>$!{transfer.serviceCharge}</td>
+                                    <td class="text_l">$!{transfer.bankTransfer.remark}</td>
+                                </tr>
+							#end
+						#end
+                    </table>
+                   <div class="tabpagediv">
+                        #set($sessionPageUrl = $!{request.contextPath}+'/payoff/getSessionPage.htm')
+                        #parse("/common/control/session-page.vm")
+                    </div>
+                    <div class="mrlauto"><span class="f14 b pw_lf">支付密码：</span><div class="pwdiv"><input name="payPassword" type="hidden" id="password" /></div></div>
+                    <div class="error" style=" height:30px;padding-left:291px;"></div>
+                </div>
+                <div class="btn_bottom_zz row3" style="width:auto;text-align:left;padding-left:348px;">
+					<input type="button" value="确 认" class="btn btn_submit" style="margin-right:30px;">
+					<input type="button" value="返 回" class="btn btn-bg" onClick="window.location.href='#springUrl("/payoff/toPayoff.htm")'">
+				</div>
+                
+            </div>
+        </form>
+        
+        <div class="faq_relevant">
+        	<h4>代发工资问题：</h4>
+            <dl>
+            	<dt>什么是代发工资？</dt>
+				<dd>答：是永达推出的增值服务，是指您可以通过永达账户来为您公司员工发放工资、奖金等薪资的服务。</dd>
+            </dl>
+             <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+$(function(){
+	closeSW();
+
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$(".pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+
+	function _submit(){
+		var btn_submit = $(".btn_submit");
+		$.ajax({
+			url: '$!{path}/payoff/checkPayPassword.htm',
+			type: 'post',
+			data: 'payPassword=' + $('#password').val(),
+			dataType: "json",
+			success: function(result) {
+				if (result && !result.success) {
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					$(".error").eq(0).text(result.message);
+				} else {
+					showWaitingImg('${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/loading.gif');
+					setTimeout(function() {
+						$(".zz_form_1").submit();
+					}, 500);
+				}
+			},
+			error:function(){
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				$(".error").eq(0).text("支付密码输入有误，请重新输入！");
+			}
+		});
+	}
+
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+
+		var jsonSubmit = {
+			jBtnSubmit:btn_submit,
+			cssClass:"btn_disabled",
+			urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+		};
+		var pgeditors = [
+			{
+				jPwInput:pgeditor,
+				jInput:$("#password"),
+				jTip:$(".error"),
+				txtEmpty:"请输入支付密码！"
+			}
+		];
+		checkPgeditor({
+			jsonSubmit:jsonSubmit,
+			pgeditors:pgeditors,
+			callback:function(){
+				_submit();
+			}
+		});
+	});
+});
+
+// 显示分页数据
+function showPageDataList(dataList) {
+	if (!dataList || dataList.length == 0) {
+		return;
+	}
+	
+	var jtable = $('.zzkjt_info2');
+	jtable.find('.jcontext').remove();
+	var len = dataList.length;
+	for (var i=0; i<len; i++) {
+		var transfer = dataList[i];
+		var tdHtml = '';
+		if(transfer.payoffType == 0) {
+			tdHtml += '<tr class="jcontext">'
+				+ '<td>' + transfer.orderNo + '</td>'
+				+ '<td>' + transfer.kjtTransfer.kjtAccountName + '(' + transfer.kjtTransfer.kjtAccount + ')</td>'
+				+ '<td>' + transfer.kjtTransfer.transferAmount + '</td>'
+				+ '<td>' + transfer.serviceCharge + '</td>'
+				+ '<td class="text_l">' + transfer.kjtTransfer.remark + '</td></tr>';
+		} else {
+			tdHtml += '<tr class="jcontext">'
+				+ '<td>' + transfer.orderNo + '</td>'
+				+ '<td>' + transfer.bankTransfer.accountName + '&nbsp;(' + transfer.bankTransfer.bankName + '&nbsp;'
+				+ transfer.bankTransfer.branchBankName + '&nbsp;' + transfer.bankTransfer.accountNo + ')</td>'
+				+ '<td>' + transfer.bankTransfer.transferAmount + '</td>'
+				+ '<td>' + transfer.serviceCharge + '</td>'
+				+ '<td class="text_l">' + transfer.bankTransfer.remark + '</td></tr>'
+		}
+		
+		jtable.append(tdHtml);
+	}
+}
+</script>

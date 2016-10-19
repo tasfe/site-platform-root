@@ -1,0 +1,7 @@
+<div id="header" >
+	<div class="wrap">
+		<div class="top">
+			欢迎您 <a href="#springUrl('/my/accountManage.htm?link=0102')"><span class="username_header">$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).loginName</span></a> <a href="#springUrl('/logout.htm')" class="a9">退出</a> <span class="s">|</span> <a href="#springUrl('/help/helpcenter.htm')" target="_blank" class="a9">帮助中心</a> <span class="s">|</span> <a href="#springUrl('/customservice/index.htm')" class="a9">客服中心</a> <span class="s">|</span> 客服热线：<span class="dh">0571-28276085</span>
+		</div>
+	</div>
+</div>

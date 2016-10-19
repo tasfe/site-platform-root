@@ -1,0 +1,162 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">批量退款信息</span>
+        </div>
+    </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>退款信息</h3>
+    </div>
+    <div class="pagebox5">
+		<form class="zz_form_1" action="${path}/confirmRefundApply.htm" method="post">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+            <td class="tab_w">商户批次号</td>
+            <td class="tab_w2">$!{sourceBatchNo}</td>
+            <td class="Detail_tab_no tab_w"></td>
+            <td class="Detail_tab_no tab_w2"></td>
+		</tr>
+		<tr class="cl">
+            <td class="tab_w">退款笔数</td>
+            <td class="tab_w2">$!{refundCount}</td>
+            <td class="tab_w">退款金额（元）</td>
+            <td class="Detail_tab_no tab_w2">$!{refundAmount}</td>
+		</tr>
+       <tr>
+            <td class="tab_w">原始订单服务费（元）</td>
+            <td class="tab_w2">$!{tradeFee}</td>
+            <td class="tab_w">退还服务费（元）</td>
+            <td class="Detail_tab_no tab_w2">$!{refundFee}</td>
+       </tr>
+       <tr class="cl">
+            <td class="tab_w">总金额（元）</td>
+            <td class="tab_w2">$!{sum}</td>
+            <td class="tab_w">状态</td>
+            <td class="Detail_tab_no tab_w2">待审批</td>
+       </tr>
+      <tr>
+      </tr>
+    </table>
+    <div class="table_div">
+        <table class="table1 zzkjt_info2">
+          <tr>
+            ## <th width="40">序号</th>
+            <th width="175">原交易订单号</th>
+			<th width="225">原商户订单号</th>
+            <th width="98">交易金额<em>（元）</em></th>
+            <th width="130">交易服务费<em>（元）</em></th>
+			<th width="115">退款金额<em>（元）</em></th>
+            <th width="130">退还服务费<em>（元）</em></th>
+            <th width="100">备注</th>
+			<th width="100">退款说明</th>
+          </tr>
+            #set ($i=1)
+            #foreach($form in ${sessionPage.dataList})
+            <tr class="jcontext">
+                ##<td>${i}</td>
+                <td>$!{form.tradeVoucherNo}</td>
+                <td>$!{form.serialNumber}</td>
+                <td>$!moneyUtil.getAmount($!{form.tradeMoney})</td>
+                <td>$!moneyUtil.getAmount($!{form.tradeFee})</td>
+                <td>$!moneyUtil.getAmount($!{form.refundMoney})</td>
+                <td>$!moneyUtil.getAmount($!{form.refundFee})</td>
+                <td>$!{form.memo}</td>
+                <td>$!{form.remarks}</td>
+            </tr>
+            #set($i=$i+1)
+            #end
+        </table>
+    </div>
+      <div class="tabpagediv">
+          #set($sessionPageUrl = $!{request.contextPath}+'/getSessionPage.htm')
+          #parse("/common/control/session-page.vm")
+      </div>
+              #if(${isRefund}=="true")
+			   <div class="mrlauto pay_pw" style="margin:20px 0 0 320px;"><span class="f14 b pw_lf">支付密码：</span><div class="pwdiv"><input name="payPassword" type="hidden" id="password" /></div>
+                    <div class="error" style=" height:30px; padding-left:77px;"></div>
+			   </div>
+			  <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:0" class="sqinfo">
+        <tr>
+            <td colspan="2" style="text-align:center"><input type="button" class="btn btn_submit" value="确 定"></td>
+        </tr>
+    </table>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+
+        var jsonSubmit = {
+            jBtnSubmit:btn_submit,
+            cssClass:"btn_disabled",
+            urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+        };
+        var pgeditors = [
+            {
+                jPwInput:pgeditor,
+                jInput:$("#password"),
+                jTip:$(".error"),
+                txtEmpty:"请输入支付密码！"
+            }
+        ];
+        checkPgeditor({
+            jsonSubmit:jsonSubmit,
+            pgeditors:pgeditors,
+            callback:function(){
+                $(".zz_form_1").submit();
+            }
+        });
+	});
+});
+// 显示分页数据
+function showPageDataList(dataList) {
+	if (!dataList || dataList.length == 0) {
+		return;
+	}
+	
+	var jtable = $('.zzkjt_info2');
+    var tdHtml = '<tr>';
+    tdHtml += '##<th width="40">序号</th>';
+    tdHtml += '<th width="175">原交易订单号</th>';
+    tdHtml += '<th width="225">原商户订单号</th>';
+    tdHtml += '<th width="98">交易金额<em>（元）</em></th>';
+    tdHtml += '<th width="130">交易服务费<em>（元）</em></th>';
+    tdHtml += '<th width="115">退款金额<em>（元）</em></th>';
+    tdHtml += '<th width="130">退还服务费<em>（元）</em></th>';
+    tdHtml += '<th width="100">备注</th>';
+    tdHtml += '<th width="100">退款说明</th>';
+    tdHtml += '</tr>';
+    jtable.html(tdHtml);
+
+	var len = dataList.length;
+	for (var i=0; i<len; i++) {
+		var batchRefund = dataList[i];
+		tdHtml = '<tr class="jcontext">'
+			/*+ '<td width="20"  >' + y + '</td>'*/
+			+ '<td>' +batchRefund.tradeVoucherNo + '</td>'
+			+ '<td>' + batchRefund.serialNumber + '</td>'
+			+ '<td>' + parseFloat(batchRefund.tradeMoney.amount).toFixed(2) + '</td>'
+			+ '<td>' + parseFloat(batchRefund.tradeFee.amount).toFixed(2) +'</td>'
+		    + '<td>' + parseFloat(batchRefund.refundMoney.amount).toFixed(2)+'</td>'
+    	    + '<td>' + parseFloat(batchRefund.refundFee.amount).toFixed(2)+'</td>'
+     		+ '<td>' + batchRefund.memo + '</td>'
+			+ '<td>' + batchRefund.remarks + '</td></tr>';
+		jtable.append(tdHtml);
+	}
+}
+</script>

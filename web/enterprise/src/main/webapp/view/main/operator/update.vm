@@ -1,0 +1,63 @@
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/safectrl.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/safectrl_utils.js${WEB_RESOURCE.staticVersion}"></script>
+<!--网银充值-->
+<div class="min_height6">
+<div class="wrap">
+    <h2 class="h2_titform"><em>操作员管理 - 修改</em></h2>
+    <form class="" id="setPassWordForm" action="#springUrl('/my/operator/update.htm')" method="POST">
+             <input type="hidden" id="passwdMode" name="passwdMode" value="1"/>
+        <div class="form-horizontal center_form clearfix">
+			
+            <div class="control-group">
+                <label class="control-label"><i class="fc_r_ff">*</i>操作员账号：</label>
+                <div class="controls pos_rel">$!response.data.operatorVO.loginName
+				</div>
+            </div>
+			
+			<div class="control-group">
+                <label class="control-label"><i class="fc_r_ff">*</i>操作员姓名：</label>
+                <div class="controls pos_rel">
+					<input type="text" id="nickName" name="nickName" value="$!response.data.operatorVO.nickName"/>
+					#if($response.errors.op_nick_name_is_not_null)
+    	               <label class="error"> #springMessageText($!response.errors.op_nick_name_is_not_null,"") </label>
+					#end
+    				#if($response.errors.op_nick_name_size_not_right)
+    	               <label class="error"> #springMessageText($!response.errors.op_nick_name_size_not_right,"") </label>
+    				#end
+				</div>
+            </div>
+			
+			<input type="hidden" id="loginName" name="loginName" value="$!response.data.operatorVO.loginName"/>
+			<input type="hidden" id="loginPwd" name="loginPwd" value="nodata"/>
+			<input type="hidden" id="loginPwdConfirm" name="loginPwdConfirm" value="nodata"/>
+			<input type="hidden" id="memberId" name="memberId" value="$!response.data.operatorVO.memberId"/>
+			<input type="hidden" id="operatorId" name="operatorId" value="$!response.data.operatorVO.operatorId"/>
+            <div class="control-group">
+                <div class="controls">
+					<input type="submit" id="updateSubmit" class="btn_h40_red bold" value="保    存" />
+					<input type="button" onclick="goBackOrClose();" class="btn_h40_gray bold marl10" value="返   回" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div></div>
+
+<script type="text/javascript">
+
+//表单提交
+$("#updateSubmit").click(function() {
+	$(".error").remove();
+	var nickName=$("#nickName");
+	if(nickName.val()==""){
+		nickName.parent().append("<label class='error'>不能为空</label>");
+		nickName.focus();
+		return false;
+	}
+	if(nickName.val().length<2||nickName.val().length>20){
+		nickName.parent().append("<label class='error'>操作员姓名只能在2到20个字符之间</label>");
+		return false;
+	}
+    return true;
+});
+
+</script>

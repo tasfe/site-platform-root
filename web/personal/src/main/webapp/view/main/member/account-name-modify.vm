@@ -1,0 +1,244 @@
+<div class="wrap">
+     <div class="page_title"><h2>修改账户名</h2></div>
+     <div class="safetyMain">
+         <div class="loginCenter">
+              <form class="from1" id="nameupdateForm" name="nameupdateForm" action="${request.contextPath}/my/accountModifySubmit.htm" method="post">
+				 
+			<input type="hidden" name="sendObject" id="sendObject" >
+			   
+			    <div class="login_limit">
+                   <label><span class="f14 limitLeft">新账户名：</span>
+                     <input type="text" class="inputtext w232" name="accountname" value="" id="accountname">
+                   </label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error">
+                <span></span>
+				</div>
+               </div>
+			   
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">校验码：</span>
+                     <input type="text" class="inputtext w80" value="" name="mobileCaptcha" id="sjyzm">
+                     <input class="btn_mfhq ml10" type="button" value="">
+						<input type="hidden" name="bizType"  id="bizType" />
+	
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error" id="codeError">$!response.data.validCode_error</div>
+				</div>
+				
+				<input type="hidden" name="verify" id="verify" value="$!response.data.verify" />	
+                  <div class="login_limit" id="module1">
+
+						<input type="hidden" name="loadNum" id="loadNum" value="$!response.data.loadNum" />
+                   <label>
+                          <span class="f14 limitLeft l_h30">支付密码：</span>
+                          <div class="pwdiv fl"><input name="password"  class="btn_mfhq1 ml10" type="hidden" id="password" /></div>
+							<a class="f_12 marl10" href="#springUrl('/my/go-get-paypasswd-index.htm')">忘记密码？</a>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;">
+				    #if($!response.errors.error_passwd=='密码错误')
+					<span>$!response.errors.error_passwd,还有$!response.errors.remainNum次输入机会</span>
+				#else
+					<span>$!response.errors.error_passwd</span>
+					#end
+				   </div>
+                  </div>
+				<div class="error pdlf170">$!{response.message}</div>
+		            
+
+			   
+           <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+
+$(function(){
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$(".pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+
+	$("#accountname").blur(function(){
+		var thisObj = $("#accountname");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var username = $.trim(thisObj.val());
+		tipObj.text("");
+
+		if(username == "" || username == $(this).attr("data-placeholder")){
+			tipObj.text("请输入新的账户名！");
+			return false;
+		}
+		if(!RegExp(regexEnum.email).test(username) && !RegExp(regexEnum.mobile).test(username)){
+			tipObj.text("您输入的手机或邮箱格式不正确！");
+			return false;
+		}else{
+			tipObj.text("");
+		}
+		var regPattern_email = /^(\w)+(\.\w+)*@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+		var regPattern_mobile = /^[1]([3][0-9]{1}|([4][7]{1})|([5][0-3|5-9]{1})|([8][0-9]{1}))[0-9]{8}$/;
+		if(regPattern_email.test(username)) {
+			$("#sendObject").val("email");
+			$("#bizType").val("ACC_UPD_TOEMAIL");
+		checkAccount({cmd:"register", username:username, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:1});//type 2 邮箱
+		} else if (regPattern_mobile.test(username)) {
+			$("#sendObject").val("mobile");
+			$("#bizType").val("ACC_UPD_TOPHONE");
+		checkAccount({cmd:"register", username:username, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:2});//type 2 手机
+		}
+	})
+	$(".btn_mfhq").click(function(){
+		var jThis = $(this);
+		var thisObj = $("#accountname");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var username = $.trim(thisObj.val());
+		var sendObject=$.trim($("#sendObject").val());
+		tipObj.text("");
+		if(sendObject==""){
+			tipObj.text("您输入的手机或邮箱格式不正确！");
+			return false;
+		}	
+		if(sendObject == 'mobile'){
+				if (!RegExp(regexEnum.mobile).test(username)){
+						tipObj.text("您输入的手机格式不正确！");
+						return false; 
+					}
+				var flag =	checkAccount({cmd:"register", username:username, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:2});//type 2 邮箱
+		}else if(sendObject== 'email'){
+				if (!RegExp(regexEnum.email).test(username)){
+					tipObj.text("您输入的邮箱格式不正确！"); return false;
+				}
+				var flag =checkAccount({cmd:"register", username:username, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:1});//type 2 邮箱
+		}else{
+			tipObj.text("");
+		}
+		if(!flag){
+			return false;
+		}
+		$("#codeError").html("");
+		countDown(jThis,60,"");
+		
+		if(sendObject == 'mobile'){
+			$.ajax({
+					url: '#springUrl('/my/send-mobile.htm')',
+					type: 'post',
+					data: "mobile=" + $("#accountname").val() + "&bizType=" + $("#bizType").val(),
+					dataType: "json",
+					success: function(result) {
+						if (!result || !result.success) {
+							if(result.message != ""){
+								$('#captchaDiv .error').text(result.message);	
+							}else{
+								$('#captchaDiv .error').text('获取验证码失败!');	
+							}
+						} else {
+							$('#captchaDiv .error').text('验证码发送成功!');
+						}
+					},
+					error:function(){$('#captchaDiv .error').text(G.sysError)}
+				});
+		}else if(sendObject== 'email'){
+				$.ajax({
+						url: '#springUrl('/my/send-mail.htm')',
+						type: 'post',
+						data: "email=" + $("#accountname").val() + "&bizType=" + $("#bizType").val(),
+						dataType: "json",
+						success: function(result) {
+							if (!result || !result.success) {
+								if(result.message != ""){
+									$('#captchaDiv .error').text(result.message);	
+								}else{
+									$('#captchaDiv .error').text('获取验证码失败!');	
+								}
+							} else {
+								$('#captchaDiv .error').text('验证码发送成功!');								
+							}
+						},
+						error:function(){$('#captchaDiv .error').text(G.sysError)}
+					});
+		}
+	});
+	
+
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		var sendObject=$.trim($("#sendObject").val());
+		var thisObj = $("#accountname");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var value = $.trim(thisObj.val());
+		
+		if (value == "") {
+			tipObj.text("请输入新的账户名！");
+		}
+		if(value == "" || value == $(this).attr("data-placeholder")){
+			tipObj.text("请输入新的账户名！");
+			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+			return false;
+		}
+		if(!RegExp(regexEnum.email).test(value) && !RegExp(regexEnum.mobile).test(value)){
+			tipObj.text("您输入的手机或邮箱格式不正确！");
+			return false;
+		}else{
+			tipObj.text("");
+		}
+		var regPattern_email = /^(\w)+(\.\w+)*@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+		var regPattern_mobile = /^[1]([3][0-9]{1}|([4][7]{1})|([5][0-3|5-9]{1})|([8][0-9]{1}))[0-9]{8}$/;
+		if(regPattern_email.test(value)) {
+			$("#sendObject").val("email");
+			$("#bizType").val("ACC_UPD_TOEMAIL");
+			var flag =checkAccount({cmd:"register", username:value, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:1});//type 2 邮箱
+		} else if (regPattern_mobile.test(value)) {
+			$("#sendObject").val("mobile");
+			$("#bizType").val("ACC_UPD_TOPHONE");
+			var flag =checkAccount({cmd:"register", username:value, tipObj:tipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:2});//type 2 邮箱
+		}
+		if(!flag){
+			return false;
+		}
+		flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+		if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+			var wid = pgeditor.settings.pgeWindowID;
+			pgeditor.pwdLength(function(){
+				if(outs[wid].length == 0){
+					$(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+					return false;
+				}
+
+				//产生随机数加密
+				getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor],function(){
+					//获得密文
+					setPwdResult(pgeditor,$('#password'),function(){
+						$("#nameupdateForm").submit();
+					});
+				});
+			});
+		}
+		else{
+			if (pgeditor.pwdLength() == 0) {
+				$(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+				btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+			}
+
+			getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+			setPwdResult(pgeditor,$('#password'));
+
+			$("#nameupdateForm").submit();
+		}
+	});
+})
+</script>

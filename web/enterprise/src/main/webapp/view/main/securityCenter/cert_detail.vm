@@ -1,0 +1,23 @@
+<style>
+.szzstab{}
+.szzstab td{ padding:8px 0;}
+.szzstab td.td1{text-align:right;padding-right:33px;}
+.szzstab tr.tr1 td{ background:#e6e6e6;}
+</style>
+<div class="wrapbg">
+	<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc" style="padding:0;">
+	<table class="szzstab" width="100%"><tr class="tr1"><td width="137" class="td1">永达盾来源地</td><td>$!{sourcePosition}</td></tr>
+		<tr><td class="td1">永达账户ID</td><td>$!{mid}</td></tr>
+		<tr class="tr1"><td class="td1">用户名</td><td>$!{enterpriseName}</td></tr>
+		<tr><td class="td1">颁发者</td><td>$!{certIssuerDn}</td></tr>
+		<tr class="tr1"><td class="td1">序列号</td><td>$!{certSerialNumber}</td></tr>
+		<tr><td class="td1">证书申请时间</td><td>$!{dateStr}</td></tr>
+		</table>
+		</div></div></div>
+</div>
+<script>
+if(window.parent.document.getElementById("sw_box") != null)
+window.parent.resetShowWinWH(720,314);
+$(function(){
+})
+</script>

@@ -1,0 +1,405 @@
+<div class="wrapbg">
+	<div class="wrap">
+		<div class="page_title">
+			<div class="title fl">
+				<i class="icon fl"></i>
+				<span class="tt fl">商户注册</span>
+			</div>
+		</div>
+
+		<form id="do-register-form" name="do-register-form" class="" action="${request.contextPath}/register/do-register.htm" method="POST">
+			<div class="login_main">
+
+				<div class="step-wrap">
+					<span class="step-index">1</span>
+					<span class="step-name">验证账户名</span>
+					<span class="s"></span>
+					<span class="step-index step-index-cur">2</span>
+					<span class="step-name step-name-cur">完善账户信息</span>
+					<span class="s"></span>
+					<span class="step-index">3</span>
+					<span class="step-name">完成注册</span>
+				</div>
+
+				<div class="login_tips">为了给您提供更好的支付和金融服务，您需要填写真实的身份信息享受会员保障服务。<br/>身份信息一经核实不可更改，隐私信息未经本人许可严格保密。</div>
+
+				<div class="login_content_wrap_t">
+					<div class="login_content clearfix">
+
+						<input type="hidden" id="registerType" name="registerType" value=""/>
+						<input type="hidden" id="username" name="username" value="$!response.data.email"/>
+
+						<div class="row">
+							<label class="row_label">永达账户</label>
+							<div class="row_con">
+								<span>$!response.data.email</span>
+							</div>
+							<div class="clear"></div>
+						</div>
+
+						<div class="row_block">
+
+							<div class="row">
+								<label class="row_label" for=""><span class="f14 color_f6 bold">企业基本信息</span></label>
+								<div class="row_con">
+									<span class="f12 color_b3">企业基本信息用于保障账户安全</span>
+								</div>
+								<div class="clear"></div>
+							</div>
+
+							<div class="row">
+								<label class="row_label" for=""><i class="red">*</i>商户类型：</label>
+								<div class="row_con">
+									<div><input type="radio" class="mr5" checked name="shlx" value="0">企业<input type="radio" class="mr5 ml20"  name="shlx" value="1">其他</div>
+								</div>
+								<div class="clear"></div>
+							</div>
+
+							<div class="row">
+								<label class="row_label" for=""><i class="red">*</i>企业名称：</label>
+								<div class="row_con">
+									<input id="comname" name="comname" type="text" class="login_input" maxlength="50">
+									<em class="f12 color_b3">请填写真实的企业名称，便于日后的实名认证</em>
+								</div>
+								<div class="clear"></div>
+								<div class="row_tip error"></div>
+							</div>
+
+							<div class="row">
+								<label class="row_label" for="">预留信息：</label>
+								<div class="row_con">
+									<input id="message" name="message" type="text" class="login_input" maxlength="20">
+									<em class="f12 color_b3">请输入6-20位字符的预留信息，保护您的账户安全</em>
+								</div>
+								<div class="clear"></div>
+								<div class="row_tip error"></div>
+							</div>
+
+						</div>
+
+						<div class="row_block pdt50">
+
+							<div class="row">
+								<label class="row_label" for=""><span class="f14 color_f6 bold">设置登录密码</span></label>
+								<div class="row_con">
+									<span class="f12 color_b3">登录时需验证，保护账户信息</span>
+								</div>
+								<div class="clear"></div>
+							</div>
+
+							<div class="row" id="login_pw_div">
+								<label class="row_label" for=""><i class="red">*</i>登录密码：</label>
+								<div class="row_con">
+									<div class="pwdiv pwdiv_login_pw fl"><input name="login_pw" type="hidden" id="login_pw" data-type="1" /></div>
+									<em class="f12 color_b3 fl ml5">请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外</em>
+								</div>
+								<div class="clear"></div>
+								<div class="grade" style="margin-left:166px;"><span class="gradeIcon g1"></span><span class="gradeText">弱</span></div>
+								<div class="row_tip error w700" style="top:48px;"></div>
+							</div>
+
+							<div class="row" id="re_login_pw_div">
+								<label class="row_label" for=""><i class="red">*</i>再输入一次：</label>
+								<div class="row_con">
+									<div class="pwdiv pwdiv_re_login_pw fl"><input name="re_login_pw" type="hidden" id="re_login_pw" data-type="1" /></div>
+								</div>
+								<div class="clear"></div>
+								<div class="row_tip error w700"></div>
+							</div>
+
+						</div>
+
+						<div class="row_block pdt50">
+
+							<div class="row">
+								<label class="row_label" for=""><span class="f14 color_f6 bold">设置支付密码</span></label>
+								<div class="row_con">
+									<span class="f12 color_b3">资金变动或账户信息变更时需验证，安全级别更高</span>
+								</div>
+								<div class="clear"></div>
+							</div>
+
+							<div class="row" id="pay_pw_div">
+								<label class="row_label" for=""><i class="red">*</i>支付密码：</label>
+								<div class="row_con">
+									<div class="pwdiv pwdiv_pay_pw fl"><input name="pay_pw" type="hidden" id="pay_pw" data-type="2" /></div>
+									<em class="f12 color_b3 fl ml5">请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外</em>
+								</div>
+								<div class="clear"></div>
+								<div class="grade" style="margin-left:166px;"><span class="gradeIcon g1"></span><span class="gradeText">弱</span></div>
+								<div class="row_tip error w700" style="top:48px;"></div>
+							</div>
+
+							<div class="row" id="pay_pw2_div">
+								<label class="row_label" for=""><i class="red">*</i>再输入一次：</label>
+								<div class="row_con">
+									<div class="pwdiv pwdiv_pay_pw2 fl"><input name="pay_pw2" type="hidden" id="pay_pw2" data-type="2" /></div>
+								</div>
+								<div class="clear"></div>
+								<div class="row_tip error w700"></div>
+							</div>
+
+						</div>
+
+						<div class="pdlf170">
+							<input class="btn btn_submit" type="button" value="确定">
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	$(function(){
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$(".pwdiv_login_pw").append(pgeditor.load());
+		pgeditor.pgInitialize();
+		
+		var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$(".pwdiv_re_login_pw").append(pgeditor1.load());
+		pgeditor1.pgInitialize();
+		
+		var pgeditor2 = newPgeditor(3,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$(".pwdiv_pay_pw").append(pgeditor2.load());
+		pgeditor2.pgInitialize();
+		
+		var pgeditor3 = newPgeditor(4,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$(".pwdiv_pay_pw2").append(pgeditor3.load());
+		pgeditor3.pgInitialize();
+		
+		window.setInterval(function(){checkPwStrongPG(pgeditor, $('#login_pw_div').find('.error'), $('#login_pw_div').find('.gradeIcon'), $('#login_pw_div').find('.gradeText'));},1000); //实时显示密码强度
+		window.setInterval(function(){checkPwStrongPG(pgeditor2, $('#pay_pw_div').find('.error'), $('#pay_pw_div').find('.gradeIcon'), $('#pay_pw_div').find('.gradeText'));},1000); //实时显示密码强度
+		//window.setInterval(function(){checkPW2PG(pgeditor, pgeditor1, $('#pay_pw2_div').find('.error'), 2);},200);
+
+		$("#comname").blur(function(){
+			checkComname($(this), $(this).parent().parent().find(".error"));
+		});
+		
+		$("#message").blur(function(){
+			var value = jQuery.trim($(this).val());
+			$(this).parent().parent().find(".error").text("");
+			if(value != ""){
+				var len = value.length;
+				if(len < 6 || len > 20) $(this).parent().parent().find(".error").text("预留信息的长度在6-20位字符！");
+			}
+		});
+		/*
+		$("#login_pw").blur(function(){
+			checkPW($(this), $(this).parent().parent().find(".error"));
+		});
+		
+		$("#login_pw").keyup(function(e){
+			checkPwStrong($(this), $(this).parent().parent().find(".error"), $(this).parent().parent().find(".gradeIcon"), $(this).parent().parent().find(".gradeText"));
+		});
+		
+		$("#re_login_pw").blur(function(){
+			checkPW2($("#login_pw"), $(this), $(this).parent().parent().find(".error"));
+		});
+		
+		$("#pay_pw2").blur(function(){
+			checkPW2($("#pay_pw"), $(this), $(this).parent().parent().find(".error"));
+		});*/
+
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+			
+			var type = $("input:radio[name=shlx]:checked").val();
+			$("#registerType").val(type);
+			
+			var flag = checkComname($("#comname"), $("#comname").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			var value = jQuery.trim($("#message").val());
+			if(value != ""){
+				var len = value.length;
+				if(len < 6 || len > 20){
+					$("#message").parent().parent().find(".error").text("预留信息的长度在6-20位字符！");
+					btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+				}
+			}
+			
+			/*
+			flag = checkPW($("#login_pw"), $("#login_pw").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			flag = checkPW2($("#login_pw"), $("#re_login_pw"), $("#re_login_pw").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			flag = checkPW($("#pay_pw"), $("#pay_pw").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			flag = checkPW2($("#pay_pw"), $("#pay_pw2"), $("#pay_pw2").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			if($("#login_pw").val() == $("#pay_pw").val()) $("#pay_pw2").parent().parent().find(".error").text("支付密码不能与登录密码相同，请重新输入！");
+			*/
+
+			var jsonSubmit = {
+				jBtnSubmit:btn_submit,
+				cssClass:"btn_disabled",
+				urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+			};
+			var pgeditors = [
+				{
+					jPwInput:pgeditor,
+					jInput:$("#login_pw"),
+					jTip:$("#login_pw_div").find(".error"),
+					txtEmpty:"请输入登录密码！",
+					txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外"
+				},
+				{
+					jPwInput:pgeditor1,
+					jInput:$("#re_login_pw"),
+					jTip:$("#re_login_pw_div").find(".error"),
+					txtEmpty:"请输入登录密码！",
+					numCompareEqual:0,
+					txtCompareEqual:"您输入的两次登录密码不一致，请重新输入！"
+				},
+				{
+					jPwInput:pgeditor2,
+					jInput:$("#pay_pw"),
+					jTip:$("#pay_pw_div").find(".error"),
+					txtEmpty:"请输入支付密码！",
+					txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外"
+				},
+				{
+					jPwInput:pgeditor3,
+					jInput:$("#pay_pw2"),
+					jTip:$("#pay_pw2_div").find(".error"),
+					txtEmpty:"请输入支付密码！",
+					numCompareEqual:2,
+					txtCompareEqual:"您输入的两次支付密码不一致，请重新输入！",
+					numCompareUnEqual:0,
+					txtCompareUnEqual:"支付密码不能与登录密码相同，请重新输入！"
+				}
+			];
+			checkPgeditor({
+				jsonSubmit:jsonSubmit,
+				pgeditors:pgeditors,
+				callback:function(){
+					$("#do-register-form").submit();
+				}
+			});
+/*
+			if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+				var wid = pgeditor.settings.pgeWindowID;
+				var wid1 = pgeditor1.settings.pgeWindowID;
+				var wid2 = pgeditor2.settings.pgeWindowID;
+				var wid3 = pgeditor3.settings.pgeWindowID;
+				pgeditor.pwdLength(function(){
+					if(outs[wid].length == 0){
+						$("#login_pw_div").find(".error").text("请输入登录密码！");
+						btn_submit.attr("disabled", false).removeClass("btn_disabled");
+						return false;
+					}
+					
+					pgeditor.pwdStrength(function(n){
+						if(n <= 2){
+							$("#login_pw_div").find(".error").text("对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外");
+							btn_submit.attr("disabled", false).removeClass("btn_disabled");
+							return false;
+						}
+						
+						pgeditor1.pwdLength(function(){
+							if(outs[wid1].length == 0){
+								$("#re_login_pw_div").find(".error").text("请输入登录密码！");
+								btn_submit.attr("disabled", false).removeClass("btn_disabled");
+								return false;
+							}
+							
+							pgeditor.pwdHash(function(){
+								pgeditor1.pwdHash(function(){
+									if(outs[wid].hash != outs[wid1].hash){
+										$("#re_login_pw_div").find(".error").text("您输入的两次登录密码不一致，请重新输入！");
+										btn_submit.attr("disabled", false).removeClass("btn_disabled");
+										return false;
+									}
+									
+									pgeditor2.pwdLength(function(){
+										if(outs[wid2].length == 0){
+											$("#pay_pw_div").find(".error").text("请输入支付密码！");
+											btn_submit.attr("disabled", false).removeClass("btn_disabled");
+											return false;
+										}
+										
+										pgeditor2.pwdStrength(function(n){
+											if(n <= 2){
+												$("#pay_pw_div").find(".error").text("对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外");
+												btn_submit.attr("disabled", false).removeClass("btn_disabled");
+												return false;
+											}
+											
+											pgeditor3.pwdLength(function(){
+												if(outs[wid3].length == 0){
+													$("#pay_pw2_div").find(".error").text("请输入支付密码！");
+													btn_submit.attr("disabled", false).removeClass("btn_disabled");
+													return false;
+												}
+												
+												pgeditor2.pwdHash(function(){
+													pgeditor3.pwdHash(function(){
+														if(outs[wid2].hash != outs[wid3].hash){
+															$("#pay_pw2_div").find(".error").text("您输入的两次支付密码不一致，请重新输入！");
+															btn_submit.attr("disabled", false).removeClass("btn_disabled");
+															return false;
+														}
+														
+														if(outs[wid].hash == outs[wid2].hash){
+															$("#pay_pw_div").find(".error").text("支付密码不能与登录密码相同，请重新输入！");
+															btn_submit.attr("disabled", false).removeClass("btn_disabled");
+															return false;
+														}
+														
+														getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor,pgeditor1,pgeditor2,pgeditor3],function(){
+															setPwdResult(pgeditor,$('#login_pw'),function(){
+																setPwdResult(pgeditor1,$('#re_login_pw'),function(){
+																	setPwdResult(pgeditor2,$('#pay_pw'),function(){
+																		setPwdResult(pgeditor3,$('#pay_pw2'),function(){
+																			_submit();
+																		});
+																	});
+																});
+															});
+														});
+													});
+												});
+											});
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+			}
+			else{
+				if(pgeditor.pwdHash() == 0) { $("#login_pw_div").find(".error").text("请输入登录密码！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				if(pgeditor.pwdStrength() <= 2) { $("#login_pw_div").find(".error").text("对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				if(pgeditor1.pwdHash() == 0) { $("#re_login_pw_div").find(".error").text("请输入登录密码！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				if(pgeditor.pwdHash() != pgeditor1.pwdHash()) { $("#re_login_pw_div").find(".error").text("您输入的两次登录密码不一致，请重新输入！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				
+				if(pgeditor2.pwdHash() == 0) { $("#pay_pw_div").find(".error").text("请输入支付密码！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				if(pgeditor2.pwdStrength() <= 2) { $("#pay_pw_div").find(".error").text("对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				if(pgeditor3.pwdHash() == 0) { $("#pay_pw2_div").find(".error").text("请输入支付密码！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				if(pgeditor2.pwdHash() != pgeditor3.pwdHash()) { $("#pay_pw2_div").find(".error").text("您输入的两次支付密码不一致，请重新输入！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				
+				if(pgeditor.pwdHash() == pgeditor2.pwdHash()) { $("#pay_pw_div").find(".error").text("支付密码不能与登录密码相同，请重新输入！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor,pgeditor1,pgeditor2,pgeditor3]);
+	            setPwdResult(pgeditor,$('#login_pw'));
+	            setPwdResult(pgeditor1,$('#re_login_pw'));
+	            setPwdResult(pgeditor2,$('#pay_pw'));
+	            setPwdResult(pgeditor3,$('#pay_pw2'));
+				
+				_submit();
+			}*/
+		});
+		
+		
+	})
+</script>

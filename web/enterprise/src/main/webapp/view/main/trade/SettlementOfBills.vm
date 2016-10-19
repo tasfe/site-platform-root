@@ -1,0 +1,324 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/lhgcalendar.css" rel="stylesheet" type="text/css">
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+    <div class="page_title settlement">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">对账单下载</span>
+        </div>
+    </div>
+	<div class="pagebox">
+    <form id="form_search" method="post">
+        <div class="search_row mt10">
+        	<label class="label1 fl">起止日期：</label>
+            <div class="data_div mr16 fl"><input class="datapick" type="text" id="startDate" name="queryStartTime" readonly="readonly" value="$!response.data.queryStartTime"><span>至</span><input class="datapick" type="text" id="endDate" name="queryEndTime" readonly="readonly" value="$!response.data.queryEndTime"></div>
+            ##<ul class="data_range fl"><li class="data_range_week">一周内</li><li class="data_range_month">一个月内</li><li class="data_range_quarter">三个月内</li><li class="data_range_year">一年内</li><input type="hidden" class="data_range_value"></ul>
+        </div>
+        <div class="search_row">
+            <dl class="search_dl">
+            <dt>查询类型：${response.data.xucache}</dt>
+            <dd data-value="1" #if($!response.data.txnType=="1")class="cur"#end>结算对账单</dd>
+            ##<dd data-value="2" #if($!response.data.txnType=="2")class="cur"#end>结算服务费</dd>
+            ##<dd data-value="3" #if($!response.data.txnType=="3")class="cur"#end>待结算</dd>
+            <input type="hidden" class="search_dl_value" name="txnType" id="txnType" value="$!response.data.txnType">
+            </dl>
+        </div>
+        <div class="search_row">
+        	<input type="button" id="search"  class="btn_chaxun ml30 fl" value="">
+			<span class="error fl pl10" style="line-height:28px;" id="errorSearch"></span>
+        </div>
+	
+		#if($!response.data.txnType=="1")
+		
+        ##<div class="tools mt20 mb5"><div class="fl f14 pl30 b">结算对账汇总</div><a href="#" class="tools_dc gray1 fr">导出下载</a></div>
+		<div class="Detail_tab_div" style="">
+        <!--
+		<table class="Detail_tab" border="0" cellspacing="0" cellpadding="0" style="width:97%; margin:0 auto;">
+          <tr >
+            <td class="tab_w">结算起始时间</td>
+            <td class="tab_w2">${response.data.fristDay}</td>
+			<td class="tab_w">结算结束时间</td>
+			<td class="tab_w2 Detail_tab_no">${response.data.lastDay}</td>
+          </tr>
+          <tr class="cl">
+            <td class="tab_w">交易订单总笔数</td>
+            <td class="tab_w2">$!{response.data.summary.totalTradeCount}</td>
+            <td class="tab_w">交易订单总金额（元）</td>
+            <td class="tab_w2 Detail_tab_no">$!{response.data.summary.totalTradeAmount}</td>
+          </tr>
+          <tr>
+            <td class="tab_w">退款订单总笔数</td>
+            <td class="tab_w2">$!{response.data.summary.totalRefundCount}</td>
+            <td class="tab_w">退款订单总金额（元）</td>
+            <td class="tab_w2 Detail_tab_no">$!{response.data.summary.totalRefundAmount} </td>
+          </tr>
+          <tr class="cl">
+            <td>服务费总笔数</td>
+            <td>$!{response.data.summary.totalTradeCount}</td>
+            <td>服务费总金额（元）</td>
+            <td class="Detail_tab_no">0.00</td>
+          </tr>
+          <tr class="cl">
+			<td class="tab_w" style="border-bottom:none;"></td>
+			<td class="tab_w2" style="border-bottom:none;"></td>
+            <td class="tab_w" style="border-bottom:none;">已结算金额（元）</td>
+            <td class="Detail_tab_no" style="border-bottom:none;">$!{response.data.summary.realAmount}</td>
+          </tr>
+		
+        </table>
+	    -->
+        </div>
+        <div class="tools mt20 mb5"><div class="fl f14 pl30 b">结算对账单</div><a href="#" class="tools_dc gray1 fr">导出下载</a></div>
+        <div class="table_div">
+        <table border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+			<th width="60">交易类型</th>
+            <th width="200">商户订单号</th>
+			<th width="200">原商户订单号</th>
+			<th width="65">下单时间</th>
+            <th width="135">交易订单号</th>
+            <th width="65">支付时间</th>
+            <th width="108">交易金额<em>（元）</em></th>
+            <th width="75">服务费<em>（元）</em></th>
+			<th width="60">支付渠道</th>
+          </tr>
+        </table>
+        </div>
+		 #set ($i=1)
+         #foreach($settlement in $response.data.settleList)
+            #if($i%2 != 0)
+                 #set ($odd="")
+            #else
+                 #set ($odd="on")
+            #end
+            #set($i=$i+1) 
+			
+			 #if($settlement.TradeType=="INSTANT_TRASFER")
+			  #set($tradeType ="普通转账交易")
+			#elseif($settlement.TradeType=="INSTANT_ACQUIRING")
+				#set($tradeType ="即时到账收单交易")
+			#elseif($settlement.TradeType=="ENSURE_ACQUIRING")
+				#set($tradeType ="担保收单交易")
+			#elseif($settlement.TradeType=="PREPAY_ACQUIRING")
+				#set($tradeType ="下订收单交易")
+			#elseif($settlement.TradeType=="REFUND_ACQUIRING")
+				#set($tradeType ="收单退款交易")
+			#else
+				#set($tradeType =$info.TradeType)
+		   #end
+        <table border="0" cellspacing="0" cellpadding="0" class="table1">
+         <tr>  
+		   <td width="60">$tradeType</td>
+           <td width="200">$!{settlement.serialNumber}</td>
+		   <td width="200">$!{settlement.origTradeSourceVoucherNo}</td>
+		   <td width="65">$!dateUtil.getNewFormatDateString(${settlement.gmtSubmit})</td>
+           <td width="135">$!{settlement.tradeVoucherNo}</td>
+           <td width="65">$!dateUtil.getNewFormatDateString(${settlement.gmtpaid})</td>
+           <td width="108"><span class="green  f14 bold">$!{settlement.orderMoney}</span></td>
+           <td width="75"><span class="orange f14 bold">$!{settlement.payeeFee}</span></td>
+		   <td width="60">$!{settlement.payChannel}</td>
+        </tr>
+       #end
+        #if(!$response.data.settleList || $response.data.settleList.size()<=0)   
+         <div class="noResult">没有找到记录，请调整搜索条件</div>
+        #end
+        <tr class="nbb">
+           <td colspan="9">
+			<div class="nav_page mt10">#parse("common/control/paginator.vm")</div>
+           </td>
+        </tr>
+        </table>
+	#end
+		
+	#if($!response.data.txnType=="2")
+		<div class="tools mt20 mb5"><div class="fl f14 pl30 b">结算服务费费用汇总</div><a href="#springUrl('/my/settlement-bill-download.htm')" class="tools_dc gray1 fr">导出下载</a></div>
+        <div class="Detail_tab_div">
+		<table class="Detail_tab" border="0" cellspacing="0" cellpadding="0" style="width:97%; margin:0 auto;">
+          <tr>
+            <td>结算时间</td>
+            <td colspan="3" class="Detail_tab_no">${response.data.queryEndTime}</td>
+          </tr>
+          <tr class="cl">
+            <td class="tab_w">入款总笔数</td>
+            <td class="tab_w2">3</td>
+            <td class="tab_w">入款总金额（元）</td>
+            <td class="Detail_tab_no tab_w2">3.00</td>
+          </tr>
+		  <tr>
+            <td>出款总笔数</td>
+            <td>1</td>
+            <td>出款总金额（元）</td>
+            <td class="Detail_tab_no">2.00</td>
+          </tr>
+          <tr class="cl">
+            <td>退款订单总笔数</td>
+            <td>$!{response.data.summary.totalRefundCount}</td>
+            <td>退款订单总金额（元）</td>
+            <td class="Detail_tab_no">$!{response.data.summary.totalRefundAmount} </td>
+          </tr>
+          <tr>
+			<td></td>
+			<td></td>
+            <td class="tab_bor_no">应付总金额（元）</td>
+            <td colspan="3" class="Detail_tab_no tab_bor_no">3.00</td>
+          </tr>
+        </table>
+        </div>
+        <div class="tools mt20 mb5"><div class="fl f14 pl30 b">结算服务费明细</div></div>
+        <div class="table_div">
+        <table border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+            <th width="170">时间</th>
+            <th width="170">入款服务费（元）</th>
+            <th width="98">出款服务费（元）</th>
+            <th width="130">退还服务费（元）</th>
+            <th width="120">应付金额（元）</em></th>
+          </tr>
+        </table>
+        </div>
+		 #set ($i=1)
+         #foreach($settlement in $response.data.settleList)
+            #if($i%2 != 0)
+                 #set ($odd="")
+            #else
+                 #set ($odd="on")
+            #end
+            #set($i=$i+1) 
+        <table border="0" cellspacing="0" cellpadding="0" class="table1">
+         <tr>                                              
+           <td width="170">2014-6-1</td>
+           <td width="170">1.00</td>
+           <td width="98">1.00</td>
+           <td width="130">0.5</td>
+           <td width="120">1.5</span></td>
+        </tr>
+       #end
+        #if(!$response.data.settleList || $response.data.settleList.size()<=0)   
+         <div class="noResult">没有找到记录，请调整搜索条件</div>
+        #end
+        <tr class="nbb">
+           <td colspan="8">
+			<div class="nav_page mt10">#parse("common/control/paginator.vm")</div>
+           </td>
+        </tr>
+        </table>
+	#end
+	
+	#if($!response.data.txnType=="3")
+		<div class="tools mt20 mb5"><div class="fl f14 pl30 b">待结算汇总</div><a href="#springUrl('/my/settlement-bill-download.htm')" class="tools_dc gray1 fr">导出下载</a></div>
+        <div class="Detail_tab_div">
+		<table class="Detail_tab" border="0" cellspacing="0" cellpadding="0" style="width:97%; margin:0 auto;">
+          <tr>
+            <td>结算时间</td>
+            <td colspan="3" class="Detail_tab_no">${response.data.queryStartTime}到${response.data.queryEndTime}</td>
+          </tr>
+          <tr class="cl">
+            <td class="tab_w">交易订单总笔数</td>
+            <td class="tab_w2">$!{response.data.summary.totalTradeCount}</td>
+            <td class="tab_w">交易订单总金额（元）</td>
+            <td class="Detail_tab_no tab_w2">$!{response.data.summary.totalTradeAmount}</td>
+          </tr>
+          <tr>
+            <td>退款订单总笔数</td>
+            <td>$!{response.data.summary.totalRefundCount}</td>
+            <td>退款订单总金额（元）</td>
+            <td class="Detail_tab_no">$!{response.data.summary.totalRefundAmount} </td>
+          </tr>
+          <tr class="cl">
+            <td>服务费总笔数</td>
+            <td>1</td>
+            <td>服务费总金额（元）</td>
+            <td class="Detail_tab_no">2.00</td>
+          </tr>
+		  <tr>
+            <td></td>
+            <td></td>
+            <td class="tab_bor_no">待结算金额（元）</td>
+            <td colspan="3" class="Detail_tab_no tab_bor_no">278.00</td>
+          </tr>
+        </table>
+        </div>
+        <div class="tools mt20 mb5"><div class="fl f14 pl30 b">待结算明细</div></div>
+        <div class="table_div">
+        <table border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+            <th width="170">商户订单号</th>
+            <th width="170">交易订单号</th>
+            <th width="98">支付时间</th>
+            <th width="130">交易类型</th>
+            <th width="120">交易金额（元）</th>
+			<th width="120">服务费（元）</th>
+			<th width="120">状态</th>
+			<th width="120">退款金额（元）</th>
+          </tr>
+        </table>
+        </div>
+		 #set ($i=1)
+         #foreach($settlement in $response.data.settleList)
+            #if($i%2 != 0)
+                 #set ($odd="")
+            #else
+                 #set ($odd="on")
+            #end
+            #set($i=$i+1) 
+        <table border="0" cellspacing="0" cellpadding="0" class="table1">
+        <tr>                                              
+           <td width="170">$!{settlement.serialNumber}</td>
+           <td width="170">$!{settlement.bizNo}</td>
+           <td width="98">$!dateUtil.getNewFormatDateString(${settlement.gmtSubmit})</td>
+           <td width="130">$!{settlement.tradeType}</td>
+           <td width="120">$!{settlement.orderMoney}</span></td>
+           <td width="100">-2.00</td>
+           <td width="80">$!{settlement.tradeState}</td>
+           <td width="125">$!{settlement.settledAmount}</td>
+        </tr>
+       #end
+        #if(!$response.data.settleList || $response.data.settleList.size()<=0)   
+         <div class="noResult">没有找到记录，请调整搜索条件</div>
+        #end
+        <tr class="nbb">
+           <td colspan="8">
+			<div class="nav_page mt10">#parse("common/control/paginator.vm")</div>
+           </td>
+        </tr>
+        </table>
+	#end
+    </form>
+    </div>
+	<form id="settlement_search" action="${request.contextPath}/my/all-settlement1.htm" method="post">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<input  type="hidden" value="$!response.data.queryStartTime" id="startDate" name="queryStartTime" >
+		<input  type="hidden" value="$!response.data.queryEndTime" id="endDate" name="queryEndTime">
+	 </form>
+	<form id="withdrawForm" action="${request.contextPath}/my/settlement-bill-download.htm" method="post">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<input  type="hidden" value="$!response.data.queryStartTime" id="startDate" name="queryStartTime" >
+		<input  type="hidden" value="$!response.data.queryEndTime" id="endDate" name="queryEndTime">
+	 </form>
+</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcore.min.js" type="text/javascript"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcalendar.min.js" type="text/javascript"></script>
+<script>
+function toQuerySubmit(currentPage){
+       	 $("#currentPage").val(currentPage);
+       	 $("#settlement_search").submit();
+}
+
+var dayRang = 31;
+var totalItem = $!response.data.page.totalItem;
+$(function(){
+	setClearStartDate2('#startDate', '#endDate', dayRang);
+	setClearEndDate2('#startDate', '#endDate', dayRang);
+	
+	$(".btn_chaxun").click(function(){
+		doSearchBeforDate2($("#form_search"), $("#errorSearch"), $("#startDate"), $("#endDate"), dayRang);
+	});
+	$(".tools_dc").click(function(){
+		if(totalItem>10000){
+			alert("您选择的日期范围内记录条数过多，可能会导致下载失败，请重新选择日期范围"); return false;
+		}
+		$('#withdrawForm').submit();
+	});
+})
+</script>

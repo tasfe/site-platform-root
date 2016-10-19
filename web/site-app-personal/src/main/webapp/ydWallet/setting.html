@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <title>设置</title>
+</head>
+<body>
+<div class="yd-wrap meWrap">
+  <div class="me-list">
+    <ul class="yd-itemList itemMarginLeft">
+      <li id="J_SetPayPwd" style="display:none; border-bottom:none;">设置支付密码<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+      <li id="J_ResetPayPwd" style="display:none; border-bottom:none;">重置支付密码<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+    </ul>
+  </div>
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script>
+  var J_SetPayPwd = $("#J_SetPayPwd"),
+          J_ResetPayPwd = $("#J_ResetPayPwd"),
+          id = tools.getQueryString("id");
+
+  // 是否设置过支付密码 未考虑缓存数据
+  tools.ajaxSubmit({
+    "type": "GET",
+    "url": gurl + "/member/info",
+    "suc_suc": function(response){
+      if(response.data.isSetPayPwd == "true"){
+        J_ResetPayPwd.show();
+        J_ResetPayPwd.unbind().click(function(){
+          window.location.href = linkPre + "/resetPwd.html?time=" + new Date().getTime();
+        });
+      }
+      else{
+        J_SetPayPwd.show();
+        J_SetPayPwd.unbind().click(function(){
+          window.location.href = linkPre + "/setPwd.html?time=" + new Date().getTime();
+        });
+      }
+    }
+  });// ajaxSubmit
+</script>
+</body>
+</html>

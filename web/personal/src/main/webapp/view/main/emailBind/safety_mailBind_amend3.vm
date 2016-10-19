@@ -1,0 +1,61 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>修改绑定邮箱</h2></div>
+
+     <div class="safetyMain">
+		<div class="cz_step step step_2" style="margin-left: 56px;"><i></i>
+          <span class="s1">验证身份</span>
+          <span class="s2" style="left: 408px;">修改邮箱</span>
+          <span class="s3" style="left: 653px;">修改成功</span>
+        </div>
+		<div class="usbKeyCon_tips" style="width: 338px;">
+			请确保您输入的邮箱能正常接收激活邮件，新邮箱才能生效。
+         </div>
+     	 <form action="${request.contextPath}/my/go-reset-set-email-active.htm" method="POST">
+				<input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+					<input type="hidden" name="password"  id="password"/>
+					<input type="hidden" name="gopage"  id="gopage" value="$!response.data.gopage"/>
+         <div class="loginCenter">
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">原邮箱：</span>
+                          <span class="f14">$!response.data.email</span>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 "></div>
+               </div>
+              <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">新邮箱地址：</span>
+                          <input type="text" class="inputtext w232" value="" id="email" name="email">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form> 
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		var flag = checkMust($("#email"),$(".error"),"请输入邮箱帐号");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		flag = checkEmail($("#email"),$(".error"),"邮箱格式不正确");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		
+		$("form").submit();
+	});
+})
+</script>

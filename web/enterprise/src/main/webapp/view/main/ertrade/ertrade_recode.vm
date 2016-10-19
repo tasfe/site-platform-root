@@ -1,0 +1,399 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/lhgcalendar.css" rel="stylesheet" type="text/css">
+<div class="wrapbg">
+<div class="wrap ">
+	<div class="page_title">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">电子回单</span>
+		</div>
+	</div>
+    <div class="pagebox">
+    	<form id="form_search">
+    	<input type="hidden" name="currentPage" id="currentPage" value="1">
+        <div class="search_row pl30 mt10">
+            <div class="select_div mr16 fl">
+				<select>
+					<option value="">创建时间</option>
+				</select>
+			</div>
+            <div class="data_div mr16 fl">
+				<input class="datapick" type="text" id="startDate" name="queryStartTime" readonly value="$!response.data.queryStartTime">
+				<span>至</span>
+				<input class="datapick" type="text" id="endDate" name="queryEndTime" readonly value="$!response.data.queryEndTime">
+			</div>
+			<div class="data_range fl" style="color:#999; line-height:22px;">注：电子回单采用T+1生成方式，今天的回单请于明天下载</div>
+        </div>
+        <div class="search_row search_cxlx">
+            <dl class="search_dl">
+            <dt>查询类型：</dt>
+            <dd data-value="2" for="lx1" #if($!response.data.txnType=="2")class="cur"#end>转账</dd>
+            ##<dd data-value="3" for="lx2" #if($!response.data.txnType=="3")class="cur"#end>代发工资</dd>
+            <dd data-value="4" for="lx3" #if($!response.data.txnType=="4")class="cur"#end>资金归集</dd>
+           	<dd data-value="5" #if($!response.data.txnType=="5")class="cur"#end>退票</dd>
+            <!--<dd data-value="5">保理放贷</dd>
+            <dd data-value="6">保理代扣</dd>-->
+             <input type="hidden" class="search_dl_value" name="txnType" id="txnType" value="$!response.data.txnType"  >
+            </dl>
+        </div>
+        <div class="search_row search_jylx" id="lx1" #if($!response.data.txnType!="2")style="display:none;"#end>
+            <dl class="search_dl">
+            <dt>交易类型：</dt>
+			<dd data-value="3" #if($!response.data.tradeType!="1" &&$!response.data.tradeType!="2")class="cur"#end>转账入款</dd>
+			<dd data-value="1" #if($!response.data.tradeType=="1")class="cur"#end>付款到永达账户</dd>
+			<dd data-value="2" #if($!response.data.tradeType=="2")class="cur"#end>付款到银行卡</dd>
+            <input type="hidden" class="search_dl_value" name="tradeType"  value="$!response.data.tradeType">
+            </dl>
+        </div>
+        <div class="search_row search_jylx" id="lx2" #if($!response.data.txnType!="3")style="display:none;"#end>
+            <dl class="search_dl">
+            <dt>交易类型：</dt>
+			<dd data-value="1" #if($!response.data.tradeType!="2")class="cur"#end>代发工资到永达账户</dd>
+			<dd data-value="2" #if($!response.data.tradeType=="2")class="cur"#end>代发工资到卡</dd>
+             <input type="hidden" class="search_dl_value" name="tradeType"  value="$!response.data.tradeType">
+            </dl>
+        </div>
+        <div class="search_row search_jylx" id="lx3" #if($!response.data.txnType!="4")style="display:none;"#end>
+            <dl class="search_dl">
+            <dt>交易类型：</dt>
+			<dd data-value="1" #if($!response.data.tradeType!="2")class="cur"#end>资金归集到永达账户</dd>
+			<dd data-value="2" #if($!response.data.tradeType=="2")class="cur"#end>资金归集到卡</dd>
+            <input type="hidden" class="search_dl_value" name="tradeType"  value="$!response.data.tradeType">
+            </dl>
+        </div>
+        <div class="search_row">
+        	<label class="label1 fl">关 键 字：</label>
+            <div class="select_div mr16 fl">
+				<select name="keyword" id="keyword">
+                    <option value="1" #if($!response.data.keyword=="1")selected="selected"#end>商户批次号</option><option value="2" #if($!response.data.keyword=="2")selected="selected"#end>商户订单号</option>
+				</select>
+			</div>
+            <input class="inputtext w177" type="text" name="keyvalue" value="$!response.data.keyvalue">
+        </div>
+        <div class="search_row">
+            <dl class="search_dl">
+            <dt>下载状态：</dt>
+            <dd data-value="" #if($response.data.downStatus=="")class="cur"#end>全部</dd>
+            <dd data-value="0"  #if($!response.data.downStatus=="0")class="cur"#end >未下载</dd>
+            <dd data-value="1" #if($!response.data.downStatus=="1")class="cur"#end>已下载</dd>
+             <input type="hidden" class="search_dl_value" name="downStatus" id="downStatus" value="$!response.data.downStatus"  >
+            </dl>
+        </div>
+      	<div class="search_row">
+        	<input type="button" id="search"  class="btn J_btn_chaxun ml30 fl" value="查 询">
+			<span class="error fl pl10" style="line-height:28px;" id="errorSearch"></span>
+        </div>
+        
+        <div class="tools">
+        <a data-flag="1" href="#springUrl('/my/download.htm?txnType=')$!response.data.txnType&tradeType=$!response.data.tradeType&downStatus=$!response.data.downStatus&queryStartTime=$!response.data.queryStartTime&queryEndTime=$!response.data.queryEndTime&flag=1&taskDate=$!response.data.insertDate&isNeed=false" class="tools_dc gray1 fr #if($!response.data.tradeType == "2") caozao_xiazai_gs #end" data-id="5" style="background:none; padding-left:10px;">下载单笔格式回单</a>
+        #if($!response.data.tradeType!="3")
+			<a data-flag="2" href="#springUrl('/my/download.htm?txnType=')$!response.data.txnType&tradeType=$!response.data.tradeType&downStatus=$!response.data.downStatus&queryStartTime=$!response.data.queryStartTime&queryEndTime=$!response.data.queryEndTime&flag=2&taskDate=$!response.data.insertDate&isNeed=false&keyvalue=$!response.data.keyvalue&keyword=$!response.data.keyword" class="tools_dc gray1 fr #if($!response.data.tradeType == "2") caozao_xiazai_gs #end ml20">下载批量格式回单 | </a>
+        #else
+			<a data-flag="2" href="#" class="tools_dc gray1 fr  ml20"></a>
+		#end
+	</div>
+        <div class="table_div">
+        <table class="table1">
+          <tr>
+            <th width="120">创建时间</th>
+            <th width="215">商户批次号|商户订单号</th>
+            <th width="210">交易对象</th>
+            <th width="120">金额<em>（元）</em></th>
+            <th width="160">服务费<em>（元）</em></th>
+            <th width="80">状态</th>
+            <th width="90">操作</th>
+			  #set ($i=1)
+			  #foreach($trade in $response.data.page.infos)
+			  #if($i%2 != 0)
+			  #set ($odd="")
+			  #else
+			  #set ($odd="on")
+			  #end
+			  #set($i=$i+1)
+
+			  #if($trade.hasDownload == "1")
+			  #set($trade.hasDownload="已下载")##交易成功
+			  #else
+			  #set($trade.hasDownload="未下载")##交易结束视为==结算成功
+			  #end
+			<tr class=$odd>
+				<td>$!dateUtil.getNewFormatDateString($!{trade.gmtCreate})</td>
+				<td>$!{trade.sourceBatchNo}/<br/>$!{trade.tradeSrcVoucherNo}</td>
+				<td>
+					#if($!{trade.source}==1)
+					#if($!response.data.tradeType=="3")
+					$!{trade.buyerName}
+					#else
+					$!{trade.sellerName}
+					#end
+					#elseif($!{trade.source}==2)
+					$!{trade.name}
+					#end
+				</td>
+				<td><span class="green f14 bold">${trade.tradeAmount1}</span></td>
+				<td>$!{trade.fee1}</td>
+				<td>$!{trade.hasDownload}</td>
+				#if($trade.status == "301" || $trade.status == "success" || $trade.status == "401" ||$trade.status == "refundTicket")
+				<td><a href="javascript:void(0)" data-p="${trade.id}" class="caozao_xiazai" data-id="5">下载</a></td>
+				#else
+				<td></td>
+				#end
+
+			</tr>
+			#end
+
+			#if(!$response.data.page.infos || $response.data.page.infos.size()<=0)
+			<tr>
+				<td colspan="7"><div class="noResult">没有找到记录，请调整搜索条件</div></td>
+			</tr>
+			#end
+			<tr class="nbb">
+				<td colspan="7">
+					<div class="nav_page mt10"> #parse("common/control/pagePost.vm")</div>
+				</td>
+			</tr>
+          </tr>
+        </table>
+        </div>
+    </form>
+    </div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcore.min.js" type="text/javascript"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcalendar.min.js" type="text/javascript"></script>
+ <script>
+ function toQuerySubmit(currentPage){
+       	 $("#currentPage").val(currentPage);
+       	 $("#form_search").submit();
+}
+ 
+ var dayRang = 31;
+var time = 5; 
+$(function(){
+
+setClearStartDate2('#startDate', '#endDate', dayRang);
+	setClearEndDate2('#startDate', '#endDate', dayRang);
+	$(".J_btn_chaxun").click(function(){
+		doSearchBeforDate2($("#form_search"), $("#errorSearch"), $("#startDate"), $("#endDate"), dayRang);
+	});
+	$(".search_cxlx dd").each(function(index, element) {
+        var jThis = $(this);
+		jThis.click(function(){
+			var id = $.trim(jThis.attr("for"));
+			$(".search_jylx").hide();
+			if(id != undefined || id != "") $("#" + id).show();
+		});
+    });
+	
+	/*
+	
+	*/
+	
+	$(".caozao_xiazai").click(function(){
+		var id = $(this).attr("data-id");
+		var tradeType="$!response.data.tradeType";
+		var tradeId=$(this).attr("data-p");
+		var isNeed = "$!response.data.tradeType";
+		var txnType="$!response.data.txnType";
+		var url="/my/"+txnType+"/"+tradeType+"/"+tradeId+"/singleDownload.htm";
+		
+		if(isNeed == "2"){
+			var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc" style="padding-bottom:10px;">';
+			html += '<table><tr><td style="width: 205px; text-align: right; vertical-align: middle; padding-right: 5px;"><input type="radio" name="bankinfo" class="radio_bankinfo" id="bankinfo_no" value="no" checked></td><td style="width:60px;"><label for="bankinfo_no">不需要</label></td><td style="width: 35px; text-align: right; vertical-align: middle; padding-right: 5px;"><input type="radio" name="bankinfo" class="radio_bankinfo" id="bankinfo_yes" value="yes"></td><td><label for="bankinfo_yes">需要</label></td></tr></table><input type="hidden" id="radio_bankinfo" value="no" />';
+			
+			html += '<div style="padding-top:10px;overflow:hidden;height:0;visibility:hidden;" id="div_pw"><table><tr><td width="180" class="f14 b" style="text-align:right">支付密码：</td><td><div class="pwdiv"><input name="password" type="hidden" id="password" /></div></td></tr><tr><td></td><td><div id="error" class="error h22" style=" margin-top:-2px;"></div></td></tr></table></div>';
+			html += '</div></div>';
+			html += '<div class="div_btn_submit"> <input type="button" value="确 认" class="btn J_btn_qr" id=""><input type="button" class="btn_qx ml30" onclick="closeSW();"></div></div>';
+			
+			showWin('html', html, '', 600, 220, '下载的电子回单需要看到银行卡全信息吗？', '', '');
+
+			var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+			window.pgeCtrl = pgeditor;
+			$(".pwdiv").append(pgeditor.load());
+			pgeditor.pgInitialize();
+			
+			$("body").delegate(".radio_bankinfo", "click", function(){
+				if($(this).val() == "yes"){
+					resetShowWinWH(600, 270);
+					$("#div_pw").css({"height":55,"visibility":"visible"})
+					$("#radio_bankinfo").val("yes");
+				}
+				else{
+					$("#div_pw").css({"height":0,"visibility":"hidden"})
+					resetShowWinWH(600, 220);
+					$("#radio_bankinfo").val("no");
+				}
+			});
+			function _submit(){
+				var btn_submit = $(".J_btn_qr");
+				jQuery.ajax({
+					url:"#springUrl('/checkPassword.htm')",
+					data:{payPassword:$('#password').val()},
+					type:'POST',
+					async:false,
+					dataType: "json",
+					success:function(response){
+						if(response.success) {
+							var str='<form id="hiddenForm" style="display:none"><input type="hidden" name="isNeed" id="isNeed" value="true"  /></from>';
+							$(document.body).append(str);
+							closeSW();
+							$('#hiddenForm').attr("action","${request.contextPath}"+url).submit();
+						} else {
+							$('#error').html("支付密码不正确");
+							btn_submit.attr("disabled", false).removeClass("btn_disabled");
+							return;
+						}
+					},
+					error:function(){
+						btn_submit.attr("disabled", false).removeClass("btn_disabled");
+						$('#error').html(G.sysError);
+						return;
+					}
+				});
+			}
+			$("body").delegate(".J_btn_qr", "click", function(){
+				var btn_submit = $(this);
+				var tipObj = $(".error");
+				tipObj.text("");
+				btn_submit.attr("disabled", true).addClass("btn_disabled");
+				var type = $("#radio_bankinfo").val();
+				if(type == "yes"){
+					var jsonSubmit = {
+						jBtnSubmit:btn_submit,
+						cssClass:"btn_disabled",
+						urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+					};
+					var pgeditors = [
+						{
+							jPwInput:pgeditor,
+							jInput:$("#password"),
+							jTip:tipObj,
+							txtEmpty:"请输入支付密码！"
+						}
+					];
+					checkPgeditor({
+						jsonSubmit:jsonSubmit,
+						pgeditors:pgeditors,
+						callback:function(){
+							_submit();
+						}
+					});
+				}
+				else{
+					var str='<form id="hiddenForm" style="display:none"><input type="hidden" name="isNeed" id="isNeed" value="false"  /></from>';
+					$(document.body).append(str);
+					closeSW();
+					$('#hiddenForm').attr("action","${request.contextPath}"+url).submit();
+				}
+				
+			});
+		}//isNeed
+		else {
+			var str='<form id="hiddenForm" style="display:none"></from>';
+			$(document.body).append(str);
+			$('#hiddenForm').attr("action","${request.contextPath}"+url).submit();
+		}
+	});
+	
+	$(".caozao_xiazai_gs").click(function(event){
+		event.preventDefault();
+		var url = $(this).attr("href");
+		
+		var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc" style="padding-bottom:10px;">';
+		html += '<table><tr><td style="width: 205px; text-align: right; vertical-align: middle; padding-right: 5px;"><input type="radio" name="bankinfo" class="radio_bankinfo" id="bankinfo_no" value="no" checked></td><td style="width:60px;"><label for="bankinfo_no">不需要</label></td><td style="width: 35px; text-align: right; vertical-align: middle; padding-right: 5px;"><input type="radio" name="bankinfo" class="radio_bankinfo" id="bankinfo_yes" value="yes"></td><td><label for="bankinfo_yes">需要</label></td></tr></table><input type="hidden" id="radio_bankinfo" value="no" />';
+		
+		html += '<div style="padding-top:10px;overflow:hidden;height:0;visibility:hidden;" id="div_pw"><table><tr><td width="180" class="f14 b" style="text-align:right">支付密码：</td><td><div class="pwdiv"><input name="password" type="hidden" id="password" /></div></td></tr><tr><td></td><td><div id="error" class="error h22" style=" margin-top:-2px;"></div></td></tr></table></div>';
+		html += '</div></div>';
+		html += '<div class="div_btn_submit"> <input type="button" class="btn" value="确 认" id="btn_qr_gs"><input type="button" class="btn_qx ml30" onclick="closeSW();"></div></div>';
+		
+		html += '<form id="Form2" action="#springUrl('/my/download.htm')">';
+		html += '<input type="hidden" name="txnType" value="$!response.data.txnType"  />';
+		html += '<input type="hidden" name="tradeType" value="$!response.data.tradeType"  />';
+		html += '<input type="hidden" name="downStatus" value="$!response.data.downStatus"  />';
+		html += '<input type="hidden" name="queryStartTime" value="$!response.data.queryStartTime"  />';
+		html += '<input type="hidden" name="queryEndTime" value="$!response.data.queryEndTime"  />';
+		html += '<input type="hidden" name="flag" value="' + $(this).attr("data-flag") + '"  />';
+		html += '<input type="hidden" name="taskDate" value="$!response.data.insertDate"  />';
+		html += '<input type="hidden" name="keyvalue" value="$!response.data.keyvalue"  />';
+		html += '<input type="hidden" name="keyword" value="$!response.data.keyword"  />';
+		html += '<input type="hidden" name="isNeed" id="isNeed" value="false"  />';
+		html += '</form>';
+		
+		showWin('html', html, '', 600, 220, '下载的电子回单需要看到银行卡全信息吗？', '', '');
+
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$(".pwdiv").append(pgeditor.load());
+		pgeditor.pgInitialize();
+		
+		$("body").delegate(".radio_bankinfo", "click", function(){
+			if($(this).val() == "yes"){
+				resetShowWinWH(600, 270);
+				$("#div_pw").css({"height":55,"visibility":"visible"})
+				$("#radio_bankinfo").val("yes");
+				$("#isNeed").val("true");
+			}
+			else{
+				$("#div_pw").css({"height":0,"visibility":"hidden"})
+				resetShowWinWH(600, 220);
+				$("#radio_bankinfo").val("no");
+				$("#isNeed").val("false");
+			}
+		});
+		function _submit2(){
+			var btn_submit = $("#btn_qr_gs");
+			jQuery.ajax({
+				url:"#springUrl('/checkPassword.htm')",
+				data:{payPassword:$('#password').val()},
+				type:'POST',
+				async:false,
+				dataType: "json",
+				success:function(response){
+					if(response.success) {
+						$('#Form2').submit();
+					} else {
+						$('#error').html("支付密码不正确");
+						btn_submit.attr("disabled", false).removeClass("btn_disabled");
+						return;
+					}
+				},
+				error:function(){
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					$('#error').html(G.sysError);
+					return;
+				}
+			});
+		}
+		$("body").delegate("#btn_qr_gs", "click", function(){
+			var btn_submit = $(this);
+			var tipObj = $(".error");
+			tipObj.text("");
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			var type = $("#radio_bankinfo").val();
+			if(type == "yes"){
+				var jsonSubmit = {
+					jBtnSubmit:btn_submit,
+					cssClass:"btn_disabled",
+					urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+				};
+				var pgeditors = [
+					{
+						jPwInput:pgeditor,
+						jInput:$("#password"),
+						jTip:tipObj,
+						txtEmpty:"请输入支付密码！"
+					}
+				];
+				checkPgeditor({
+					jsonSubmit:jsonSubmit,
+					pgeditors:pgeditors,
+					callback:function(){
+						_submit2();
+					}
+				});
+			}
+			else{
+				$('#Form2').submit();
+			}
+		});
+	})//caozao_xiazai_gs
+})
+</script>

@@ -1,0 +1,171 @@
+<!--所有用户所有信息-->
+                     <div class="trade_all">
+                         <div class="tab">
+                               <em class="icon_left"></em>
+                               <em class="icon_right"></em>
+                               <ul class="clearfix">
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/downloadBill.htm')" hidefocus="true">支付流水</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-orderSettle.htm')" hidefocus="true">订单结算</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem cur">
+                                          <s class="yj_l"></s><a href="javascript:toMenuSubmit('/my/all-refundWater.htm')" hidefocus="true">退款流水</a><s class="yj_r"></s><b></b>
+                                      </li>
+                                      <li class="fr">
+                                          <a href="#springUrl('/my/home.htm')" >返回</a><b></b>
+                                      </li>
+
+                               </ul>
+
+                         </div>
+
+
+                         <ul class="select_by_time clearfix">
+                            <li class="fr">
+                                  导出: <a target="_blank" onclick="downloadCsv('/my/downloadToCsv.htm');pclick(this);" id="pclick" ><font color="blue">Csv</font></a><font color="blue" id="btnImg" style="display:none">Csv</font> | <a target="_blank" onclick="downloadExcel('/my/downloadToExcel.htm');pclick1(this);" id="pclick1" ><font color="blue">Excel</font></a><font color="blue" id="btnImg1" style="display:none">Excel</font>
+                            </li>
+                                                       <li>
+
+                                时间：
+                                       <input name="searchStartDate" id="searchStartDate" class="date-picker" type="text" value="$!response.data.startDate" readonly="">
+                                 至
+                                      <input name="searchEndDate" id="searchEndDate" class="date-picker" type="text" value="$!response.data.endDate" readonly="">
+                                        <input id="search" class="btn_h24" type="button" value="搜 索" />
+                            </li>
+                         </ul>
+
+                        <table class="bill_table" >
+                           <colgroup>
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="91px">
+                                    <col width="90px">
+                            </colgroup>
+                           <tr >
+                               <th>钱包交易订单号</th>
+                               <th>商户退单ID</th>
+                               <th>商户订单ID</th>
+                               <th>商品名称</th>
+                               <th>退款金额</th>
+                               <th>退担保金额</th>
+                               <th>退款提交时间 </th>
+                               <th>退款时间</th>
+                               <th>退款状态 </th>
+                            </tr>
+                            #set ($i=1)
+                             #foreach ($!tradeInfo in $!response.data.page.infos)
+                                #if($i%2 != 0)
+                                    #set ($odd_class="time")
+                                #else
+                                    #set ($odd_class="odd")
+                                #end
+                                #set($i=$i+1)
+                                <tr class=$odd_class>
+                                    <td>$!tradeInfo.walletTradeId</td>
+                                    <td>$!tradeInfo.merchantOrderId</td>
+                                    <td>$!tradeInfo.merchantRefundOrderId</td>
+                                    <td>$!tradeInfo.commodityName</td>
+                                    <td class="money ff5f40">$!moneyUtil.getAmount($!tradeInfo.refundAmount)</td>
+                                    <td class="money ff5f40">$!moneyUtil.getAmount($!tradeInfo.refundGuarantAmount)</td>
+                                    <td>$!dateUtil.getNoSecondDateString($!tradeInfo.refundSubmitTime)</td>
+                                    <td>$!dateUtil.getNoSecondDateString($!tradeInfo.refundTime)</td>
+                                    <td>$!tradeInfo.refundState</td>
+                                </tr>
+                            #end
+                           #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+                            <tr>
+                            	<td colspan="10">无数据信息！</td>
+                            </tr>
+                            #end
+
+                         </table>
+                          #parse("common/control/pagePost.vm")
+</div></div></div>
+<form id="menuForm" name="menuForm" action="" method="post">
+</form>
+ <form id="refundForm" name="refundForm" action="/my/all-refundWater.htm" method="post">
+    <input type="hidden" name="startDate" id="startDate" value="$!response.data.startDate">
+    <input type="hidden" name="endDate" id="endDate" value="$!response.data.endDate">
+     <input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.pageInfo.currentPage">
+ </form>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/time.js${WEB_RESOURCE.staticVersion}"></script>
+
+ <script type="text/javascript">
+ $(window).resize(function() {
+	$(".date-picker").datepicker( "hide" );
+	$(".date-picker").blur();
+});
+ $(function(){
+     $('.date-picker').datepicker({
+		  maxDate: new Date()
+		  });
+  });
+ function toQuerySubmit(currentPage){
+        $("#currentPage").val(currentPage);
+        $("#refundForm").submit();
+     }
+ $("#search").click(function(){
+      var star=$("#searchStartDate").val();
+      var end=$("#searchEndDate").val();
+      if(end < star)  {
+      jQuery.dialog({
+				 title: "消息",
+				 lock: true,
+				 content: "输入的截止时间必须大于起始时间！",
+				 height: 110,
+				 width:300,
+				 ok:function(){}
+				 });
+      return;
+   }
+     $("#startDate").val(star);
+     $("#endDate").val(end);
+     $("#currentPage").val(1);
+     $("#refundForm").submit();
+  });
+              function downloadCsv(downloadUrl){
+                        var startDate=$("#searchStartDate").val();
+                        var endDate=$("#searchEndDate").val();
+                        var queryType=3;
+                        if(endDate < startDate)  {
+							jQuery.dialog({
+								 title: "消息",
+								 lock: true,
+								 content: "输入的截止时间必须大于起始时间！",
+								 height: 110,
+								 width:300,
+								 ok:function(){}
+								 });
+                            return;
+                        }
+                        window.location.href=downloadUrl+"?startDate="+startDate+"&endDate="+endDate+"&queryType="+queryType;
+              }
+              function downloadExcel(downloadUrl){
+                        var startDate=$("#searchStartDate").val();
+                        var endDate=$("#searchEndDate").val();
+                        var queryType=3;
+                        if(endDate < startDate)  {
+                           jQuery.dialog({
+								 title: "消息",
+								 lock: true,
+								 content: "输入的截止时间必须大于起始时间！",
+								 height: 110,
+								 width:300,
+								 ok:function(){}
+								 });
+                            return;
+                        }
+                        window.location.href=downloadUrl+"?startDate="+startDate+"&endDate="+endDate+"&queryType="+queryType;
+              }
+   function  toMenuSubmit(adr){
+		  document.menuForm.action=adr;
+		  document.menuForm.submit();
+	  }
+ </script>

@@ -1,0 +1,208 @@
+<div class="wrapbg">
+    <div id="money_cz" class="wrap">
+  ##<div class="page_title"> <div class="fr"><i class="color_66 mt10 dzdzd">查看电子回单</i></div> <h2>代发工资信息</h2></div>
+        <div class="page_title">
+            <div class="title fl">
+                <i class="icon fl"></i>
+                <span class="tt fl">消费撤销信息详情</span>
+            </div>
+        </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>消费撤销信息</h3>
+    </div>
+    <div class="pagebox5">
+	#foreach ($!tradeInfo in $!response.data.page.infos)
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+          <tr >
+            <td class="tab_w">撤销订单号</td>
+            <td class="tab_w2" id="J_tradeVoucherNo1">$!{tradeInfo.tradeVoucherNo}</td>
+            <td class="tab_w">撤销商户订单号</td>
+            <td class="Detail_tab_no tab_w2">$!{tradeInfo.tradeSourceVoucherNo}</td>
+    	  </tr>
+    	  <tr class="cl">
+            <td class="tab_w">已退服务费（元）</td>
+            <td class="tab_w2">$!moneyUtil.getAmount($!tradeInfo.payeeFee)</td>
+            <td class="tab_w">撤销金额（元）</td>
+            <td class="Detail_tab_no tab_w2">$!moneyUtil.getAmount($!tradeInfo.payAmount)</td>
+    	  </tr>
+    	  <tr>
+            <td class="tab_w">完成时间</td>
+            <td class="tab_w2">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtModified) </td>
+            <td class="tab_w">创建时间</td>
+            <td class="Detail_tab_no tab_w2">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtSubmit)</td>
+          </tr>
+    	  <tr class="cl">
+                <td class="tab_w">状态</td>
+                #if($!tradeInfo.status == 100)
+                   <td width="97"><span>待支付</span></td>
+                #elseif($!tradeInfo.status == 101 || $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+                   <td width="97"><span>支付中</span></td>
+                #elseif($!tradeInfo.status == 201)
+                   <td width="97"><span>付款成功</span></td>
+                #elseif($!tradeInfo.status == 301 || $!tradeInfo.status == 401)
+                   <td width="97"><span>交易成功</span></td>
+                #elseif($!tradeInfo.status == 900 || $!tradeInfo.status == 901)
+                   <td width="97"><span>撤销中</span></td>
+                #elseif($!tradeInfo.status == 951)
+                   <td width="97"><span>撤销成功</span></td>
+                #elseif($!tradeInfo.status == 952)
+                   <td width="97"><span>撤销失败</span></td>
+                #elseif($!tradeInfo.status == 999)
+                   <td width="97"><span>交易关闭</span></td>
+                #else
+                   <td width="97"><span>$!tradeInfo.status</span></td>
+        		#end
+    		    <td>操作员</td>
+    		    <td class="Detail_tab_no tab_w2" id="J_operator1"></td>
+               ## <td class="Detail_tab_no tab_w2">$!tradeInfo.tradeMemo</td>
+          </tr>
+    </table>
+	#end
+    </div>
+    <div class="table_div">
+      <h3>订单信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+		#foreach($info in $response.data.list.baseInfoList)
+    <tr>
+		<td class="tab_w" >交易订单号</td>
+		<td class="tab_w2" id="J_tradeVoucherNo2">$!{info.tradeVoucherNo}</td>
+		<td class="tab_w">商户订单号</td>
+		<td class="Detail_tab_no tab_w2">$!{info.serialNumber}</td>
+	</tr>
+	<tr class="cl">
+		<td class="tab_w">创建时间</td>
+		<td class="tab_w2">$!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>
+		<td class="tab_w">交易金额（元）</td>
+		<td class="Detail_tab_no tab_w2">$moneyUtil.getAmount($!info.payAmount)</td>
+	</tr>
+	<tr >
+		<td class="tab_w">原始订单服务费（元）</td>
+		<td class="tab_w2">$moneyUtil.getAmount($!info.payeeFee)</td>##数据暂缺
+		<td class="tab_w">实际金额（元）</td>
+		<td class="Detail_tab_no tab_w2">$moneyUtil.getAmount($!info.orderMoney)</td>
+	</tr>
+	<tr class="cl">
+		<td class="tab_w">支付时间</td>
+		<td class="tab_w2">$!dateUtil.getNewFormatDateString(${info.gmtModified})</td>
+		
+	            #if(${info.orderState} == "100")
+	            #set($tradeStatus="待支付")##待支付
+	            ##set($moneycolor="money")
+	            ##elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+	            ##set($tradeStatus="处理中")
+	            #elseif(${info.orderState} == "201"||${info.orderState} == "301")
+	            #set($tradeStatus="支付成功")##   付款成功=支付成功    交易成功视为支付成功
+	            #elseif(${info.orderState} == "999"||${info.orderState} == "998")
+	            #set($tradeStatus="交易失败")##  交易失败
+	            #elseif($info.orderState == "401")
+	            #set($tradeStatus="交易结束")##交易结束==结算成功
+	            #end
+	            
+    #if($info.memberId == $info.buyerId)
+        #set($plusminus ="-")
+		#set($moneycolor="orange f14 bold")
+    #elseif($info.memberId == $info.sellerId)
+        #set($plusminus ="")
+		#set($moneycolor="green  f14 bold")
+	#end
+		<td class="tab_w">状态</td>
+		<td class="Detail_tab_no tab_w2">$!{tradeStatus}</td>
+	</tr>
+	<tr >
+		<td class="tab_w">操作员</td>
+		<td class="tab_w2" id="J_operator2"></td>##数据暂缺
+		<td class="tab_w"></td>
+		<td class="Detail_tab_no tab_w2"></td>
+	</tr>
+	#end
+	</table>
+    </div>
+    
+    
+   <!-- <div class="table_div">################################
+      <h3>申请信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">申请时间</td>
+        <td class="tab_w2">$!response.data.applyTime</td>
+        <td  class="tab_w">申请操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.operatorName</td>
+      </tr>
+    </table>
+    </div>
+    <div class="table_div">
+      <h3>审核信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">审核时间</td>
+        <td class="tab_w2">$!response.data.gmtModified</td>
+        <td  class="tab_w">审核操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.auditorName</td>
+      </tr>
+      <tr class="cl">
+        <td class="tab_w">审核结果</td>
+		#if($!response.data.status=="1")
+		<td class="tab_w2">待审核</td>
+		#elseif($!response.data.status=="2")
+        <td class="tab_w2">审核通过</td>
+		#elseif($!response.data.status=="3")
+		<td class="tab_w2">审核拒绝</td>
+		#else
+		<td class="tab_w2"></td>
+		#end
+        <td  class="tab_w">审核说明</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.remark</td>
+      </tr>
+    </table>####################################
+    </div>-->
+    
+    
+    <div class="fun_btn relative">
+	<input type="button" value="返 回" class="btn btn-bg" onClick="goBackOrClose();">
+</div>
+  </div>
+</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/JSON2.js"></script>
+<script>
+$(function(){
+	$(".dzdzd").click(function(){
+		var html = '<div style="width:702px; margin:0 auto;"><div style="text-align:right; padding-bottom:5px;"><a href="TransferInformationPrint.html" class="print" target="_blank">打印</a> | <a href="#@">下载</a></div>';
+		html += '<div id="dzdzd_xq"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/dzdzd_xq.gif" alt="电子对账单"></div></div>';
+		showWin('html', html, '', 810, 500, ' ', '', '');
+	});
+})
+
+var token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjg4NjY4MjI0NDUsIm1pZCI6IjAwMSIsInVpZCI6IjAwMSJ9.sPN9IxlDf5ex9RQuA17BRqEODLNPngLk7FQ7C3dkODlhJI175HrD_00yipR2NOllXpaB8R5Emd6-v18DacjTNQ";
+var dataPost = {};
+dataPost.service = "order";
+dataPost.method = "Orders.QueryPayByFlow";
+dataPost.request = {"flow_no":$("#J_tradeVoucherNo1").text(),"op_info":{"partner_id":"ANDROID_DEBUG","token":token}};
+
+tools.ajaxSubmit({
+	"url":"#springUrl('/orderAgent.htm')",
+	"data":dataPost,
+	"suc_suc":function(response){
+		if(response.err.err_code == 1)
+     		$("#J_operator1").text(response.record.operator_account);
+	}
+});
+
+dataPost.request.flow_no = $("#J_tradeVoucherNo2").text();
+tools.ajaxSubmit({
+	"url":"#springUrl('/orderAgent.htm')",
+	"data":dataPost,
+	"suc_suc":function(response){
+		if(response.err.err_code == 1)
+     		$("#J_operator2").text(response.record.operator_account);
+	}
+});
+
+</script>

@@ -1,0 +1,245 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/lhgcalendar.css" rel="stylesheet" type="text/css">
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">收支汇总</span>
+        </div>
+    </div>
+	<div class="pagebox">
+    <form id="form_search">
+        <div class="search_row mt10">
+        	<label class="label1 fl">起止日期：</label>
+            <div class="data_div mr16 fl"><input class="datapick" type="text" value="" id="startDate" readonly="readonly" ><span>至</span><input class="datapick" type="text" value="" id="endDate" readonly="readonly" ></div>
+            <ul class="data_range fl"><li class="data_range_week">一周内</li><li class="data_range_month">一个月内</li><li class="data_range_quarter">三个月内</li><li class="data_range_year">一年内</li><input type="hidden" class="data_range_value"></ul>
+            <input type="button" value="查 询" class="btn J_btn_chaxun ml30">
+        </div>
+        <div class="tools mt20 mb5"><div class="fl f14 pl30 b">2014-06-02至2014-06-08收支汇总　<em class="f12">单位：元</em></div><a href="#" class="tools_dc gray1 fr">导出下载</a></div>
+        
+        <div class="table_div">
+        <table border="0" cellspacing="0" cellpadding="0" class="table1" style="width:100%;">
+          <tr>
+            <th width="70">时间</th>
+            <th width="85">期初余额</th>
+            <th width="85">网关交易</th>
+            <th width="85">转账</th>
+            <th width="85">提现</th>
+            <th width="85">充值</th>
+            <th width="85">退款</th>
+            <th width="85">增值业务</th>
+            <th width="85">手续费</th>
+            <th width="85">退费</th>
+            <th width="85">退票</th>
+            <th width="85">期末余额</th>
+          </tr>
+        </table>
+        </div>
+        <table border="0" cellspacing="0" cellpadding="0" class="table1 table1_1" style="width:100%;">
+         <tr class="table1_top">                                              
+           <td width="70">汇总</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+           <td width="85">222222222.00</td>
+        </tr>
+        <tr>                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+        </tr>
+        <tr class="on">                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+        </tr>
+        <tr>                                              
+          <td>2014-6-16</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+           <td>222222222.00</td>
+        </tr>
+        <tr class="on">                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+          </tr>
+        <tr>                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+          </tr>
+        <tr class="on">                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+          </tr>
+        <tr>                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+          </tr>
+        <tr class="on">                                              
+          <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+          </tr>
+        <tr>                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+          </tr>
+        <tr class="on">                                              
+           <td>2014-6-16</td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+           <td><span class="orange">222222222.00</span></td>
+           <td><span class="green">222222222.00</span></td>
+          </tr>
+        <tr class="nbb">
+           <td colspan="12">
+			 <div class="nav_page mt10"> #parse("common/control/paginator.vm")</div>
+           </td>
+        </tr>
+        </table>
+
+        
+    </form>
+    </div>
+    
+</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcore.min.js" type="text/javascript"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcalendar.min.js" type="text/javascript"></script>
+<script>
+var dayRang = 367;
+function doSearch() {
+	var beginDateObj = $('#startDate');
+	var endDateObj = $('#endDate');
+	var beginDateValue = beginDateObj.val();
+	var endDateValue = endDateObj.val();
+	if (beginDateValue != "" || endDateValue != "") {
+		if (beginDateValue == "") { alert("开始时间为空！"); return false; }
+		else if (endDateValue == "") { alert("结束时间为空！"); return false; }
+		else {
+			if (compareDate(beginDateValue, endDateValue) < 0) {
+				alert("起始时间不能大于结束时间！");
+				return false;
+			}
+			else {
+				var maxdate = GetDateRangStr(((beginDateValue).split(" "))[0], dayRang-1);
+				maxdate = getDateValue(maxdate);
+				var enddate = getDateValue(((endDateValue).split(" "))[0]);
+				if (compareDate(enddate, maxdate) < 0) {
+					alert("请选择一年内您要查询的记录！");
+					return false;
+				}
+			}
+		}
+	}
+	$("#form_search").submit();
+}
+
+$(function(){
+	setClearStartDate('#startDate', '#endDate', dayRang);
+	setClearEndDate('#startDate', '#endDate', dayRang);
+	
+	$(".J_btn_chaxun").click(function(){
+		doSearch();
+	});
+})
+</script>

@@ -1,0 +1,115 @@
+#set($page = ${sessionPage.page})
+<div class="nav_page mt10">
+	<a href="javascript:void(0)" onclick="goToPage(1)">首页</a><a id="prevPage" href="javascript:void(0)">上一页</a>
+	<i class="pageInfo">第<em id="currentPage">$!{page.currentPage}</em>页，共$!{page.totalPage}页</i><a id="nextPage" href="javascript:void(0)">下一页</a>
+	<a href="javascript:void(0)" onclick="goToPage(${page.totalPage})">尾页</a><span class="ml10">转到</span><input type="text" class="input_go" /><span>页</span>
+	<input type="button" class="btn_go" />
+</div>
+<script type="text/javascript">
+$(function() {
+	//addEvent();
+	
+
+    	var currentPage = parseInt($("#currentPage").text());
+    	var pageCount = $!{page.totalPage};
+		
+		if(pageCount == 0){
+			pageCount=1;
+		}
+		if(!currentPage ){
+			currentPage = 1;
+		}
+		
+		if(currentPage!=1){
+		
+		}else{
+			$("#prevPage").css({"color":"gray","cursor":" default"});
+		}
+		
+		if(currentPage != pageCount){
+		
+		}else{
+			$("#nextPage").css({"color":"gray","cursor":" default"});
+		}
+		
+		<!--上一页-->
+		$("#prevPage").live("click",function(){
+			currentPage = parseInt($("#currentPage").text());
+			if(currentPage!=1){
+				return goToPage(currentPage-1);
+			}
+		});
+		
+		<!--下一页 -->
+		$("#nextPage").live("click",function(){
+			currentPage = parseInt($("#currentPage").text());
+			if(currentPage != pageCount){
+				return goToPage(parseInt(currentPage)+1);
+			}
+		});
+		
+		
+		$(".btn_go").live("click",function(){
+			var page = $(".input_go").val();	
+			if(parseInt(page)>parseInt(pageCount)){
+				return goToPage(pageCount);
+			}
+				return goToPage(page);
+			});
+		
+	
+	
+});
+
+function addEvent() {
+	$('.btn_go').click(function() {
+		goToPage($('.input_go').val());
+	});
+}
+
+function goToPage(curPage) {
+	$.ajax({
+		url: '$!{sessionPageUrl}',
+		type: 'post',
+		data: 'currentPage=' + curPage,
+		dataType: "json",
+		success: function(result) {
+			if (result && result.success && result.messageObj) {
+				var page = result.messageObj.page;
+				var pageHtml = '<a href="javascript:void(0)" onclick="goToPage(1)">首页</a><a id="prevPage" href="javascript:void(0)">上一页</a>'
+                	+ '<i class="pageInfo">第<em id="currentPage">' + page.currentPage + '</em>页，共' + page.totalPage + '页</i><a id="nextPage" href="javascript:void(0)">下一页</a>'
+                	+ '<a href="javascript:void(0)" onclick="goToPage(' + page.totalPage + ')">尾页</a><span class="ml10">转到</span><input type="text" class="input_go" /><span>页</span>'
+                	+ '<input type="button" class="btn_go" />';
+				
+				$('.nav_page').html(pageHtml);
+				
+				var currentPage = parseInt($("#currentPage").text());
+            	var pageCount = $!{page.totalPage};
+        		
+        		if(pageCount == 0){
+        			pageCount=1;
+        		}
+        		if(!currentPage ){
+        			currentPage = 1;
+        		}
+        		
+        		if(currentPage!=1){
+        		
+        		}else{
+        			$("#prevPage").css({"color":"gray","cursor":" default"});
+        		}
+        		
+        		if(currentPage != pageCount){
+        		
+        		}else{
+        			$("#nextPage").css({"color":"gray","cursor":" default"});
+        		}
+				
+				//addEvent();
+				showPageDataList(result.messageObj.dataList);
+			}
+		}
+	});
+}
+</script>
+ 

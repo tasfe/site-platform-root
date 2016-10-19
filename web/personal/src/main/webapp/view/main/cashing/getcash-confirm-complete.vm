@@ -1,0 +1,64 @@
+<div id="money_tx" class="wrap">
+	<div class="page_title">
+    	 <div class="fr page_title_right"><a href="#springUrl('/my/all-cach1.htm?link=0203')">提现记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_6_0.html&4,0')">提现问题</a></div>
+    	<h2>提现</h2>
+    </div>
+    <div class="pagebox pagebox1">
+    	<div class="tx_step step step_3"><i></i><span class="s1">提现信息</span><span class="s2">提现审核</span><span class="s3">完成提现</span></div>
+        <form class="cz_form_1">
+            <div class="boxbg1">
+                
+                <table cellpadding="0" cellspacing="0" border="0"  class="sqinfo">
+                	<tr>
+                    	<td class="h3 p24"><i class="txsh_wq"></i></td>
+                        <td class="p24"><span class="f16 b">您的提现请求已提交！</span></td>
+                        <!--<td class="p24"><span class="f16 b">提现操作已完成</span><br><span class="color_4c f12">请在2个工作日之后查看您的银行卡余额是否到帐</span></td>-->
+                    </tr>
+                	<tr>
+                    	<td class="h3">提现金额：</td>
+                        <td><span class="color_f6 b">$!{cashingForm.money}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现账户名：</td>
+                        <td>$!{memberName}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现账户：</td>
+                        <td>$!{bankAcctInfo.bankName}  $!{bankAcctInfo.bankAccountNumMask}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现类型：</td>
+                        <td>$!{cashingForm.typeDesc}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">服务费：</td>
+                        <td><span class="b">$!{cashingForm.serviceCharge}</span>元</td>
+                    </tr>
+                
+                </table>
+            </div>
+        </form>
+        <div class="faq_relevant">
+        	<h4>提现问题：</h4>
+            <dl>
+            	<dt>什么是提现？</dt>
+                <dd>答：提现是指将永达互联网金融账户中的可用余额转到提现的银行账户上的操作。</dd>
+            </dl>
+            <dl>
+            	<dt>提现失败怎么办？</dt>
+                <dd>答：提现成功，请用户联系银行查询是否已经到账，若未到账，不排除后续可能会退票，大概需要7个工作日，款项退回到您的永达互联网金融账户中。</dd>
+            </dl>
+			<dl>
+            	<dt>哪些情况下不能进行提现？</dt>
+                <dd>答：a) 会员账户被冻结，无法提现；<br>
+b) 会员账户被加入提现黑名单；<br>
+c) 会员账户后台已注销；<br>
+d) 会员账户未实名认证；<br>
+e) 会员账户可用余额不足；<br>
+f) 当天提现次数、金额超限；
+</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+        </div>
+    </div>
+</div>

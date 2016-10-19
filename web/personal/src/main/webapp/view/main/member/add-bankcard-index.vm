@@ -1,0 +1,369 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2>添加银行卡</h2>
+      </div>
+    <div class="pagebox relative">
+    	<div class="assets_bankcardlist" style=" height:500px; padding-top:58px; width:100%;">
+			<input type="hidden" id="membertType" name="membertType" value="$response.data.membertType">
+			<input type="hidden" id="isVerify" name="isVerify" value="$response.data.isVerify">
+			<table cellpadding="0" cellspacing="0" border="0" class="sqinfo" width="100%">
+				<tr>
+                	<td width="450" class="tcright">银行账户类型：</td>
+					#if($response.data.membertType == "1")
+                    <td><div class="select_div"><select id="cardAttr">
+							<option value="1" selected>个人</option>
+					</div></td>
+					#else
+					<td><div class="select_div"><select id="cardAttr">
+							#if($response.data.isVerify == "true")
+							<option value="1">个人</option>
+							#end
+							<option value="0" selected>企业</option></select>
+					</div></td>
+					#end
+					<input type="hidden" id="membertType" name="membertType" value="$response.data.membertType">
+					<input type="hidden" id="isVerify" name="isVerify" value="$response.data.isVerify">
+						
+                </tr>
+				#if($response.data.membertType == "1")
+            	<tr>
+                	<td width="450" class="tcright">银行账号名：</td>
+                    <td><span class="f12" >$!response.data.realName</span></td>
+					<input type="hidden" id="realName" name="realName" value="$response.data.realName">
+                </tr>
+				<tr>
+                	<td width="450" class="tcright">身份证号：</td>
+                    <td><span class="f12" >$!response.data.authNo</span></td>
+                </tr>
+				#else
+				<tr id="personDiv" style="display:none;">
+                	<td width="450" class="tcright">银行账号名：</td>
+                    <td><span class="f12">$!response.data.legalPerson</span></td>
+                </tr>
+				<tr id="personDiv2" style="display:none;">
+                	<td width="450" class="tcright">身份证号：</td>
+                    <td><span class="f12">$!response.data.authNo</span></td>
+                </tr>
+				<tr id="compDiv" style="display:none;">
+                	<td width="450" class="tcright">银行账号名：</td>
+					<td><span class="f12">$!response.data.user.memberName</span></td>
+                </tr>
+				<tr id="compDiv2" style="display:none;">
+                	<td width="450" class="tcright">企业证件号：</td>
+					<td><span class="f12">$!response.data.authNo</span></td>
+                </tr>
+				<input type="hidden" id="legalPerson" name="legalPerson" value="$response.data.legalPerson">
+				<input type="hidden" id="realName" name="realName" value="$response.data.user.memberName">
+				#end
+                <tr>
+                	<td class="tcright">开户银行：</td>
+                    <td><div class="select_div"><select name="bankSeq" id="accountbank"><option value="-1">--请选择--</option></select></div></td>
+                </tr>
+                <tr>
+                	<td class="tcright">开户银行所在城市：</td>
+                    <td><div class="select_div" style="margin-right:10px;"><select name="bankSeq" id="accountProvince" ><option value="-1">--请选择省份--</option></select></div><div class="select_div"><select name="bankSeq" id="accountcity"><option value="-1">--请选择城市--</option></select></div></td>
+                </tr>
+                <tr>
+                	<td class="tcright"><span class="red">*</span> 开户银行支行名称：</td>
+                    <td><div style="height:28px;"><select name="branchname" id="branchname" class="chzn-select w232" style="width:250px;"><option value="-1">--请选择--</option></select></div></td>
+                </tr>
+                <tr>
+                	<td class="tcright"><span class="red">*</span> <span id="gqlable">银行卡号码</span>：</td>
+                    <td><input type="text"  class="inputtext w232" id="bankaccount" name="bankaccount" maxlength="26" ></td>
+                </tr>
+                <tr>
+                	<td class="tcright"></td>
+                    <td><div class="error h22"></div></td>
+                </tr>
+            	
+            </table>
+            <div class="div_btn_submit" style="padding-top:0;"><input type="button" class="btn_qd btn_sumbit"></div>
+        </div>
+    	
+    </div>
+
+</div>
+<script>
+$(function(){
+
+	if($("#membertType").val() != "1"){
+		$("#compDiv").show();
+		$("#personDiv").hide();
+		$("#compDiv2").show();
+		$("#personDiv2").hide();
+	}
+
+	$("#cardAttr").change(function(){
+		$(".error").text("");
+		
+		if($("#membertType").val() != "1"){
+    		switch($(this).val()){
+    			case "0": 
+    			$("#compDiv").show();$("#personDiv").hide();$("#compDiv2").show();$("#personDiv2").hide();break;
+    			case "1": 
+    			$("#compDiv").hide();$("#personDiv").show();$("#compDiv2").hide();$("#personDiv2").show();$("#realName").val($("#legalPerson").val());break;
+    			default: break;
+    		}
+		}
+		switch($(this).val()){
+			case "0": //企业
+			$("#gqlable").html("银行卡号码");break;
+			case "1": //个人
+			$("#gqlable").html("银行卡号码");break;
+			default: break;
+		}
+	});
+	
+	switch($("#cardAttr").val()){
+		case "0": //企业
+		$("#gqlable").html("银行卡号码");break;
+		case "1": //个人
+		$("#gqlable").html("银行卡号码");break;
+		default: break;
+	}
+
+	$("#accountbank").change(function(){
+    	// 初始化所有省
+    	$("#accountProvince").val("-1");
+		//初始化城市
+		$("#accountcity").html('<option value="-1">--请选择城市--</option>');
+		$("#branchname").html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+	})
+	
+
+	initCorpBanks();
+	// 显示银行列表
+    function initCorpBanks() {
+    	jQuery.ajax({
+        	type: "get",
+    		url: "${request.contextPath}/contacts/queryCorpBanks.htm",
+    		data: "",
+    		dataType: "JSON",
+    		success: function(result) {
+    			if (result && result.success) {
+    				var bankArr = result.messageObj;
+    				var optHtml = '';
+    				var len = bankArr.length;
+    				for (var i=0; i<len; i++) {
+    					optHtml += '<option value="' + bankArr[i].bankId + '">' + bankArr[i].bankName + '</option>'
+    				}
+    				
+    				var jBank = $('#accountbank');
+    				jBank.append(optHtml);
+    				selOneOption(jBank, 'text', $("#accountbank").val());
+    			}
+    		}
+        });
+    }
+	
+	// 选中指定的选项
+    function selOneOption(jSelectObj, type, value) {
+    	if(!jSelectObj || !type || !value) {
+    		return;
+    	}
+    	
+    	jSelectObj.find('option').each(function() {
+    		var jOpt = $(this);
+    		if (type == 'text') {
+    			if (jOpt.text() == value) {
+    				jOpt.attr("selected",true);
+    			}
+    		} else {
+    			if (jOpt.val() == value) {
+    				jOpt.attr("selected",true);
+    			}
+    		}
+    	});
+    }
+	initProvinces();
+	// 显示省份列表
+    var provArr = null;
+    function initProvinces() {
+    	jQuery.ajax({
+        	type: "get",
+    		url: "${request.contextPath}/contacts/queryAllProvCities.htm",
+    		data: "",
+    		dataType: "JSON",
+    		success: function(result) {
+    			if (result && result.success) {
+    				// 省份
+    				provArr = result.messageObj;
+    				var jprov = $('#accountProvince');
+    				jprov.html('<option value="-1">--请选择省份--</option>');
+    				var provOptHtml = '';
+    				var len = provArr.length;
+    				for (var i=0; i<len; i++) {
+    					provOptHtml += '<option value="' + provArr[i].provId + '">' + provArr[i].provShortName + '</option>'
+    				}
+    				jprov.append(provOptHtml).bind('change', function() {
+    					initCities($(this).val());
+						$('#branchname').html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+    				});
+    			}
+    		}
+        });
+    }
+	
+	// 根据省份初始化该省下的市
+    function initCities(provId) {
+    	var len = provArr.length;
+    	for (var i=0; i<len; i++) {
+    		if (provId == provArr[i].provId) {
+				showCities(provArr[i].cityInfos);	
+    		}
+    	}
+		
+    }
+	// 显示城市
+    function showCities(cityInfos) {
+		
+    	var jCity = $('#accountcity');
+    	jCity.html('<option value="-1">--请选择城市--</option>');
+    	
+    	var len = cityInfos.length;
+    	var cityOptHtml = '';
+    	for (var i=0; i<len; i++) {
+    		cityOptHtml += '<option value="' + cityInfos[i].cityId + '">' + cityInfos[i].cityShortName + '</option>'
+    	}
+    	jCity.append(cityOptHtml);
+    }
+	$('#accountcity').bind('change', function() {
+		if($("#accountbank").val()=="-1"){return false;}
+		initBranches($('#accountbank').val(), $(this).val());
+	});
+	
+	// 初始化某市某某银行的支行
+    function initBranches( bankCode, cityId) {
+    	jQuery.ajax({
+        	type: "get",
+    		url: "${request.contextPath}/contacts/queryBranches.htm",
+    		data: "cityId=" + cityId + "&bankCode=" + bankCode,
+    		dataType: "JSON",
+    		success: function(result) {
+    			if (result && result.success) {
+    				var jBranch = $('#branchname');
+    				var branchArr = result.messageObj;
+    				jBranch.html('<option value="-1">--请选择支行--</option>');
+    				
+    				var optHtml = '';
+    				var len = branchArr.length;
+    				for (var i=0; i<len; i++) {
+						optHtml += '<option value="' + branchArr[i].branchId + '" for1="' + branchArr[i].branchName + '" for2="' + branchArr[i].branchNo + '">' + branchArr[i].branchShortName + '</option>'
+    				}
+    				jBranch.append(optHtml);
+    				selOneOption(jBranch, 'text', $("#branchname").val());
+    				jBranch.trigger("liszt:updated");
+    			}
+    		}
+        });
+    }
+	
+	$("#branchname").chosen();
+
+
+	$("#branchname").blur(function(){
+		checkMust($(this), $(".error"), "请输入您的开户银行支行名称！");
+	});
+	
+	//$("#cardAttr").val() 个人 ，企业 
+	$("#bankaccount").blur(function(){
+		var msg = "";
+		switch($("#cardAttr").val()){
+			case "0": //企业
+			msg = "银行帐户信息！"; break;
+			case "1": //个人
+			msg = "银行卡号码！"; break;
+			default: break;
+		}
+		var flag = checkMust($(this), $(".error"), "请输入"+msg);
+		if(flag){
+			if(!RegExp(regexEnum.bankcard).test($(this).val())){ $(".error").text("请输入8-26位数字组成的"+msg);}
+		}
+	});
+	
+	$(".btn_qd").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qd_disabled");
+		$(".error").text("");
+		
+		thisObj = $("#accountbank");
+		var value = thisObj.val();
+		if(value == "-1" || value == ""){
+			$(".error").text("请选择您的开户银行！");
+			btn_submit.attr("disabled", false).removeClass("btn_qd_disabled"); return false;
+		}
+		
+		thisObj = $("#accountProvince");
+		value = thisObj.val();
+		if(value == "-1" || value == ""){
+			$(".error").text("请选择您开户银行所在地区！");
+			btn_submit.attr("disabled", false).removeClass("btn_qd_disabled"); return false;
+		}
+		
+		thisObj = $("#accountcity");
+		value = thisObj.val();
+		if(value == "-1" || value == ""){
+			$(".error").text("请选择您开户银行所在地区！");
+			btn_submit.attr("disabled", false).removeClass("btn_qd_disabled"); return false;
+		}
+		
+		thisObj = $("#branchname");
+		value = thisObj.val();
+		if(value == "-1" || value == ""){
+			$(".error").text("请输入您的开户银行支行名称！");
+			btn_submit.attr("disabled", false).removeClass("btn_qd_disabled"); return false;
+		}
+		
+		var msg = "";
+		switch($("#cardAttr").val()){
+			case "0": //企业
+			msg = "银行帐户信息！"; break;
+			case "1": //个人
+			msg = "银行卡号码！"; break;
+			default: break;
+		}
+		thisObj = $("#bankaccount");
+		flag = checkMust(thisObj, $(".error"), "请输入"+msg);
+		if(!flag) {
+    		btn_submit.attr("disabled", false).removeClass("btn_qd_disabled"); 
+    		return false; 
+		}
+		if(!RegExp(regexEnum.bankcard).test(thisObj.val())) { 
+			$(".error").text("请输入8-26位数字组成的"+msg);
+			btn_submit.attr("disabled", false).removeClass("btn_qd_disabled");
+			return false; 
+		}
+		
+		var province = $('#accountProvince option:selected').text();
+		var city = $('#accountcity option:selected').text();
+		var bankCode = $('#accountbank option:selected').val();
+		var bankName = $('#accountbank option:selected').text();
+		var branchname = $('#branchname option:selected').attr("for1");
+		var branchNo = $('#branchname option:selected').attr("for2");
+		var shortName = $('#branchname option:selected').text();
+		var cardAttr = $('#cardAttr option:selected').val();
+		
+		jQuery.ajax({
+        	type: "post",
+    		url: "${request.contextPath}/my/addBankCard.htm",
+    		dataType: "json",
+    		data: {realName:$("#realName").val(),branchShortName:shortName,bankAccountNum:$("#bankaccount").val(),
+			bankCode:bankCode,bankName:bankName,province:province,city:city,branchName:branchname,branchNo:branchNo,cardAttribute:cardAttr},
+    		success: function(result){
+    			if (result.success) {
+    				window.location.href = '${request.contextPath}/my/accountInfo.htm';
+    			}else{
+					$(".error").html(result.message);
+					btn_submit.attr("disabled", false).removeClass("btn_qd_disabled");	
+				}
+    		},
+    		error: function(){
+    			$(".error").html(G.sysError);
+    			btn_submit.attr("disabled", false).removeClass("btn_qd_disabled");
+    		}
+        });
+	})
+})
+</script>

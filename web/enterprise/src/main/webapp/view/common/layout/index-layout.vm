@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>永达商户钱包</title>
+	<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/index.css" rel="stylesheet" type="text/css">
+  </head>
+<body>
+  #parse("/common/control/header-nologin-index.vm")
+
+  $screen_content
+
+  #parse("/common/control/footer-index.vm")
+  <!--<script defer src="https://service.udcredit.com:10000/sdk/device-fingerprint/web?partnerCode=201601141404&appKey=wIqeiVOn6oxloDvzbD3X"></script>-->
+</body>
+</html>

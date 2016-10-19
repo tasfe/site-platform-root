@@ -1,0 +1,79 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>登陆密码找回</h2></div>
+     
+
+     <div class="safetyMain">
+     	  <form id="form" action="${request.contextPath}/my/refind/loginPwd/checkTelMsgCode.htm" method="POST">
+			<input id="membertype" name="membertype" type="hidden" value="$!{membertype}">
+          <div class="loginCenter">
+                   
+                   
+               		<div class="cz_step step step_1" style="margin-left:-150px;"><i></i><span class="s1">验证身份</span><span class="s2" style="left:394px;">重置登录密码</span><span class="s3" style="left:653px;">重置成功</span></div>  
+                 
+                     <div class="login_limit hg40">
+                      <span class="f14 limitLeft">账户名：</span><span class="f14  color_f60">$!personMember.loginName</span>
+                   </div>                 
+                   
+                   <div class="login_limit">
+                       <label><span class="f14 limitLeft">手机校验码：</span>
+                         <input type="text" name="phoneVerifyCode" class="inputtext w80" value="" id="sjyzm">
+                         <input  id="send_msg" class="btn_mfhq ml10" type="button" value="">
+                       </label>
+                       <label class="ml5"></label>
+                       <div class="mainTips ml160 error">$!errorMsg</div>
+                    </div>
+                   
+                   <div class="loginAmendBtn" style="padding-left:181px;">
+					<input class="btn_qr btn_submit" type="button" value=""></div>
+               
+               
+          </div>
+          </form>
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+
+    
+		
+	$(".btn_mfhq").click(function(){
+		$(".error").text("");
+		countDown($(this),60,"");
+		jQuery.ajax({
+                type: 'POST',
+                url: "#springUrl('/my/refind/loginPwd/ajaxSendSms.htm')" ,
+    			data: "membertype="+$("#membertype").val(),
+				dataType: "json",
+                success: function(response) {
+                    if(response.success) {
+        				$(".error").text("验证码已发送");
+                    } else {
+                        $(".error").text("若长时间未收到验证码，请联系客服 400-611-0909");
+                    }
+                },
+				error:function(){
+					 $(".error").text(G.sysError);
+				}
+                
+            });
+			
+	});
+	
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		
+		$("form").submit();
+	});
+})
+</script>
+

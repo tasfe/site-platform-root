@@ -1,0 +1,32 @@
+#set($page_title = '操作错误')
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">登录</span>
+		</div>
+	</div>
+    <div class="pagebox pagebox1" style=" height:286px; padding-top:42px;">
+    	<div style="width:894px; height:136px; line-height:136px; background:#F7F8F8; text-align:center; margin-bottom:54px; font-size:16px; font-weight:bold;">当前操作员已登录!</div>
+        <div style="text-align:center;"><input type="button" value="强制登录" class="btn" style="margin-right:40px;" onClick="forceLogin()"><input type="button" value="取消登录" class="btn btn-bg" onClick="window.location.href='/my/home.htm'"></div>
+    </div>
+</div>
+</div>
+<!--<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.cookie.js"></script>-->
+<script type="text/javascript">
+	function forceLogin() {
+		jQuery.ajax({
+			url:"#springUrl('/login/forceLogin.htm')",
+			type:'post',
+			dataType:'json',
+			data:'',
+			success:function(data, textStatus, jqXHR){
+					window.location.href = data.redirect;
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				return false;
+			}
+		});
+	}
+</script>

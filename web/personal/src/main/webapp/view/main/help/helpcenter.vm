@@ -1,0 +1,146 @@
+
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/helpcenter.css" rel="stylesheet" type="text/css">
+<div class="wrap">
+  <div class="page_title">
+    <h2></h2>
+  </div>
+  <div class="helpcenter_nav">
+    <ul>
+      <li><a href="#springUrl('/help/helpcenter.htm')" class="cur">帮助中心首页</a></li>
+     <li><a href="javascript:" style="cursor: default;">功能演示</a></li>
+      <li><a href="#springUrl('/help/faq.htm')">常见问题</a></li>
+      <li><a href="#springUrl('/help/self.htm')">自助服务</a></li>
+    </ul>
+  </div>
+  <div class="mt30 ">
+    <div class="helpleft">
+      <div class="helpleftnav">
+        <div class="helpleftnav_top"></div>
+        <div class="helpleftnav_cont"> 
+          <h3><a href="#springUrl('/help/self.htm')">更多</a>常用自助服务</h3>
+            <ul class="ul1">
+                <li><a href="#springUrl('/my/refind/loginPwd/index.htm')">找回登录密码</a></li>
+                <li><a href="#springUrl('/my/go-get-paypasswd-index.htm')">找回支付密码</a></li>
+                <li><a href="#springUrl('/register/main.htm')">注册</a></li>
+                <li><a href="#springUrl('/my/go-reset-email.htm')">修改邮箱</a></li>
+                <li><a href="#springUrl('/my/go-reset-mobilephone.htm')">修改手机绑定</a></li>
+                <li><a href="#springUrl('/register/main.htm')">激活账户</a></li>
+                ##<li><a href="#springUrl('/softcertActivate/step1.htm')">申请数字证书</a></li>
+                ##<li><a href="#springUrl('/softcertActivate/removeAllCert.htm')">取消数字证书</a></li>
+                ##<li><a href="#springUrl('/hardcertActivate/step1.htm')">激活快捷盾</a></li>
+                ##<li class="nob"><a href="#springUrl('/hardcertUnbind/step1.htm')">解绑快捷盾</a></li>
+            </ul>
+        </div>
+        <div class="helpleftnav_bot"></div>
+      </div>
+      <!-- helpleftnav  -->
+      <div class="fl" style="margin-top:20px;"><a href="javascript:" style="cursor: default;"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/helpcenter/ys.gif"></a></div>
+    </div>
+    <!-- helpleft -->
+    
+    <div class="helpcont">
+    
+    
+      <div class="helpbox">
+        <h3 class="helpboxh3">各类常见自助服务</h3>
+        <ul class="methodslist">
+          <li> <img src="${WEB_RESOURCE.staticAddress}wallet/common/images/helpcenter/icon1.gif">
+            <p class="f14 b">在线客服</p>
+            <p class="p2">实时QQ聊天<br>
+              只需QQ登录状态，<br>
+              直接交谈 </p>
+            <a href="http://crm2.qq.com/page/portalpage/wpa.php?uin=4006110909&aty=0&a=0&curl=&ty=1" target="_blank" class="btn_ms">马上联系</a> </li>
+          <li> <img src="${WEB_RESOURCE.staticAddress}wallet/common/images/helpcenter/icon2.gif">
+            <p class="f14 b">邮件客服</p>
+            <p class="p2">提出您的意见，<br>
+              我们会做的更好！ </p>
+            <a href="#springUrl('/customservice/index.htm')" target="_blank" class="btn_ms" id="sendemail">发送邮件</a> </li>
+          <li> <img src="${WEB_RESOURCE.staticAddress}wallet/common/images/helpcenter/icon3.gif">
+            <p class="f14 b">电话客服</p>
+            <p class="p2">7*24小时<br>
+              客服热线：400-611-0909 </p>
+          </li>
+          <li class="nob"> <img src="${WEB_RESOURCE.staticAddress}wallet/common/images/helpcenter/icon4_disable.gif">
+            <p class="f14 b" style="color:#a8a8a8;">客户投诉</p>
+            <p class="p2" style="color:#c2c2c2;">提出您的意见，<br>
+              我们会做的更好！ </p>
+            <a href="javascript:" class="btn_ms btn_ms_diabled" id="sendlitig">提交投诉</a> 
+          </li>
+        </ul>
+      </div>
+      <!--helpbox  -->
+      <div class="helpbox">
+        <h3 class="helpboxh3">
+        	 各类常见问题
+          <ul class="helpclasslist">
+            <li><a href="javascript:void(0)" class="cur">账户类</a></li>
+            <li><a href="javascript:void(0)">操作类</a></li>
+            <li><a href="javascript:void(0)">付款类</a></li>
+            <li><a href="javascript:void(0)">安全类</a></li>
+            <li><a href="#springUrl('/help/faq.htm')">更多</a></li>
+          </ul>
+         
+       	</h3>
+        <style>
+		.helpclasstab{ height:120px;}
+		</style>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_1_1.html&0,0">·注册？</a></li>
+            <li><a href="faq.htm?=FAQ_9_1.html&7,0">·实名认证？</a></li>
+            <li><a href="faq.htm?=FAQ_2_1.html&1,0">·登录？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_7_2_0.html&5,0">·如何添加联系人？</a></li>
+            <li><a href="faq.htm?=FAQ_7_3_1.html&5,1">·如何添加银行卡？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_4_4.html&2,0">·如何充值？</a></li>
+            <li><a href="faq.htm?=FAQ_5_7.html&3,0">·如何转账？</a></li>
+            <li><a href="faq.htm?=FAQ_6_1.html&4,0">·如何提现？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="faq.htm?=FAQ_9_2_1.html&7,1">·修改登录密码？</a></li>
+            <li><a href="faq.htm?=FAQ_9_2_2.html&7,1">·找回登录密码？</a></li>
+            <li><a href="faq.htm?=FAQ_9_4.html&7,2">·修改支付密码？</a></li>
+            <li><a href="faq.htm?=FAQ_9_5.html&7,2">·找回支付密码？</a></li>
+            <li><a href="faq.htm?=FAQ_9_6_1.html&7,3">·如何安装数字证书？</a></li>
+            <li><a href="faq.htm?=FAQ_9_6_4.html&7,3">·如何卸载数字证书？</a></li>
+            <li><a href="faq.htm?=FAQ_9_7_7.html&7,5">·如何激活快捷盾？</a></li>
+            <li><a href="faq.htm?=FAQ_9_7_8.html&7,5">·如何解绑快捷盾？</a></li>
+          </ul>
+        </div>
+      </div>
+      <!--helpbox  --> 
+      
+    </div>
+    <!--helpcont --> 
+    
+  </div>
+  <!-- mt30 --> 
+  
+</div>
+ 
+<script>
+$(function(){
+	
+	$(".helpclasstab").eq(0).show();
+	$(".helpclasslist a").click(function(){
+		$(this).addClass("cur").parent().siblings().find("a").removeClass("cur");
+		$(".helpclasstab").hide();
+		var i=$(this).parent().index();
+		
+		$(".helpclasstab").eq(i).show();
+	})
+	
+	
+})
+</script>
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="site-api" />
+        <module name="site-app-personal" />
+        <module name="site-core-common" />
+        <module name="site-core-dal" />
+        <module name="site-domain-main" />
+        <module name="site-domainservice-main" />
+        <module name="site-ext-integration" />
+        <module name="site-ext-service" />
+        <module name="site-service-facade" />
+        <module name="site-test" />
+        <module name="site-web-enterprise" />
+        <module name="site-web-personal" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="site-api" target="1.6" />
+      <module name="site-app-personal" target="1.6" />
+      <module name="site-core-common" target="1.6" />
+      <module name="site-core-dal" target="1.6" />
+      <module name="site-core-parent" target="1.6" />
+      <module name="site-domain-main" target="1.6" />
+      <module name="site-domain-parent" target="1.6" />
+      <module name="site-domainservice-main" target="1.6" />
+      <module name="site-domainservice-parent" target="1.6" />
+      <module name="site-ext-integration" target="1.6" />
+      <module name="site-ext-parent" target="1.6" />
+      <module name="site-ext-service" target="1.6" />
+      <module name="site-platform-root" target="1.6" />
+      <module name="site-service-facade" target="1.6" />
+      <module name="site-service-parent" target="1.6" />
+      <module name="site-test" target="1.6" />
+      <module name="site-web-enterprise" target="1.6" />
+      <module name="site-web-parent" target="1.6" />
+      <module name="site-web-personal" target="1.6" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

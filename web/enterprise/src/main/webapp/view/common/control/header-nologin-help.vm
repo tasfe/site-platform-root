@@ -1,0 +1,7 @@
+<div id="header" >
+    <div class="wrap">
+        <div class="top">
+            <a class="a9" href="${request.contextPath}/register/register-index.htm">注册</a> <span class="s">|</span> <a href="#springUrl('/help/helpcenter.htm')" target="_blank" class="a9">帮助中心</a> <span class="s">|</span> <a href="#springUrl('/customservice/index.htm')" class="a9">客服中心</a> <span class="s">|</span> 客服热线：<span class="dh">0571-28276085</span>
+        </div>
+    </div>
+</div>

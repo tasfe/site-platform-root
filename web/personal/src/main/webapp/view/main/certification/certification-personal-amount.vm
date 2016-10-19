@@ -1,0 +1,201 @@
+
+<div class="container">
+  
+  <div class="wrap">
+    <div class="page_title">
+      <h2>银行账户验证</h2>
+    </div>
+    <div class="box_e1e1e1 w998">
+      <div class="infotips_yellow">
+      	<p class="b f14">永达互联网金融已向您的$!response.data.info.bankName卡（$!response.data.info.bankAccountNumMask）汇入一笔1元以下的确认金额</p>
+        <p style="padding-top:5px;">若您想重新认证，请先 <a href="javascript:;" id="cancelCertification">撤销本次认证申请</a>。</p></div>
+      <div class="reg_content_wrap2">
+        <div class="login_content clearfix">
+          <form id="amount-input-form" name="amount-input-form" action="#springUrl('/my/do-personal-verifyAmount.htm')" method="post">
+            <div class="row">
+                <label class="row_label" for="">银行账户名：</label>
+                <div class="row_con">
+                     <span>$!response.data.info.realName</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="row">
+                <label class="row_label" for="">银行账号：</label>
+                <div class="row_con">
+                     <span>$!response.data.info.bankAccountNumMask</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="row">
+                <label class="row_label" for="">开户银行：</label>
+                <div class="row_con">
+                     <span>$!response.data.info.bankName</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="row">
+                <label class="row_label" for="">开户银行所在城市：</label>
+                <div class="row_con">
+                     <span>$!response.data.info.city</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="row">
+                <label class="row_label" for="">开户银行支行名称：</label>
+                <div class="row_con">
+                     <span>$!response.data.info.bankBranch</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="row" style="z-index:1">
+                 <label class="row_label" for="">验证打款金额：</label>
+                 <div class="row_con">
+                      <input id="money" name="money" type="text" class="inputtext money2" maxlength="5" style="width:100px;">                     <span class="f12">元</span>
+                 </div>
+                 <div class="clear"></div>
+            </div>
+            
+            <div class="error pdlf170" id="sError"></div>
+            <div class="btn pdlf170" style="padding-bottom:55px;">
+                  <input class="btn_qr  btn_submit" type="button" value="">
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+<script>
+	$(function(){
+		
+		$("#cancelCertification").click(function(){
+			var html = '<style type="text/css">.sw_0 #sw_title { height:30px;}</style>';
+			html += '<div class="sw_tip">';
+			html += '<div class="sw_tip_title" style="padding-left:100px;"><i class="alert"></i><span>确认撤销本次认证申请!</span></div>';
+			html += '</div>';
+			html += '<div style="text-align:center; padding:20px;"><input type="button" id="ckxq_alert" class="btn_qr mr16" ><input type="button" class="btn_qx" ></div>';
+			
+			showWin('html', html, "", 520, 210, ' ', '', '');
+		});
+		
+		$(".btn_qx").live("click",function(){
+			closeSW();
+		});
+		
+		$("#ckxq_alert").live("click",function(){
+			jQuery.ajax({
+            	type: "post",
+        		url: "${request.contextPath}/my/do-personal-cancelBankVerify.htm",
+        		dataType: "json",
+        		//data: {money:value},
+        		success: function(result){
+        			if (result.success) {
+						
+						var html = '<style type="text/css">.sw_0 #sw_title { height:30px;}</style>';
+            			html += '<div class="sw_tip">';
+            			html += '<div class="sw_tip_title" style="padding-left:100px;"><i class="success"></i><span><span class="t1">撤销成功!</span><span class="t2">您的本次认证申请已撤销</span></span></div>';
+            			html += '</div>';
+            			html += '<div style="text-align:center; padding:20px;"><input type="button" id="ckxq_suc" class="btn_qr" ></div>';
+            			
+            			showWin('html', html, {mode:1}, 500, 210, ' ', '', '');
+						
+					}else{
+						var html = '<style type="text/css">.sw_0 #sw_title { height:30px;}</style>';
+            			html += '<div class="sw_tip">';
+            			html += '<div class="sw_tip_title" style="padding-left:100px;"><i class="success"></i><span><span class="t1">撤销失败!</span><span class="t2">您的本次申请撤销失败</span></span></div>';
+            			html += '</div>';
+            			html += '<div style="text-align:center; padding:20px;"><input type="button" id="ckxq" class="btn_qr" ></div>';
+            			
+            			showWin('html', html, {mode:1}, 500, 210, ' ', '', '');
+						
+						btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+						return false;	
+					}
+        		},
+        		error: function(){
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+        			$(".error").text(G.sysError);
+					return false;
+        		}
+            });
+		});
+		
+		$("#ckxq_suc").live("click",function(){
+			window.location.href = '${request.contextPath}/my/go-personal-certification.htm';
+		});
+		
+		$("#ckxq").live("click",function(){
+			closeSW();
+		});
+					
+		$(".btn_submit").click(function(){
+						
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+			$(".error").text("");
+			
+			var value = jQuery.trim($("#money").val());
+			value = value == $("#money").attr("data-placeholder") ? "" : value;
+			if(value == ""){
+				$(".error").text("请输入打款金额！");
+				btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+			}
+			jQuery.ajax({
+            	type: "post",
+        		url: "${request.contextPath}/my/do-personal-verifyAmount.htm",
+        		dataType: "json",
+        		data: {amount:value},
+        		success: function(result){
+        			if (result.success) {
+						var html = '<style type="text/css">.sw_0 #sw_title { height:30px;}</style>';
+            			html += '<div class="sw_tip">';
+            			html += '<div class="sw_tip_title" style="padding-left:100px;"><i class="success"></i><span>恭喜您，您已通过银行账户认证!</span></div>';
+            			html += '</div>';
+            			html += '<div style="text-align:center; padding:20px;"><input type="button" id="ckxq_suc" class="btn_qr" ></div>';
+            			
+            			showWin('html', html, {mode:1}, 600, 210, ' ', '', '');
+						
+					}else{
+						var html = '<style type="text/css">.sw_0 #sw_title { height:30px;}</style>';
+            			html += '<div class="sw_tip">';
+						if(result.message){
+            				html += '<div class="sw_tip_title" style="padding-left:100px;"><i class="error"></i><span><span class="t1">'+result.message+'</span></span></div>';
+            			}else{
+							var remainCount = result.data.remainCount;
+							if(remainCount != 0){
+								html += '<div class="sw_tip_title" style="padding-left:100px;"><i class="error"></i><span><span class="t1">您输入的金额和系统打款金额不一致!</span><span class="t2">还剩<em class="red">'+remainCount+'</em>次输入机会</span></span></div>';	
+							}else{
+								window.location.href = '${request.contextPath}/my/go-personal-certification.htm';
+							}
+						}
+						html += '</div>';
+            			html += '<div style="text-align:center; padding:20px;"><input type="button" id="ckxq" class="btn_qr" ></div>';
+            			
+            			showWin('html', html, {mode:1}, 600, 210, ' ', '', '');
+						
+						btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+						return false;	
+					}
+        		},
+        		error: function(){
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+        			$(".error").text(G.sysError);
+					return false;
+        		}
+            });
+		});
+	})
+</script>

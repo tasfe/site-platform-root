@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>#if($page_title) $page_title #else 永达互联网金融钱包 #end</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/wallet.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/wallet_online.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/skins/jiaDialog.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+	<link href="${WEB_RESOURCE.staticAddress}wallet/css/online.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">
+    <link href="${WEB_RESOURCE.staticAddress}wallet/css/plugin/jquery-ui-1.10.3.custom.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen"  id="theme_date">
+
+    <!--[if lt IE 9]>
+      <script src="${WEB_RESOURCE.staticAddress}wallet/js/html5shiv.js${WEB_RESOURCE.staticVersion}"></script>
+    <![endif]-->
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/jquery.min.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/plugin/jquery-ui-1.10.3.custom.min.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/plugin/jquery.ui.datepicker-zh-CN.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/jquery.artDialog.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/jquery.validate.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/form_validate.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/comment.js${WEB_RESOURCE.staticVersion}"></script>
+
+     <!--翻页插件-->
+    <script src="${WEB_RESOURCE.staticAddress}wallet/js/plugin/paginator/bootstrap-paginator.js${WEB_RESOURCE.staticVersion}"></script>
+<style>
+input.datepicker_start,input.datepicker_end{ display:inline-block; width:150px;margin-bottom:0; height:22px; padding:0 6px; font-size:12px;}
+input.date-picker{ display:inline-block; width:150px;margin-bottom:0; height:24px; padding:0 6px; font-size:12px;}
+/*底部*/
+.foot_in{ height:48px; background-color:#ebeef2;}
+.foot_in .foot_con{ position:relative; margin:0 auto; width:1000px; line-height:48px; color:#999;text-align:center;}
+.foot_in .foot_con a{ margin:0 5px; color:#999;}
+.foot_in .foot_con a:hover{ color:#a40000;}
+.foot_in .down_scroll{display:none; float:right; margin-top:-48px; width:150px; height:48px;  background-color:#d8dce3; cursor:pointer;}
+.foot_in .scroll_txt{ float:left; padding:6px 0 0 0; width:112px;height:32px; line-height:18px;  color:#4f5b5f;}
+.foot_in .down_scroll:hover{ background-color:#c8cfda;}
+.foot_in .scroll_d{ float:left; width:38px;height:48px; background:#c0c5d0;}
+.foot_in .scroll_d span{ display:block; margin:13px 0 0 7px; width:24px; height:24px; background:url(../image/index_icobg.png) -160px -99px no-repeat;}
+.foot_in .down_scroll.d_fixed{display:block; position:fixed; bottom:0; margin-left:1002px;*margin-left:505px;}
+.foot_in .lpd2{ letter-spacing:2px;}
+</style>
+</head>
+<body class="bodyBg">
+	<div class="container">
+		#parse("/common/control/header-login.vm")
+		#parse("/common/control/userheader.vm")
+
+		$screen_content
+
+		#parse("/common/control/footer.vm")
+    </div>
+    <script src="${WEB_RESOURCE.staticAddress}wallet/js/validate.js${WEB_RESOURCE.staticVersion}"></script>
+
+</body>
+</html>

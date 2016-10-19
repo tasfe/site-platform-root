@@ -1,0 +1,58 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">支付密码找回</span>
+		</div>
+	</div>
+	 
+	 <input id="url" name="url" type="hidden" value="$!loginMailUrl"/>
+	 
+     <div class="safetyMain">
+         <div class="safetyMainBlock">
+              
+                   <p class="f14 bold mb15 pdl280">邮件已发送，请<a href="#" id="btn_mail">登录邮箱</a>进行下一步操作！</p>
+                   <p class="pdl350">未收到邮件，<span id="again_text"><em class="red pdlr5 bold time_left">60</em>秒后可点击 重新发送</span><input class="savelxr ml10" type="button" value="重新发送" id="again" style="display:none;" disabled></p>
+				   <p class="error pdl350"></p>
+         </div> 
+     </div>
+</div>
+</div>
+<script>
+$(function(){
+	countDownDo({timePlace:$(".time_left"), time:60, callback:function(){
+		$("#again_text").hide();
+		$("#again").attr("disabled", false).show();
+	}});
+	
+	$("#again").click(function(){
+        $(this).hide().attr("disabled",true);
+		$("#again_text").show();
+		
+		countDownDo({timePlace:$(".time_left"), time:60, callback:function(){
+			$("#again_text").hide();
+			$("#again").attr("disabled", false).show();
+		}});
+		
+         jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/my/refindPwd/ajaxSendMail.htm')" ,
+			data: "",
+			cache: false,
+            success: function(response) {
+            } ,
+            dataType: "json"
+        });
+	});
+
+	$("#btn_mail").click(function(){
+		var url = $("#url").val();
+		if (url != '') {
+			window.open(url,'_blank');
+		}else {
+			$(".error").html('暂不支持此邮箱登陆跳转，请您手动登陆邮箱并完成验证');
+		}
+	});
+});
+</script>

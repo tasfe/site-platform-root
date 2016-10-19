@@ -1,0 +1,163 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     <div class="page_title"><h2>支付密码找回</h2></div>
+     <div class="safetyMain">
+     	 <form id="form" action="${request.contextPath}/my/check-certificates.htm" method="POST">
+         <div class="loginCenter">
+			  #if($response.data.realName == 'true')
+              <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">选择找回支付密码的方式：</span>
+                          <div class="select_div mr16 fl">
+                               <select id="type" name="type">
+									<option value="4">通过绑定邮箱和手机校验码找回</option>                               
+                               </select>
+                          </div>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="clear"></div>
+                   <div class="mainTips ml230 error"></div>
+               </div>
+			   
+			   <div class="login_limit" id="module2">
+                   <label>
+                          <span class="f14 limitLeft">证件号：</span>
+                          <input id="CertificateNo" name="certificates" type="text" class="inputtext w232 placeholder" value="" data-placeholder="请输入实名认证证件号">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error">$!{response.message}</div>
+               </div>
+			   #else
+			   <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">选择找回支付密码的方式：</span>
+                          <div class="select_div mr16 fl">
+                               <select id="type" name="type">
+									#if($response.data.hasEmail == 'true' && $response.data.hasMobile != 'true')
+									<option value="1">通过绑定邮箱找回</option>
+									#end
+									#if($response.data.hasMobile == 'true')
+									<option value="2">通过绑定手机找回</option> 
+									#end
+                               </select>
+                          </div>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="clear"></div>
+                   <div class="mainTips ml230 error"></div>
+               </div>
+			   
+			   <div class="login_limit">
+                   <label>
+					      <div id="emailDiv">
+                          <span class="f14 limitLeft">您绑定的邮箱：</span>
+						   $!response.data.email
+						  </div>
+						  <div id="mobileDiv">
+                          <span class="f14 limitLeft">您绑定的手机号码：</span>
+						   $!response.data.mobile
+						  </div>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="login_limit">
+                   <label>
+                        <span class="f14 limitLeft">验证码：</span>
+                        <div class="yzm_i" id="yzm_i">
+                        <input id="captcha_value" name="captcha_value" type="text" data-placeholder="请输入验证码" class="placeholder" data-input="yzm_i" ><i class="yzm_rw"></i>
+                        </div>
+                         <img id="randImage" src="#springUrl('/pvc.htm')" alt="点击图片刷新校验码" class="yzm_img">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error">$!{response.message}</div>
+               </div>
+			   #end
+              
+              
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form> 
+          
+     </div>
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+	if($("#type").val()=="1"){
+		$("#emailDiv").show();
+		$("#mobileDiv").hide();
+		$("form").attr("action","${request.contextPath}/my/go-get-paypasswd-email-send.htm");
+		$("#bizType").attr("value","REFIND_SENDEMAIL");
+	}else if($("#type").val()=="2"){
+		$("#emailDiv").hide();
+		$("#mobileDiv").show();
+		$("form").attr("action","${request.contextPath}/my/go-get-paypasswd-phone-first.htm");
+		$("#bizType").attr("value","REFIND_PAYPASSWD");
+	}
+	
+	
+	$("#type").change(function(){
+		switch($(this).val()){
+			case "1": 
+			$("#emailDiv").show();$("#mobileDiv").hide();
+			$("form").attr("action","${request.contextPath}/my/go-get-paypasswd-email-send.htm");
+			$("#bizType").attr("value","REFIND_SENDEMAIL"); 
+			$("#type").attr("value","1");break;
+			case "2": 
+			$("#emailDiv").hide();$("#mobileDiv").show();
+			$("form").attr("action","${request.contextPath}/my/go-get-paypasswd-phone-first.htm");
+			$("#bizType").attr("value","REFIND_PAYPASSWD");
+			$("#type").attr("value","2");break;
+			case "4": 
+			$("form").attr("action","${request.contextPath}/my/check-certificates.htm");
+			$("#bizType").attr("value","REFIND_PAYPASSWD");
+			$("#type").attr("value","4");break;
+			default: break;
+		}
+	});
+		
+	$("#captcha_value").blur(function(){
+		var thisObj = $(this);
+		var code = thisObj.val();
+		if(thisObj.attr("data-placeholder") != undefined){
+			code = code == thisObj.attr("data-placeholder") ? "" : code;
+		}
+		checkVerificationCode({code:code, tipObj:thisObj.parent().parent().parent().find(".error"), imgTipObj:thisObj.parent().find(".yzm_rw"), url:"${request.contextPath}/my/refindPwd/ajaxValidateCode.htm", async:true});
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+	
+		switch($("#type").val()){
+			case "1":
+			case "2":
+				thisObj = $("#captcha_value");
+				value = thisObj.val();
+				if(thisObj.attr("data-placeholder") != undefined){
+					value = value == thisObj.attr("data-placeholder") ? "" : value;
+				}
+				flag = checkVerificationCode({code:value, tipObj:thisObj.parent().parent().parent().find(".error"), imgTipObj:thisObj.parent().find(".yzm_rw"), url:"${request.contextPath}/my/refindPwd/ajaxValidateCode.htm", async:false});
+				if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;}
+				
+				break;
+				
+			case "4":
+				flag = checkMust($("#CertificateNo"),$("#CertificateNo").parent().parent().find(".error"),"请输入证件号");
+				if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				break;
+				
+			default: break;
+			
+		}
+		$("form").submit();
+	});
+})
+</script>

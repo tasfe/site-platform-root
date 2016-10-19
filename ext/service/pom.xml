@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<parent>
+		<groupId>com.netfinworks.site</groupId>
+		<artifactId>site-ext-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>site-ext-service</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<name>site ext service</name>
+	<description>site application</description>
+
+	<packaging>jar</packaging>
+	<dependencies>
+		<!-- cxf -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<exclusions>
+				<exclusion>
+				  <groupId>asm</groupId>
+  					<artifactId>asm</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.meidusa.toolkit</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+
+		<!-- self -->
+		<dependency>
+	        <groupId>com.netfinworks.site</groupId>
+	        <artifactId>site-ext-integration</artifactId>
+		</dependency>
+    
+		<dependency>
+			<groupId>com.netfinworks.site</groupId>
+			<artifactId>site-domain-main</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netfinworks.site</groupId>
+			<artifactId>site-service-facade</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netfinworks.site</groupId>
+			<artifactId>site-core-dal</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netfinworks.site</groupId>
+			<artifactId>site-domainservice-main</artifactId>
+		</dependency>
+		<dependency>
+  			<groupId>com.netfinworks.urm.service</groupId>
+  			<artifactId>urm-domainservice-common</artifactId>
+	    </dependency>
+	    <dependency>
+			<groupId>com.netfinworks.ucs</groupId>
+			<artifactId>ucs-support-annotation</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,128 @@
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">数字证书</span>
+        </div>
+    </div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               <!-- 
+               <div class="usbKeyConT usbKeyConT2 stepTwo">
+                    <span class="u1">验证身份</span>
+                    <span class="u2">输入手机校验码</span>
+                    <span class="u3">安装证书</span>
+                    <span class="u4">激活成功</span>
+               </div>
+               -->
+               
+               <!-- <div class="usbKeyCon_tips w410" style="width:476px; height:50px; line-height:20px; padding-top:6px">永达互联网金融已经向您的手机$!{mobile} 免费发送了一条校验短信，请输入短信内的校验码。如此手机不能正常接收短信，您可以<a href="#springUrl('/my/go-reset-mobilephone.htm')">更换手机号码</a> </div> -->
+               <!-- <form action="#springUrl('/softcertActivate/step3.htm')" method="POST"> -->
+               <div class="usbKeyCenter">
+				<div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">支付密码：</span>
+                          <div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;">$!{passwordmessage}</div>
+               </div>
+               
+               <div class="login_limit hg50">
+                   <label><span class="f14 limitLeft">手机号码：</span>$!{mobile}</label>
+                   <!--<div class="c86 f12" style="padding-left:178px; width:480px;">永达互联网金融已向此手机发送了校验码短信，请查看您的手机短信！</div>-->
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+                   
+                 <div class="login_limit">
+                   <label><span class="f14 limitLeft">校验码：</span>
+                     <input type="text" class="inputtext w80" value="" id="sjyzm" name="authCode">
+                     <input class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <div class="c86 f12" style="padding-left:178px; width:480px;"></div>
+                   <label class="ml5"></label>
+                   <div class="authCodeTip error clear" id="authCodeTip" style="padding-left:180px;">$!{authCodeMessage}</div>
+               </div>
+                   
+                   
+                           <div class="loginAmendBtn" style="padding-left:161px;"> <input class="btn btn_submit" type="button" value="确 认"></div>
+               
+               </div>
+			   <input type="hidden" id="position" name="position" value="$!{position}"/>
+               <!--</form>-->
+               <div class="usbKeyFaq">
+                    <h4>数字证书问题：</h4>
+                   <dl>
+                       <dt>永达账户数字证书有什么作用？</dt>
+                       <dd>答：1、<b>加强保障：</b>将您的永达账户与您使用的电脑进行绑定，即使对方窃取了您的密码，在其它的设备上也动不了您的资金，保障了您的资金安全。数字证书用户，如果在其他设备登录永达账户，在设备没有安装数字证书的情况下，只能查询账户，不能进行任何操作，数字证书相当于为您的账户配置了一把“钥匙”，大大增强账户使用的安全性。<br><br>
+                           2、<b>提升限额：</b>使用永达账户的数字证书，当您在使用永达账户进行转账、提现等功能时可提升相应额度。</dd>
+                   </dl>
+                   <dl>
+                       <dt>数字证书安装有哪些好处？</dt>
+                       <dd>答：申请了数字证书，在登录的时候会获取更高安全等级的身份认证，可以更好地保证您发送的信息不会在网上被篡改，即使丢失了账号和密码，您的账户、资金仍然能得到一定的安全保护。数字证书会将用户的出款、重要资料修改等行为控制在固定的电脑上进行，即使账号密码被盗取，没有证书，就无法操作账户内的资金。</dd>
+                   </dl>
+                  <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+                </div>
+                <input type="hidden" name="bizType"  id="bizType" value="CERT_APPLY"/>
+          </div>
+     </div>
+</div>
+</div>
+<script>
+$(function(){
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+		
+	
+	//免费获取手机验证码
+	$(".btn_mfhq").click(function(){
+        var jThis = $(this);
+        sendPhoneCode({
+            jBtn:jThis,
+            jTip:$('.authCodeTip'),
+            url:"#springUrl('/my/mobile/sendMessage.htm')",
+            txtSuccess:"校验码已发送",
+            txtFail:"若长时间未收到校验码，请联系客服 0571-28276085"
+        });
+	});
+	
+
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+
+        var jsonSubmit = {
+            jBtnSubmit:btn_submit,
+            cssClass:"btn_disabled",
+            urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+        };
+        var pgeditors = [
+            {
+                jPwInput:pgeditor,
+                jInput:$("#password"),
+                jTip:$(".pwdiv").parent().parent().find(".error"),
+                txtEmpty:"请输入支付密码！"
+            }
+        ];
+        checkPgeditor({
+            jsonSubmit:jsonSubmit,
+            pgeditors:pgeditors,
+            callback:function(){
+                var flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入手机校验码");
+                if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+
+                $("form").submit();
+            }
+        });
+	});
+})
+</script>

@@ -1,0 +1,52 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2></h2></div>
+	<div class="safetyMain">
+       <div class="logiAmend_succeed" >
+              <div class="loginTipsBox" style="margin-left:-175px; margin-top:0;">
+				<form >
+		 #if($!response.data.gotype=="1" ||$!response.data.gotype=="3")##1、永达互联网金融绑定永达互联网金融；；3、永达互联网金融绑定永达互联网金融
+               <i class="tipsIcon succeed"></i>
+               <p class="f16 bold mb10">恭喜您顺利完成永达互联网金融和永达互联网金融的账号统一流程！</p>
+               <p class="f16  mb10">后续您将可以使用永达互联网金融账号信息登陆永达互联网金融和永达互联网金融两个平台，</p>
+			   <p class="f16  mb10">并且可以同时享受我们为您量身打造的专业支付和金融服务。</p>
+               <p><em class="red time_left">10</em>秒后会自动跳转至
+					<a href="#springUrl('/my/home.htm?link=0101')">我的永达互联网金融</a>
+		 #elseif($!response.data.gotype=="4")##永达互联网金融未绑定永达互联网金融
+               <i class="tipsIcon succeed"></i>
+               <p class="f16 bold mb10">我们已经在后台为您自动实现账号信息同步工作！</p>
+               <p class="f16  mb10">从即刻起，您将可以使用两个平台，</p>
+			   <p class="f16  mb10">并且可以同时享用我们为您量身打造的专业支付和金融服务。</p>
+               <p><em class="red time_left">10</em>秒后会自动跳转至
+					<a href="#springUrl('/my/home.htm?link=0101')">我的永达互联网金融</a>
+		#elseif($!response.data.gotype=="2")##永达互联网金融未绑定永达互联网金融
+                 <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">恭喜您顺利完成永达互联网金融账号信息的重置流程！</p>
+                   <p class="f16  mb10">从即刻起，您将可以使用永达互联网金融账号信息登陆永达互联网金融和永达互联网金融两个平台，</p>
+				   <p class="f16  mb10">并且可以同时享用我们为您量身打造的专业金融和支付服务。</p>
+                   <p><em class="red time_left">10</em>秒后会自动跳转至
+					<a href="#springUrl('/my/home.htm?link=0101')">我的永达互联网金融</a>
+		#else
+			<i class="tipsIcon succeed"></i>
+               <p class="f16 bold mb10">我们已经在后台为您自动实现账号信息同步工作！</p>
+               <p class="f16  mb10">从即刻起，您将可以使用两个平台，</p>
+			   <p class="f16  mb10">并且可以同时享用我们为您量身打造的专业支付和金融服务。</p>
+			   <p><em class="red time_left">10</em>秒后会自动跳转至
+				<a href="#springUrl('/my/home.htm?link=0101')">我的永达互联网金融</a>
+		 #end
+		 </form>
+		    </div>
+         </div> 
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+	
+<script>
+
+$(function(){
+goUrlByTime({$obj:$(".time_left"), time:10, url:"#springUrl('/my/home.htm?link=0101')"});
+})
+</script>

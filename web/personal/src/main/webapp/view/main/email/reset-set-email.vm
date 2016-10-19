@@ -1,0 +1,68 @@
+<!--修改绑定新邮箱-->
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/safectrl.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/safectrl_utils.js${WEB_RESOURCE.staticVersion}"></script>
+
+<div class="wrap min_height6">
+	<!-- S 流程 -->
+     <div class="amendFlow-mail">
+          <p class="amendFlow-one" style="display:none;"></p>
+          <p class="amendFlow-two"></p>
+          <p class="amendFlow-three" style="display:none;"></p>
+     </div>
+     <!-- E 流程 -->
+     <div class="account_number_manager">
+    	<div class="user_ibox">
+            <h2 class="h2_titform"><em>修改绑定邮箱</em>你正在绑定新的邮箱</h2>
+            <form id="set-email-form" name="set-email-form" class="" action="/my/go-reset-set-email-active.htm" method="POST">
+        			<input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+					<input type="hidden" name="password"  id="password"/>
+        			 <div class="form-horizontal center_form clearfix">
+                    <div class="control-group">
+                        <label class="control-label" for="email"><i class="fc_r_ff">*</i>邮箱：</label>
+                        <div class="controls pos_rel">
+            				 <input type="text" id="email" name="email" class="field_input J_focus" hidefocus="true" value="$!response.data.email"/>
+            				 <p id="email_error"></p>
+                        </div>
+        			</div>
+                    <div class="control-group">
+                        <div class="controls">
+                           <input id="set_email_submit" type="submit"  class="btn_h40_red bold" value="下一步">
+                        </div>
+                    </div>
+                </div>
+            </form>
+    	</div>
+	</div>
+</div>
+<script type="text/javascript">
+$("#email").focus(function(){
+	$("#email_error").html('');
+});
+//表单提交
+$("#set_email_submit").click(function() {
+	$("#email_error").html('');
+	if (!checkEmail()) {
+		return false;
+	}
+	var email = $("#email").val();
+	if(email == '') {
+		$("#email_error").html('<label  class="error">邮箱地址不能为空!</label>');
+        return false;
+	}
+    return true;
+});
+
+function checkEmail() {
+	var email = $("#email").val();
+	if (email == '') {
+		$("#email_error").html('<label  class="error">邮箱地址不能为空!</label>');
+		return false;
+	}
+	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+	if(!reg.test(email)) {
+    	$("#email_error").html('<label  class="error">不是合法的邮箱地址!</label>');
+        return false;
+	}
+	return true;
+}
+</script>

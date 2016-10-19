@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/web/site-api/site-api.iml" filepath="$PROJECT_DIR$/web/site-api/site-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web/site-app-personal/site-app-personal.iml" filepath="$PROJECT_DIR$/web/site-app-personal/site-app-personal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/common/site-core-common.iml" filepath="$PROJECT_DIR$/core/common/site-core-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/dal/site-core-dal.iml" filepath="$PROJECT_DIR$/core/dal/site-core-dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/site-core-parent.iml" filepath="$PROJECT_DIR$/core/site-core-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domain/main/site-domain-main.iml" filepath="$PROJECT_DIR$/domain/main/site-domain-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domain/site-domain-parent.iml" filepath="$PROJECT_DIR$/domain/site-domain-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domainservice/main/site-domainservice-main.iml" filepath="$PROJECT_DIR$/domainservice/main/site-domainservice-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/domainservice/site-domainservice-parent.iml" filepath="$PROJECT_DIR$/domainservice/site-domainservice-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ext/integration/site-ext-integration.iml" filepath="$PROJECT_DIR$/ext/integration/site-ext-integration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ext/site-ext-parent.iml" filepath="$PROJECT_DIR$/ext/site-ext-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ext/service/site-ext-service.iml" filepath="$PROJECT_DIR$/ext/service/site-ext-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/site-platform-root.iml" filepath="$PROJECT_DIR$/site-platform-root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/facade/site-service-facade.iml" filepath="$PROJECT_DIR$/service/facade/site-service-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/site-service-parent.iml" filepath="$PROJECT_DIR$/service/site-service-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/site-test.iml" filepath="$PROJECT_DIR$/test/site-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web/enterprise/site-web-enterprise.iml" filepath="$PROJECT_DIR$/web/enterprise/site-web-enterprise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web/site-web-parent.iml" filepath="$PROJECT_DIR$/web/site-web-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web/personal/site-web-personal.iml" filepath="$PROJECT_DIR$/web/personal/site-web-personal.iml" />
+    </modules>
+  </component>
+</project>

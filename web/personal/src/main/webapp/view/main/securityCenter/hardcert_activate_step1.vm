@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+
+    <div class="page_title"><h2>快捷盾</h2></div>
+
+    <div class="safetyMain">
+
+        <div class="usbKeyCon">
+            <div class="tx_step step step_1" style="margin-left:80px; padding-bottom:10px;"><i></i><span
+                    class="s1">验证身份</span><span class="s2">下载激活</span><span class="s3">激活成功</span></div>
+
+            <div class="usbKeyCon_tips w720">请插入快捷盾，并确保在激活成功前不拔出快捷盾。永达互联网金融将会向您的手机发送短信校验码，请确保您的手机能够接收短信。</div>
+
+            <div class="usbKeyCenter">
+                <form action="#springUrl('/hardcertActivate/step2.htm')" method="POST">
+                    <div class="login_limit hg40">
+                        <label><span class="f14 limitLeft">会员名称：</span>
+                            <span class="f14">$!{realName}</span>
+                        </label>
+
+                        <label class="ml5"></label>
+                    </div>
+
+                    <div class="login_limit">
+                        <label><span class="f14 limitLeft">$!{company}：</span>
+                            <input type="text" class="inputtext w232" value="" id="idcard" name="idcard">
+                        </label>
+
+                        <div class="c86 f12" style="padding-left:178px; width:480px;">请填入与您真实姓名一致的身份证号码。</div>
+                        <div class="mainTips ml160 error">$!{buscodeMessage}</div>
+                    </div>
+
+                    <div class="login_limit">
+                        <label><span class="f14 limitLeft">绑定的手机号码：</span>
+                            <span class="f14">$!{mobile}</span>
+                        </label>
+
+                        <!--<div class="c86 f12" style="padding-left:178px; width:480px;">永达互联网金融已向此手机发送了校验码短信，请查看您的手机短信！</div>-->
+                        <label class="ml5"></label>
+
+                        <div class="mainTips ml160 error"></div>
+                    </div>
+
+                    <div class="login_limit">
+                        <label><span class="f14 limitLeft">校验码：</span>
+                            <input type="text" class="inputtext w80" value="" id="sjyzm" name="authCode">
+                            <input class="btn_mfhq ml10" type="button" value="">
+                        </label>
+
+                        <div class="c86 f12" style="padding-left:178px; width:480px;"></div>
+                        <label class="ml5"></label>
+
+                        <div class="authCodeTip error clear h22" id="authCodeTip" style="padding-left:180px;">
+                            $!{authCodeMessage}
+                        </div>
+                        <input type="hidden" name="bizType" id="bizType" value="KJTSHILED_ACTIVE"/>
+                    </div>
+
+                    <div class="login_limit">
+                        <label>
+                            <span class="f14 limitLeft">支付密码：</span>
+
+                            <div class="pwdiv fl"><input name="password" type="hidden" id="password"/></div>
+                        </label>
+
+                        <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                        <div class="mainTips ml160 error" style="clear:both;">$!{passwordmessage}</div>
+                    </div>
+                    <input type="hidden" id="certSn" name="certSn" value="$!{certSn}">
+
+                    <div id="mobileMessage" class="mainTips ml160 error"></div>
+                    <div class="loginAmendBtn"><input class="btn_qr btn_submit" type="button" value=""></div>
+                </form>
+
+            </div>
+
+            <div class="usbKeyFaq">
+                <h4>快捷盾问题：</h4>
+                <dl>
+                    <dt>什么是快捷盾？</dt>
+                    <dd>答：快捷盾是永达互联网金融推出的安全产品，是为了更好的保障用户的账户资金安全，防止用户账户和资金被盗。</dd>
+                </dl>
+                <dl>
+                    <dt>收到快捷盾后该怎么操作？</dt>
+                    <dd>答：请您先仔细阅读《快捷盾用户使用手册》，然后登录永达互联网金融账户，根据激活向导进行激活操作。</dd>
+                </dl>
+                <dl>
+                    <dt>申请快捷盾的前提条件是什么？</dt>
+                    <dd>答：1、所有通过永达互联网金融个人实名认证的永达互联网金融账户。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;2、通过永达互联网金融商家实名认证的永达互联网金融账户。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;3、永达互联网金融数字证书用户（证书已登录情况下）。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;4、支持的操作系统：Windows2000/XP、Vista、win7版本的操作系统。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;5、支持的浏览器：支持windows所有【非64位IE内核浏览器】。
+                    </dd>
+                </dl>
+                <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a
+                        href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+<!-- E 主要内容 -->
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/PassGuardCtrl.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/demo.js"></script>
+<script>
+    /*
+     $(function(){
+
+     var mobile = "$!{mobile}";
+     if( mobile == null || mobile == "") {
+     $("#mobileMessage").html("您的账户尚未绑定手机号码!");
+     $(".btn_submit").attr("disabled", true).addClass("btn_qr_disabled");
+     }
+     $(".pwdiv").append(pgeditor.load());
+     pgeditor.pgInitialize();
+
+     $(".btn_submit").click(function(){
+     var btn_submit = $(this);
+     btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+     $(".error").text("");
+
+     var flag = checkMust($("#busCode"),$("#busCode").parent().parent().find(".error"),"请输入证件号码");
+     if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+     var len = pgeditor.pwdLength();
+     if (len == 0) {
+     $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+     btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+     }
+
+     getSrandNum("#springUrl('/ocx/generateRandomKey.htm')"); //产生随机数去加密
+     var PwdResult = pgeditor.pwdResult();
+     $('#password').val(PwdResult);
+
+
+     $("form").submit();
+
+     });
+
+
+     })
+
+     */
+</script>
+<script>
+    function btnDoOrNot(flag) {
+        stopCountDown($(".btn_mfhq"));
+        if (flag) {
+            $(".btn_submit").attr("disabled", false).removeClass("btn_qr_disabled");
+            $(".btn_mfhq").attr("disabled", false).removeClass("btn_mfhq_disabled").val("");
+        }
+        else {
+            $(".btn_submit").attr("disabled", true).addClass("btn_qr_disabled");
+            $(".btn_mfhq").attr("disabled", true).addClass("btn_mfhq_disabled").val("免费获取");
+        }
+    }
+    $(function () {
+
+        btnDoOrNot(false);
+
+        var pgeditor = newPgeditor(1, '${response.data.ocx_skey}', '${response.data.ocx_enstr}');
+        window.pgeCtrl = pgeditor;
+        $(".pwdiv").append(pgeditor.load());
+        pgeditor.pgInitialize();
+
+        //免费获取手机验证码
+        $(".btn_mfhq").click(function () {
+            $(".authCodeTip").html("");
+            countDown($(this), 60, "");
+            jQuery.ajax({
+                type: 'GET',
+                url: "#springUrl('/my/mobile/sendMessage.htm')",
+                data: "bizType=" + $("#bizType").val(),
+                success: function (response) {
+                    if (response.success) {
+                        $(".authCodeTip").html("校验码已发送");
+                    } else {
+                        $(".authCodeTip").html("若长时间未收到校验码，请联系客服 400-611-0909");
+                    }
+                },
+                cache: false,
+                error: function () {
+                    $(".authCodeTip").html(G.sysError)
+                },
+                dataType: "json"
+            });
+        });
+
+        $("#idcard").blur(function () {
+            var jTip = $(this).parent().parent().find(".error");
+            var flag = checkMust($(this), jTip, "请输入您的身份证号码！");
+            if (flag)
+                flag = checkIdCard($(this), jTip, "请输入18位身份证号码！");
+            if (flag) {
+                var value = $(this).val();
+                jTip.text("");
+                jQuery.ajax({
+                    type: 'POST',
+                    url: "#springUrl('/softcertActivate/idcard.htm')",
+                    data: "idcard=" + value,
+                    success: function (response) {
+                        if (response.success) {
+                            btnDoOrNot(true);
+                        } else {
+                            btnDoOrNot(false);
+                            jTip.text("身份验证失败！");
+                        }
+                    },
+                    cache: false,
+                    error: function () {
+                        jTip.text(G.sysError);
+                        btnDoOrNot(true);
+                    },
+                    dataType: "json"
+                });
+            }
+            else btnDoOrNot(false);
+        });
+
+        if ($("#addrselect").val() == "-1") {
+            $("#address").show();
+        } else {
+            $("#address").hide()
+        }
+        $("#addrselect").change(function () {
+            if ($(this).val() == "-1") {
+                $("#address").show();
+            } else {
+                $("#address").hide()
+            }
+        })
+
+        $("#address").blur(function () {
+            var tipObj = $(this).parent().find(".error");
+            tipObj.text("");
+            if ($.trim($(this).val()).length > 64) tipObj.text("地址长度超出了64位！");
+        });
+
+        /*$("#captcha_value").blur(function(){
+         var code = $(this).val();
+         code = code == $(this).attr("data-placeholder") ? "" : code;
+         checkVerificationCode({code:code, tipObj:$(this).parent().parent().parent().find(".error"), imgTipObj:$(".yzm_rw"), async:true, url:"#springUrl('/login/checkVerifiCode.htm')"});
+         }).keyup(function(event){
+         if(event.keyCode ==13){
+         $(".btn_submit").click();
+         }
+         });*/
+
+
+        $(".btn_submit").click(function () {
+            var btn_submit = $(this);
+            btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+            $(".error").text("");
+
+            var thisObj = $("#idcard");
+            var tipObj = thisObj.parent().parent().find(".error");
+            var flag = checkMust(thisObj, tipObj, "请输入您的身份证号码！");
+            if (!flag) {
+                btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                return false;
+            }
+            flag = checkIdCard(thisObj, tipObj, "请输入18位身份证号码！");
+            if (!flag) {
+                btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                return false;
+            }
+
+            if ($("#addrselect").val() == "-1") {
+                thisObj = $("#address");
+                tipObj = thisObj.parent().find(".error");
+                tipObj.text("");
+                flag = checkMust(thisObj, tipObj, "请输入您的使用地址！");
+                if (!flag) {
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                if ($.trim(thisObj.val()).length > 64) {
+                    tipObj.text("地址长度超出了64位！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+            }
+
+            if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+                var wid = pgeditor.settings.pgeWindowID;
+                pgeditor.pwdLength(function(){
+                    if(outs[wid].length == 0){
+                        $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    flag = checkMust($("#sjyzm"), $("#sjyzm").parent().parent().find(".error"), "请输入手机校验码");
+                    if (!flag) {
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    //产生随机数加密
+                    getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+                        //获得密文
+                        setPwdResult(pgeditor,$('#password'),function(){
+                            $("form").submit();
+                        });
+                    });
+                });
+            }
+            else{
+                if (pgeditor.pwdLength() == 0) {
+                    $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                flag = checkMust($("#sjyzm"), $("#sjyzm").parent().parent().find(".error"), "请输入手机校验码");
+                if (!flag) {
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor]); //产生随机数去加密
+                setPwdResult(pgeditor, $('#password'));
+
+                $("form").submit();
+
+                /*jQuery.ajax({
+                 type: 'POST',
+                 url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+                 data: {"authCode":authCode,"password":PwdResult},
+                 success: function(response) {
+                 if(response.success) {
+                 $("form").submit();
+                 } else {
+                 btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+                 $("#cError").text(response.msg);
+                 }
+                 } ,
+                 cache: false,
+                 error:function(){$("#cError").text(G.sysError);btnDoOrNot(true);},
+                 dataType: "json"
+                 });*/
+
+                /*var code = $("#captcha_value").val();
+                 code = code == $("#captcha_value").attr("data-placeholder") ? "" : code;
+                 flag = checkVerificationCode({code:code, tipObj:$("#captcha_value").parent().parent().parent().find(".error"), imgTipObj:$(".yzm_rw"), async:false, url:"#springUrl('/login/checkVerifiCode.htm')"});
+                 if(!flag){ btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+                 //异步校验
+                 */
+            }
+        });
+    })
+
+</script>
+
+
+</body>
+</html>

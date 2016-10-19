@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:osgi="http://www.springframework.org/schema/osgi"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+    default-autowire="byName">
+    <!-- data source -->
+    <bean id="appsDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/apps-datasource" />
+    </bean>
+
+    <bean id="appsSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="appsDataSource" />
+		<property name="configLocation" value="classpath:META-INF/spring/persistent-apps-sqlmap.xml" />
+	</bean>
+
+    <bean id="appsTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="appsDataSource" />
+    </bean>
+	<bean name="appsTransactionTemplate" class="org.springframework.transaction.support.TransactionTemplate" >
+		<property name="transactionManager" ref="appsTransactionManager" />
+	</bean>
+</beans>

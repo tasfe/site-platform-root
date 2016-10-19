@@ -1,0 +1,171 @@
+
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/account.css" rel="stylesheet" type="text/css">
+<style>
+/* 左侧菜单 */
+.account_set_wrap{ width: 998px; border: 1px solid #e1e1e1; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/account_set_left2.gif) left top repeat-y #fff; }
+.account_set_left{ float:left; width: 173px;  }
+.account_set_left ul{ padding: 33px 0; min-height: 300px; }
+.account_set_left ul li a.subBlock{ display: block; width: 173px; height: 45px; position:relative; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/subBlock.gif) no-repeat; color:#595757; }
+.account_set_left ul li a:hover, 
+.account_set_left ul li a.selected{ background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/subBlockHover.gif) no-repeat;}
+.account_set_left ul li a:hover, .account_set_left ul li a.selected{ border-left:0}
+.account_set_left ul li a.subBlock{ border-left:0;}
+
+.account_set_left ul li a span.subNavTxt{ position:absolute; left:60px; top:15px; }
+.account_set_left_standard ul li a span.subNavTxt{ left:20px;}
+
+.account_set_left ul li a:hover span.subNavTxt ,
+.account_set_left ul li a.selected span.subNavTxt{ color: #f60; }
+.account_set_left ul li a span.subNavArrows{ display:block; width:18px; height:18px; position:absolute; right:20px; top:15px; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/AccountSettings.gif) -2px -578px no-repeat; }
+.account_set_left ul li a:hover span.subNavArrows ,
+.account_set_left ul li a.selected span.subNavArrows{ background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/AccountSettings.gif) -2px -533px no-repeat; }
+
+.account_set_right{ float:right; width: 825px; background:#FFF; overflow:hidden; }
+</style>
+<div id="" class="wrap">
+	<div class="page_title">
+    	<div class="fr page_title_right"></div>
+    	<h2>格式条款</h2>
+    </div>
+    <div class="account_set_wrap" style="display:inline-block;">
+    
+    	<div class="account_set_left account_set_left_standard" style=" ">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a href="#springUrl('/static/charge.htm')" class="subBlock selected">
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">快捷通费率标准</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a href="#springUrl('/static/service.htm')" class="subBlock">
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">快捷通服务协议</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a href="#springUrl('/static/privacy.htm')" class="subBlock">
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">隐私保护声明</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+          <div class="account_set_right">
+     	  	   
+     	  	   
+     	  	   <div class="account_set_right_main clearfix" style=" padding-top:32px; ">
+     	  	   	   
+					<h3 class="f16 b" style=" text-align:center;">快捷通费率标准</h3>
+                    <p class=" color_b3"  style=" text-align:center;">商户可根据业务情况，按下表所示选择适合各自企业的费率；</p>
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="standard_table"  style="margin-top:25px;">
+                    	<tr>
+                        	<th width="74">费率类型</th>
+                            <th width="212">交易流量</th>
+                            <th width="77">费率标准</th>
+                            <th width="77">超量费率</th>
+                            <th>备注</th>
+                        </tr>
+                    	<tr>
+                        	<td width="74" rowspan="7">阶梯费率</td>
+                            <td width="212">0-5万元（包含5万元）</td>
+                            <td width="77">0.90%</td>
+                            <td width="77">1.00%</td>
+                            <td class="text_left" rowspan="7">1、选择阶梯费率的商户，按实际交易量进行选择，快捷通会根据商户经营情况进行判断是否符合该费率
+2、超量费率是指：如您的交易量为10万，则您的费用为5万*0.9%+（10万-5万）*1.0%=0.095万元。</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>5-20万元（包含20万元）</td>
+                            <td>0.84%</td>
+                            <td>1.00%</td>
+                        </tr>
+                        <tr>
+                            <td>20-50万元（包含50万元）</td>
+                            <td>0.75%</td>
+                            <td>1.00%</td>
+                        </tr>
+                        <tr>
+                            <td>50-100万元（包含100万元）</td>
+                            <td>0.70%</td>
+                            <td>1.00%</td>
+                        </tr>
+                        <tr>
+                            <td>100-200万元（包含200万元）</td>
+                            <td>0.60%</td>
+                            <td>1.00%</td>
+                        </tr>
+                        <tr>
+                            <td>200-500万元（包含500万元）</td>
+                            <td>0.50%</td>
+                            <td>1.00%</td>
+                        </tr>
+                        <tr>
+                            <td>500-1000万元（包含1000万元）</td>
+                            <td>0.45%</td>
+                            <td>1.00%</td>
+                        </tr>
+                    </table>
+                    
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="standard_table" style="margin-top:39px;">
+                    	<tr>
+                        	<th width="74">费率类型</th>
+                            <th width="212">交易流量</th>
+                            <th width="77">费率标准</th>
+                            <th width="77">超量费率</th>
+                            <th>备注</th>
+                        </tr>
+                    	<tr>
+                        	<td width="74" rowspan="7">套餐费率</td>
+                            <td width="212">0-5万元（包含5万元）</td>
+                            <td width="77">420元</td>
+                            <td width="77">0.84%</td>
+                            <td rowspan="7">选择套餐费率的商户需要提前支付套餐手续费</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>5-20万元（包含20万元）</td>
+                            <td>1580元</td>
+                            <td>0.79%</td>
+                        </tr>
+                        <tr>
+                            <td>20-50万元（包含50万元）</td>
+                            <td>3600元</td>
+                            <td>0.72%</td>
+                        </tr>
+                        <tr>
+                            <td>50-100万元（包含100万元）</td>
+                            <td>6600元</td>
+                            <td>0.66%</td>
+                        </tr>
+                        <tr>
+                            <td>100-200万元（包含200万元）</td>
+                            <td>10800元</td>
+                            <td>0.54%</td>
+                        </tr>
+                        <tr>
+                            <td>200-500万元（包含500万元）</td>
+                            <td>23000元</td>
+                            <td>0.46%</td>
+                        </tr>
+                        <tr>
+                            <td>500-1000万元（包含1000万元）</td>
+                            <td>42000元</td>
+                            <td>0.42%</td>
+                        </tr>
+                    </table>
+                </ul>
+     	  	   </div>
+
+     	  </div>
+    </div>
+    
+    
+  
+</div>
+
+
+
+
+

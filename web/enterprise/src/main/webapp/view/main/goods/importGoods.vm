@@ -1,0 +1,337 @@
+<div class="wrapbg">
+	<div id="money_cz" class="wrap">
+		<div class="page_title audit">
+			<div class="title fl">
+				<i class="icon fl"></i>
+				<span class="tt fl">导入基础数据</span>
+			</div>
+		</div>
+		<div class="pagebox">
+			<form id="form_search" action="${request.contextPath}/my/all-audit.htm?shStatus=1" method="post">
+				<input type="hidden" name="isPending" id="isPending" value="1">
+				<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+				<div class="search_row mt10">
+					<label class="label1 fl">商品类型：</label>
+					<div class="select_div mr16 fl">
+						<select name="selectType" id="J_Cata">
+							<option value="">全部</option>
+						</select></div>
+
+					<label class="label1 fl">品牌名称：</label>
+					<div class="select_div mr16 fl">
+						<select name="selectType" id="J_Brand">
+							<option value="">全部</option>
+						</select></div>
+				</div>
+				<div class="search_row">
+					<input type="button" value="查 询" class="btn J_btn_chaxun ml30">
+				</div>
+			</form>
+
+			<form id="form_batchAudit" action="#" method="POST">
+			<input type="hidden" id="J_StoreId">
+				<div class="tools"></div>
+				<div class="table_div">
+					<table class="table1">
+						<tr>
+							<th width="55" class="left pl15"><label><input type="checkbox" class="checkbox_all fl"> <em>全选</em></label></th>
+							<th width="110">商品类型</th>
+							<th width="110">品牌名称</th>
+							<th width="110">系列</th>
+							<th width="110">车型</th>
+							<th width="110">型号</th>
+							<th width="120">商品名称</th>
+							<th width="130">商品描述</th>
+							<th width="110">销售价格<em>（元）</em></th>
+						</tr>
+
+						<tr class="nbb">
+							<td colspan="9">
+								<div class="fl table1_bottom_left2"><input type="button" class="btn J_btn_dr" value="导 入"></div>
+								<div class="nav_page mt10">
+									<a href="#" id="firstPage">首页</a>
+									<a href="#" id="prevPage">上一页</a>
+									<i>第 <em id="J_CurPage">1</em> 页，共  <em id="J_TotalPage">1</em>  页</i>
+									<a href="#" id="nextPage">下一页</a>
+									<a href="#" id="lastPage">尾页</a>
+									<span class="ml10">转到</span>
+									<input type="text" value="" class="input_go"><span>页</span><input type="button" class="btn_go"></div>
+							</td>
+						</tr>
+
+					</table>
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/JSON2.js"></script>
+<script>
+	jQuery.support.cors = true;
+	var memberid = $!response.data.member.memberId;
+	var token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjg4NjY4MjI0NDUsIm1pZCI6IjAwMSIsInVpZCI6IjAwMSJ9.sPN9IxlDf5ex9RQuA17BRqEODLNPngLk7FQ7C3dkODlhJI175HrD_00yipR2NOllXpaB8R5Emd6-v18DacjTNQ";
+	function toQuerySubmit(currentPage){
+		$("#currentPage").val(currentPage);
+		//$("#form_search").submit();
+		ajaxSearch(currentPage);
+	}
+
+	function ajaxSearch(current,rowcount){
+		current = current || 1;
+		rowcount = rowcount || 20;
+		var dataPost = {};
+		dataPost.service = "products";
+		dataPost.method = "Products.ListProduct";
+		dataPost.request = {"current":parseInt(current),"row_count":parseInt(rowcount),"op_info":{"partner_id":"ANDROID_DEBUG","token":token}};
+		if($("#J_Cata option:selected").val() != "")
+			dataPost.request.cata_id = parseInt($("#J_Cata option:selected").val());
+		if($("#J_Brand option:selected").val() != "")
+			dataPost.request.brand_id = parseInt($("#J_Brand option:selected").val());
+			
+		dataPost.request.store_id = -1;
+		dataPost = JSON.stringify(dataPost);
+
+		$.ajax({
+			"type":"POST",
+			"url":"#springUrl('/agent.htm')",
+			"contentType":"application/json",
+			"data":dataPost,
+			"cache":false,
+			"success":function (response,e) {
+				showData(response,current,rowcount);
+			},
+			"error":function(){
+				alert(G.sysError);
+			}
+		});
+	}
+
+	function showData(data,current,rowcount){
+		var html = "";
+		var _data = data.rows;
+
+		if(_data && _data.length > 0){
+			for(var i = 0, len = _data.length; i < len; i++){
+				var __data = _data[i];
+
+				html += '<tr class="ajaxTr">';
+				html += '<td><input type="checkbox" name="id" value="" class="checkbox" data-id="' + __data.id + '"></td>'
+				html += '<td>' + htmlEncode(__data.cata_name) + '</td>';
+				html += '<td>' + htmlEncode(__data.brand_name) + '</td>';
+				html += '<td>' + htmlEncode(__data.xilie) + '</td>';
+				html += '<td>' + htmlEncode(__data.chexing) + '</td>';
+				html += '<td>' + (__data.xinghao == undefined ? "" : htmlEncode(__data.xinghao)) + '</td>';
+				html += '<td>' + htmlEncode(__data.name) + '</td>';
+				html += '<td>' + htmlEncode(__data.desc) + '</td>';
+				html += '<td>' + fomatMoney2(__data.price) + '</td>';
+				html += '</tr>';
+			}
+
+			var totalItem = data.total;
+			var pageSize = rowcount;
+			var currentPage = current;
+			var pageCount = Math.ceil(totalItem / pageSize);
+
+			pageCount = pageCount == 0 ? 1 : pageCount;
+			if(!currentPage || totalItem == 0){
+				currentPage = 1;
+			}
+
+			$("#J_CurPage").text(currentPage);
+			$(".input_go").val(currentPage);
+			$("#J_TotalPage").text(pageCount);
+
+			var toQueryFn = function() {
+				var page = $(".input_go").val();
+				var patm=/^\d+$/;
+				if(!patm.test(page)){
+					alert("请输入要跳转的页");
+					$(".input_go").val("");
+					return false;
+				}
+				if(parseInt(page, 10) > parseInt(pageCount, 10)){
+					return toQuerySubmit(parseInt(pageCount));
+				}
+				return toQuerySubmit(parseInt(page));
+			};
+
+			if(currentPage != 1){
+				$("#firstPage").removeClass("nav_page_disabled");
+				$("#prevPage").removeClass("nav_page_disabled");
+			}else{
+				$("#firstPage").addClass("nav_page_disabled");
+				$("#prevPage").addClass("nav_page_disabled");
+			}
+
+			if(currentPage != pageCount){
+				$("#nextPage").removeClass("nav_page_disabled");
+				$("#lastPage").removeClass("nav_page_disabled");
+			}else{
+				$("#nextPage").addClass("nav_page_disabled");
+				$("#lastPage").addClass("nav_page_disabled");
+			}
+
+			// 首页
+			$("#firstPage").unbind().click(function(e){
+				e.preventDefault();
+				if(currentPage != 1) {
+					toQuerySubmit(1);
+				}
+			});
+
+			// 尾页
+			$("#lastPage").unbind().click(function(e){
+				e.preventDefault();
+				if(currentPage != pageCount) {
+					toQuerySubmit(pageCount);
+				}
+			});
+
+			// 上一页
+			$("#prevPage").unbind().click(function(e){
+				e.preventDefault();
+				if(currentPage != 1){
+					return toQuerySubmit(currentPage - 1);
+				}
+			});
+
+			// 下一页
+			$("#nextPage").unbind().click(function(e){
+				e.preventDefault();
+				if(currentPage != pageCount){
+					return toQuerySubmit(parseInt(currentPage)+1, 10);
+				}
+			});
+
+			$('.input_go').unbind().on('keypress', function(e){
+				var keyCode = e.which;
+				return keyCode == 46 || (keyCode >= 48 && keyCode <=57);
+			});
+
+			$('.input_go').unbind().on('keyup', function(e){
+				var value = $(".input_go").val();
+				if (value) {
+					value = parseInt(value, 10);
+					if (value  > pageCount) {
+						$(".input_go").val(pageCount);
+						return false;
+					}
+					$(".input_go").val(value);
+				}
+			});
+
+			$('.input_go').unbind().bind('keydown', function (e) {
+				var key = e.which;
+				if (key == 13) {
+					return toQueryFn();
+				}
+			});
+
+			$(".btn_go").unbind().click(function(){
+				return toQueryFn();
+			});
+
+			$(".nav_page").show();
+		}
+		else{
+			html += '<tr class="ajaxTr"><td colspan="9">无记录！</td></tr>';
+			$(".nav_page").hide();
+		}
+
+		$(".checkbox_all").prop("checked",false);
+		$(".ajaxTr").remove();
+		$(".table1 .nbb").before(html);
+	}
+
+	$(function(){
+
+		dataTools.initSelectOptions({
+			"url":"#springUrl('/agent.htm')",
+			"data":{"service":"products","method":"Products.ListCata"},
+			"J_Select":$("#J_Cata"),
+			"emptyText":"全部"
+		});
+
+		dataTools.initSelectOptions({
+			"url":"#springUrl('/agent.htm')",
+			"data":{"service":"products","method":"Products.ListBrand"},
+			"J_Select":$("#J_Brand"),
+			"emptyText":"全部"
+		});
+
+		ajaxSearch();
+
+		$(".J_btn_chaxun").click(function(){
+			ajaxSearch();
+		});
+
+		$(".checkbox_all").click(function(){
+			var jThis = $(this);
+			$(".checkbox").prop("checked", jThis.prop("checked"));
+		});
+		$("body").delegate(".checkbox","click",function(){
+			var jThis = $(this);
+			$(".checkbox_all").prop("checked", $(".checkbox").length == $(".checkbox:checked").length);
+		});
+
+		$(".J_btn_dr").click(function(){
+			var dataPost = {};
+			dataPost.service = "products";
+			dataPost.method = "Products.ImportProducts";
+			dataPost.request = {"product":{},"op_info":{"partner_id":"ANDROID_DEBUG","token":token}};
+			dataPost.request.store_id = memberid;
+			dataPost.request.ids = [];
+
+			var jChecked = $(".checkbox:checked");
+			if(jChecked.length == 0) { alert("请选择您要导入的内容！"); return false; }
+			jChecked.each(function(){
+				dataPost.request.ids.push(parseInt($(this).data("id")));
+			});
+			
+			dataPost = JSON.stringify(dataPost);
+
+			$.ajax({
+				"type":"POST",
+				"url":"#springUrl('/agent.htm')",
+				"contentType":"application/json",
+				"data":dataPost,
+				"cache":false,
+				"success":function (response,e) {
+					if(response && response.err && response.err.err_code == 1){
+						var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+	    				html += '<tr><td class="tcenter"><i class="zzffwqfm txsh_wq2"><span class="f16 b tip_title" style="line-height: 48px;">您已成功导入 ' + jChecked.length + ' 条！</span><br><span class="color_4c f12" style="display: none;"><i class="time_left">3</i>秒后将自动关闭</span></span></i></td></tr></table>';
+	    				html += '</div><div class="div_btn_submit"><input type="button" class="btn" value="确认" id="J_QueRen" /></div></div>';
+	    				showWin('html', html, '', 500, 240, '提示', '', '');
+
+						//showWin('html', html, {mode:1}, 500, 190, '提示', '', 3000);
+	    				//doFunByTime({jObj:$(".time_left"), time:3});
+	    			}else{
+	    				var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+	    				html += '<tr><td class="tcenter"><i class="zzffwqfm txsh_wq2"><span class="f16 b tip_title" style="line-height: 48px;">导入失败！</span><br><span class="color_4c f12" style="display: none;"><i class="time_left">3</i>秒后将自动关闭</span></span></i></td></tr></table>';
+	    				html += '</div><div class="div_btn_submit"><input type="button" class="btn" value="确认" id="J_QueRen" /></div></div>';
+	    				showWin('html', html, '', 500, 240, '提示', '', '');
+
+						//showWin('html', html, {mode:1}, 500, 190, '提示', '', 3000);
+	    				//doFunByTime({jObj:$(".time_left"), time:3});
+	    			}
+
+					$("#J_QueRen").unbind("click").click(function(){
+						closeSW();
+					});
+					//J_Error.text("提交成功");
+					//btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					//window.location.href = "";
+				},
+				"error":function(){
+					alert(G.sysError);
+				}
+			});
+			
+			return false;
+			//$('#form_batchAudit').submit();
+		});
+
+	})
+</script>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>#if($page_title) $page_title #else 商户登录 #end</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.js"></script>
+</head>
+<style type="text/css">
+    .safe_plugin {
+        display: none;
+        height: 250px;
+        position: relative;
+        width: 540px;
+    }
+</style>
+<body class="login_body">
+  <div id="pageF">
+    #parse("/common/control/header-nologin_login.vm")
+    
+		$screen_content
+		
+		#parse("/common/control/footer.vm")
+    </div>
+</body>
+</html>

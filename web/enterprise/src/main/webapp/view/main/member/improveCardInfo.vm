@@ -1,0 +1,182 @@
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/safectrl.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/safectrl_utils.js${WEB_RESOURCE.staticVersion}"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/withdrawal.js"></script>
+<style>
+#bank_cord_tip{ display:none; position:absolute; left:0; top:-35px; padding:0 8px; height:32px; line-height:32px; font-size:20px; border:1px solid #bbb; background-color:#f3f3f3;}
+/*模糊匹配 */
+.custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+.custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    /* support: IE7 */
+    *height: 1.7em;
+    *top: 0.1em;
+  }
+.custom-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+	width:275px;
+	font-weight:normal;
+	color:#000;
+	padding-left:7px;
+  }
+.ui-autocomplete {max-height: 300px;overflow-y: auto;overflow-x: hidden;}
+.ui-tooltip {z-index:1000000}
+
+</style>
+<div class="wrap min_height6">
+<h2 class="h2_titform"><em>完善银行卡信息</em>为保证您的交易安全，公司用户必须完善公司银行卡信息方可提现。</h2>
+    <form id="withdraw_form1" class="form-horizontal recharge_form" action="/my/doWithdraw.htm" method="POST">
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>选择银行卡：</label>
+            <div class="controls">
+              <ul class="bind_bank bind_bank_sh">
+              #foreach ($!bankcard in $!response.data.banks)
+                <li><label class="f_12"><input class="mart2_ie7" id="bankcardId_$velocityCount"  name="bankcardId" type="radio" checked="checked" value="$!bankcard.bankcardId"> $!bankcard.bankName 尾号：$!bankcard.bankAccountNumMask 开户人：$!bankcard.realName </label>
+                #if("$!bankcard.branchNo"==""||$null.isNull($bankcard.branchNo))
+                <span id="addBank" class="btn_h24 fc_3 mart10" data-indexno="$velocityCount" data-bankcardid="$!bankcard.bankcardId">完善卡信息</span>
+                #end
+                #end
+              </ul>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="del_bank_dialog" id="addBankDialogBusy">
+    <span class="wram_icobg"></span>
+    <h2>完善银行卡信息？</h2>
+    <p>系统繁忙，请等待。</p>
+</div>
+<div class="add_bank_dialog" id="addBankDialog">
+    <form id="withdraw_bank_form" name="withdraw_bank_form" action="/my/finishBankAccount.htm" method="POST" class="form-horizontal" >
+         <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>银行卡号：</label>
+             <div class="controls">
+                <input type="text" id="showCardId" name="showCardId" class="in_txt disabled_txt" value="" disabled>
+             </div>
+            </div>
+          <div class="control-group">
+             <label class="control-label" for=""><i class="fc_r_ff">*</i>银行名称：</label>
+               <div class="controls">
+                 <input type="text" id="showBankName" name="showBankName" class="in_txt disabled_txt" value="" disabled>
+                 <input type="hidden" id="showBankCode" name="showBankCode"  value="" >
+                 <input type="hidden" id="showBankCardId" name="showBankCardId" value=""/>
+               </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for=""><i class="fc_r_ff">*</i>开户名：</label>
+                <div class="controls">
+                  <input type="text" id="showUserName" name="showUserName" class="in_txt disabled_txt" value="" disabled>
+                </div>
+            </div>
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>开户银行所在省、直辖市：</label>
+            <div class="controls">
+                <select id="provSelect" name="province" class="select"  onchange="selectCity(this.value)">
+                  <option value="">请选择省份</option>
+                </select>
+                <p id="provSelectTip_error"> </p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>开户银行所在城市：</label>
+            <div class="controls">
+                <select id="citySelect" name="city" class="select" onchange="selectBranch(this.value)">
+                  <option value="">请选择城市</option>
+                </select>
+                <p class="f_12 fc_9">如果找不到所在城市，可以选择所在地区或者上级城市。</p>
+                <p id="citySelectTip_error"> </p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for=""><i class="fc_r_ff">*</i>支行名称：</label>
+            <div class="controls">
+                <select id="branchSelect"  name="branchCode" class="select">
+                  <option value="">请选择支行</option>
+                </select>
+                 <p id="branch_error"> </p>
+                 <input type="hidden" id="branchBack">
+            </div>
+          </div>
+         <div class="control-group">
+                <label class="control-label" for=""><i class="fc_r_ff">*</i>银行卡类型行：</label>
+                <div class="controls pos_rel">
+                    <select class="select" name="cardType" style="width:150px;">
+                      <option value="1">借记卡</option>
+                      <option value="2">贷记卡</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for=""><i class="fc_r_ff">*</i>银行卡属性：</label>
+                <div class="controls pos_rel">
+                    <select class="select" name="cardAttribute" style="width:150px;">
+                      <option value="0">对公</option>
+                      <option value="1">对私</option>
+                    </select>
+                </div>
+            </div>
+          <div class="control-group">
+            <div class="controls"> <label id="withdraw_add_bankcard_submit" class="btn_h40_red bold" >提交</label></div>
+          </div>
+    </form>
+</div>
+<script type="text/javascript">
+ $("#withdraw_add_bankcard_submit").click(function () {
+
+        var province=$("#provSelect").val();
+        if(jQuery.isEmpty(province)) {
+            $("#provSelectTip_error").html("<label class='error'>请选择省份!</label>");
+            return false;
+        } else {
+            $("#provSelectTip_error").html("");
+        }
+        var city=$("#citySelect").val();
+        if(jQuery.isEmpty(city)) {
+            $("#citySelectTip_error").html("<label class='error'>请选择城市!</label>");
+            return false;
+        } else {
+            $("#citySelectTip_error").html("");
+        }
+        var bank=$("#branchSelect").val();
+        if(jQuery.isEmpty(bank)) {
+            $("#branch_error").html("<label class='error'>请选择支行!</label>");
+            return false;
+        } else {
+            $("#branch_error").html("");
+        }
+		$("#withdraw_bank_form").submit();
+       jQuery.dialog("操作完成！", function(){});
+        return true;
+    });
+ function ajaxStart(){
+		$("body").ajaxStart(function() {
+			if(typeof($(".ajax_start").attr("class"))=="undefined"){
+				$("body").append("<div class='ajax_start' style='z-index:1000000'><p class='loding'><img src='${WEB_RESOURCE.staticAddress}wallet/image/ajax-loader.gif'>数据加载中...</p></div>");
+				$(".ajax_start").fadeIn("fast");
+			}
+			else{
+				$(".ajax_start").html("<p class='loding' style='z-index:1000000'><img src='${WEB_RESOURCE.staticAddress}wallet/image/ajax-loader.gif'>数据加载中...</p>").fadeIn("fast");
+			}
+		});
+}
+
+	function ajaxSuc(){
+			$(".ajax_start").remove();
+	}
+	$(document).ajaxStart(function(){
+			ajaxStart();
+		});
+	$(document).ajaxComplete(function(){
+		ajaxSuc();
+	});
+	$(document).ajaxStop(function(){
+		ajaxSuc();
+	});
+</script>

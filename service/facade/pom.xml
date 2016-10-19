@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<parent>
+		<groupId>com.netfinworks.site</groupId>
+		<artifactId>site-service-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>site-service-facade</artifactId>
+	<version>1.0.2-SNAPSHOT</version>
+
+	<name>site service facade</name>
+	<description>site application</description>
+
+	<packaging>jar</packaging>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.netfinworks.common</groupId>
+			<artifactId>netfinworks-common-lang</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.netfinworks.ma.service</groupId>
+			<artifactId>ma-service-facade</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.netfinworks.site</groupId>
+				<artifactId>site-domain-main</artifactId>
+				<version>${site.version}</version>
+			</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Releases</name>
+			<url>http://192.168.110.31:8081/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Snapshots</name>
+			<url>http://192.168.110.31:8081/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

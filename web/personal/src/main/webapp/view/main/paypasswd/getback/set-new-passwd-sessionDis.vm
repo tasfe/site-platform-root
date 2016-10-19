@@ -1,0 +1,18 @@
+<!--设置支付新密码成功-->
+<div class="min_height6">
+#if($response.success==false)
+	<div class="user_done_success">
+	          <i class="ico_err"></i>
+	          <ul>
+	              <li class="tit">对不起，链接地址已过期！</li>
+	         </ul>
+	</div>
+	#else
+		<div class="user_done_success">
+	          <i class="ico_err"></i>
+	          <ul>
+	              <li class="tit">对不起，用户信息不匹配！</li>
+	         </ul>
+	</div>
+	#end
+</div>

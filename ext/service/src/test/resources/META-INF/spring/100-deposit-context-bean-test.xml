@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <context:property-placeholder location="file:///opt/pay/config/basis/site/app.properties"
+        ignore-unresolvable="true" />
+    <util:properties id="properties" location="file:///opt/pay/config/basis/site/app.properties" />
+
+     <bean id="receiptServiceImpl" class="com.netfinworks.site.ext.service.facade.impl.ReceiptServiceImpl">
+<!--      	<property name="depositFacade" ref="depositFacade"></property> -->
+     	<property name="fundoutFacade" ref="fosFacade"></property>
+     	<property name="uesClient" ref="uesClient"></property>     	
+     	 <property name="fundoutProducts">  
+	        <list>  
+	          <value>10210</value>
+	          <value>10220</value>  
+	        </list>  
+	      </property> 
+	      <property name="tradeProducts">  
+	        <list>  
+	          <value>20201</value>
+	          <value>20202</value>  
+	        </list>  
+	      </property>
+    </bean>
+
+
+</beans>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>管理数字证书</h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+  			<div class="" style="padding:53px 264px 0;">	
+  				<div style="width:424px; height:50px; line-height:20px; padding-top:6px" class="usbKeyCon_tips w410"><span class="f14 b">您是数字证书用户，但本台电脑尚未安装证书。</span><br>您可以<a href="#springUrl('/softcertActivate/step1.htm')">安装证书</a> </div>
+                <div class="">
+                	相关操作：<a href="#" class="btn_fs_l">取消数字证书</a>&nbsp;&nbsp;<span class="color_b3">取消数字证书会员服务，您将不再受数字证书的保护。</span>
+                </div>
+                </div>
+               <div class="usbKeyFaq" style="padding-top:90px;">
+                    <h4>数字证书问题：</h4>
+                    <dl>
+                        <dt>删除本地证书和取消证书的区别？</dt>
+                        <dd>答：<b>删除本地证书：</b>可以防止他人用证书登录进行操作。删除后仍然是证书用户，只是把当前机器中安装的证书删除了。如果之后仍要在这台机器上使用数字证书，将原来备份的证书导入进去即可。<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>取消证书：</b>当不想继续使用数字证书登录账户时，或证书备份密码忘记、证书丢失或过期，将无法使用永达互联网金融系统的一些功能时，可申请取消数字证书。取消证书成功后，不再是数字证书用户，账户安全将降低。</dd>
+                    </dl>
+                  <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+                </div>
+				<input type="hidden" name="bizType"  id="bizType" value="CERT_UNBIND"/>
+              
+               
+          </div>
+      
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<form id="cancelCert" action="#springUrl('/softcertActivate/cancelCert.htm')" method="post"></form>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script> 
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/showwin.js"></script>
+<OBJECT id="ukeyadmin_ie"  classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>		
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/showwin.js"></script>
+<script>
+function btnDoOrNot(flag){
+	stopCountDown($(".btn_mfhq")); 
+	if(flag){
+		$(".btn_submit").attr("disabled", false).removeClass("btn_qr_disabled");
+		$(".btn_mfhq").attr("disabled", false).removeClass("btn_mfhq_disabled").val("");
+	}
+	else{
+		$(".btn_submit").attr("disabled", true).addClass("btn_qr_disabled");
+		$(".btn_mfhq").attr("disabled", true).addClass("btn_mfhq_disabled").val("免费获取");
+	}
+}
+$(function(){
+	
+	$(".btn_fs_l").click(function(){
+		var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		html += '<div style=" padding-left:50px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span class="color_f60">证书一旦取消，你将失去证书保护功能，此操作请慎重！<br>如有需要，您可以在取消完成后重新申请证书。</i></p></div>';
+		html += '<form id="revoke" action=\'#springUrl("/softcertActivate/removeSingleCert.htm")\' method="post"><table cellpadding="0" cellspacing="0" border="0" class="sqinfo" style="margin:0; width:100%;"><tr><td class="tcright" width="233">法人身份证号：</td><td><input type="text" class="inputtext w232" value="" id="idcard" name="idcard"></td></tr><tr><td class="tcright" width="233">手机校验码：</td><td><label><input type="text" class="inputtext w80" value="" id="sjyzm" name=""><input class="btn_mfhq ml10" type="button" value=""><span id= "authCodeTip" style="padding-left:5px;color:red;font-size:12px;"></span></label></td></tr><tr><td class="tcright">支付密码：</td><td><div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div></td>'
+		html += '</tr></table></form>';
+		html += '<div class="error h22" style="padding-left:233px;"></div>'
+		html += '</div></div>';
+		
+		
+		html += '<div class="div_btn_submit"><input type="button" class="btn_qr btn_sumbit_qr_fs" ></div></div>';
+
+		showWin('html', html, '', 611, 410, ' ', '', '');
+		
+		btnDoOrNot(false);
+
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$(".pwdiv").append(pgeditor.load());
+		pgeditor.pgInitialize();
+		
+		$("#idcard").blur(function () {
+			var jTip =  $(".error");
+			var flag = checkMust($(this), jTip, "请输入您的身份证号码！");
+			if(flag)
+			flag = checkIdCard($(this), jTip, "请输入18位身份证号码！");
+			if(flag) {
+				var value = $(this).val();
+				jTip.text("");
+				jQuery.ajax({
+		            type: 'POST',
+		            url: "#springUrl('/softcertActivate/idcard.htm')" ,
+					data: "idcard=" + value,
+		            success: function(response) {
+		             if(response.success) {
+						btnDoOrNot(true);		
+		             } else {
+		                btnDoOrNot(false);
+		                jTip.text("身份验证失败！");
+		             }
+		            } ,
+					cache: false,
+					error:function(){jTip.text(G.sysError);btnDoOrNot(true);},
+		            dataType: "json"
+		        });
+			}
+			else btnDoOrNot(false);
+		});
+
+		function _submit(){
+			var btn_submit = $(".btn_sumbit_qr_fs");
+			jQuery.ajax({
+				type: 'POST',
+				url: '#springUrl("/softcertActivate/checkCode.htm")',
+				data: {"authCode":$("#sjyzm").val(), "password":$('#password').val()},
+				success: function(response) {
+					if(response.success) {
+						$("#cancelCert").submit();
+					} else {
+						$(".error").text(response.data.message);
+						btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+					}
+
+				},
+				cache: false,
+				error:function(){ $(".error").html(G.sysError); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");},
+				dataType: "json"
+			});
+		}
+
+		$(".btn_sumbit_qr_fs").click(function(){
+			var btn_submit = $(this);
+    		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+    		$(".error").text("");
+    		
+    		var thisObj = $("#idcard");
+			var tipObj = $(".error");
+			var flag = checkMust(thisObj, tipObj, "请输入您的身份证号码！");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			flag = checkIdCard(thisObj, tipObj, "请输入18位身份证号码！");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			
+    		if($.trim($("#sjyzm").val())==""){
+    			$(".error").text("请输入手机校验码！");
+    			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+    			return false;
+    		}
+
+			if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+				var wid = pgeditor.settings.pgeWindowID;
+				pgeditor.pwdLength(function(){
+					if(outs[wid].length == 0){
+						$(".error").text("请输入密码！");
+						btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+						return false;
+					}
+
+					//产生随机数加密
+					getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+						//获得密文
+						setPwdResult(pgeditor,$('#password'),function(){
+							_submit();
+						});
+					});
+				});
+			}
+			else{
+				if (pgeditor.pwdLength() == 0) {
+					$(".error").text("请输入密码！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+					return false;
+				}
+
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor]); //产生随机数去加密
+				setPwdResult(pgeditor,$('#password'));
+
+				_submit();
+			}
+		});//$(".btn_sumbit_qr_fs").click
+	});//取消数字证书结束
+	
+	$(".btn_mfhq").live("click",function(){
+		 $("#authCodeTip").html("");
+		countDown($(this),60,"");
+		$("#authCodeTip").html("");
+		jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/my/mobile/sendMessage.htm')",
+			data: "bizType=" + $("#bizType").val(),
+            success: function(response) {
+             if(response.success) {
+				$("#authCodeTip").html("校验码已发送");
+             } else {
+                $("#authCodeTip").html("若长时间未收到校验码，请联系客服 400-611-0909");
+             }
+            },
+			cache: false,
+			error:function(){ $("#authCodeTip").html(G.sysError); },
+            dataType: "json"
+        });
+	});
+})
+function del(obj){
+	
+	var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		
+	html += '<div style=" padding-left:132px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span class="f14 b l_h47">您正在删除此数字证书,是否继续操作？</i></p></div>';
+	
+	html += '</div></div>';
+	
+	
+	html += '<div class="div_btn_submit"><input type="button" class="btn_qr" ></div></div>';
+	
+	
+	showWin('html', html, '', 611, 270, ' ', '', '');
+
+if($("#digitalcertificatelist tr").length==2){
+	var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		
+	html += '<div style=" padding-left:50px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span>您正在删除账户中唯一的数字证书。如果您不想再使用数字证书，<br>请您<span class="color_f60">取消数字证书</span>。是否继续操作？</i></p></div>';
+	
+	html += '</div></div>';
+	
+	
+	html += '<div class="div_btn_submit"><input type="button" class="btn_qr btn_sumbit_qr" ></div></div>';
+	
+	
+	showWin('html', html, '', 611, 270, ' ', '', '');
+	
+	$(".btn_sumbit_qr").live("click",function(){
+		var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		
+		html += '<div style=" padding-left:50px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span class="color_f60">证书一旦取消，你将失去证书保护功能，此操作请慎重！<br>如有需要，您可以在取消完成后重新申请证书。</i></p></div>';
+		
+		html += '<table cellpadding="0" cellspacing="0" border="0" class="sqinfo" style="margin:0; width:100%;"><tr><td class="tcright" width="233">手机校验码：</td><td><label><input type="text" class="inputtext w80" value="" id="sjyzm"><input class="btn_mfhq ml10" type="button" value=""></label></td></tr><tr><td class="tcright">支付密码：</td><td><div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div></td></tr></table>';
+		
+		html += '</div></div>';
+		
+		
+		html += '<div class="div_btn_submit"><input type="button" class="btn_qr btn_sumbit_qr" ></div></div>';
+		
+		
+		showWin('html', html, '', 611, 350, ' ', '', '');
+	})
+}
+	
+	
+}
+</script>
+
+</body>
+</html>

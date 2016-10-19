@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:task="http://www.springframework.org/schema/task"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans   
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/task  
+  http://www.springframework.org/schema/task/spring-task-3.0.xsd ">
+
+ <bean id="xuCache" class="com.netfinworks.basis.inf.ucs.memcached.XUCache" init-method="init" >
+		<property name="name" value="${memcached.name}" />
+		<property name="namingService" ref="tTNamingService" />
+ </bean>
+ 
+ <bean id="tTNamingService" class="com.netfinworks.basis.inf.ucs.memcached.ns.TTNamingService">
+		<property name="ttServerAddress" value="${memcached.ttServerAddress}" />
+ </bean> 
+
+ <task:scheduled-tasks>  
+   <!-- 日对账单 -->
+  <task:scheduled ref="merchantTrade" method="upLoadTradeDay"  cron="0 10 1 * * ?" />  
+  <!-- 月对账单 -->
+  <task:scheduled ref="merchantTrade" method="upLoadTradeMonth"  cron="0 40 1 1 * ?" />  
+  
+   <!-- pos日对账单 -->
+  <task:scheduled ref="merchantTrade" method="upLoadPosTradeDay"  cron="0 0 12 * * ?" />
+   <!-- 连连pos日对账单 -->
+  <task:scheduled ref="merchantTrade" method="upLoadOtherPosTradeDay"  cron="0 30 15 * * ?" />   
+  <!-- pos月对账单 -->
+  <task:scheduled ref="merchantTrade" method="upLoadPosTradeMonth"  cron="0 40 1 1 * ?" />  
+  
+    
+   <!-- 补充上线前的日对账单 -->
+<!--  <task:scheduled ref="merchantTrade" method="upLoadTradeDayFill"  cron="0 35 01 03 07 ?" /> -->
+   <!-- 补充上线前的月对账单  -->
+  <!-- <task:scheduled ref="merchantTrade" method="upLoadTradeMonthFill"  cron="0 40 01 03 07 ?" /> -->
+  
+  <!-- 测试对账单  -->
+  <!-- <task:scheduled ref="merchantTrade" method="test"  cron="0 10 16 02 07 ?" /> -->
+ </task:scheduled-tasks>
+ <bean id="merchantTrade"  class="com.netfinworks.site.web.task.BatchTask"> </bean> 
+ 
+ <task:scheduled-tasks>
+	<task:scheduled ref="erTask" method="dataMigrationAccountYesterday"  cron="0 10 2 * * ?" />
+	<task:scheduled ref="erTask" method="dataMigrationBankCardYesterday"  cron="0 15 2 * * ?" />
+	<task:scheduled ref="erTask" method="dataMigrationAccount"  cron="0 10 1 13 6 ?" />
+	<task:scheduled ref="erTask" method="dataMigrationBankCard"  cron="0 10 1 13 6 ?" />
+	
+	<task:scheduled ref="erTask" method="capitalAndSalaryToAccount"  cron="0 10 1 13 6 ?" />
+	<task:scheduled ref="erTask" method="capitalAndSalaryToBankCard"  cron="0 10 1 13 6 ?" />
+	<!-- <task:scheduled ref="erTask" method="refundTicket"  cron="0 10 1 13 6 ?" /> -->
+	<task:scheduled ref="erTask" method="capitalAndSalaryToAccountYesterday"  cron="0 20 2 * * ?" />
+	<task:scheduled ref="erTask" method="capitalAndSalaryToBankCardYesterday"  cron="0 25 2 * * ?" />
+	<!-- <task:scheduled ref="erTask" method="refundTicketYesterday"  cron="0 30 2 * * ?" /> -->
+ </task:scheduled-tasks>
+ <bean id="erTask"  class="com.netfinworks.site.web.task.ErTask"> </bean>
+</beans>

@@ -1,0 +1,39 @@
+<style type="text/css">
+    .contactus-name { width:100%; height:106px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/contactus/1.jpg) center top no-repeat;}
+    .contactus-name h1 { height: 32px; padding: 36px 0 0 18px; line-height: 30px; font-size: 30px; color: #fff;}
+    .contactus-content { height: 495px; padding: 36px 0 0 24px;}
+    .contactus-content h2 { margin-bottom: 20px;}
+    .contactus-content p { line-height: 24px; color: #808080;}
+    .contactus-content .ewm { width: 300px; margin-top: 70px; text-align: center;}
+    .contactus-content .ewm .f14 { margin-top: 8px;}
+    .contactus-content .map { position: absolute; top: 39px; right: 18px; width: 629px; height: 450px;}
+</style>
+<div class="wrapbg">
+    <div class="contactus-name">
+        <div class="wrap">
+            <h1>联系我们</h1>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <div class="page_title">
+            <div class="title fl">
+            </div>
+        </div>
+
+        <div class="pagebox relative contactus-content">
+            <h2 class="f14 b">浙江永达互联网金融信息服务有限公司</h2>
+            <p>联系电话：0571-28276085</p>
+            <p>联系地址：杭州下城区杭州新天地商务中心2幢西11楼</p>
+            <p>邮政编码：310004</p>
+            <div class="ewm">
+                <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/contactus/3.png" alt="扫描关注永达互联网金融公众号"/>
+                <div class="f14">扫描关注永达互联网金融公众号</div>
+            </div>
+
+            <div class="map">
+                <img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/contactus/2.jpg">
+            </div>
+        </div>
+    </div>
+</div>

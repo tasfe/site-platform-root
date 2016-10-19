@@ -1,0 +1,138 @@
+<div class="wrapbg">
+<div class="wrap">
+
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">数字证书</span>
+		</div>
+	</div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               
+          <div class="activateTit pos_rel">
+          
+              <ul>
+                   <li><span class="bold f16">数字证书</span><span class="ml10"></span></li>
+				  <li class="mt5">申请后账户安全等级为：<span class="spBar"><span style="width:65px;"></span></span><span class="f14 ml10">中</span></li>
+              </ul>
+              
+              <span class="imgAct"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/DigitalCertificateImg.gif" height="93" width="138" alt=""></span>
+          
+          </div>  
+                
+          <div class="usbConBox clearfix" style="padding:25px; width:870px;">
+          
+               <p class="bold" style="width:702px;">申请数字证书后，只能在安装数字证书的电脑上支付。当您换电脑或重装系统时，只需用手机校验即可重新安装数字证书，
+所以确保您在永达账户绑定的手机可以正常使用。</p>
+               <p class="mt20 l_h20" style="color:#858689;">支持的操作系统：Windows XP/Windows 7/Windows 8/ Windows 10/Windows Vista<br>支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等</p>
+               
+               <ul class="actList">
+                   <li style="color:#595757;"><input type="button" class="btn_digitalcer" id="btn_digitalcer" style="display:none">
+						<input class="btn_digitalcerno" type="button" value=""><!--若还没有数字证书，<a href="#">点击申请</a>--></li>
+                   <li><div id= "mobileMessage" class="mainTips error">$!{message}</div></li>
+                  ## <li><p class="actCon_tips" id="xghm" style="width:375px;">请先确认您绑定的手机$!{mobile}能接收短信 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#springUrl('/my/go-reset-mobilephone.htm')">修改号码</a></p></li>
+				  ## <li><p class="actCon_tips" id="bdhm" style="width:375px; display:none;">您的账户尚未绑定手机号码，请先<a href="#springUrl('/my/go-set-mobilephone-verify.htm')">绑定手机</a></p></li>
+               	   <li><p class="actCon_tips" id="hdhm" style="width:375px; display:none;">您已绑定永达盾，无法申请数字证书。</p></li>
+          		   <li><p class="actCon_tips" id="sdhm" style="width:375px; display:none;">您的账户尚未进行身份认证，请先<a href="#springUrl('/my/go-personal-certification.htm')">身份认证</a></p></li>
+          		   <li><p class="actCon_tips" id="ssdhm" style="width:375px; display:none;">您的账户尚未进行身份认证，请先<a href="#springUrl('/my/go-enterprise-certification.htm')">身份认证</a></p></li>
+				   <li><p class="actCon_tips" id="bdyx" style="width:375px; display:none;">您的账户尚未绑定邮箱，请先<a href="#springUrl('/my/go-set-email.htm')">绑定邮箱</a></p></li>
+               </ul>
+          
+          </div>
+          
+          
+          <div class="usbKeyFaq" style="padding:30px 70px 50px">
+			  <h4>数字证书问题：</h4>
+			  <dl>
+				  <dt>永达账户数字证书有什么作用？</dt>
+				  <dd>答：1、<b>加强保障：</b>将您的永达账户与您使用的电脑进行绑定，即使对方窃取了您的密码，在其它的设备上也动不了您的资金，保障了您的资金安全。数字证书用户，如果在其他设备登录永达账户，在设备没有安装数字证书的情况下，只能查询账户，不能进行任何操作，数字证书相当于为您的账户配置了一把“钥匙”，大大增强账户使用的安全性。<br><br>
+					  2、<b>提升限额：</b>使用永达账户的数字证书，当您在使用永达账户进行转账、提现等功能时可提升相应额度。</dd>
+			  </dl>
+			  <dl>
+				  <dt>数字证书安装有哪些好处？</dt>
+				  <dd>答：申请了数字证书，在登录的时候会获取更高安全等级的身份认证，可以更好地保证您发送的信息不会在网上被篡改，即使丢失了账号和密码，您的账户、资金仍然能得到一定的安全保护。数字证书会将用户的出款、重要资料修改等行为控制在固定的电脑上进行，即使账号密码被盗取，没有证书，就无法操作账户内的资金。</dd>
+			  </dl>
+                  <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+            </div>
+     </div>
+     </div>
+</div>
+</div>
+<form id="form2" action="#springUrl('/softcertActivate/step1.htm')" method="get"></form>
+<OBJECT id="ukeyadmin_ie"  classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+<script>
+$(function(){
+	var mobile = "$!{mobile}";
+	var hard = "$!{hard}";
+	var realName = "$!{realName}";
+	var membercode = "$!{membercode}";
+	var email = "$!{email}";
+	
+	if( hard && hard == "true"){
+		$("#xghm").hide();
+		$("#hdhm").show();
+		$(".btn_digitalcerno").show();
+		$(".btn_digitalcer").hide();
+		return;
+	}
+	if((realName==null || realName=="" )&& (mobile == null || mobile == "")){
+		if( membercode=="1"){
+			$("#sdhm").show();
+		}else{
+			$("#ssdhm").show();
+		}
+		$("#xghm").hide();
+		/*$("#bdhm").show();*/
+		$(".btn_digitalcerno").show();
+		$(".btn_digitalcer").hide();
+		return;
+	}
+	if(realName == null ||realName==""){
+		if(membercode=="1"){
+			$("#sdhm").show();
+		}else{
+			$("#ssdhm").show();
+		}
+		/*$("#xghm").show();*/
+		$(".btn_digitalcerno").show();
+		$(".btn_digitalcer").hide();
+		return;
+	}
+	/*
+	if( mobile == null || mobile == "") {
+		$("#xghm").hide();
+		$("#bdhm").show();
+		$(".btn_digitalcerno").show();
+		$(".btn_digitalcer").hide();
+		return;
+	} 
+	*/
+	if( email == null || email == "") {
+		$("#xghm").hide();
+		$("#bdyx").show();
+		$(".btn_digitalcerno").show();
+		$(".btn_digitalcer").hide();
+		return;
+	}
+	else if(cenroll==null) {
+		$(".btn_digitalcerno").show();
+		$(".btn_digitalcer").hide();
+	}
+	else{
+		$(".btn_digitalcerno").hide();
+		$(".btn_digitalcer").show();
+	}
+
+	$(".btn_digitalcer").click(function(){
+		$("#form2").submit();
+	});
+})
+</script>

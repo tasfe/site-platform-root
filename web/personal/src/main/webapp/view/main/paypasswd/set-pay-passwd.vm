@@ -1,0 +1,156 @@
+<!-- S 主要内容 -->
+<style> 
+.w232{ width:227px; height:24px;} 
+</style> 
+<div class="wrap">
+     
+     <div class="page_title"><h2>支付密码修改</h2></div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginList">
+              <form id="reset-paypasswd-form" name="reset-paypasswd-form" class="" action="${request.contextPath}/my/set-back-paypasswd.htm" method="POST">
+               <div class="login_limit">
+                       <label><span class="f14 limitLeft">账户名：</span>$!{response.data.member.loginName}
+                       </label>
+					   <label class="ml5"></label>
+					   <div class="mainTips ml160"></div>
+                    </div>
+			   #if($!response.data.realName == "true")
+			   <div class="login_limit" id="module2">
+                   <label>
+                          <span class="f14 limitLeft">证件号：</span>
+                          <input id="CertificateNo" name="certificates" type="text" class="inputtext w232 placeholder" value="" data-placeholder="请输入实名认证证件号">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+			   #end
+               <div class="login_limit" id="pwdiv_login_pw_new">
+                   <label><span class="f14 limitLeft">新支付密码：</span>
+                     <div class="pwdiv fl"><input name="newPasswd" type="hidden" id="newPasswd" data-type="11" /></div>
+                     <div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外！</em>
+                   </label>
+                   <div class="mainTips ml160 error clear"></div>
+               </div>
+               
+               <div class="login_limit" id="pwdiv_login_pw_new2">
+                   <label><span class="f14 limitLeft">重新输入新支付密码：</span>
+                     <div class="pwdiv fl"><input name="renewPasswd" type="hidden" id="renewPasswd" data-type="11" /></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外！</em>
+                   </label>
+                   <div class="mainTips ml160 error clear">
+				    #if($response.errors.repassword_password_not_same.length() > 0)
+        				#springMessageText($!response.errors.repassword_password_not_same,"您输入的两次支付密码不一致，请重新输入！")
+                    #elseif($response.errors.newpaypwd_equal_oldpaypwd.length() > 0)
+        				#springMessageText($!response.errors.newpaypwd_equal_oldpaypwd,"新支付密码不能和旧支付密码相同！")
+				    #elseif($response.errors.password_equal_login_password.length() > 0)
+        				#springMessageText($!response.errors.password_equal_login_password,"新支付密码不能和登陆密码相同！") 
+				    #end
+				    $!{response.message}
+				   
+				   </div>
+               </div>
+			   
+			   <input type="hidden" id="token" name="token" value="$response.data.token"/>
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+	$(function(){
+		var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$("#pwdiv_login_pw_new .pwdiv").append(pgeditor1.load());
+		pgeditor1.pgInitialize();
+
+		var pgeditor2 = newPgeditor(3,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$("#pwdiv_login_pw_new2 .pwdiv").append(pgeditor2.load());
+		pgeditor2.pgInitialize();
+		
+		window.setInterval(function(){checkPwStrongPG(pgeditor1, $('#pwdiv_login_pw_new').find('.error'), $('#pwdiv_login_pw_new').find('.gradeIcon'), $('#pwdiv_login_pw_new').find('.gradeText'));},200); //实时显示密码强度
+
+		var realName="$!response.data.realName";
+		$("#CertificateNo").blur(function(){
+			flag = checkMust($("#CertificateNo"),$("#CertificateNo").parent().parent().find(".error"),"请输入证件号");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		});
+
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+			$(".error").text("");
+			if(realName=='true'){
+    			flag = checkMust($("#CertificateNo"),$("#CertificateNo").parent().parent().find(".error"),"请输入证件号");
+    			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			}
+
+			if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11) {
+				var wid1 = pgeditor1.settings.pgeWindowID;
+				var wid2 = pgeditor2.settings.pgeWindowID;
+				pgeditor1.pwdLength(function() {
+					if (outs[wid1].length == 0) {
+						$("#pwdiv_login_pw_new").find(".error").text("请输入新的支付密码！");
+						btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+						return false;
+					}
+
+					pgeditor1.pwdStrength(function(n){
+						if(n <= 2){
+							$("#pwdiv_login_pw_new").find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外！");
+							btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+							return false;
+						}
+
+						pgeditor2.pwdLength(function() {
+							if (outs[wid2].length == 0) {
+								$("#pwdiv_login_pw_new2").find(".error").text("请输入新的支付密码！");
+								btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+								return false;
+							}
+
+							pgeditor1.pwdHash(function(){
+								pgeditor2.pwdHash(function(){
+									if(outs[wid1].hash != outs[wid2].hash){
+										$("#pwdiv_login_pw_new2").find(".error").text("您输入的两次支付密码不一致，请重新输入！");
+										btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+										return false;
+									}
+
+									getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor1,pgeditor2],function(){
+										setPwdResult(pgeditor1,$('#newPasswd'),function(){
+											setPwdResult(pgeditor2,$('#renewPasswd'),function(){
+												$("#reset-paypasswd-form").submit();
+											});
+										});
+									});
+								})
+							});
+						});
+					});
+				});
+			}
+			else{
+				if(pgeditor1.pwdHash() == 0) { $("#pwdiv_login_pw_new").find(".error").text("请输入新的支付密码！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				if(pgeditor1.pwdStrength() <= 2) { $("#pwdiv_login_pw_new").find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				if(pgeditor2.pwdHash() == 0) { $("#pwdiv_login_pw_new2").find(".error").text("请输入新的支付密码！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				if(pgeditor1.pwdHash() != pgeditor2.pwdHash()) { $("#pwdiv_login_pw_new2").find(".error").text("您输入的两次支付密码不一致，请重新输入！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor1,pgeditor2]); //产生随机数去加密
+				setPwdResult(pgeditor1,$('#newPasswd'));
+				setPwdResult(pgeditor2,$('#renewPasswd'));
+
+				$("#reset-paypasswd-form").submit();
+			}
+		});
+		
+		
+	})
+</script>

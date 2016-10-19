@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <title>个人资料</title>
+</head>
+<body>
+<div class="yd-wrap meWrap">
+  <div class="me-list">
+    <ul class="yd-itemList itemMarginLeft">
+      <li id="J_Acount" style="display: none;">账户<span class="yd-layouts-right info-gray">-</span></li>
+      <li id="J_Name" style="display: none;">姓名<span class="yd-layouts-right info-gray">-</span></li>
+      <li id="J_Sex" style="display: none;">性别<span class="yd-layouts-right info-gray">-</span></li>
+      <li id="J_IdCard" style="display: none;">证件号<span class="yd-layouts-right info-gray">--</span></li>
+    </ul>
+  </div>
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script>
+  var J_Acount = $("#J_Acount"),
+          J_Name = $("#J_Name"),
+          J_Sex = $("#J_Sex"),
+          J_IdCard = $("#J_IdCard");
+
+  tools.ajaxSubmit({
+    "type": "GET",
+    "url": gurl + "/member/info",
+    "suc_suc": function(response){
+      // 已登录 则填值
+      var data = response.data;
+      if(!tools.isNull(data.loginName)){
+        J_Acount.find(".info-gray").text(data.loginName).end().show();
+      }
+      if(!tools.isNull(data.memberName)){
+        J_Name.find(".info-gray").text(data.memberName).end().show();
+      }
+      if(!tools.isNull(data.sex)){
+        J_Sex.find(".info-gray").text(data.sex).end().show();
+      }
+      if(!tools.isNull(data.authNo)){
+        J_IdCard.find(".info-gray").text(data.authNo).end().show();
+      }
+      //去除最后一行的横线
+      var melistLen=$(".me-list ul li:visible").length;
+      melistLen=parseInt(melistLen)-1;
+      $(".me-list ul li:visible").eq(melistLen).css("border-bottom","none");
+    }
+  });// ajaxSubmit
+</script>
+</body>
+</html>

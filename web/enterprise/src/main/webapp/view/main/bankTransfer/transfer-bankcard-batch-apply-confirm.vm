@@ -1,0 +1,188 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_zz" class="wrap">
+	<div class="page_title transfer">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">转账</span>
+		</div>
+		<div class="right fr"><a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=4')">转账记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_7_3.html&6,2')">转账常见问题</a></div>
+	</div>
+    <div class="zz_tab_link">
+		<a href="${path}/transfer/toTransferKjt.htm?link=0204" class="tab_zz_kjt fl">转账到永达账户</a>
+		<a href="${path}/bTransfer/toTransferBank.htm" class="tab_zz_yh fl cur">转账到银行账户</a>
+	</div>
+    <div class="pagebox pagebox1 pagezz relative">
+		<div class="step-wrap step-wrap2">
+			<span class="step-index">1</span>
+			<span class="step-name">转账信息</span>
+			<span class="s"></span>
+			<span class="step-index step-index-cur">2</span>
+			<span class="step-name step-name-cur">转账审核</span>
+			<span class="s"></span>
+			<span class="step-index">3</span>
+			<span class="step-name">转账成功</span>
+		</div>
+
+        <div class="bank_cooper_title">转账申请信息确认：</div>
+        <form class="zz_form_1" action="$!{path}/bTransfer/confirmBatchTransferBankApply.htm" method="post">
+        	<input type="hidden" name="token" value="$!token" >
+            <div class="boxbg1 w860">
+            	<div class="p49">
+                	<table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info f14">
+                        <tr>
+                        	<td width="200"><span class="b">转账人数：$!{transferPerCount}</span>人</td>
+                            <td width="200"><span class="b">转账金额：</span><span class="color_f6 b">$!{form.transMoney}</span>元</td>
+                            <td width="200"><span class="b">服务费：</span><span class="b">$!{form.serviceCharge}</span>元</td>
+                        </tr>
+                        <tr>
+                        	<td width="200"><span class="b">总额：</span><span class="color_f6 b">$!{form.totalMoney}</span>元</td>
+                            <td colspan="2">
+                             <span class="b">商户批次号：$!{sourceBatchNo}</span>
+                            <!--<span class="b">短信通知到：</span><span class="b">$!{user.mobile}</span>-->
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info2">
+                    	<tr>
+                        	<th width="88">序号</th>
+                            <th width="303">收款人信息</th>
+                            <th width="155">金额(元)</th>
+                            <th width="211">商户订单号</td>
+                            <th width="211">备注</th>                           
+                        </tr>
+                        #foreach($transfer in ${sessionPage.dataList})
+                        <tr class="jcontext">
+                        	<td>$!{transfer.orderNo}</td>
+                            <td>$!{transfer.name}&nbsp;($!{transfer.bankName}&nbsp;$!{transfer.branchName}&nbsp;$!{transfer.accountNoMask})</td>
+                            <td>$!{transfer.money}</td>
+                            <td class="text_l">$!{transfer.sourceDetailNo}</td>
+                            <td class="text_l">$!{transfer.remark}</td>
+                             
+                        </tr>
+						#end
+                    </table>
+					<div class="tabpagediv">
+    					#set($sessionPageUrl = $!{request.contextPath}+'/bTransfer/getSessionPage.htm?token=' + $!token)
+                        #parse("/common/control/session-page.vm")
+                    </div>
+                    <div class="mrlauto pay_pw"><span class="f14 b pw_lf">支付密码：</span><div class="pwdiv"><input name="payPassword" type="hidden" id="password" /></div>
+                    <div class="error" style=" height:30px; padding-left:77px;"></div>
+                </div>
+                </div>
+                <div class="btn_bottom_zz row3"><input type="button" value="确认转账" class="btn btn_submit "><input type="button" value="返 回" onClick="goBackOrClose();" class="btn btn-bg ml10"></div>
+                
+            </div>
+            
+        </form>
+        <br>
+		<!--<div class="faq_relevant">
+            <h4>批量转账问题：</h4>
+            <dl>
+                <dt>什么是批量转账到账户？</dt>
+                <dd>答：您可以下载批量转账到账户的表格，在表格中可添加多个转账的永达账户，来实现您的转账需求。</dd>
+            </dl>
+            <dl>
+                <dt>什么是批量转账到银行卡？</dt>
+                <dd>答：您可以下载批量转账到银行的表格，在表格中可添加多个转账的银行卡，来实现您的转账需求。</dd>
+            </dl>
+            <dl>
+                <dt>批量转账到账户的总笔数，总金额限制？</dt>
+                <dd>答：批量转账到账户总笔数为999笔，总金额不受限制！</dd>
+            </dl>
+            <dl>
+                <dt>批量转账到银行卡的总笔数，总金额？</dt>
+                <dd>答：批量转账到银行卡总笔数为999笔，总金额不受限制！</dd>
+            </dl>
+             <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>-->
+
+    </div>
+
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    closeSW();
+
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+
+    function _submit(){
+        var btn_submit = $(".btn_submit");
+        $.ajax({
+            url: '#springUrl("/bTransfer/checkPayPassword.htm")',
+            type: 'post',
+            data: 'payPassword=' + $('#password').val(),
+            dataType: "json",
+            success: function(result) {
+                if (result && !result.success) {
+                    btn_submit.attr("disabled", false).removeClass("btn_disabled");
+                    $(".pay_pw").find(".error").text(result.message);
+                } else {
+                    showWaitingImg('${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/loading.gif');
+                    setTimeout(function() {
+                        $(".zz_form_1").submit();
+                    }, 500);
+                }
+            },
+            error:function(){
+                btn_submit.attr("disabled", false).removeClass("btn_disabled");
+                $(".pay_pw").find(".error").text("支付密码输入有误，请重新输入！");
+            }
+        });
+    }
+
+    $(".btn_submit").click(function(){
+        var btn_submit = $(this);
+        btn_submit.attr("disabled", true).addClass("btn_disabled");
+        $(".error").text("");
+
+        var jsonSubmit = {
+            jBtnSubmit:btn_submit,
+            cssClass:"btn_disabled",
+            urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+        };
+        var pgeditors = [
+            {
+                jPwInput:pgeditor,
+                jInput:$("#password"),
+                jTip:$("#password").parent().parent().find(".error"),
+                txtEmpty:"请输入支付密码！"
+            }
+        ];
+        checkPgeditor({
+            jsonSubmit:jsonSubmit,
+            pgeditors:pgeditors,
+            callback:function(){
+                _submit();
+            }
+        });
+    });
+});
+
+// 显示分页数据
+function showPageDataList(dataList) {
+    if (!dataList || dataList.length == 0) {
+        return;
+    }
+
+    var jtable = $('.zzkjt_info2');
+    jtable.find('.jcontext').remove();
+    var len = dataList.length;
+    for (var i=0; i<len; i++) {
+        var transfer = dataList[i];
+        var tdHtml = '<tr class="jcontext">'
+            + '<td>' + transfer.orderNo + '</td>'
+            + '<td>' + transfer.name + '&nbsp;(' + transfer.bankName + '&nbsp;'
+                + transfer.branchName + '&nbsp;' + transfer.accountNoMask + ')</td>'
+            + '<td>' + transfer.money + '</td>'
+            + '<td>' + transfer.sourceDetailNo + '</td>'
+            + '<td class="text_l">' + transfer.remark + '</td></tr>';
+        jtable.append(tdHtml);
+    }
+}
+</script>

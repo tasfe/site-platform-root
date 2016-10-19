@@ -1,0 +1,203 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">应用产品</span>
+		</div>
+	</div>
+
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/accountManage.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/app-center.htm')">
+     	  	   	             <span class="subNavIcon qycp"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">应用产品</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/card-manage-index.htm')">
+     	  	   	             <span class="subNavIcon yhzh"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">银行账户</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1"><a href="javascript:" id="wgzs" class=" color_4e" style="float:right; font-size:12px; margin-right:20px;">下载网关证书</a><em class="f14 b">应用产品</em></div>
+     	  	   <div class="account_set_right_main clearfix" style="padding-top:0;">
+     	  	   	   		
+                       <div class="" style="display:inline-block; width:100%;">
+                         <div class="applicationlist applicationlist2">
+                        <ul>
+                            <li><a href="#springUrl('/static/wyzf.htm')"><img title="网银支付" alt="网银支付" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-1.gif"><p class="p1">网银支付</p></a></li>
+                    ##<li><a href="#"><img title="资金归集" alt="资金归集" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-2.gif"><p class="p1">资金归集</p></a></li>
+                    <li><a href="#springUrl('/static/plzz.htm')"><img title="批量转账" alt="批量转账" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-3.gif"><p class="p1">批量转账</p></a></li>
+                    <li><a href="#springUrl('/static/jsdz.htm')"><img title="即时转账" alt="即时转账" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-4.gif"><p class="p1">即时转账</p></a></li>
+                   ## <li><a href="#"><img title="代收代付" alt="代收代付" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-5.gif"><p class="p1">代收代付</p></a></li>
+                    ##<li><a href="#springUrl('/static/rzzf.htm')"><img title="认证支付" alt="认证支付" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-6.gif"><p class="p1">认证支付</p></a></li>
+                   ## <li><a href="${request.contextPath}/payoff/toPayoff.htm" target="_blank"><img title="代发工资" alt="代发工资" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-7.gif"><p class="p1">代发工资</p></a></li>
+                    ##<li><a href="#"><img title="担保交易" alt="担保交易" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-8.gif"><p class="p1">担保交易</p></a></li>
+                    ##<li><a href="#"><img title="快捷支付" alt="快捷支付" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/app/app-9.gif"><p class="p1">快捷支付</p></a></li>
+                            
+                            
+                        </ul>
+                        </div>
+           				</div>
+   
+                       
+     	  	   </div>
+
+     	  </div>
+     	  <!-- E 右边内容 -->
+
+     </div>
+
+</div>
+</div>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+<script>G.isShowShieldDownload = false;</script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+<script>
+/*checkHardCert("#springUrl('/certActive/getCertSns.htm')",'gateway', "", function(result) {
+		if (result && result.status) {
+			if(result.status != 2) {
+				$("#tiperror").text("您已经下载网关证书");
+				document.getElementById("wgzs").disabled = true;
+			}
+		}
+	});*/
+
+$(function(){
+	$(".applicationlist li").hover(function(){
+		$(this).addClass("hover");
+		$(".p2",this).hide();
+		$(".p3",this).show();
+	},function(){
+		$(this).removeClass("hover");
+		$(".p2",this).show();
+		$(".p3",this).hide();
+	});
+	var csr = null;
+	var flag = null;
+	var pgeditor = null;
+	$("#wgzs").click(function(){
+		//权限验证：
+		$.ajax({
+			type: "post",
+			url:"#springUrl('/appCenter/downloadGatewayCertificate.htm')",
+			data: "",
+			dataType: "JSON",
+			success: function(result) {
+				if (result.success) {
+					//获取csr
+					csr = getCsr("soft");
+					if (!csr) {
+						return;
+					}
+
+					var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc" style="padding-bottom:10px;">';
+					html += '<table><tr><td width="230" class="f14 b" style="text-align:right">支付密码：</td><td><div class="pwdiv"><input name="password" type="hidden" id="password" /></div></td></tr><tr><td></td><td><div class="error h22" style=" margin-top:-2px;"></div></td>';
+					html += '</tr></table>';
+					html += '</div></div>';
+					html += '<div class="div_btn_submit"> <input type="button" value="确 定" class="btn J_btn_qd" id=""><input type="button" value="取 消" class="btn btn-bg ml30" onclick="closeSW();"></div></div>';
+
+					showWin('html', html, '', 713, 280, '下载网关证书', '', '');
+
+					pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+					window.pgeCtrl = pgeditor;
+					$(".pwdiv").append(pgeditor.load());
+					pgeditor.pgInitialize();
+				}
+				else{
+					alert(result.message);
+				}
+			},
+			error: function(){
+				alert(G.sysError);
+			}
+		});
+
+	});
+
+	function _submit(){
+		var btn_submit = $(".J_btn_qd");
+		var tipObj = $(".error");
+
+		//异步请求校验支付密码，校验成功安装网关证书
+		jQuery.ajax({
+			url:"#springUrl('/securityCenter/applyGatewayCert.htm')",
+			data:{csr:csr,password:$('#password').val()},
+			type:'POST',
+			dataType: "json",
+			success:function(response){
+				if(response.success) {
+					if (response.data.certSignBufP7.length > 0){
+						flag = installCert(response.data.certSignBufP7);
+						if(flag) {
+							tipObj.text(response.message);
+						}
+					}
+				} else {
+					tipObj.text(response.message);
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					return false;
+				}
+			},
+			error:function(){
+				tipObj.text(response.message);
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+		});
+	}
+
+	$("body").delegate(".btn_qd","click",function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		var tipObj = $(".error");
+		tipObj.text("");
+
+		var jsonSubmit = {
+			jBtnSubmit:btn_submit,
+			cssClass:"btn_disabled",
+			urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+		};
+		var pgeditors = [
+			{
+				jPwInput:pgeditor,
+				jInput:$("#password"),
+				jTip:tipObj,
+				txtEmpty:"请输入支付密码！"
+			}
+		];
+		checkPgeditor({
+			jsonSubmit:jsonSubmit,
+			pgeditors:pgeditors,
+			callback:function(){
+				_submit();
+			}
+		});
+	});
+})
+</script>

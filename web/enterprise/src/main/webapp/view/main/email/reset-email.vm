@@ -1,0 +1,102 @@
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">邮箱绑定修改</span>
+        </div>
+    </div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginCenter">
+              <form id="reset-email-form" name="reset-email-form" class="" action="${request.contextPath}/my/go-reset-email-active.htm" method="POST">
+              <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft l_h30">请输入支付密码：</span>
+                          <div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;">
+				   #if($response.errors.error_passwd_not_right.length() > 0)
+        				#springMessageText($!response.errors.error_passwd_not_right,"支付密码输入错误") ，还有$!{response.errors.remainNum}次机会！ 
+				   #elseif($response.errors.error_passwd_is_locked.length() > 0)
+        				#springMessageText($!response.errors.error_passwd_is_locked,"支付密码已被锁定！") 
+				   #end
+				   </div>
+               </div>
+			   <input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+			   <input type="hidden" name="isCertActive"  id="isCertActive" value="$!response.data.isCertActive"/>
+               
+               <div class="red" style="margin-left:160px; margin-bottom:20px;" id="errorMsg"></div>
+			   <div id="needUpdataKjd" class="mb15" style="margin-left:160px;display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</div>
+               
+               <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确 认"></div>
+              </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+</div>
+<OBJECT id="ukeyadmin" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+#if($!{response.data.isCertActive} == 'yes')
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+#end
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+
+<!-- E 主要内容 -->
+<script>
+
+$(function(){
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+
+            var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+            window.pgeCtrl = pgeditor;
+            $(".pwdiv").append(pgeditor.load());
+            pgeditor.pgInitialize();
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+
+        var jsonSubmit = {
+            jBtnSubmit:btn_submit,
+            cssClass:"btn_disabled",
+            urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+        };
+        var pgeditors = [
+            {
+                jPwInput:pgeditor,
+                jInput:$("#password"),
+                jTip:$(".error"),
+                txtEmpty:"请输入支付密码！"
+            }
+        ];
+        checkPgeditor({
+            jsonSubmit:jsonSubmit,
+            pgeditors:pgeditors,
+            callback:function(){
+                $("#reset-email-form").submit();
+            }
+        });
+	});
+	
+	#if($!{response.data.isCertActive} == 'yes')
+	// 检查提醒证书更新
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+	// 检查证书
+	selectVerifyStyle("#springUrl('/certActive/getCertSns.htm')");
+	// 检查永达盾是否插入
+	intervalCheckUSB();
+	#else
+	$("#captchaDiv").show();
+	#end
+
+})
+</script>

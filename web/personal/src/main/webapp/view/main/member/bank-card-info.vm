@@ -1,0 +1,120 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+      </div>
+    <div class="pagebox relative">
+    	<div class="assets_bankcardlist bankcardmanage icons_list" style="padding-left:48px; ">
+        	<ul>
+				
+				#set($cardType = "")
+				#foreach($info in $response.data.list)
+					#if($info.cardType == "1")
+						#set($cardType="借记卡")
+					#elseif($info.cardType == "2")
+						#set($cardType="贷记卡")
+					#end
+					#set($cardNo=$info.bankAccountNumMask)
+					#set($end=$cardNo.length() - 6)
+					#if($cardNo.length() - 6 > 0)
+						#set($tailNo=$cardNo.substring($end))
+					#else
+						#set($tailNo=$cardNo)
+					#end
+					#if($info.bankcardId == $response.data.defaultCard)
+						<li>
+                        	<div>
+								<span class="bankcardbgimg ${info.bankCode}_s"></span>
+								<span class="bankcardbgimgicon icon ${info.bankCode}"></span>
+                                <span class="s1">$!{info.bankName}</span><span class="s2">$tailNo</span>
+                                <span class="s3">$cardType</span>
+                                <span class="ss"><span class="ssbg"></span><a href="#" onclick="cardManage($!{info.bankcardId})" class="gl">管理</a></span>
+                                <span class="mr">默认银行卡</span>
+                            </div>
+                        </li>
+				    #else
+						<li>
+                        	<div>
+								<span class="bankcardbgimg ${info.bankCode}_s"></span>
+								<span class="bankcardbgimgicon icon ${info.bankCode}"></span>
+                                <span class="s1">$!{info.bankName}</span><span class="s2">$tailNo</span>
+                                <span class="s3">$cardType</span>
+                                <span class="ss"><span class="ssbg"></span><a href="#" onclick="cardManage($!{info.bankcardId})" onclick="cardManage($!{info.bankcardId})" class="gl">管理</a></span>
+                                <span class="mr" data-bank="尾号为$tailNo的$!{info.bankName}储蓄卡" data-id="$!{info.bankcardId}"><a href="#"  class="setDefaultBank">设为默认银行卡</a></span>
+                            </div>
+                        </li>
+					#end
+				#end
+            	
+                <li class="first last">
+                	<a href="#springUrl('/my/add-bankcard-index.htm?link=0104')" class="addbankcard"></a>
+                </li>
+				<input type="hidden" id="defaultCardId" name="defaultCardId" value="$!{response.data.defaultCard}"/>
+            </ul>
+        </div>
+    	
+    </div>
+
+</div>
+<form action="#springUrl('/my/cardManage.htm')" id="bankCardForm" method="POST"><input type="hidden" id="bankCardId" name="bankCardId" value=""></form>
+<script>
+$(function(){
+	
+	$(".assets_bankcardlist li").not(".last").hover(function(){
+		$(this).addClass("hover");
+		$(".mr>a",this).show();
+		
+	},function(){
+		$(this).removeClass("hover");
+		$(".mr>a",this).hide();
+	})
+	
+	$(".setDefaultBank").click(function(){
+		var html = '<div class="bankNnfasten"><div class="bankNnfasten_box">';
+		html += '<p class="bank_line">确认设置' + $(this).parent().attr("data-bank") + '为默认银行卡？</p>';
+		html += '<p class="btn_bankNnfasten_box"><input class="btn_bankNnfasten" type="button" value="" id="btn_setDefaultBank" data-id="'+$(this).parent().attr("data-id")+'"></p>';
+		html += '</div></div>';
+													
+		showWin('html', html, '', 500, 220, ' ', '', '');
+	});
+	
+	$("body").delegate("#btn_setDefaultBank","click",function(){
+		var $thisobj = $(this);
+		if($thisobj.val() == $thisobj.attr("data-placeholder")) {
+			$thisobj.val("");
+			$thisobj.removeClass("color_b3");
+		}
+		
+		var cardId = $(this).attr("data-id");
+		
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/setDefaultCard.htm')" ,
+            data: 'bankCardId='+cardId+'&defaultCardId='+$("#defaultCardId").val(),
+            success: function(response) {
+            	if(response.success){
+					window.location.href="#springUrl('/my/bankCardInfo.htm?link=0104')";
+            	} else {
+	            	$(".error").html(response.message);
+            	}
+            } ,
+            error: function(data) {
+               $(".error").html(response.message);
+            },
+            dataType: "json"
+        });
+		
+		closeSW();
+		
+	});
+	
+	
+})
+
+function cardManage(id){
+	$("#bankCardId").val(id);
+	$("#bankCardForm").submit();
+}
+
+</script>

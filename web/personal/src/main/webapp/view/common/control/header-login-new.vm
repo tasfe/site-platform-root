@@ -1,0 +1,85 @@
+<div id="top">
+	<div class="wrap">
+    	<div class="fr"><a href="#springUrl('/logout.htm')" class="a">退出</a><span class="color_a5">|</span><a href="#springUrl('/help/helpcenter.htm')">帮助中心</a><span class="color_a5">|</span><a href="#springUrl('/customservice/index.htm')">客服中心</a><span class="color_a5">|</span><span class="kf">客服热线：<b>400-611-0909</b></span></div>
+        <div class="fl">您好，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).memberName</div>
+        
+    </div>
+</div>
+
+<div id="header_main">
+<div class="wrap">
+    <div id="logo"><a href="#springUrl('/my/home.htm?link=0101')"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/logo.jpg" alt="永达互联网金融永达互联网金融支付平台"></a><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/logo_merchant.jpg" alt="会员版" class="logo_mp"></div>
+    <ul id="nav_main">
+            <li class="hoverli first hoverlia cur">
+                <a href="${request.contextPath}/my/home.htm?link=0101" class="hovera"><i class="mykjt_icon"></i>我的永达互联网金融</a>
+                <dl class="subnav">
+                    <dd class="cur"><a href="#springUrl('/my/home.htm?link=0101')">首页</a></dd>
+                    <dd><a href="#springUrl('/my/accountInfo.htm?link=0102')">账户资产</a></dd>
+                    <dd><a href="#springUrl('/my/accountSetting.htm?link=0103')">账户设置</a></dd>
+                    <dd><a href="#springUrl('/my/bankCardInfo.htm?link=0104')">银行账户</a></dd>
+                </dl>
+            </li>
+            <li class="hoverli Second">
+                <a href="#springUrl('/my/all-trade1.htm?link=0201')" class="hovera"><i class="tran_icon"></i>交易记录</a>
+                <dl class="subnav">
+                    <dd><a href="#springUrl('/my/all-trade1.htm?link=0201')">交易记录</a></dd>
+                    <dd><a href="#springUrl('/my/all-recharge1.htm?link=0202')">充值记录</a></dd>
+                    <dd><a href="#springUrl('/my/all-cach1.htm?link=0203')">提现记录</a></dd>
+					<dd><a href="#springUrl('/my/all-refund1.htm?link=0204')">退款记录</a></dd>
+					<dd><a href="#springUrl('/my/pay-detail.htm?link=0205')">收支明细</a></dd>
+                </dl>
+            </li>
+            <li class="hoverli third">
+                <a href="${request.contextPath}/my/accountManage.htm?link=0400" class="hovera"><i class="safety_icon"></i>安全中心</a>
+            </li>
+            <li class="hoverli last">
+                <a href="${request.contextPath}/my/appcenter.htm?link=0500" class="hovera"><i class="app_icon"></i>应用中心</a>
+            </li>
+
+        </ul>
+</div>
+</div>
+<div id="nav_con_2"><div></div></div>
+#set($linkCode=$session.getAttribute("link"))
+<script type="text/javascript">
+	var linkCode = '$!{linkCode}';
+	$(function() {
+		if (!linkCode) {
+			return;
+		}
+		$('#nav_main .hoverlia').removeClass('hoverlia').removeClass('cur');
+		$('#nav_main .subnav .cur').removeClass('cur');
+		$('#nav_main .hoverli').each(function() {
+			if ($(this)) {
+				var aHref = $(this).children('.hovera').attr('href');
+				if (aHref != undefined && aHref.indexOf(linkCode) >= 0) {
+    				$(this).addClass('hoverlia').addClass('cur');
+    			}
+			}
+		
+			if (hasCurLinkCode($(this))) {
+				$(this).addClass('hoverlia').addClass('cur');
+			}
+		});
+	});
+	
+	function hasCurLinkCode(jHoverli) {
+		if (!linkCode) {
+			return false;
+		}
+		
+		var res = false;
+		var liHref = jHoverli.find('a').attr('href');
+		if (liHref && liHref.indexOf(linkCode) >= 0) {
+			jHoverli.addClass('hoverli_cur').addClass('cur');
+		}
+		jHoverli.find('.subnav a').each(function() {
+			var aHref = $(this).attr('href');
+			if (aHref != undefined && aHref.indexOf(linkCode) >= 0) {
+				$(this).parent().addClass('cur');
+				res = true;
+			}
+		});
+		return res;
+	}
+</script>

@@ -1,0 +1,255 @@
+#set($path = ${request.contextPath})
+<div id="money_tx" class="wrap">
+	<div class="page_title">
+    	 <div class="fr page_title_right"><a href="#springUrl('/my/all-cach1.htm?link=0203')">提现记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_6_0.html&4,0')">提现问题</a></div>
+    	<h2>提现</h2>
+    </div>
+    <div class="pagebox pagebox1">
+    	<div class="tx_step step step_1"><i></i><span class="s1">提现信息</span><span class="s2">提现审核</span><span class="s3">完成提现</span></div>
+        <div class="bank_cooper_title">请选择提现银行：</div>
+        <form class="cashingForm" action="${path}/cash/toAuditCashInfo.htm" method="post">
+            <div class="boxbg1">
+                <ul class="list_bank_2 icons_list">
+					<!-- <li class="cur"><input type="radio" name="bankCode" checked>
+						<img src="../common/images/bank/abc.gif"><span class="bankname">农业银行</span><span>尾号：8756</span><span class="xe">限额4999元/笔</span></li>-->
+					#set ($i=0)
+					#foreach($bank in $baList)
+						<li>
+							<!--<span title="$!{bank.bankName}" class="icon $!{bank.bankCode}">$!{bank.bankCode}</span>-->
+							<input type="radio" name="bankCode" value="$!{bank.bankcardId}" 
+								#if($!{defaultCardId}==$!{bank.bankcardId}) 
+									checked 
+								#elseif($i == 0)
+									checked 
+								#end
+							>
+							<span class="bankname icon $!{bank.bankCode}">$!{bank.bankName}</span>&nbsp;&nbsp;
+							<span>尾号：$!{bank.bankAccountNumMask}&nbsp;$!{bank.realName}</span>
+							<span class="xe">
+								#if(${lfltForm.quota} != "-1")
+								限额$!{lfltForm.quota}元/次
+								#end
+							</span>
+						</li>
+					#set ($i=$i+1)
+					#end
+				 </ul>
+				 <div class="bank_more" style="padding-top:0; padding-bottom:10px; margin-left:400px;">更多银行<i style="top:5px;"></i></div>
+            </div>
+            <div class="addbtn"><input type="button" value="添加银行卡" onclick="addBankCard()" class="addBank"></div>
+            <div class="kjt_limit"><span class="f14 b">可用余额：</span><span class="f14 b color_f6">$!{account.availableBalance}</span>元
+				#if(${lfltForm.timesPerMonth} != "-1")
+					<span class="color_8a">您本月还可提现<b class="c0 b f14">$!{lfltForm.timesPerMonth}</b>次
+				#end
+				#if(${lfltForm.quotaPerMonth} != "-1")
+					，可提现总额为<b class="c0 b f14">$!{lfltForm.quotaPerMonth}</b>元</span>
+				#end
+			</div>
+            <div class="kjt_limit"><label><span class="f14 b">提现金额：</span><input id="money" name="money" type="text" class="inputtext w177 money2" maxlength="13"> 元</label>&nbsp;&nbsp;&nbsp;<label>大写：<input type="text" class="inputtext w177 bg_f7" readonly id="money_big"></label></div>
+            <div class="kjt_limit"><label><span class="f14 b">提现方式：</span><input type="radio" name="type" value="0" checked> 普通提现（T+1日到帐）</label><label><input type="radio" value="1" name="type"> 快速提现（2小时到账）</label></div>
+            <div class="sxf" style="padding-bottom:11px;"><label><span class="f14 b">服务费：</span><b id="servFeeText">0.00</b>元</label>
+				<input type="hidden" id="servFee" name="serviceCharge" value="" />
+			</div>
+            <div class="btn_bottom_list"><div class="error h22"></div>
+				<input type="button" value="" style="width:100px" class="btn_next btn_submit">
+			</div>
+        </form>
+        <div class="faq_relevant">
+        	<h4>提现问题：</h4>
+            <dl>
+            	<dt>什么是提现？</dt>
+                <dd>答：提现是指将永达互联网金融账户中的可用余额转到提现的银行账户上的操作。</dd>
+            </dl>
+            <dl>
+            	<dt>提现失败怎么办？</dt>
+                <dd>答：提现成功，请用户联系银行查询是否已经到账，若未到账，不排除后续可能会退票，大概需要7个工作日，款项退回到您的永达互联网金融账户中。</dd>
+            </dl>
+			<dl>
+            	<dt>哪些情况下不能进行提现？</dt>
+                <dd>答：a) 会员账户被冻结，无法提现；<br>
+b) 会员账户被加入提现黑名单；<br>
+c) 会员账户后台已注销；<br>
+d) 会员账户未实名认证；<br>
+e) 会员账户可用余额不足；<br>
+f) 当天提现次数、金额超限；
+</dd>
+            </dl>
+           <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+        </div>
+    </div>
+</div>
+
+<script>
+var canGetCashMoney = $!{account.withdrawBalance};
+$(function(){
+	$(".list_bank_2 li,.bank_more").hide();
+	if($(".list_bank_2 li").length>3){
+		$(".bank_more").show();
+	}
+	$(".list_bank_2 li").eq(0).show();
+	$(".list_bank_2 li").eq(1).show();
+	$(".list_bank_2 li").eq(2).show();
+	
+	$(".list_bank_2 li").each(function(index, element) {
+		var $list_bank = $(".list_bank_2 li");
+        var eleThis = $(this);
+		eleThis.hover(
+			function(){
+				eleThis.addClass("addborder");
+			},
+			function(){
+				eleThis.removeClass("addborder");
+			}
+		).click(function(){
+			$list_bank.removeClass("cur");
+			eleThis.addClass("cur").find("input").attr("checked", true);
+		});
+    });
+	$(".bank_more").click(function(){
+		$(".list_bank_2 li").show();
+		$(this).remove();
+	})
+	
+	$("#money").keyup(function(){
+		checkMoney($(this), $(".error"), $("#money_big"));
+	}).blur(function(){
+		var flag = checkMoney($(this), $(".error"), $("#money_big"));
+		var money = $(this).val();
+		if( money > canGetCashMoney ){
+			$(".error").text("您提现的金额已超限，请重新输入！");
+		}
+		else if(flag) {
+			var _money = $(this).attr("data-money");
+			
+			if(money != _money){
+				$(this).attr("data-money", money);
+				var tradeFlag = $('.cashingForm input[name=type]:checked').val();
+				//算服务费
+				queryServiceCharge(money, tradeFlag);
+				//设置点击提现方式，需要计算服务费
+				$(".cashingForm input[name=type]").attr("data-query","true");
+			}
+			else {
+				var total_money = parseFloat(money) + parseFloat($("#servFee").val());
+				total_money = parseFloat(total_money).toFixed(2);
+				if( total_money > canGetCashMoney ){
+					$(".error").text("您提现的金额已超限，请重新输入！");
+				}
+			}
+		}
+	});
+	//初始化 需要计算服务费
+	$(".cashingForm input[name=type]").attr("data-query","true");
+	var fee0 = 0.00, fee1 = 0.00;
+	// 查询服务费用
+	function queryServiceCharge(money, tradeFlag) {
+		$.ajax({
+        	type: "POST",
+    		url: "$!{path}/cash/queryServiceCharge.htm",
+    		data: "money=" + money + "&tradeFlag=" + tradeFlag,
+			async:false,
+			cache: false,
+    		dataType: "JSON",
+    		success: function(result){
+				var servFee = parseFloat(result.message);
+				if (result && result.success) {
+					servFee = servFee.toFixed(2) || 0.00;
+					$('#servFee').val(servFee);
+					$('#servFeeText').text(servFee);
+					if(tradeFlag==0||tradeFlag=="0") {
+						fee0=servFee;
+						$(".cashingForm input[name=type]").eq(0).attr("data-query","false");
+					}
+					else if(tradeFlag==1||tradeFlag=="1") {
+						fee1=servFee;
+						$(".cashingForm input[name=type]").eq(1).attr("data-query","false");
+					}
+					
+					var total_money = parseFloat(money) + parseFloat(servFee);
+					total_money = parseFloat(total_money).toFixed(2);
+					if( total_money > canGetCashMoney ){
+						$(".error").text("您提现的金额已超限，请重新输入！");
+					}
+				}
+    		}
+        });
+	}
+	
+	$(".cashingForm input[name=type]").click(function(){
+		var flag = checkMoney($("#money"), $(".error"), $("#money_big"));
+		if(flag) {
+			var idNeed = $(this).attr("data-query");
+			var tradeFlag = $('.cashingForm input[name=type]:checked').val();
+			if(idNeed=="true"){
+				//算服务费
+				queryServiceCharge($("#money").val(), tradeFlag);
+			}
+			else {
+				var total_money = parseFloat($("#money").val());
+				if(tradeFlag==0||tradeFlag=="0") {
+					$('#servFee').val(fee0);
+					$('#servFeeText').text(fee0);
+					
+					total_money += parseFloat(fee0);
+				}
+				else if(tradeFlag==1||tradeFlag=="1") {
+					$('#servFee').val(fee1);
+					$('#servFeeText').text(fee1);
+					
+					total_money += parseFloat(fee1);
+				}
+				total_money = parseFloat(total_money).toFixed(2);
+				if( total_money > canGetCashMoney ){
+					$(".error").text("您提现的金额已超限，请重新输入！");
+				}
+			}
+		}
+	});
+	
+	$(".btn_submit").click(function(){
+		submitCmd = 1;
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_next_disabled");
+		$(".error").text("");
+		
+		var flag = checkMust($("#money"), $(".error"), "请输入提现金额！");
+		if(!flag) { $btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false; }
+		
+		var flag = checkMoney($("#money"), $(".error"), $("#money_big"));
+		if(!flag) { $btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false; }
+		
+		var total_money = parseFloat($("#money").val()) + parseFloat($("#servFee").val());
+		total_money = total_money.toFixed(2);
+		if( total_money > canGetCashMoney ){
+			$(".error").text("您提现的金额已超限，请重新输入！");
+			$btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false;
+		}
+		
+		var jCashForm = $(".cashingForm");
+		$.ajax({
+        	type: "POST",
+    		url: "$!{path}/cash/validateLflt.htm",
+    		data: jCashForm.serialize(),
+			async: false,
+			cache: false,
+    		dataType: "JSON",
+    		success: function(result) {
+				if (result && result.success) {
+					jCashForm.submit();
+				} else {
+					$(".error").text(result.message);
+				}
+    		},
+			error: function(){
+				$(".error").text(G.sysError);
+				$btn_submit.attr("disabled", false).removeClass("btn_next_disabled");
+			}
+        });
+	});
+});
+
+function addBankCard() {
+	window.location.href = "$!{path}/my/add-bankcard-index.htm?link=0104"
+}
+
+</script>

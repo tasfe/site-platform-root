@@ -1,0 +1,219 @@
+#set($path = ${request.contextPath})
+<div id="money_tx" class="wrap">
+	<div class="page_title">
+		 <div class="fr page_title_right"><a href="#springUrl('/my/all-cach1.htm?link=0203')">提现记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_6_0.html&4,0')">提现问题</a></div>
+    	<h2>提现</h2>
+    </div>
+    <div class="pagebox pagebox1">
+    	<div class="tx_step step step_2"><i></i><span class="s1">提现信息</span><span class="s2">提现审核</span><span class="s3">完成提现</span></div>
+        <div class="bank_cooper_title">请确认提现！</div>
+        <form class="cashingForm" action="${path}/cash/completeApply.htm" method="post">
+            <div class="boxbg1">
+                
+                <table cellpadding="0" cellspacing="0" border="0"  class="sqinfo">
+                	<tr>
+                    	<td class="h3">提现金额：</td>
+                        <td><span class="color_f6 b">$!{cashingForm.money}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现账户名：</td>
+                        <td>$!{memberName}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现账户：</td>
+                        <td>$!{bankAcctInfo.bankName} $!{bankAcctInfo.bankAccountNumMask}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">提现类型：</td>
+                        <td>$!{cashingForm.typeDesc}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">服务费：</td>
+                        <td><span class="b">$!{cashingForm.serviceCharge}</span>元</td>
+                    </tr>
+                </table>
+                <div class="mrlauto pay_pw" style="margin-top:-20px; margin-left:280px;">
+					<span class="f14 b pw_lf">支付密码：</span>
+						<div class="pwdiv" style="margin-left:6px;">
+						<input name="payPassword" type="hidden" id="password" /></div>
+					<div class="error h22" style="line-height:14px; margin-left:82px; margin-top:-2px;"></div>
+				</div>
+			   <div id="captchaDiv" style="margin-left:266px; margin-bottom:20px;display:none">
+                       <label><span class="f14 limitLeft b fl">手机校验码：</span>
+                         <input type="text" class="inputtext w80" value="" id="sjyzm" name="mobileCaptcha" style="margin-left:6px;">
+                         <input class="btn_mfhq ml10" type="button" value="">
+						 <input id="bizType" name="bizType" type="hidden" value="PAY_WITHDRAW">
+                       </label>
+                       <!--<label class="fl ml5 mt5">您当前手机校验还可使用*天！</label>-->
+                       <div class="mainTips h22 error fl clear" style="margin-left:98px;"></div>
+               </div>
+			   <input id="signedData" name="signedData" type="hidden" />
+			   <div class="red clear" style="margin-left: 362px; margin-bottom: 0px;" id="errorMsg"></div>
+			   <!--<div id="needUpdataKjd" class="mb15" style="margin-left:360px;display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</div>-->
+			   <p>　</p>
+            </div>
+            
+            <div class="btn_bottom_list btn_bottom_tx">
+				<div class="error h22" style="text-align:left; padding-left:282px;">
+					#if($!{success} == false)
+						$!{message}
+					#end
+				</div>
+				<input type="button" value="" style="width:100px" class="btn_qr btn_submit">
+				<input type="button" value="" style="width:100px" onClick="window.location.href='#springUrl("/cash/toCashing.htm")'" class="btn_pre">
+			</div>
+        </form>
+        <div class="faq_relevant">
+        	<h4>提现问题：</h4>
+            <dl>
+            	<dt>什么是提现？</dt>
+                <dd>答：提现是指将永达互联网金融账户中的可用余额转到提现的银行账户上的操作。</dd>
+            </dl>
+            <dl>
+            	<dt>提现失败怎么办？</dt>
+                <dd>答：提现成功，请用户联系银行查询是否已经到账，若未到账，不排除后续可能会退票，大概需要7个工作日，款项退回到您的永达互联网金融账户中。</dd>
+            </dl>
+			<dl>
+            	<dt>哪些情况下不能进行提现？</dt>
+                <dd>答：a) 会员账户被冻结，无法提现；<br>
+b) 会员账户被加入提现黑名单；<br>
+c) 会员账户后台已注销；<br>
+d) 会员账户未实名认证；<br>
+e) 会员账户可用余额不足；<br>
+f) 当天提现次数、金额超限；
+</dd>
+            </dl>
+           <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+        </div>
+    </div>
+</div>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>		
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+#if($!{isCertActive} == 'yes')
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+#end
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+<script>
+$(function(){
+	//初始化控件
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$(".pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+	
+	$(".btn_mfhq").click(function(){
+		$('#captchaDiv .error').text('');
+		countDown($(this),60,"");
+		$.ajax({
+			url: '$!{path}/cert/sendMobileCertCode.htm',
+			type: 'post',
+			data: 'bizType=' + $('#bizType').val(),
+			dataType: "json",
+			success: function(result) {
+				if (!result || !result.success) {
+					$('#captchaDiv .error').text(result.message);
+				} else {
+					$('#captchaDiv .error').text('验证码发送成功!');
+				}
+			},
+			error: function(){
+				$('#captchaDiv .error').html(G.sysError);
+			}
+		});
+	});
+
+	function _submit(){
+		var jBtnSubmit = $(".btn_submit");
+		$.ajax({
+			url: '$!{path}/cash/checkPayPassword.htm',
+			type: 'post',
+			data: 'payPassword=' + $('#password').val(),
+			dataType: "json",
+			success: function(result) {
+				if (result && !result.success) {
+					jBtnSubmit.attr("disabled", false).removeClass("btn_qr_disabled");
+					$(".pay_pw").find(".error").text(result.message);
+				} else {
+					var jForm = $(".cashingForm");
+					if (cert) {
+						signAndSubmit(jForm, cert, [jForm.find('#password').val()]);
+					} else {
+						jForm.submit();
+					}
+				}
+			},
+			error:function(){
+				jBtnSubmit.attr("disabled", false).removeClass("btn_qr_disabled");
+				$(".pay_pw").find(".error").text("支付密码输入有误，请重新输入！");
+			}
+		});
+	}
+
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+
+		if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+			var wid = pgeditor.settings.pgeWindowID;
+			pgeditor.pwdLength(function(){
+				if(outs[wid].length == 0){
+					$(".pay_pw").find(".error").text("请输入支付密码！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+					return false;
+				}
+
+				if(cert){
+
+				}else{
+					if($("#sjyzm").attr("id") == "sjyzm"){
+						flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入校验码！");
+						if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+					}
+				}
+
+				//产生随机数加密
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+					//获得密文
+					setPwdResult(pgeditor,$('#password'),function(){
+						_submit();
+					});
+				});
+			});
+		}
+		else{
+			if (pgeditor.pwdLength() == 0) {
+				$(".pay_pw").find(".error").text("请输入支付密码！");
+				btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+			}
+
+			if(cert){
+
+			}else{
+				if($("#sjyzm").attr("id") == "sjyzm"){
+					flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入校验码！");
+					if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				}
+			}
+
+			getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor]); //产生随机数去加密
+			setPwdResult(pgeditor,$('#password'));
+
+			_submit();
+		}
+	});
+	#if($!{isCertActive} == 'yes')
+	// 检查提醒证书更新
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+	// 检查证书
+	selectVerifyStyle("#springUrl('/certActive/getCertSns.htm')");
+	// 检查快捷盾是否插入
+	intervalCheckUSB();
+	#else
+	$("#captchaDiv").show();
+	#end
+	
+});
+</script>

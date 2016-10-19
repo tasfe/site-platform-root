@@ -1,0 +1,23 @@
+<div class="wrap">
+     
+     <div class="page_title"><h2>登录密码找回</h2></div>
+
+     <div class="safetyMain">         
+         <div style=" padding:28px 70px; height:270px;">
+         	<p class="f14" style="line-height:44px;">您正在为账户 <span class="b">$!response.data.loginName</span> 找回登录密码，请选择找回方式：</p>
+            <div class="dlmm_chtype">
+            	<i class="typeicon messageicon"></i>
+            	<span class="p1">通过验证短信</span>
+                <span class="p2">如果您的$!response.data.bindPhone手机还在正常使用，请选择此方式</span>
+                <a href="#springUrl('/my/refind/loginPwd/phoneFirst.htm?membertype=')$!response.data.membertype" class="btn_ljzh"></a>
+            </div>
+            <div class="dlmm_chtype">
+            	<i class="typeicon emailicon"></i>
+            	<span class="p1">通过验证电子邮箱</span>
+                <p class="p2">如果您的$!response.data.bindEmail邮箱还在正常使用，请选择此方式</p>
+                <a href="#springUrl('/my/refind/loginPwd/goRefindEmail.htm?membertype=')$!response.data.membertype" class="btn_ljzh"></a>
+            </div>
+         </div>
+     </div>
+     
+</div>

@@ -1,0 +1,76 @@
+<div class="wrap">
+     
+     <div class="page_title"><h2>会员注册</h2></div>
+
+     <div class="login_main">
+     	  
+     	  <div class="login_flow">
+     	  	   <p class="lf_1"><span>1 选择注册方式</span><span>2 填写账号信息</span><span>3 完成注册</span></p>
+     	  </div>
+		  
+		  <input id="username" name="username" type="hidden" value="$!response.data.username"/>
+		  <input id="url" name="url" type="hidden" value="$!response.data.url"/>
+		  <input id="regType" name="regType" type="hidden" value="$!response.data.regType"/>
+          
+          <div class="login_verify clearfix">
+               
+               <div class="verify_h1">验证账户名</div>
+
+               <div class="verify_con">
+                    
+                    <p class="f14">请在24小时内点击邮件中的链接，继续完成注册。</p>
+                    <p class="f14">邮件已发送到邮箱<span class="color_33 bold">$!response.data.username</span></p>
+                    <p class="h60 mt20"><input class="btn_mail btn_submit" type="button" value=""></p>
+					<p id="error"></p>
+                    <p class="f14">没收到邮件</p>
+                    <p>1、请先检查是否在垃圾邮件中</p>
+					<p>2、如还未收到，<span id="again_text"><em class="red pdlr5 bold time_left">60</em>秒后可点击 重新发送</span><a id="send_email" class="btn_fs ml10" href="#" style="display:none;" disabled>重新发送邮件</a></p>
+                    <p>3、重新发送邮件也没收到？请试试<a href="#springUrl('/register/main.htm')" class="ml10">更换邮箱</a></p>
+
+               </div>
+
+          </div>
+          
+          
+          
+     </div>
+     
+</div>
+	
+<script>
+	$(function(){
+	countDownDo({timePlace:$(".time_left"), time:60, callback:function(){
+		$("#again_text").hide();
+		$("#send_email").attr("disabled", false).show();
+	}});
+	
+	$("#send_email").click(function(){
+         if($("#send_email").attr("disabled")) {
+             return;
+         }
+		 $("#again_text").show();
+		 $("#send_email").attr("disabled", true).hide();
+		 countDownDo({timePlace:$(".time_left"), time:60, callback:function(){
+			$("#again_text").hide();
+			$("#send_email").attr("disabled", false).show();
+		}});
+         jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/register/send-mail.htm')" ,
+			data: {username:$("#username").val(),regType:$("#regType").val()},
+            success: function(response) {
+            } ,
+            dataType: "json"
+        });
+	});
+	
+	$(".btn_mail").click(function(){
+		var url = $("#url").val();
+		if (url != '') {
+			window.open(url,'_blank');
+		}else {
+			$("#error").html('暂不支持此邮箱登陆跳转，请您手动登陆邮箱并完成验证');
+		}
+	});
+})
+</script>

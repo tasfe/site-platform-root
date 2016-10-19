@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <!--<meta http-equiv="Access-Control-Allow-Origin" content="https://res.wx.qq.com,https://testfp.udcredit.com">-->
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <link rel="stylesheet" href="css/swiper.min.css">
+  <title>首页</title>
+  <style>
+   .swiper-container {
+        width: 100%;
+        height: 190px;
+        /*border-top:1px solid #E5E5E5;
+        border-bottom:1px solid #E5E5E5;*/
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+    }
+    .swiper-slide img{ width:100%; height:100%;}
+    .swiper-slide{ background:#E5E5E5;}
+    .scroll{position:absolute; overflow-y:scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch; top:0; left:0; bottom:0; right:0}
+  </style>
+</head>
+<body style="display: none;">
+<div class="yd-wrap indexWrap scroll" id="indexHeader">
+  <header class="index-header" style="display: none;">
+      <img id="J_WeatherImg" src="" alt="" class="tqImg">
+      <span class="headerInfoBox">
+        <span id="J_Weather" class="tqInfo" style="font-size:14px">-</span><br>
+        <span id="J_WeatherDes" class="index-gray" style="font-size:12px">-</span>
+      </span>
+      <span class="headerInfoBox box-right" style="text-align:right;">
+        <span class="tqInfo"><img src="images/ico_location.png" style="width:15px;margin-right:3px;vertical-align:top;"><span id="J_CityName" style="font-size:14px">-</span></span><br>
+        <span id="J_CityTraffic" class="index-gray" style="font-size:12px">-</span>
+      </span>
+  </header>
+  <section class="index-banner">
+   <div class="swiper-container">
+        <div id="J_Swiper" class="swiper-wrapper">
+          <!--直接在这里面添加banner内容,只有里面有内容，才可以初始化swiper
+            <div class="swiper-slide"><img src="http://ossweb-img.qq.com/images/lol/web201310/skin/big78000.jpg"></div>
+            <div class="swiper-slide"><img src="http://ossweb-img.qq.com/images/lol/web201310/skin/big11009.jpg"></div>
+            <div class="swiper-slide"><img src="http://ossweb-img.qq.com/images/lol/web201310/skin/big86006.jpg"></div>-->
+        </div>
+         <div class="swiper-pagination"></div>
+    </div>
+  </section>
+  <section class="index-iconList">
+    <div class="iconItem J_LinkToken" data-href="/youka/remote/recharge" data-linkpre="/"><i class="icon-index icon-youkaBig icon-index-marginTop">&nbsp;</i><span class="iconListText">油卡充值</span></div>
+    <div class="iconItem J_Link" data-href="/recharge/rechargeIndex.html"><i class="icon-index icon-shoujiBig icon-index-marginTop">&nbsp;</i><span class="iconListText">手机充值</span></div>
+    <div class="iconItem J_LinkToken" data-href="/insurance/remote/add" data-linkpre="/"><i class="icon-index icon-baodanBig icon-index-marginTop">&nbsp;</i><span class="iconListText">保单解析</span></div>
+    <!--<div class="iconItem" ><i class="icon-index icon-weizhangBig">&nbsp;</i><span class="iconListText">违章查询</span></div>-->
+  </section>
+  <section class="index-floor">
+    <div class="index-floorF1">
+      <div class="index-floorF1Full">
+          <h2 class="index-floorF1Title2">今日限免</h2>
+          <h3 class="index-floorF1Desc2">限免试用日日新</h3>
+      </div>
+      <!--<div data-href="/insurance/remote/add" data-linkpre="/" class="index-floorF1-left J_LinkToken">
+        <h2 class="index-floorF1Title">保单解析</h2>
+        <h3 class="index-floorF1Desc">条款弄不懂，我帮你</h3>
+      </div>
+      <div class="index-floorF1-right">
+        <h2 class="index-floorF1Title">今日限免</h2>
+        <h3 class="index-floorF1Desc">限免试用日日新</h3>
+      </div>-->
+    </div>
+  </section>
+
+</div>
+
+
+<div class="bottomNav">
+  <div class="bottomNavItem" id="J_ShouYe">
+    <span class="bottomNavIcon icon-shouye shouye-active"></span>
+    <span class="bottomNavText">首页</span>
+  </div>
+  <div class="bottomNavItem" id="J_FaXian">
+    <span class="bottomNavIcon icon-faxian"></span>
+    <span class="bottomNavText">发现</span>
+  </div>
+  <div class="bottomNavItem" id="J_WoDe">
+    <span class="bottomNavIcon icon-wode"></span>
+    <span class="bottomNavText">我的</span>
+  </div>
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script src="js/swiper.jquery.min.js"></script>
+
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!--<script async src="js/yongda_ud_fp.js"></script>-->
+<script async src="https://service.udcredit.com:10000/sdk/device-fingerprint/web?partnerCode=201601141404&appKey=wIqeiVOn6oxloDvzbD3X"></script>
+<script>      
+var wHeight=$(window).height();
+wHeight=wHeight-60;
+$(".indexWrap").height(wHeight);
+var overscroll = function(el) {
+      el.addEventListener('touchstart', function() {
+        var top = el.scrollTop
+          , totalScroll = el.scrollHeight
+          , currentScroll = top + el.offsetHeight;
+        //If we're at the top or the bottom of the containers
+        //scroll, push up or down one pixel.
+        //
+        //this prevents the scroll from "passing through" to
+        //the body.
+        if(top === 0) {
+          el.scrollTop = 1;
+        } else if(currentScroll === totalScroll) {
+          el.scrollTop = top - 1;
+        }
+      });
+      el.addEventListener('touchmove', function(evt) {
+        //if the content is actually scrollable, i.e. the content is long enough
+        //that scrolling can occur
+        if(el.offsetHeight < el.scrollHeight)
+          evt._isScroller = true;
+      });
+    }
+    overscroll(document.querySelector('.scroll'));
+    document.body.addEventListener('touchmove', function(evt) {
+      //In this case, the default behavior is scrolling the body, which
+      //would result in an overflow.  Since we don't want that, we preventDefault.
+      if(!evt._isScroller) {
+        evt.preventDefault();
+      }
+});
+
+    function getWeatherImg(weather){
+        if(weather.indexOf("雪") > -1){
+            return "images/ico_snow.png";
+        }
+        else if(weather.indexOf("雨") > -1){
+            if(weather.indexOf("小雨") > -1 || weather.indexOf("中雨") > -1)
+                return "images/ico_midrain.png";
+            else
+                return "images/ico_rain.png";
+        }
+        else if(weather.indexOf("阴") > -1){
+            return "images/ico_overcast.png";
+        }
+        else if(weather.indexOf("多云") > -1){
+            return "images/ico_cloud.png";
+        }
+        else if(weather.indexOf("晴") > -1){
+            return "images/ico_sun.png";
+        }
+    }
+
+// not use
+    var WeatherImg = {
+        "暴雨":"images/ico_rain.png",
+        "大雨":"images/ico_rain.png",
+        "阵雨":"images/ico_rain.png",
+
+        "中雨":"images/ico_midrain.png",
+        "小雨":"images/ico_midrain.png",
+
+        "阴":"images/ico_overcast.png",
+        "多云":"images/ico_cloud.png",
+        "雪":"images/ico_snow.png",
+        "晴":"images/ico_sun.png"
+    };
+    //?code=031gBgeZ1TpcT517TfgZ1tcleZ1gBgeW
+    function doSomeThing(){
+        $("body").show();
+
+        var J_WeatherImg = $("#J_WeatherImg"),
+                J_Weather = $("#J_Weather"),
+                J_WeatherDes = $("#J_WeatherDes"),
+                J_CityName = $("#J_CityName"),
+                J_CityTraffic = $("#J_CityTraffic");
+
+        // 获取微信信息，并存储到sessionStorage
+        tools.ajaxSubmit({
+            "url": gurl + "/getUserInfo",
+            "suc_suc": function(response){
+                // 已登录 则填值
+                var data = response.data;
+                var storage = window.sessionStorage;
+                storage.setItem("txurl",data.url);
+                //storage.setItem("userinfo",JSON.stringify(data.userinfo));
+                if(data.wxuserinfo == "" || data.wxuserinfo == null){
+                    $(".index-header").remove();
+                }
+                else{
+                    $(".index-header").show();
+                    storage.setItem("wxuserinfo",JSON.stringify(data.wxuserinfo));
+
+                    J_WeatherImg.attr("src",getWeatherImg(data.wxuserinfo.type)).attr("alt",data.wxuserinfo.type);
+                    J_Weather.text(data.wxuserinfo.type + data.wxuserinfo.low.replace("低温","").replace("℃","") + "-" + data.wxuserinfo.high.replace("高温 ",""));
+                    J_WeatherDes.text(data.wxuserinfo.ganmao);
+                    J_CityName.text(data.wxuserinfo.city);
+                    J_CityTraffic.text(data.wxuserinfo.trafficControl);
+                }
+            }
+        });// ajaxSubmit
+
+        var J_Swiper = $("#J_Swiper");
+        // 获取首页banner 未考虑缓存数据
+        tools.ajaxSubmit({
+            "type": "GET",
+            "url": gurl + "/index/banners/weixin",
+            "suc_suc": function(response){
+                // 已登录 则填值
+                var data = response.data.banners;
+                if(!!data){
+                    var _html = "";
+                    for(var i = 0, len = data.length; i < len; i++){
+                        var link = "#",
+                                className = "swiper-slide";
+                        if(data[i].contentType == "P"){
+                            link = data[i].content;
+                            if(link.indexOf("#J_LinkToken#") > -1){
+                                link = link.replace("#J_LinkToken#","");
+                                className += " J_LinkToken";
+                            }
+                            else{
+                                className += " J_Link";
+                            }
+                        }
+                        _html += '<div data-href="' + link + '" class="' + className + '" data-linkpre="/"><img alt="' + data[i].name + '" src="' + data[i].image + '"></div>';
+                    }
+                    J_Swiper.html(_html);
+
+                    //在渲染完banner里的dom以后，再执行以下初始化方法
+                    var swiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        paginationClickable: true,
+                        loop: true,
+                        autoplay: 4000
+                    });
+
+                    /*$(".swiper-slide").unbind().click(function(){
+                        if($(this).data("href") != "#")
+                            window.location.href = $(this).data("href");
+                    });*/
+
+                    J_Swiper.find(".J_Link").unbind().click(function(){
+                        var jThis = $(this);
+                        var link = jThis.data("href"),// 链接地址加/
+                                _linkPre = jThis.data("linkpre");
+                        if(!!link)
+                            window.location.href = (_linkPre == "/" ? "" : linkPre) + link + "?time=" + new Date().getTime();
+                    });
+
+                    J_Swiper.find(".J_LinkToken").unbind().click(function(){
+                        var jThis = $(this);
+                        var link = jThis.data("href"),// 链接地址加/
+                                _linkPre = jThis.data("linkpre");
+                        if(!!link){
+                            // 判断是否登录，获取token
+                            tools.ajaxSubmit({
+                                "type": "GET",
+                                "url": gurl + "/insurance/remote/token",
+                                "suc_suc": function(response){
+                                    // 已登录 则取token，并跳转
+                                    window.location.href = (_linkPre == "/" ? "" : linkPre) + link + "?t=" + response.data.token + "&time=" + new Date().getTime();
+                                }
+                            });// ajaxSubmit
+                        }
+                    });
+
+                }
+                else{
+                    J_Swiper.parent().parent().remove();
+                }
+            }
+        });// ajaxSubmit
+
+    }
+
+    var code = tools.getQueryString("code");
+    var storage = window.sessionStorage;
+      
+    if(code == storage.getItem("code") || code == null || code == ""){
+        doSomeThing();
+    }
+    else{
+        tools.ajaxSubmit({
+            "url": gurl + "/callback",
+            "data":{"code": tools.getQueryString("code")},
+            "suc_suc": function(response){
+                // 已登录
+                storage.setItem("code",code);
+                doSomeThing();
+            }
+        });// ajaxSubmit
+    }    
+  $(".scroll").css("overflow-x","hidden");
+  $(".scroll").css("overflow-y","scroll");
+</script>
+</body>
+</html>

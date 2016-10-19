@@ -1,0 +1,154 @@
+<!--绑定手机号码-->
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/PassGuardCtrl.js"></script>
+<link href="${WEB_RESOURCE.staticAddress}wallet/css/ocx.css" rel="stylesheet" type="text/css" />
+<script>
+ //密码控件js
+ if(navigator.userAgent.indexOf("MSIE")<0){
+    navigator.plugins.refresh();
+ }
+ var pgeditor = new jQuery.pge({
+  pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",
+  pgeId: "_ocx_password",//控件ID
+  pgeEdittype: 0,//控件类型,0星号,1明文
+  pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+  pgeEreg2: "[\\s\\S]{6,12}", //输入完毕后字符类型判断条件
+  pgeMaxlength: 12,//允许最大输入长度
+  pgeTabindex: 2,//tab键顺序
+  pgeClass: "ocx_style",//控件css样式
+  pgeInstallClass: "ocx_style",//针对安装或升级
+  pgeOnkeydown:"FormSubmit()",//回车键响应函数
+     tabCallback:"_ocx_password2"
+ });
+ window.onload = function(){  
+    pgeditor.pgInitialize();//初始化控件
+ }   
+</script>
+<div class="wrap min_height6">
+	<div class="user_ibox">
+        <h2 class="h2_titform"><em>绑定手机</em></h2>
+        <form id="set-mobile-form" name="set-mibilePhone-form" class="" action="${request.contextPath}/my/set-mobilephone.htm" method="POST">
+         		 <input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+				 <input type="hidden" name="password"  id="password"/>
+    			 <div class="form-horizontal center_form clearfix">
+                <div class="control-group">
+                <label class="control-label" for="mobile"><i class="fc_r_ff">*</i>手机：</label>
+                <div class="controls pos_rel">
+    				 <input type="text" id="mobile" name="mobile" class="field_input J_focus" hidefocus="true" maxlength="11" value="$!response.data.mobile"/>
+    				 <p id="mobile_error"></p>
+                </div>
+              </div>
+    		  <div class="control-group">
+                    <label class="control-label" for="verifyCode"><i class="fc_r_ff">*</i>验证码：</label>
+                    <div class="controls verify_code">
+                      <input style="width:85px;" type="text" id="mobileCaptcha" name="mobileCaptcha" class="in_txt"><span id="send_msg" class="btn_h30 btn_suffix">发送短信验证码</span><span id="mobileCaptchaTip" class="suc_tip" hidden="true"></span>
+    					 <p id="mobileCaptcha_error"></p>
+    					  #if($!response.data.mobileCaptcha_error.length() > 0)
+                            <label id="mobileCaptcha_error1" class="error">#springMessageText($!response.data.mobileCaptcha_error, "")</label>
+    					  #end
+    				</div>
+                </div>
+				#parse("main/ocx/password.vm")
+                <div class="control-group">
+                    <div class="controls">
+                       <input id="set_mobile_submit" type="button" class="btn_h40_red bold" value="确  认">
+                    </div>
+                </div>
+            </div>
+        </form>
+	</div>
+</div>
+<script>
+jQuery.ajaxSetup({ cache: false }); 
+$("#mobileCaptchaTip").hide();
+$("#send_msg").click(function(){
+			if (!checkMobile()) {
+				return;
+			};
+	        if($("#send_msg").attr("disabled")) {
+	            return;
+	        };
+	        $('#send_msg').countDown({
+	            text:"秒后重新获取",
+	            endText:"发送短信验证码",
+	            isDisabled:true,
+	            count:120
+	        });
+         jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+			data: "mobile=" + $("#mobile").val() + "&bizType=" + $("#bizType").val(),
+			cache:false,
+            success: function(response) {
+             if(response.success) {
+	             if($("#back-mobileCaptcha")) {
+	                $("#back-mobileCaptcha").hide();
+	             }
+				$("#mobileCaptchaTip").html("校验码已发送");
+                $("#mobileCaptchaTip").show();
+             } else {
+                $("#mobileCaptchaTip").html("若长时间未收到校验码，请联系客服 400-611-0909");
+				$("#mobileCaptchaTip").show();
+             }
+            } ,
+            dataType: "json"
+        });
+  });
+$("#mobileCaptcha").focus(function(){
+	$("#mobileCaptcha_error").html('');
+	$("#mobileCaptcha_error1").hide();
+});
+$("#mobile").focus(function(){
+	$("#mobile_error").html('');
+});
+//表单提交
+$("#set_mobile_submit").click(function() {
+	$("#mobile_error").html('');
+	$("#mobileCaptcha_error").html('');
+	$("#mobileCaptcha_error1").hide();
+	if (!checkMobile()) {
+		return false;
+	}
+	var mobileCaptcha = $("#mobileCaptcha").val();
+	if(mobileCaptcha == '') {
+		$("#mobileCaptcha_error").html('<label  class="error">短信验证码不能为空!</label>');
+        return false;
+	}
+	if(pgeditor.pwdLength()==0){
+    $("#password_error").html('<label class="error">支付密码不能为空</label>');
+       $("#_ocx_password").focus();
+       return false;
+     }
+   if(pgeditor.pwdValid()==1){
+    $("#password_error").html('<label class="error">支付密码不符合要求，请输入6-12位字符或数字</label>');
+       $("#_ocx_password").focus();
+       return false;
+     }  
+     jQuery.ajax({
+          url: "#springUrl('/ocx/generateRandomKey.htm')",
+          type: "POST",
+       async: false,
+          success: function(result){
+              pgeditor.pwdSetSk(result);
+          }
+       });
+    setPwdResult(pgeditor,$('#password'));
+    
+	$("#set-mobile-form").submit();
+    $("#set_mobile_submit").attr("disabled", "disabled");
+    return true;
+});
+
+function checkMobile() {
+	var mobile = $("#mobile").val();
+	var reg = /^[1]([3][0-9]{1}|([4][5|7]{1})|([5][0-3|5-9]{1})|([8][0-9]{1}))[0-9]{8}$/;
+	if(mobile == '') {
+		$("#mobile_error").html('<label  class="error">手机号码不能为空!</label>');
+        return false;
+	}
+	if(!reg.test(mobile)) {
+    	$("#mobile_error").html('<label  class="error">不是合法的手机号码!</label>');
+        return false;
+	}
+	return true;
+}
+</script>

@@ -1,0 +1,161 @@
+<!--通过短信找回支付密码：第一步  -->
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/PassGuardCtrl.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/passwordOcx.js"></script>
+<link href="${WEB_RESOURCE.staticAddress}wallet/css/ocx.css" rel="stylesheet" type="text/css" />
+<script>
+	//密码控件js
+	if(navigator.userAgent.indexOf("MSIE")<0){
+	   navigator.plugins.refresh();
+	}
+	
+	var pgeditor = new jQuery.pge({
+		pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",//控件文件目录
+		pgeId: "_ocx_password",//控件ID
+		pgeEdittype: 0,//控件类型,0星号,1明文
+		pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+		pgeEreg2: "[\\s\\S]{6,12}",	//输入完毕后字符类型判断条件
+		pgeMaxlength: 12,//允许最大输入长度
+		pgeTabindex: 2,//tab键顺序
+		pgeClass: "ocx_style",//控件css样式
+		pgeInstallClass: "ocx_style",//针对安装或升级
+		pgeOnkeydown:"FormSubmit()",//回车键响应函数
+	    tabCallback:"_ocx_password2",
+		pgeOnfocus:"ocxfocus()"
+		//pgeOnblur: ""
+	});
+	
+	var pgeditor3 = new jQuery.pge({
+		pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",//控件文件目录
+		pgeId: "_ocx_password2",//控件ID
+		pgeEdittype: 0,//控件类型,0星号,1明文
+		pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+		pgeEreg2: "[\\s\\S]{6,12}",	//输入完毕后字符类型判断条件
+		pgeMaxlength: 12,//允许最大输入长度
+		pgeTabindex: 2,//tab键顺序
+		pgeClass: "ocx_style",//控件css样式
+		pgeInstallClass: "ocx_style",//针对安装或升级
+		pgeOnkeydown:"FormSubmit()",//回车键响应函数
+	    tabCallback:"_ocx_password3",
+		pgeOnfocus:"ocxfocus3()"
+		//pgeOnblur: ""
+	});
+	
+		
+	window.onload = function(){	 
+	   pgeditor.pgInitialize();//初始化控件
+	   pgeditor3.pgInitialize();//初始化控件
+	   window.setInterval("GetLevel('${WEB_RESOURCE.staticAddress}wallet/img/ocx')",800); //实时显示密码强度
+    }   
+</script>
+<div class="zhanghu_infor">
+  <div class="findFlow">
+      <p class="findFlow-one" style="display:none;"></p>
+      <p class="findFlow-two"></p>
+      <p class="findFlow-three" style="display:none;"></p>
+ </div>
+ <div class="wrap">
+       <div class="account_number_manager">            
+           <div class="user_ibox">
+            <h2 class="h2_titform"><em>找回支付密码：短信验证</em></h2>
+            <form  id="refind-paypwd-second-form" name="refind-paypwd-second-form" action="/my/resetpaypasswd.htm" method="POST"  >
+                <input type="hidden" name="newPasswd" id="newPasswd" value=""/>
+                <input type="hidden" name="renewPasswd" id="renewPasswd" value=""/>
+                
+                
+                <div class="form-horizontal center_form clearfix">
+                   <div class="control-group">
+                        <label class="control-label" for="idCardType">用户名：</label>
+                        <div class="controls">
+                          <span class="con_txt14">$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).memberName</span>
+                        </div>
+                    </div>           
+                    #parse("main/ocx/newPassword.vm")
+		 			#parse("main/ocx/passwordStrength.vm")
+		  			#parse("main/ocx/renewPassword.vm") 
+                    
+                    <div class="control-group">
+                        <div class="controls" id="showDiv">
+                          <button id="refind_paypwd_second_submit"  class="btn_h40_red bold">确认</button><a href="#springUrl('/my/home.htm')" class="btn_forget f_12 marl20">返回钱包首页</a>
+                        </div>
+                    </div>
+        
+                </div>
+            </form>
+         </div>
+      </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+jQuery.ajaxSetup({ cache: false });
+$(function(){
+		  #if($response.errors.password_equal_login_password)
+			$("#new_password_error").html('<label class="error"> #springMessageText($!response.errors.password_equal_login_password,"")</label>');
+		  #elseif($response.errors.paypasswd_not_exist)
+		  	$("#new_password_error").html('<label class="error"> #springMessageText($!response.errors.paypasswd_not_exis,"")</label>');
+		  #elseif($response.errors.error_passwd_parten)
+		  	$("#renew_password_error").html('<label class="error"> #springMessageText($!response.errors.error_passwd_parten,"")</label>');
+		  #elseif($response.errors.repassword_password_not_same)
+		    $("#renew_password_error").html('<label class="error"> #springMessageText($!response.errors.repassword_password_not_same,"")</label>');
+		  #end  
+	 });
+
+var  ocxfocus= function(){
+	$("#new_password_error").html("");
+      }
+  var  ocxfocus3= function(){
+	$("#renew_password_error").html("");
+  }
+
+
+$("#refind_paypwd_second_submit").click(function() {
+
+     if(pgeditor.pwdLength()==0){
+			 $("#new_password_error").html('<label class="error">支付密码不能为空</label>');
+    		 $("#_ocx_password").focus();
+    		 return false;
+	}
+	
+	if(pgeditor.pwdValid()==1){
+		 $("#new_password_error").html('<label class="error">支付密码不符合要求，请输入6-12位字符或数字</label>');
+		 $("#_ocx_password").focus();
+		 return false;
+	} 	
+	
+	if(pgeditor3.pwdLength()==0){
+			 $("#renew_password_error").html('<label class="error">重新输入支付密码不能为空</label>');
+    		 $("#_ocx_password").focus();
+    		 return false;
+	}
+	
+	if(pgeditor3.pwdValid()==1){
+		 $("#renew_password_error").html('<label class="error">重新输入支付密码不符合要求，请输入6-12位字符或数字</label>');
+		 $("#_ocx_password").focus();
+		 return false;
+	} 	
+	
+	
+	jQuery.ajax({
+		url: "#springUrl('/ocx/generateRandomKey.htm')",
+		type: "POST",
+		async: false,
+		success: function(result){
+			pgeditor.pwdSetSk(result);
+			pgeditor3.pwdSetSk(result);
+		}
+	});
+
+	var PwdResult = setPwdResult(pgeditor,$('#newPasswd'));
+	var PwdPwdResult2Result = setPwdResult(pgeditor3,$('#renewPasswd'));
+		
+	if(PwdResult!=PwdResult2){
+		$("#renew_password_error").html('<label class="error">两次输入支付密码不同</label>');
+		$("#_ocx_password").focus();
+		return false
+	}
+	
+	document.getElementById("refind-paypwd-second-form").submit();
+    return true;
+});
+</script>
+

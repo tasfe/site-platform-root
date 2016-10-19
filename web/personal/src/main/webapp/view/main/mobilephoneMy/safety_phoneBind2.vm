@@ -1,0 +1,133 @@
+<div class="wrap">
+     
+     <div class="page_title"><h2>手机绑定</h2></div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginCenter">
+              <form action="${request.contextPath}/my/set-mobilephone.htm" method="POST">
+				 <input type="hidden" name="bizType"  id="bizType" value="SET_MOBILE"/>
+				 <!--<input type="hidden" name="password"  id="password" value="$!response.data.password"/>-->
+              <div class="login_limit">
+                   <label><span class="f14 limitLeft">手机号码：</span>
+                     <input type="text" class="inputtext w232" name="mobile" value="" id="iphone">
+                   </label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error">
+                <span></span>
+				</div>
+               </div>
+               
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">手机校验码：</span>
+                     <input type="text" class="inputtext w80" value="" name="mobileCaptcha" id="sjyzm">
+                     <input class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error" id="codeError">$!response.data.validCode_error</div>
+           </div>
+		   
+		       <div class="login_limit" id="pwdiv_login_pw">
+                   <label><span class="f14 limitLeft">登录密码：</span>
+                     <div class="pwdiv fl"><input name="loginPasswd" type="hidden" id="loginPasswd" data-type="22" /></div>
+                     <em class="f12 color_b3 fl ml5 mt5"></em>
+                   </label>
+                   <div class="mainTips ml160 error clear"></div>
+               </div>
+               
+           <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+
+$(function(){
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$("#pwdiv_login_pw .pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+
+	$(".btn_mfhq").click(function(){
+		var jThis = $(this);
+		var value = $.trim($("#iphone").val());
+		var flag = false;
+		if (value == "") {
+			$("#codeError").text("请输入手机号码！");
+		}
+		else flag = checkMobile($("#iphone"), $("#codeError"), "手机号码格式不正确！");
+		if(flag){
+			$("#codeError").html("");
+			countDown(jThis,60,"");
+			jQuery.ajax({
+				type: 'POST',
+				url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+				data: "mobile=" + $("#iphone").val() + "&bizType=" + $("#bizType").val(),
+				success: function(response) {
+					$("#codeError").html(response.message);			
+				} ,
+				error:function(){$("#codeError").html(G.sysError)},
+				dataType: "json"
+			});
+		}
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#iphone");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var value = $.trim(thisObj.val());
+		if (value == "") {
+			tipObj.text("请输入手机号码！");
+			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+		}
+		else if (!RegExp(regexEnum.mobile).test(value)){
+			tipObj.text("手机号码格式不正确！");
+			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+		}
+		
+		flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+		if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+			var wid = pgeditor.settings.pgeWindowID;
+			pgeditor.pwdLength(function(){
+				if(outs[wid].length == 0){
+					$("#pwdiv_login_pw").find(".error").text("请输入登录密码！");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+					return false;
+				}
+
+				//产生随机数加密
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+					//获得密文
+					setPwdResult(pgeditor,$('#loginPasswd'),function(){
+						$("form").submit();
+					});
+				});
+			});
+		}
+		else{
+			if (pgeditor.pwdLength() == 0) {
+				$("#pwdiv_login_pw").find(".error").text("请输入登录密码！");
+				btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+				return false;
+			}
+
+			getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor]);
+			setPwdResult(pgeditor,$('#loginPasswd'));
+
+			$("form").submit();
+		}
+
+	});
+})
+</script>

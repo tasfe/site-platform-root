@@ -1,0 +1,167 @@
+
+<div class="container">
+  <div class="wrap">
+    <div class="page_title">
+      <h2>证件照审核</h2>
+    </div>
+    <div class="box_e1e1e1 w998">
+      <div class="reg_content_wrap2" style="height:auto;">
+        <div class="login_content clearfix">
+          
+          <div class="row">
+            <label class="row_label" for="">银行账户名：</label>
+            <div class="row_con"> <span>$!response.data.realName</span> </div>
+            <div class="clear"></div>
+          </div>
+          <div class="row">
+            <label class="row_label" for="">证件类型：</label>
+            <div class="row_con"> <span>$!response.data.certType</span> </div>
+            <div class="clear"></div>
+          </div>
+          <div class="row">
+            <label class="row_label" for="">证件号：</label>
+            <div class="row_con"> <span>$!response.data.authNo</span> </div>
+            <div class="clear"></div>
+          </div>
+          
+          <div class="row mb5">
+          <label class="row_label" for="">证件影印件正面：</label>
+          <div class="row_con">
+          <form id="form1" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+            <input id="file1" type="text" class="login_input" readonly>
+            <input type="hidden" id="imageUrl1" name="imageUrl1" value="$!response.data.imageUrl1"/>
+            <div class="relative inline">
+              <input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl1" forpath="file1">
+            </div>
+            <a class="viewImg zj" href="#" title="法定代表人身份证正面"></a>
+          </form>
+          <div class="msg"></div>
+          <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+          </div>
+          <div class="clear"></div>
+          <div class="text pdlf170 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+          <div class="pdlf170 h20 error"></div>
+          </div>
+          
+          <div class="row mb5">
+          <label class="row_label" for="">证件影印件反面：</label>
+          <div class="row_con">
+          <form id="form2" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+            <input id="file2" type="text" class="login_input" readonly>
+            <input type="hidden" id="imageUrl2" name="imageUrl2" value="$!response.data.imageUrl2"/>
+            <div class="relative inline">
+              <input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl2" forpath="file2">
+            </div>
+            <a class="viewImg zj" href="#" title="法定代表人身份证正面"></a>
+          </form>
+          <div class="msg"></div>
+          <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+          </div>
+          <div class="clear"></div>
+          <div class="text pdlf170 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+          <div class="pdlf170 h20 error"></div>
+          </div>
+		  
+		  <input type="hidden" id="certTypeCode" name="certTypeCode" value="$!response.data.certTypeCode"/>
+          
+      <div class="error pdlf170" id="sError"></div>
+      <div class="btn pdlf170" style="padding-bottom:55px;">
+        <input class="btn_next btn_submit" type="button" value="">
+      </div>
+	  
+    </div>
+  </div>
+</div>
+</div>
+<script>
+var baseUrl = "${request.contextPath}/site/getFile.htm?fileName=";
+function successUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl){
+	$("#" + input_path_id).val(input_path);
+	$("#" + input_imgurl_id).val(input_imgurl);
+	
+	$("#" + input_path_id).parent().find(".viewImg").attr("href",baseUrl + input_imgurl).html('<img src="'+(baseUrl + input_imgurl)+'" style="width:45px; height:28px; border:0;" />').css("visibility","visible");
+	//encodeURIComponent(input_imgurl)
+	
+	$("#" + input_path_id).parent().show().parent().find(".msg").text("如需修改附件，请联系客服！");
+	
+	$("#" + input_path_id).parent().find(".relative").hide();
+}
+function errorUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl){
+	$("#" + input_path_id).val("");
+	
+	var tipObj = $("#" + input_path_id).parent().parent().parent().find(".error");
+	if(!tipObj.hasClass("error")) tipObj = $("#" + input_path_id).parent().parent().parent().parent().find(".error");
+		
+	tipObj.text("上传失败，请重新上传！");
+	$("#" + input_path_id).parent().find(".viewImg").attr("href","").html('').css("visibility","hidden");
+	
+	$("#" + input_path_id).parent().show().parent().find(".msg").text("");
+}
+function imgint(){
+	$("#file1,#imageUrl1,#file2,#imageUrl2,#file3,#imageUrl3,#file4,#imageUrl4,#file5,#imageUrl5").val("");
+	$(".viewImg").empty();
+}
+$(function(){
+	imgint();
+	
+	//上传图片
+	$("body").delegate(".btn_liulan","click",function(){
+		var pathid = $(this).attr("forpath");
+		var imgid = $(this).attr("forimg");
+		var jIframe = $(this).parent().parent().parent().find(".iframe_upload").contents();
+		
+		jIframe.find("#input_path_id").val(pathid);
+		jIframe.find("#input_imgurl_id").val(imgid);
+		jIframe.find("#file_select").click();
+		
+	});
+	
+	$('.viewImg').lightBox({
+		imageLoading: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-ico-loading.gif',
+		imageBtnClose: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-close.gif',
+		imageBtnPrev: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-prev.gif',
+		imageBtnNext: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-next.gif'
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_next_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#file1");
+		var tipObj = thisObj.parent().parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请上传法定代表人的身份证正面图片！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false; }
+		
+		thisObj = $("#file2");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传法定代表人的身份证反面图片！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_next_disabled"); return false; }
+		
+		jQuery.ajax({
+        	type: "post",
+    		url: "${request.contextPath}/my/do-personal-verifyRealName.htm",
+    		dataType: "json",
+    		data: {imageUrl1:$("#imageUrl1").val(),imageUrl2:$("#imageUrl2").val(),certTypeCode:$("#certTypeCode").val()},
+    		success: function(result){
+				var	isSuccess = result.success,
+					msg 	  = result.message,
+					failFn	  = function() {
+						btn_submit.attr("disabled", false).removeClass("btn_next_disabled");					    			
+						$("#sError").text(msg);
+					};
+    			if (isSuccess) {
+    				window.location.href = '${request.contextPath}/my/go-personal-certification.htm';
+    			} else {
+					failFn();
+				}
+    		},
+    		error: function(){
+				$("#sError").html(G.sysError);
+    			btn_submit.attr("disabled", false).removeClass("btn_next_disabled");
+    		}
+        });
+	})
+	
+})
+</script>

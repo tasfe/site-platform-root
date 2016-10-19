@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.netfinworks.site.core.dal.daointerface.InsuranceOrderDAO" >
+  <resultMap id="BaseResultMap" type="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDO" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="MEMBER_ID" property="memberId" jdbcType="VARCHAR" />
+    <result column="BXGSID" property="bxgsid" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY" property="company" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="POLICYTYPE" property="policytype" jdbcType="VARCHAR" />
+    <result column="SECURITYMONEY" property="securitymoney" jdbcType="VARCHAR" />
+    <result column="CURRENCYTYPE" property="currencytype" jdbcType="VARCHAR" />
+    <result column="APPLICANT" property="applicant" jdbcType="VARCHAR" />
+    <result column="ATYPE" property="atype" jdbcType="VARCHAR" />
+    <result column="AIDCARD" property="aidcard" jdbcType="VARCHAR" />
+    <result column="APHONE" property="aphone" jdbcType="VARCHAR" />
+    <result column="BINSURED" property="binsured" jdbcType="VARCHAR" />
+    <result column="BTYPE" property="btype" jdbcType="VARCHAR" />
+    <result column="BIDCARD" property="bidcard" jdbcType="VARCHAR" />
+    <result column="BPHONE" property="bphone" jdbcType="VARCHAR" />
+    <result column="STARTDATE" property="startdate" jdbcType="TIMESTAMP" />
+    <result column="ENDDATE" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SPECILTYPE" property="speciltype" jdbcType="VARCHAR" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="LIABILITYS" property="liabilitys" jdbcType="VARCHAR" />
+    <result column="OTHERINFO" property="otherinfo" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="MENUCON" property="menucon" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, MEMBER_ID, BXGSID, COMPANY,COMPANY_NAME, NAME, POLICYTYPE, SECURITYMONEY, CURRENCYTYPE, APPLICANT, 
+    ATYPE, AIDCARD, APHONE, BINSURED, BTYPE, BIDCARD, BPHONE, STARTDATE, ENDDATE, STATUS, 
+    SPECILTYPE, PID, LIABILITYS, OTHERINFO, CREATE_TIME, MENUCON
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from TR_INSURANCE_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from TR_INSURANCE_ORDER
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from TR_INSURANCE_ORDER
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDOExample" >
+    delete from TR_INSURANCE_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDO" >
+  <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+    <![CDATA[
+        select TR_INSURANCE_ORDER_seq.nextval from dual
+    ]]>
+    </selectKey>
+    insert into TR_INSURANCE_ORDER (ID, MEMBER_ID, BXGSID, 
+      COMPANY,COMPANY_NAME, NAME, POLICYTYPE, 
+      SECURITYMONEY, CURRENCYTYPE, APPLICANT, 
+      ATYPE, AIDCARD, APHONE, 
+      BINSURED, BTYPE, BIDCARD, 
+      BPHONE, STARTDATE, ENDDATE, 
+      STATUS, SPECILTYPE, PID, 
+      LIABILITYS, OTHERINFO, CREATE_TIME, 
+      MENUCON)
+    values (#{id,jdbcType=DECIMAL}, #{memberId,jdbcType=VARCHAR}, #{bxgsid,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{policytype,jdbcType=VARCHAR}, 
+      #{securitymoney,jdbcType=VARCHAR}, #{currencytype,jdbcType=VARCHAR}, #{applicant,jdbcType=VARCHAR}, 
+      #{atype,jdbcType=VARCHAR}, #{aidcard,jdbcType=VARCHAR}, #{aphone,jdbcType=VARCHAR}, 
+      #{binsured,jdbcType=VARCHAR}, #{btype,jdbcType=VARCHAR}, #{bidcard,jdbcType=VARCHAR}, 
+      #{bphone,jdbcType=VARCHAR}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{speciltype,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
+      #{liabilitys,jdbcType=VARCHAR}, #{otherinfo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{menucon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDO" >
+  	<selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+    <![CDATA[
+        select TR_INSURANCE_ORDER_seq.nextval from dual
+    ]]>
+    </selectKey>
+    insert into TR_INSURANCE_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ID,
+      <if test="memberId != null" >
+        MEMBER_ID,
+      </if>
+      <if test="bxgsid != null" >
+        BXGSID,
+      </if>
+      <if test="company != null" >
+        COMPANY,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="policytype != null" >
+        POLICYTYPE,
+      </if>
+      <if test="securitymoney != null" >
+        SECURITYMONEY,
+      </if>
+      <if test="currencytype != null" >
+        CURRENCYTYPE,
+      </if>
+      <if test="applicant != null" >
+        APPLICANT,
+      </if>
+      <if test="atype != null" >
+        ATYPE,
+      </if>
+      <if test="aidcard != null" >
+        AIDCARD,
+      </if>
+      <if test="aphone != null" >
+        APHONE,
+      </if>
+      <if test="binsured != null" >
+        BINSURED,
+      </if>
+      <if test="btype != null" >
+        BTYPE,
+      </if>
+      <if test="bidcard != null" >
+        BIDCARD,
+      </if>
+      <if test="bphone != null" >
+        BPHONE,
+      </if>
+      <if test="startdate != null" >
+        STARTDATE,
+      </if>
+      <if test="enddate != null" >
+        ENDDATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="speciltype != null" >
+        SPECILTYPE,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="liabilitys != null" >
+        LIABILITYS,
+      </if>
+      <if test="otherinfo != null" >
+        OTHERINFO,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="menucon != null" >
+        MENUCON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{id,jdbcType=DECIMAL},
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="bxgsid != null" >
+        #{bxgsid,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="policytype != null" >
+        #{policytype,jdbcType=VARCHAR},
+      </if>
+      <if test="securitymoney != null" >
+        #{securitymoney,jdbcType=VARCHAR},
+      </if>
+      <if test="currencytype != null" >
+        #{currencytype,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="atype != null" >
+        #{atype,jdbcType=VARCHAR},
+      </if>
+      <if test="aidcard != null" >
+        #{aidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="aphone != null" >
+        #{aphone,jdbcType=VARCHAR},
+      </if>
+      <if test="binsured != null" >
+        #{binsured,jdbcType=VARCHAR},
+      </if>
+      <if test="btype != null" >
+        #{btype,jdbcType=VARCHAR},
+      </if>
+      <if test="bidcard != null" >
+        #{bidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="bphone != null" >
+        #{bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="speciltype != null" >
+        #{speciltype,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="liabilitys != null" >
+        #{liabilitys,jdbcType=VARCHAR},
+      </if>
+      <if test="otherinfo != null" >
+        #{otherinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menucon != null" >
+        #{menucon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDOExample" resultType="java.lang.Integer" >
+    select count(*) from TR_INSURANCE_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update TR_INSURANCE_ORDER
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.memberId != null" >
+        MEMBER_ID = #{record.memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bxgsid != null" >
+        BXGSID = #{record.bxgsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null" >
+        COMPANY = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policytype != null" >
+        POLICYTYPE = #{record.policytype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.securitymoney != null" >
+        SECURITYMONEY = #{record.securitymoney,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currencytype != null" >
+        CURRENCYTYPE = #{record.currencytype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicant != null" >
+        APPLICANT = #{record.applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.atype != null" >
+        ATYPE = #{record.atype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aidcard != null" >
+        AIDCARD = #{record.aidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aphone != null" >
+        APHONE = #{record.aphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.binsured != null" >
+        BINSURED = #{record.binsured,jdbcType=VARCHAR},
+      </if>
+      <if test="record.btype != null" >
+        BTYPE = #{record.btype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bidcard != null" >
+        BIDCARD = #{record.bidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bphone != null" >
+        BPHONE = #{record.bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startdate != null" >
+        STARTDATE = #{record.startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enddate != null" >
+        ENDDATE = #{record.enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speciltype != null" >
+        SPECILTYPE = #{record.speciltype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        PID = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.liabilitys != null" >
+        LIABILITYS = #{record.liabilitys,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherinfo != null" >
+        OTHERINFO = #{record.otherinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.menucon != null" >
+        MENUCON = #{record.menucon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update TR_INSURANCE_ORDER
+    set ID = #{record.id,jdbcType=DECIMAL},
+      MEMBER_ID = #{record.memberId,jdbcType=VARCHAR},
+      BXGSID = #{record.bxgsid,jdbcType=VARCHAR},
+      COMPANY = #{record.company,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      POLICYTYPE = #{record.policytype,jdbcType=VARCHAR},
+      SECURITYMONEY = #{record.securitymoney,jdbcType=VARCHAR},
+      CURRENCYTYPE = #{record.currencytype,jdbcType=VARCHAR},
+      APPLICANT = #{record.applicant,jdbcType=VARCHAR},
+      ATYPE = #{record.atype,jdbcType=VARCHAR},
+      AIDCARD = #{record.aidcard,jdbcType=VARCHAR},
+      APHONE = #{record.aphone,jdbcType=VARCHAR},
+      BINSURED = #{record.binsured,jdbcType=VARCHAR},
+      BTYPE = #{record.btype,jdbcType=VARCHAR},
+      BIDCARD = #{record.bidcard,jdbcType=VARCHAR},
+      BPHONE = #{record.bphone,jdbcType=VARCHAR},
+      STARTDATE = #{record.startdate,jdbcType=TIMESTAMP},
+      ENDDATE = #{record.enddate,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      SPECILTYPE = #{record.speciltype,jdbcType=VARCHAR},
+      PID = #{record.pid,jdbcType=VARCHAR},
+      LIABILITYS = #{record.liabilitys,jdbcType=VARCHAR},
+      OTHERINFO = #{record.otherinfo,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      MENUCON = #{record.menucon,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDO" >
+    update TR_INSURANCE_ORDER
+    <set >
+      <if test="memberId != null" >
+        MEMBER_ID = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="bxgsid != null" >
+        BXGSID = #{bxgsid,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        COMPANY = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="policytype != null" >
+        POLICYTYPE = #{policytype,jdbcType=VARCHAR},
+      </if>
+      <if test="securitymoney != null" >
+        SECURITYMONEY = #{securitymoney,jdbcType=VARCHAR},
+      </if>
+      <if test="currencytype != null" >
+        CURRENCYTYPE = #{currencytype,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        APPLICANT = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="atype != null" >
+        ATYPE = #{atype,jdbcType=VARCHAR},
+      </if>
+      <if test="aidcard != null" >
+        AIDCARD = #{aidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="aphone != null" >
+        APHONE = #{aphone,jdbcType=VARCHAR},
+      </if>
+      <if test="binsured != null" >
+        BINSURED = #{binsured,jdbcType=VARCHAR},
+      </if>
+      <if test="btype != null" >
+        BTYPE = #{btype,jdbcType=VARCHAR},
+      </if>
+      <if test="bidcard != null" >
+        BIDCARD = #{bidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="bphone != null" >
+        BPHONE = #{bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="speciltype != null" >
+        SPECILTYPE = #{speciltype,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="liabilitys != null" >
+        LIABILITYS = #{liabilitys,jdbcType=VARCHAR},
+      </if>
+      <if test="otherinfo != null" >
+        OTHERINFO = #{otherinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menucon != null" >
+        MENUCON = #{menucon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netfinworks.site.core.dal.dataobject.InsuranceOrderDO" >
+    update TR_INSURANCE_ORDER
+    set MEMBER_ID = #{memberId,jdbcType=VARCHAR},
+      BXGSID = #{bxgsid,jdbcType=VARCHAR},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      POLICYTYPE = #{policytype,jdbcType=VARCHAR},
+      SECURITYMONEY = #{securitymoney,jdbcType=VARCHAR},
+      CURRENCYTYPE = #{currencytype,jdbcType=VARCHAR},
+      APPLICANT = #{applicant,jdbcType=VARCHAR},
+      ATYPE = #{atype,jdbcType=VARCHAR},
+      AIDCARD = #{aidcard,jdbcType=VARCHAR},
+      APHONE = #{aphone,jdbcType=VARCHAR},
+      BINSURED = #{binsured,jdbcType=VARCHAR},
+      BTYPE = #{btype,jdbcType=VARCHAR},
+      BIDCARD = #{bidcard,jdbcType=VARCHAR},
+      BPHONE = #{bphone,jdbcType=VARCHAR},
+      STARTDATE = #{startdate,jdbcType=TIMESTAMP},
+      ENDDATE = #{enddate,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SPECILTYPE = #{speciltype,jdbcType=VARCHAR},
+      PID = #{pid,jdbcType=VARCHAR},
+      LIABILITYS = #{liabilitys,jdbcType=VARCHAR},
+      OTHERINFO = #{otherinfo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MENUCON = #{menucon,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <sql id="TR_INSURANCE_ORDER_query_fuzzy_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="memberId != null and memberId.trim().length() != 0" >
+         AND (MEMBER_ID like '%' || #{memberId} || '%') 
+      </if>
+      <if test="bxgsid != null and bxgsid.trim().length() != 0" >
+         AND (BXGSID like '%' || #{bxgsid} || '%') 
+      </if>
+      <if test="company != null and company.trim().length() != 0" >
+         AND (COMPANY like '%' || #{company} || '%') 
+      </if>
+      <if test="name != null and name.trim().length() != 0" >
+         AND (NAME like '%' || #{name} || '%') 
+      </if>
+      <if test="policytype != null and policytype.trim().length() != 0" >
+         AND (POLICYTYPE like '%' || #{policytype} || '%') 
+      </if>
+      <if test="securitymoney != null and securitymoney.trim().length() != 0" >
+         AND (SECURITYMONEY like '%' || #{securitymoney} || '%') 
+      </if>
+      <if test="currencytype != null and currencytype.trim().length() != 0" >
+         AND (CURRENCYTYPE like '%' || #{currencytype} || '%') 
+      </if>
+      <if test="applicant != null and applicant.trim().length() != 0" >
+         AND (APPLICANT like '%' || #{applicant} || '%') 
+      </if>
+      <if test="atype != null and atype.trim().length() != 0" >
+         AND (ATYPE like '%' || #{atype} || '%') 
+      </if>
+      <if test="aidcard != null and aidcard.trim().length() != 0" >
+         AND (AIDCARD like '%' || #{aidcard} || '%') 
+      </if>
+      <if test="aphone != null and aphone.trim().length() != 0" >
+         AND (APHONE like '%' || #{aphone} || '%') 
+      </if>
+      <if test="binsured != null and binsured.trim().length() != 0" >
+         AND (BINSURED like '%' || #{binsured} || '%') 
+      </if>
+      <if test="btype != null and btype.trim().length() != 0" >
+         AND (BTYPE like '%' || #{btype} || '%') 
+      </if>
+      <if test="bidcard != null and bidcard.trim().length() != 0" >
+         AND (BIDCARD like '%' || #{bidcard} || '%') 
+      </if>
+      <if test="bphone != null and bphone.trim().length() != 0" >
+         AND (BPHONE like '%' || #{bphone} || '%') 
+      </if>
+      <if test="startdate != null" >
+        AND (STARTDATE = #{startdate})
+      </if>
+      <if test="enddate != null" >
+        AND (ENDDATE = #{enddate})
+      </if>
+      <if test="status != null and status.trim().length() != 0" >
+         AND (STATUS like '%' || #{status} || '%') 
+      </if>
+      <if test="speciltype != null and speciltype.trim().length() != 0" >
+         AND (SPECILTYPE like '%' || #{speciltype} || '%') 
+      </if>
+      <if test="pid != null and pid.trim().length() != 0" >
+         AND (PID like '%' || #{pid} || '%') 
+      </if>
+      <if test="liabilitys != null and liabilitys.trim().length() != 0" >
+         AND (LIABILITYS like '%' || #{liabilitys} || '%') 
+      </if>
+      <if test="otherinfo != null and otherinfo.trim().length() != 0" >
+         AND (OTHERINFO like '%' || #{otherinfo} || '%') 
+      </if>
+      <if test="createTime != null" >
+        AND (CREATE_TIME = #{createTime})
+      </if>
+      <if test="menucon != null and menucon.trim().length() != 0" >
+         AND (MENUCON like '%' || #{menucon} || '%') 
+      </if>
+    </trim>
+  </sql>
+  <sql id="TR_INSURANCE_ORDER_query_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="memberId != null and memberId.trim().length() != 0" >
+        AND (MEMBER_ID = #{memberId})
+      </if>
+      <if test="bxgsid != null and bxgsid.trim().length() != 0" >
+        AND (BXGSID = #{bxgsid})
+      </if>
+      <if test="company != null and company.trim().length() != 0" >
+        AND (COMPANY = #{company})
+      </if>
+      <if test="name != null and name.trim().length() != 0" >
+        AND (NAME = #{name})
+      </if>
+      <if test="policytype != null and policytype.trim().length() != 0" >
+        AND (POLICYTYPE = #{policytype})
+      </if>
+      <if test="securitymoney != null and securitymoney.trim().length() != 0" >
+        AND (SECURITYMONEY = #{securitymoney})
+      </if>
+      <if test="currencytype != null and currencytype.trim().length() != 0" >
+        AND (CURRENCYTYPE = #{currencytype})
+      </if>
+      <if test="applicant != null and applicant.trim().length() != 0" >
+        AND (APPLICANT = #{applicant})
+      </if>
+      <if test="atype != null and atype.trim().length() != 0" >
+        AND (ATYPE = #{atype})
+      </if>
+      <if test="aidcard != null and aidcard.trim().length() != 0" >
+        AND (AIDCARD = #{aidcard})
+      </if>
+      <if test="aphone != null and aphone.trim().length() != 0" >
+        AND (APHONE = #{aphone})
+      </if>
+      <if test="binsured != null and binsured.trim().length() != 0" >
+        AND (BINSURED = #{binsured})
+      </if>
+      <if test="btype != null and btype.trim().length() != 0" >
+        AND (BTYPE = #{btype})
+      </if>
+      <if test="bidcard != null and bidcard.trim().length() != 0" >
+        AND (BIDCARD = #{bidcard})
+      </if>
+      <if test="bphone != null and bphone.trim().length() != 0" >
+        AND (BPHONE = #{bphone})
+      </if>
+      <if test="startdate != null" >
+        AND (STARTDATE = #{startdate})
+      </if>
+      <if test="enddate != null" >
+        AND (ENDDATE = #{enddate})
+      </if>
+      <if test="status != null and status.trim().length() != 0" >
+        AND (STATUS = #{status})
+      </if>
+      <if test="speciltype != null and speciltype.trim().length() != 0" >
+        AND (SPECILTYPE = #{speciltype})
+      </if>
+      <if test="pid != null and pid.trim().length() != 0" >
+        AND (PID = #{pid})
+      </if>
+      <if test="liabilitys != null and liabilitys.trim().length() != 0" >
+        AND (LIABILITYS = #{liabilitys})
+      </if>
+      <if test="otherinfo != null and otherinfo.trim().length() != 0" >
+        AND (OTHERINFO = #{otherinfo})
+      </if>
+      <if test="createTime != null" >
+        AND (CREATE_TIME = #{createTime})
+      </if>
+      <if test="menucon != null and menucon.trim().length() != 0" >
+        AND (MENUCON = #{menucon})
+      </if>
+    </trim>
+  </sql>
+  <select id="query" resultMap="BaseResultMap" >
+    <include refid="PAGINATION2.ORACLE_paginationStart" />
+    select 
+    <include refid="Base_Column_List" />
+     from TR_INSURANCE_ORDER 
+    <if test="fuzzy" >
+      <include refid="TR_INSURANCE_ORDER_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy" >
+      <include refid="TR_INSURANCE_ORDER_query_condition" />
+    </if>
+    <if test="order" >
+      order by ID desc
+    </if>
+    <include refid="PAGINATION2.ORACLE_paginationEnd" />
+  </select>
+  <select id="count" resultType="int" >
+    select count(*) from TR_INSURANCE_ORDER 
+    <if test="fuzzy" >
+      <include refid="TR_INSURANCE_ORDER_query_fuzzy_condition" />
+    </if>
+    <if test="!fuzzy" >
+      <include refid="TR_INSURANCE_ORDER_query_condition" />
+    </if>
+  </select>
+</mapper>

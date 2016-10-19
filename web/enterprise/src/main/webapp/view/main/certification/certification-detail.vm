@@ -1,0 +1,46 @@
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title certification">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">实名认证</span>
+        </div>
+    </div>
+
+     <div class="login_main">
+          
+          <div class="logiAmend_succeed" style="padding: 50px 0 0 400px;">
+                   <div class="loginTipsBox">
+                            <i class="tipsIcon succeed"></i>
+                            <p class="f16 bold mb10">已通过永达实名认证</p>
+                            <p>您可以享受更多的永达服务和保障</p>
+                   </div>
+          </div>
+          
+          <div class="loginInfo clearfix">
+          
+              <div class="header">您的实名认证信息</div>
+              <div class="body">
+              <style>
+			  .loginInfo .body{ display:inline-block;}
+			  .loginInfo .body ul li { float:left; _height:35px;}
+			  .loginInfo .body ul li strong{ float:left; text-align:left; width:305px;}
+			  </style>
+                   <ul>
+                       <li><span>认证通过时间：</span><strong>$!dateUtil.getNewFormatDateString($!response.data.authDate)</strong></li>
+                       <li><span>企业名称：</span><strong>$!{response.data.user.companyName}</strong></li>
+                       <li><span>营业执照号：</span><strong>$!{response.data.licenseNo}</strong></li>
+                       <li><span>组织机构代码证号：</span><strong>$!{response.data.organizationNo}</strong></li>
+                       <li><span>ICP证（备案）号：</span><strong>$!{response.data.user.icpLicensePath}</strong></li>
+                       <li><span>法人姓名：</span><strong>$!{response.data.legalPerson}</strong></li>
+                       <li><span>法人身份证号：</span><strong>$!{response.data.authNo}</strong></li>
+					    #if($!{response.data.user.proxyPerson})
+                       <li><span>代理人姓名：</span><strong>$!{response.data.user.proxyPerson}</strong></li>
+                       <li><span>代理人身份证号：</span><strong>$!{response.data.proxyPersonId}</strong></li>
+					    #end
+                   </ul>
+              </div>
+          </div>
+     </div>
+</div>
+</div>

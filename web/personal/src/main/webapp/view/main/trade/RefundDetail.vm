@@ -1,0 +1,75 @@
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2>退款详情</h2>
+      </div>
+    <div class="pagebox">
+    	<form id="form_search">
+    
+        <div class="pagebox5 mt10" style="border-top:0;">
+	#foreach ($!tradeInfo in $!response.data.page.infos)
+        <table cellspacing="0" cellpadding="0" border="0" class="Detail_tab">
+      <tbody>
+	  <tr>
+        <td class="tab_w">退款订单号</td>
+        <td class="tab_w2">$!tradeInfo.tradeVoucherNo</td>
+		<td class="tab_w">原交易订单号</td>
+        <td class="tab_w2">$!tradeInfo.tradeSourceVoucherNo</td>
+      </tr>
+      <tr class="cl">
+        <td class="tab_w">创建时间</td>
+        <td class="tab_w2">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtSubmit)<br></td>
+		<td class="tab_w">交易类型</td>
+		<td class="tab_w2">退款</td>
+  	  </tr>
+      <tr>
+		<td>交易对方</td>
+		<td width="168" style="text-align:left;"><div class="ellipsis w168">$!tradeInfo.sellerName</div></td>
+		<td>交易金额（元）</td>
+		<td width="140">$!moneyUtil.getAmount($!tradeInfo.payAmount)</td>
+       </tr>
+      <tr class="cl">
+        <td>服务费（元）</td>
+        <td>$!moneyUtil.getAmount($!tradeInfo.payerFee)</td>
+        <td class="cl">实际金额（元）</td>
+        <td class="cl Detail_tab_no">$!moneyUtil.getAmount($!tradeInfo.refundSettledAmount)</td>
+        </tr>
+      <tr >
+        <td>支付时间</td>
+        <td>$!dateUtil.getNewFormatDateString($!tradeInfo.gmtModified)</td>
+        <td>支付账户</td>
+        <td class="Detail_tab_no">$!tradeInfo.sellerName</td>
+       </tr>
+	   <tr >
+        <td>备注</td>
+        <td>$!tradeInfo.tradeMemo</td>
+        <td>状态</td>
+        #if($!tradeInfo.status == 100)
+             <td width="10"><span>待支付</span></td>
+        #elseif($!tradeInfo.status == 101 || $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+             <td width="97"><span>支付中</span></td>
+        #elseif($!tradeInfo.status == 201)
+             <td width="97"><span>付款成功</span></td>
+        #elseif($!tradeInfo.status == 301 || $!tradeInfo.status == 401)
+             <td width="97"><span>交易成功</span></td>
+        #elseif($!tradeInfo.status == 900 || $!tradeInfo.status == 901)
+             <td width="97"><span>退款中</span></td>
+        #elseif($!tradeInfo.status == 951)
+             <td width="97"><span>退款成功</span></td>
+        #elseif($!tradeInfo.status == 952)
+             <td width="97"><span>退款失败</span></td>
+        #elseif($!tradeInfo.status == 999)
+             <td width="97"><span>交易关闭</span></td>
+        #else
+            <td width="97"><span>$!tradeInfo.status</span></td>
+		#end
+       </tr>
+    </tbody></table>
+	#end
+    <div class="div_btn_submit"><input type="button" class="btn_fanhui" onClick="history.back(-1);return false;"></div>
+        </div>
+    </form>
+    </div>
+
+</div>
+

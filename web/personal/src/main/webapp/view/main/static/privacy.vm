@@ -1,0 +1,136 @@
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/account.css" rel="stylesheet" type="text/css">
+<style>
+/* 左侧菜单 */
+.account_set_wrap{ width: 998px; border: 1px solid #e1e1e1; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/account_set_left2.gif) left top repeat-y #fff; }
+.account_set_left{ float:left; width: 173px;  }
+.account_set_left ul{ padding: 33px 0; min-height: 300px; }
+.account_set_left ul li a.subBlock{ display: block; width: 173px; height: 45px; position:relative; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/subBlock.gif) no-repeat; color:#595757; }
+.account_set_left ul li a:hover, 
+.account_set_left ul li a.selected{ background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/subBlockHover.gif) no-repeat;}
+.account_set_left ul li a:hover, .account_set_left ul li a.selected{ border-left:0}
+.account_set_left ul li a.subBlock{ border-left:0;}
+
+.account_set_left ul li a span.subNavTxt{ position:absolute; left:60px; top:15px; }
+.account_set_left_standard ul li a span.subNavTxt{ left:20px;}
+
+.account_set_left ul li a:hover span.subNavTxt ,
+.account_set_left ul li a.selected span.subNavTxt{ color: #f60; }
+.account_set_left ul li a span.subNavArrows{ display:block; width:18px; height:18px; position:absolute; right:20px; top:15px; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/AccountSettings.gif) -2px -578px no-repeat; }
+.account_set_left ul li a:hover span.subNavArrows ,
+.account_set_left ul li a.selected span.subNavArrows{ background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/AccountSettings.gif) -2px -533px no-repeat; }
+
+
+.account_set_right{ float:right; width: 825px; background:#FFF; overflow:hidden; }
+</style>
+<div id="" class="wrap">
+	<div class="page_title">
+    	<div class="fr page_title_right"></div>
+    	<h2>格式条款</h2>
+    </div>
+    <div class="account_set_wrap" style="display:inline-block;">
+    
+    	<div class="account_set_left account_set_left_standard" style=" ">
+     	  	   <ul>
+                    <li>
+     	  	   	         <a href="#springUrl('/static/service.htm')" class="subBlock">
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">快捷通服务协议</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a href="#springUrl('/static/privacy.htm')" class="subBlock selected">
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">隐私保护声明</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+          <div class="account_set_right">
+     	  	   
+     	  	   
+     	  	   <div class="account_set_right_main clearfix" style=" padding-top:32px; padding-left:25px; padding-right:25px;">
+     	  	   	   
+					<h3 class="f16 b" style=" text-align:center; ">隐私保护声明</h3>
+                    <div class="agreementcont">
+                   
+                    <div class="agreementcont_p">
+                    <p><b>第一章　总则</b><br>
+第一条　快捷通支付服务有限公司（以下简称“快捷通”）注重客户个人隐私的保护，但有时快捷通需要某些信息才能为客户提供相应服务，所以特对这些情况下的数据收集和使用情况进行声明。<br>
+本声明的全部条款属于《快捷通服务协议》的重要组成部份之一。<br>
+请客户务必仔细阅读，以了解快捷通管理个人信息的情况。</p>
+
+<p><b>第二章　实施细则</b><br>
+<b>第二条　信息的收集</b><br>
+（一） 概述<br>
+为了使客户在一个高效和个性化的过程中进行交易，快捷通会根据需要，按照所提供的不同服务类别向客户收集不同的个人信息。<br>
+有关服务包括但不限于快捷通账户注册、认证、客户在快捷通支付系统中的操作记录。<br>
+所收集的内容包括但不限于客户的姓名、性别、居住城市、通讯地址、邮政编码、电子邮件、手机号码、电话号码、身份证资料、银行信用卡和银行来往账户的信息。<br>
+（二） 对于未成年人信息的收集<br>
+快捷通非常重视对未成年人个人信息收集和使用的安全性和保护。快捷通建议，任何16岁以下的未成年人参加网上活动应事先取得家长或其法定监护人（以下简称"监护人"）的同意。经监护人同意，快捷通可以收集未成年人的个人信息，但监护人有权拒绝快捷通进一步收集其子女或被监护人的个人信息，有权审阅或要求删除该未成年人的个人信息。快捷通保证不会要求未成年人提供额外的个人资料，以作为允许其参与网上活动的条件。<br>
+（三） Cookie记录<br>
+Cookie是记录客户在网上操作的一些内容并被放置在客户计算机硬盘上的文本文件。cookie使网络应用程序能够将客户的访问作为一个个体来响应，收集和记忆有关客户好恶的信息。<br>
+只要客户同意（通过浏览器设置），为更好的给客户提供个性化的服务，同时节约客户的时间，快捷通会在部分网页中使用cookie收集客户信息。
+</p>
+<p>
+<b>第三条　信息的使用</b><br>
+快捷通所收集的客户信息主要用于以下方面：<br>
+（一） 为客户提供有关服务<br>
+包括但不限于：<br>
+1、利用客户留存在快捷通的通讯方式联系客户。<br>
+2、为了在快捷通能力所及程度和范围内保护我们的全部客户以防止可能存在的潜在欺诈行为，我们将向第三方（包括但不仅限于银行发卡机构，公安局户籍管理机关等）证实客户提供的信息。<br>
+3、银行账户信息核对，快捷通将通过与银行授权的安全认证和信誉记录等服务来与客户提供给快捷通的有关银行账户信息进行核实，以证实该账户没有不良记录、丢失或者被偷窃。<br>
+4、在客户使用账户余额支付服务时，快捷通会对客户身份进行验证，包括手机验证和电子邮箱地址验证等，在验证中会使用客户的这些信息，但快捷通保证这些信息仅作为验证身份时必要的验证信息来使用，不会用于其他商业用途，更不会将其公开。<br>
+（二） 改进快捷通的产品和服务<br>
+为了提高快捷通的服务质量，更好的满足客户的实际需求，快捷通会使用作为第三方服务的提供商来完成某些特定的服务。在这种情况下，客户的某些个人资料将会被披露，包括但不限于邮件服务提供商，市场调查公司等。快捷通与第三方之间签署相关法律文件，用以确保所披露的个人资料仅用于特定的服务，除非得到客户的明确同意，不得用于其他任何目的。
+</p>
+
+<p>
+<b>第四条　客户信息的披露</b><br>
+在出现以下情形时，快捷通将披露客户信息：<br>
+（一）有关法律法规要求披露的。<br>
+（二）司法机关或行政机关基于法定程序要求披露的。<br>
+（三）快捷通为维护自己合法权益而向客户提起诉讼或者仲裁的。<br>
+（四）为免除客户在生命、身体或财产方面的急迫危险而公开的。<br>
+（五）其他必须披露的情况。
+</p>
+
+<p>
+<b>第五条　快捷通信息的安全</b><br>
+快捷通使用程序上和硬件技术上的各种安全策略来保护客户的个人信息不被未经授权的访问、使用或泄漏。快捷通会定期严格的测试系统，不断完善快捷通的安全系统和流程。<br>
+客户的信用卡和银行来往账户信息将以加密的形式保存在计算机里，快捷通将采用物理、电子以及流程等形式来保护客户的私人信息。<br>
+客户的快捷通账户的相关密码（登录密码、支付密码等）是以加密的格式保存在快捷通的机器上，快捷通工作人员不知道客户的密码，也不会向客户索取密码。请客户谨慎的保管好有关密码信息，尤其不要把密码告诉他人。如果客户不小心泄漏了密码，请立即联系快捷通或访问快捷通网站，更改密码。<br>
+</p>
+
+<p>
+<b>第六条　免责声明</b><br>
+就下列相关事宜的发生，快捷通不承担任何法律责任：<br>
+1、根据第三条的规定披露客户的信息。<br>
+2、在客户注册为快捷通客户时，客户需设置账户名和密码。客户仅可通过设置的有效密码来使用该账户，如果由于客户泄漏了密码，可能会造成客户信息的丢失，并可能导致对客户不利的后果。当账户和密码因任何原因受到潜在或现实危险时，客户应该立即和快捷通取得联系，在快捷通采取行动前，快捷通对此不负任何责任。<br>
+3、任何第三方根据快捷通各服务条款及声明中所列明的情况使用客户的个人信息，由此所产生的纠纷。<br>
+4、任何由于黑客攻击、电脑病毒侵入或政府管制而造成的暂时性网站关闭。<br>
+5、因不可抗力导致的任何后果。<br>
+6、快捷通网站设有其他网站的链接，但快捷通对其他网站的隐私保护措施不负任何责任。快捷通可在任何需要的时候增加商业伙伴或共用品牌的网站。<br>
+7、快捷通允许在快捷通网页上发布广告的公司在部分网页中使用cookie，但快捷通并不对这类cookie进行监控，也不承担使用此类cookie所产生的任何责任。<br>
+8、快捷通在各服务条款及声明中列明的使用方式或免责情形。
+</p>
+
+<p>
+<b>第七条　变更通知</b><br>
+业务变更时，快捷通会更新《隐私保护声明》，同时将以网站公告的方式予以公布，而不会单独通知客户，客户可定期查阅本声明。
+</p>
+                   </div> 
+                
+     	  	   </div>
+
+     	  </div>
+    </div>  
+</div>
+</div>
+<a id="fix_online_kf" href="#"></a>
+<script>
+$(function(){
+
+})
+</script>
+

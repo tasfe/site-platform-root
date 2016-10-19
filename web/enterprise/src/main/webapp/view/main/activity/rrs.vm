@@ -1,0 +1,43 @@
+<style>
+#header a:hover{ text-decoration:underline;}
+.wrap { position:relative; width:1000px; margin:0 auto;}
+.activitybox1{ width:100%; height:425px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_02.jpg) center top no-repeat;}
+.activitybox2{ width:100%; height:390px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_03.jpg) center top no-repeat;}
+.activitybox3{ width:100%; height:387px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_04.jpg) center top no-repeat;}
+.activitybox4{ width:100%; height:351px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_05.jpg) center top no-repeat;}
+.activitybox5{ width:100%; height:530px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_06.jpg) center top no-repeat;}
+.activitybox6{ width:100%; height:695px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_07.jpg) center top no-repeat;}
+.activitybox7{ width:100%; height:410px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_08.jpg) center top no-repeat;}
+.activitybox8{ width:100%; height:709px; min-width:1000px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/upload/images/20150318/365rrs_002_09.jpg) center top no-repeat;}
+</style>
+<div class="activitybox1">
+    <div class="wrap"></div>
+</div>
+
+<div class="activitybox2">
+    <div class="wrap"></div>	
+</div>
+
+<div class="activitybox3">
+    <div class="wrap"></div>
+</div>
+
+<div class="activitybox4"> 
+    <div class="wrap"></div>
+</div>
+
+<div class="activitybox5">
+    <div class="wrap"><a href="http://www.365rrs.com/" style="position:absolute; width:110px; height:20px; line-height:20px; left:420px; top:485px;" target="_blank">&nbsp;</a></div>
+</div>
+
+<div class="activitybox6">
+    <div class="wrap"><a href="http://www.365rrs.com/" style="position:absolute; width:110px; height:20px; line-height:20px; left:420px; top:655px;" target="_blank">&nbsp;</a></div>
+</div>
+
+<div class="activitybox7">
+    <div class="wrap"></div>
+</div>
+
+<div class="activitybox8">
+    <div class="wrap"></div>
+</div>

@@ -1,0 +1,43 @@
+<div id="top">
+	<div class="wrap">
+    	<div class="fr"><a href="#springUrl('/logout.htm')" class="a">退出</a><span class="color_a5">|</span><a href="#springUrl('/help/helpcenter.htm')">帮助中心</a><span class="color_a5">|</span><a href="#springUrl('/customservice/index.htm')">客服中心</a><span class="color_a5">|</span><span class="kf">客服热线：<b>400-611-0909</b></span></div>
+        <div class="fl">您好，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).memberName</div>
+        
+    </div>
+</div>
+
+
+#set($linkCode=$session.getAttribute("link"))
+
+<script type="text/javascript">
+
+	var linkCode = '$!{linkCode}';
+	$(function() {
+		if (!linkCode) {
+			return;
+		}
+		$('#nav_con .hoverli_cur').removeClass('hoverli_cur').removeClass('cur');
+		$('#nav_con .subnav .cur').removeClass('cur');
+		$('#nav_con .hoverli').each(function() {
+			if (hasCurLinkCode($(this))) {
+				$(this).addClass('hoverli_cur').addClass('cur');
+			}
+		});
+	});
+	
+	function hasCurLinkCode(jHoverli) {
+		if (!linkCode) {
+			return false;
+		}
+		var res = false;
+		jHoverli.find('.subnav a').each(function() {
+			var aHref = $(this).attr('href');
+			if (aHref.indexOf(linkCode) >= 0) {
+				$(this).parent().addClass('cur');
+				res = true;
+			}
+		});
+		return res;
+	}
+
+</script>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:jaxws="http://cxf.apache.org/jaxws" 
+    xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://cxf.apache.org/jaxws
+                        http://cxf.apache.org/schemas/jaxws.xsd
+                        http://cxf.apache.org/transports/http/configuration
+                        http://cxf.apache.org/schemas/configuration/http-conf.xsd
+                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+    default-autowire="byName" default-lazy-init="true">
+
+	<!-- 设置客户端超时信息 单位为毫秒  -->
+	<http-conf:conduit name=".*/batchServiceFacade">
+		<http-conf:client ConnectionTimeout="50000"
+			ReceiveTimeout="3600000" AutoRedirect="true" />
+	</http-conf:conduit>
+	
+	<http-conf:conduit name=".*/tradeQueryFacade">
+		<http-conf:client ConnectionTimeout="50000"
+			ReceiveTimeout="300000" AutoRedirect="true" />
+	</http-conf:conduit>
+	
+	<http-conf:conduit name=".*/erServiceFacade">
+		<http-conf:client ConnectionTimeout="50000"
+			ReceiveTimeout="300000" AutoRedirect="true" />
+	</http-conf:conduit>
+    <import resource="classpath:META-INF/spring/mns-client-bean.xml" />
+    <!-- URM  统一登录   账号绑定-->
+    <jaxws:client id="userAccreditFacade" serviceClass="com.netfinworks.urm.domainservice.accredit.UserAccreditInfoInter" address="${urm.address}/userAccreditInfoInter" />
+    <!-- CMS -->
+    <jaxws:client id="bannerFacade" serviceClass="com.netfinworks.basis.service.api.BannerFacade" address="${cms.address}/bannerService" />
+   	<jaxws:client id="systemMsgFacadeService" serviceClass="com.netfinworks.basis.service.api.SystemMsgFacade" address="${cms.address}/systemMsgService" />
+   	<jaxws:client id="activityfacadeService" serviceClass="com.netfinworks.basis.service.api.ActivityFacade" address="${cms.address}/activityService" />
+   	<jaxws:client id="faqFacade" serviceClass="com.netfinworks.basis.service.api.FaqFacade" address="${cms.address}/faqService" />
+    <!-- 统一账户系统 -->
+        
+    <jaxws:client id="accountFacadeWSC" serviceClass="com.kjt.unionma.api.account.service.AccountFacadeWS" address="${unionma.address}/accountFacadeWSC" />
+    <jaxws:client id="authFacadeWSC" serviceClass="com.kjt.unionma.api.auth.service.AuthFacadeWS" address="${unionma.address}/authFacadeWSC" />
+    <jaxws:client id="bankCardFacadeWSC" serviceClass="com.kjt.unionma.api.auth.service.BankCardFacadeWS" address="${unionma.address}/bankCardFacadeWSC" />
+    <jaxws:client id="bindFacadeWSC" serviceClass="com.kjt.unionma.api.bind.service.BindFacadeWS" address="${unionma.address}/bindFacadeWSC" />
+    <jaxws:client id="loginFacadeWSC" serviceClass="com.kjt.unionma.api.login.service.LoginFacadeWS" address="${unionma.address}/loginFacadeWSC" />
+    <jaxws:client id="loginPasswordFacdeWSC" serviceClass="com.kjt.unionma.api.password.service.LoginPasswordFacdeWS" address="${unionma.address}/loginPassowrdFacdeWSC" />
+    <jaxws:client id="payPasswordFacadeWSC" serviceClass="com.kjt.unionma.api.password.service.PayPasswordFacadeWS" address="${unionma.address}/payPasswordFacadeWSC" />
+    <jaxws:client id="registerFacadeWSC" serviceClass="com.kjt.unionma.api.register.service.RegisterFacadeWS" address="${unionma.address}/registerFacadeWSC" />
+    <jaxws:client id="smsFacadeWSC" serviceClass="com.kjt.unionma.api.sms.service.SmsFacadeWS" address="${unionma.address}/smsFacadeWSC" />
+    
+	<jaxws:client id="erServiceFacade" serviceClass="com.netfinworks.ersys.service.facade.api.ErServiceFacade" address="${er-web.address}/erService" />
+    <!-- MA系统 -->
+    <jaxws:client id="memberContactFacade" serviceClass="com.netfinworks.ma.service.facade.IMemberContactFacade" address="${ma-web.address}/MemberContactFacade" />
+    <jaxws:client id="memberFacade" serviceClass="com.netfinworks.ma.service.facade.IMemberFacade" address="${ma-web.address}/MemberFacade" />
+    <jaxws:client id="bankAccountFacade" serviceClass="com.netfinworks.ma.service.facade.IBankAccountFacade" address="${ma-web.address}/BankAccountFacade" />
+    <jaxws:client id="agreementFacade" serviceClass="com.yongda.supermag.facade.api.AgreementFacade" address="${supermag-services.address}/agreementFacade" />
+    
+    <jaxws:client id="payPwdFacade" serviceClass="com.netfinworks.ma.service.facade.IPayPwdFacade" address="${ma-web.address}/PayPwdFacade" />
+    <jaxws:client id="operatorFacade" serviceClass="com.netfinworks.ma.service.facade.IOperatorFacade" address="${ma-web.address}/OperatorFacade" />
+    <jaxws:client id="accountFacade" serviceClass="com.netfinworks.ma.service.facade.IAccountFacade" address="${ma-web.address}/AccountFacade" />
+    <jaxws:client id="verifyFacade" serviceClass="com.netfinworks.ma.service.facade.IVerifyFacade" address="${ma-web.address}/VerifyFacade" />
+    <jaxws:client id="loginPwdFacade" serviceClass="com.netfinworks.ma.service.facade.ILoginPwdFacade" address="${ma-web.address}/LoginPwdFacade" />
+    <jaxws:client id="merchantFacade" serviceClass="com.netfinworks.ma.service.facade.IMerchantFacade" address="${ma-web.address}/MerchantFacade" />
+
+	<!-- PBS算费 -->
+	<jaxws:client id="payPartyFeeFacade" serviceClass="com.netfinworks.pbs.service.facade.PayPartyFeeFacade" address="${pbs-basis.address}/payPartyFeeFacade" />
+
+    <!-- 会员鉴权管理系统（对内） -->
+    <jaxws:client id="memberInnerClient" serviceClass="com.netfinworks.authorize.ws.clientservice.IMemberService" address="${member-auth.address}/IMemberService" />
+    <jaxws:client id="operatorInnerClient" serviceClass="com.netfinworks.authorize.ws.clientservice.IOperatorService" address="${member-auth.address}/IOperatorService" />
+    <jaxws:client id="operatorRoleClient" serviceClass="com.netfinworks.authorize.ws.clientservice.IOperatorRoleService" address="${member-auth.address}/IOperatorRoleService" />
+  	<!-- 会员鉴权系统（对外）-->
+  	<jaxws:client id="operatorOuterClient" serviceClass="com.netfinworks.authorize.ws.clientservice.IOperatorService" address="${authcore.address}/IOperatorService" />
+
+    <!-- 交易系统  -->
+    <jaxws:client id="tradeProcessFacade" serviceClass="com.netfinworks.tradeservice.facade.api.TradeProcessFacade" address="${trade.address}/tradeProcessFacade" />
+    <jaxws:client id="tradeQueryFacade" serviceClass="com.netfinworks.tradeservice.facade.api.TradeQueryFacade" address="${trade.address}/tradeQueryFacade" />
+	
+    <!-- MSN短信网关系统-->
+    <jaxws:client id="authCodeFacade" serviceClass="com.netfinworks.smsgateway.service.facade.api.IAuthCodeFacade" address="${smsgateway.address}/authCodeFacade" />
+	
+	<!-- 批量服务 -->
+	<jaxws:client id="batchQueryServiceFacade" serviceClass="com.netfinworks.batchservice.facade.api.BatchQueryServiceFacade" address="${batch-trade.address}/batchQueryServiceFacade" />
+	<jaxws:client id="batchFileServiceFacade" serviceClass="com.netfinworks.batchservice.facade.api.BatchFileServiceFacade" address="${batch-trade.address}/batchFileServiceFacade" />
+	<jaxws:client id="batchServiceFacade" serviceClass="com.netfinworks.batchservice.facade.api.BatchServiceFacade" address="${batch-trade.address}/batchServiceFacade" />
+	
+    <!-- 认证系统 -->
+    <jaxws:client id="certFacade" serviceClass="com.netfinworks.cert.service.facade.ICertFacade" address="${cert.address}/certFacade" />
+    <jaxws:client id="certUdcreditFacade" serviceClass="com.netfinworks.cert.service.facade.ICertUdcreditFacade" address="${cert.address}/certUdcreditFacade" />
+	<!-- 国政通实名认证 -->
+	<jaxws:client id="icertvalidateFacade" serviceClass="com.netfinworks.cert.service.facade.ICertValidateFacade" address="${cert.address}/certValidateFacade" />
+    <!-- 数字证书认证系统 -->
+	<jaxws:client id="certificationFacade" serviceClass="com.netfinworks.cert.service.facade.ICertificationFacade" address="${certification.address}/certificationFacade"/>
+
+    <!-- 支付前置系统-->
+    <jaxws:client id="provCityQueryFacade" serviceClass="com.netfinworks.pfs.service.basis.baseinfo.ProvCityQueryFacade" address="${pfs-basis.address}/provCityService" />
+    <jaxws:client id="branchQueryFacade" serviceClass="com.netfinworks.pfs.service.basis.branchinfo.BranchQueryFacade" address="${pfs-basis.address}/branchQueryService" />
+    <jaxws:client id="cardBinValidateFacade" serviceClass="com.netfinworks.pfs.service.basis.cardbin.CardBinValidateFacade" address="${pfs-basis.address}/cardBinValidateService" />
+    <jaxws:client id="instQueryFacade" serviceClass="com.netfinworks.pfs.service.basis.inst.InstQueryFacade" address="${pfs-basis.address}/instQueryService" />
+	<jaxws:client id="bankInfoFacade" serviceClass="com.netfinworks.pfs.service.manager.basis.baseinfo.BankInfoFacade" address="${pfs-manager.address}/bankInfoService" />
+	<!-- 冻结解冻 -->
+	<jaxws:client id="fundsControlFacade" serviceClass="com.netfinworks.pfs.service.payment.FundsControlFacade" address="${pfs-payment.address}/fundsControlFacade" />
+	<!-- 手机话费充值 -->
+	
+	<jaxws:client id="ewPayRechargeServiceFacade" serviceClass="com.netfinworks.recharge.facade.api.EwPayRechargeServiceFacade" address="${recharge.address}/ewPayRechargeServiceFacade" />
+	<jaxws:client id="rechargeNotifyService" serviceClass="com.netfinworks.recharge.facade.api.RechargeNotifyFacade" address="${recharge.address}/rechargeQueryServiceFacade" />
+	<jaxws:client id="rechargeQueryServiceFacade" serviceClass="com.netfinworks.recharge.facade.api.RechargeQueryServiceFacade" address="${recharge.address}/rechargeQueryServiceFacade" />
+		
+	<jaxws:client id="slsQueryAddressService" serviceClass="com.netfinworks.recharge.facade.api.SlsQueryAddressService" address="${sls-recharge.address}/slsQueryAddressservice" />
+	<jaxws:client id="slsRechargeServiceFacade" serviceClass="com.netfinworks.recharge.facade.api.SlsRechargeServiceFacade" address="${sls-recharge.address}/slsRechargeServiceFacade" />
+	<jaxws:client id="rechargeCardServiceFacade" serviceClass="com.netfinworks.recharge.facade.api.RechargeCardServiceFacade" address="${sls-recharge.address}/rechargeCardServiceFacade" />
+    <jaxws:client id="ofRechargeServiceFacade" serviceClass="com.netfinworks.recharge.facade.api.OfRechargeServiceFacade" address="${sls-recharge.address}/ofRechargeServiceFacade" />
+    
+    <jaxws:client id="scfUserFacade" serviceClass="org.scf.facade.service.api.IScfUserFacade" address="${scf.address}/scfUserService" />
+    
+    <!-- UFS统一文件系统 -->
+    <bean id="ufsClient" class="com.netfinworks.ufs.client.UFSClient">
+        <property name="host" value="${ufs.host}" />
+        <property name="user" value="${ufs.user}" />
+        <property name="password" value="${ufs.password}" />
+        <property name="serverRoot" value="${ufs.serverRoot}" />
+    </bean>
+
+    <!-- 统一凭证 -->
+    <jaxws:client id="voucherFacade" serviceClass="com.netfinworks.voucher.service.facade.VoucherFacade" address="${voucher.address}/voucherFacade" />
+
+    <!-- 收银台 -->
+	<jaxws:client id="cashierFacade" serviceClass="com.netfinworks.cashier.facade.api.CashierFacade" address="${cashier.address}/cashierService" />
+	<jaxws:client id="cashierPayLimitFacade" serviceClass="com.netfinworks.cashier.facade.api.PayLimitFacade" address="${cashier.address}/cashierPayLimitService" />
+	
+
+    <!-- 出款服务 -->
+    <jaxws:client id="fundoutFacade" serviceClass="com.netfinworks.fos.service.facade.FundoutFacade" address="${fos-web.address}/FundoutFacade" />
+    <!-- 充值服务 -->
+    <jaxws:client id="depositFacade" serviceClass="com.netfinworks.deposit.api.DepositService" address="${deposit.address}/deposit" />
+
+    <!-- UES加密 -->
+    <jaxws:client id="uesRemoteService"
+        serviceClass="com.netfinworks.ues.services.UesRemoteService" address="${ues.uesRemoteService.address}/UesRemoteService" />
+
+    <!-- 储值管理-->
+	<jaxws:client id="accountServiceApi"
+        serviceClass="com.netfinworks.dpm.accounting.api.AccountService" address="${dpm-manager.address}/AccountService" />
+	
+	<!-- 限额限次 -->
+    <jaxws:client id="iLfltFacadeWS"
+        serviceClass="com.netfinworks.lflt.api.service.ILfltFacadeWS" address="${lflt.address}/lfltFacade" />
+
+    <bean id="uesClient" class="com.netfinworks.ues.UesClient" />
+    
+    <bean id="cropService" class="com.netfinworks.site.ext.integration.corp.impl.CropServiceImpl" />
+    
+    <bean id="maQueryService" class="com.netfinworks.site.ext.integration.member.impl.MaQueryService" />
+    
+    <bean id="insuranceFacade" class="com.yongda.site.ext.integration.insurance.impl.InsuranceFacadeImpl">
+    	<property name="queryUrl" value="${insurance.address}" />
+    	<property name="token" value="${insurance.token}"/>
+    	<property name="sKey" value="${insurance.skey}"/>
+    	<property name="key" value="${insurance.key}"/>
+    	<property name="vi" value="${insurance.vi}"/>
+    </bean>
+
+    <!-- 支付密码及解密PKI 证书文件信息 -->
+    <bean id="payPasswdPfx"
+        class="com.netfinworks.site.ext.integration.kpi.impl.PkiServiceImpl.RSAKeyHolder"
+        p:pfxFile="${paypasswd.rsa.keypair.filepath}" p:password="${paypasswd.rsa.keypair.passwd}" />
+        
+    <!-- 转账短信通知模板 -->
+    <bean id="transfer_notify_template" class="java.lang.String">
+    	<constructor-arg>
+    		<value>${transfer_notify_template}</value>
+    	</constructor-arg>
+    </bean>
+
+     <!-- 转账短信通知app模板 -->
+    <bean id="transfer_notify_template_app" class="java.lang.String">
+    	<constructor-arg>
+    		<value>${transfer_notify_template_app}</value>
+    	</constructor-arg>
+    </bean>
+</beans>

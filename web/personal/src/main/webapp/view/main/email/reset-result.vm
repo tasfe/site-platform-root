@@ -1,0 +1,39 @@
+<div class="zhanghu_infor">
+    <div class="wrap">
+		#if($!response.success) 
+    		<!-- S 流程 -->
+             <div class="amendFlow-mail">
+                  <p class="amendFlow-one" style="display:none;"></p>
+                  <p class="amendFlow-two" style="display:none;"></p>
+                  <p class="amendFlow-three"></p>
+             </div>
+             <!-- E 流程 -->
+             <div class="account_number_manager">
+                <div class="user_ibox">
+                    <h2 class="h2_titform"><em>修改绑定邮箱</em></h2>
+                        <div class="form-horizontal center_form clearfix">                              
+                            <p class="main_tip f_24 fc_yellow">
+    							<span class="ico_suc"></span>
+    							#springMessageText($!response.message, "")
+    						</p>
+							<p class="main_tip fc_9 marb40">已成功绑定邮箱<i class="fc_yellow">$!response.data.email</i></p>
+                            <p class="main_tip">现在您可以：<a href="#springUrl('/my/home.htm')" class="btn_forget f_12"> 返回我的钱包</a></p>
+                    </div>
+				</div>                                                          
+          </div>
+		  #else
+			<div class="account_number_manager">
+                <div class="user_ibox">
+                    <h2 class="h2_titform"><em>修改绑定邮箱</em></h2>
+                        <div class="form-horizontal center_form clearfix">     
+                			<p class="main_tip f_24 fc_yellow">
+                				<span class="ico_err"></span>
+                				$!response.data.email#springMessageText($!response.message, "")
+                			</p>
+                			<p class="main_tip">现在您可以：<a href="#springUrl('/my/go-reset-email.htm')" class="btn_forget f_12"> 重新修改绑定</a><em> 丨 </em><a href="#springUrl('/my/home.htm')" class="btn_forget f_12"> 返回我的钱包</a></p>
+						</div>
+				</div>                                                          
+          </div>
+		#end
+     </div>
+</div>

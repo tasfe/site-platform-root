@@ -1,0 +1,86 @@
+#set($path = ${request.contextPath})
+<div id="money_zz" class="wrap">
+	<div class="page_title">
+    	<div class="fr page_title_right"><a href="#springUrl('/my/all-trade1.htm')">转账记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_5_0.html&3,0')">转账常见问题</a></div>
+    	<h2>转账</h2>
+    </div>
+    <div class="zz_tab_link"><a href="${path}/transfer/toTransferKjt.htm" class="tab_zz_kjt fl cur">转账到永达互联网金融账户</a>
+		<a href="${path}/bTransfer/toTransferBank.htm" class="tab_zz_yh fl ">转账到银行账户</a></div>
+    <div class="pagebox pagebox1 pagezz relative">
+    	<div class="zz_step step step_2"><i></i><span class="s1">转账信息</span><span class="s2">转账确认</span><span class="s3">收银台付款</span></div>
+        <div class="bank_cooper_title">转账信息确认：</div>
+        <form target="_blank" class="zz_form_1" action="${path}/transfer/confirmTransferKjt.htm" method="post">
+            <div class="boxbg1 w860">
+            	<div class="p49" style=" padding-bottom:0;">
+                	<table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info f14">
+                        <tr>
+                        	<td width="200"><span class="b">转账人数：$!{transferPerCount}</span>人</td>
+                            <td width="200" ><span class="b">转账金额：</span><span class="color_f6 b">$!{form.totalTransMoney}</span>元</td>
+                            <td><span class="b">服务费：</span><span class="b">$!{form.serviceCharge}</span>元</td>
+                        </tr>
+                        <tr>
+                        	<td colspan="3"><span class="b">总额：</span><span class="color_f6 b">$!{form.totalMoney}</span>元</td>
+                        </tr>
+                    </table>
+                    
+                    <table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info2">
+                    	<tr>
+                        	<th width="88">序号</td>
+                            <th width="303">收款人信息</td>
+                            <th width="155">金额(元)</td>
+                            <th width="211">备注</td>
+                        </tr>
+						#foreach($transfer in ${transferList})
+                        <tr>
+                        	<td>$!{transfer.orderNo}</td>
+                            <td>$!{transfer.name}($!{transfer.contact})</td>
+                            <td>$!{transfer.money}</td>
+                            <td class="text_l" rowspan="$!{transferList.size}">$!{form.remark}</td>
+                        </tr>
+						#end
+                    </table>
+					<div class="error h22" style="line-height:14px; margin-left:80px; margin-top:-2px;"></div></div>
+                <div class="btn_bottom_zz row3">
+					<input type="button" value="" style="width:100px" class="btn_qrzz btn_submit ">
+					<input type="button" value="" style="width:100px" onClick="window.location.href='#springUrl("/transfer/toTransferKjt.htm")'" class="btn_fh">
+				</div>
+            </div>
+        </form>
+        
+        <div class="faq_relevant">
+        	<h4>转账问题：</h4>
+            <dl>
+            	<dt>转账到永达互联网金融账户需要手续费吗？</dt>
+                <dd>答：永达互联网金融账户到账户转账是不收取手续费的。</dd>
+            </dl>
+            <dl>
+            	<dt>哪些情况下不能转账转出？</dt>
+                <dd>答：a)会员账户被冻结，无法转出<br>
+&nbsp;&nbsp;&nbsp;&nbsp;b)会员账户被加入转账黑名单<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c)会员账户后台注销；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d)会员账户未实名认证；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;e)当天转账次数超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f)当天会员支持的各种支付方式（余额、认证、快捷）次数、金额超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;g)转账收款方为未实名认证的个人或者企业会员；
+</dd>
+            </dl>
+            <dl>
+            	<dt>转账到银行卡和提现有什么区别？</dt>
+                <dd>答：<b>转账到卡：</b>是指将用户永达互联网金融账户余额或者储蓄卡中的钱转入自己或者他人的储蓄卡中。<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>提现：</b>是指把永达互联网金融账户的钱转到账户本人的储蓄卡中。</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+        </div>
+        
+    </div>
+</div>
+<script>
+$(function(){
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qrzz_disabled");
+		$(".error").text("");
+		
+		$(".zz_form_1").submit();
+	});
+});
+</script>

@@ -1,0 +1,204 @@
+<div class="user_infor_all">
+    <div class="wrap">
+         <div class="nav_top">
+            <div class="photo_box">
+              #if($member.faceImageUrl && $member.faceImageUrl != "null")
+	         	 	<img width="76" height="76" src="${WEB_RESOURCE.plateImageUrl}/$!member.faceImageUrl">
+        	  #end
+            </div>
+            <div class="edit_box">
+                <h2>欢迎您，$!{member.memberName}</h2>
+                <ul class="clearfix">
+                #*<li>上次登录时间为：$!member.lastLoginTime  </li>*#
+                </ul>
+            </div>
+         </div>
+    </div>
+</div>
+
+<div class="zhanghu_infor">
+  <div class="wrap">
+    <div class="div_empty"> </div>
+    <div class="trade_all mart20">
+      <div class="tab"> <em class="icon_left"></em> <em class="icon_right"></em> 
+			#if($functionVOs.get("EW_OP_ADD")) 
+				<a class="fr" href="${request.contextPath}/my/operator/toAdd.htm" >添加操作员</a>
+			#end
+		<form id="queryForm" action="${request.contextPath}/my/operator/manage.htm" method="post">
+            <ul class="select_by">
+               <li>
+    				操作员姓名：<input class="in_txt" type="text" id="nickName" name="nickName" value="$!{queryCondition.nickName}" style="margin-bottom:0; width:120px; height:24px; line-height:24px;" > 
+    				
+               </li>
+    		   <li>
+    				操作员账号：<input class="in_txt" type="text" id="loginName" name="loginName" value="$!{queryCondition.loginName}" style="margin-bottom:0; width:120px; height:24px; line-height:24px;" > 
+                </li>
+                <li>
+                     <select id="lockStatusEnum" name="lockStatusEnum" class="select">
+                        <option value="">全部</option>
+    					#foreach($lockStauts in $lockStatusEnums)              
+    						<option value="$lockStauts.code"
+								
+								#if(${queryCondition.lockStatusEnum.code}==${lockStauts.code})
+									selected
+								#end
+								>$lockStauts.msg</option>
+    					#end
+                    </select>  
+                             <a class="btn_h24" id="query" href="#">查询</a>
+                </li>
+             </ul>
+		 </form>
+      </div>
+      <table id="trade_table">
+        <tr>
+          <th width="126">操作人姓名</th>
+          <th width="179">操作员账号</th>
+          <th width="116">状态</th>
+          <th width="389">操作</th>
+        </tr>
+		
+		#foreach($operatorVO in $operatorVOList)
+			#if($operatorVO.isDefaultOperator==false)
+                #if($velocityCount%2 != 0)
+                    #set ($trClass="time")
+                #else
+                    #set ($trClass="odd")
+    			#end
+    			
+    			
+    			#if(${operatorVO.lockStatusEnum.code}==0)
+    				#set ($lockClickTip="禁用")
+    			#else	
+    				#set ($lockClickTip="启用")
+    			#end
+                    <tr class="$trClass trInfo">
+                       <td class="nickName">$!{operatorVO.nickName}</td>
+        			   <td class="loginName">$!{operatorVO.loginName}</td>
+        			   <td class="lockStatus">
+							#if($functionVOs.get("EW_OP_STATUS"))
+								<a href="#" class="lockToggle" opName="${lockClickTip}" lockStatus="$!{operatorVO.lockStatusEnum.code}" operatorId="${operatorVO.operatorId}" title="点击${lockClickTip}该操作员">$!{operatorVO.lockStatusEnum.msg}</a>
+							#else
+								$!{operatorVO.lockStatusEnum.msg}
+							#end
+					   </td>
+        			   <td>	
+							#if($functionVOs.get("EW_OP_RESET_LOGINPWD"))
+								<a class="marl20" href="${request.contextPath}/my/operator/goResetLoginPwd.htm?operatorId=${operatorVO.operatorId}">重置登陆密码</a>
+							#end
+							#if($functionVOs.get("EW_OP_SET_PERMISSION"))
+								<a class="marl20" href="${request.contextPath}/my/operator/goSetPermission.htm?operatorId=${operatorVO.operatorId}">权限设置</a>
+							#end
+        					<!-- <a class="marl20" href="${request.contextPath}/my/operator/goUpdate.htm?operatorId=${operatorVO.operatorId}">修改</a>-->
+							#if($functionVOs.get("EW_OP_DETAIL"))
+								<a class="marl20" href="${request.contextPath}/my/operator/show.htm?operatorId=${operatorVO.operatorId}"> 查看详情</a>
+							#end
+							#if($functionVOs.get("EW_OP_DEL"))
+								<a class="marl20 del" href="#" operatorId="${operatorVO.operatorId}"> 删除</a>
+							#end
+        			   </td>
+                    </tr>
+			#end
+        #end
+        #if(!$operatorVOList || $operatorVOList.size()==0)
+        <tr>
+        	<td colspan="5">无操作员信息！</td>
+        </tr>
+		#end
+      </table>
+    </div>
+  </div>
+</div>			   
+		
+<script type="text/javascript">
+$(function(){
+	$(".lockToggle").click(function(){
+		var obj=$(this);
+		if(confirm("您确定要"+obj.attr("opName")+"该操作员吗?")){
+			ajaxToggleLockStatus(obj);
+		}
+	});
+	
+	$("#query").click(function(){
+		$("#queryForm").submit();
+	});
+	
+	$(".del").click(function(){
+		var obj=$(this);
+		if(confirm("您确定要删除该操作员吗?")){
+			ajaxToggleStatus(obj);
+		}
+	});
+	
+	document.onkeydown = function(e){  
+    	var ev = document.all ? window.event : e;
+    	if(ev.keyCode==13) {
+			$("#query").click();
+    	}
+
+  	};
+  
+  
+	function ajaxToggleLockStatus(obj){
+		jQuery.ajax({      
+		 	data:{
+				operatorId:obj.attr("operatorId"),
+				lockStatus:obj.attr("lockStatus")
+			},
+            type: "Post",     
+            url: "${request.contextPath}/my/operator/lockToggle.htm",     
+            dataType: "json",     
+            success: function(data) {  
+				if(data.success){
+					//当前状况为"启用","禁用"成功
+					if(obj.attr("lockStatus")==0){
+						obj.attr("opName","启用");
+						obj.attr("lockStatus","1");
+						obj.attr("title","点击启用该操作员");
+						obj.html("禁用");
+					}else{
+						obj.attr("opName","禁用");
+						obj.attr("lockStatus","0");
+						obj.attr("title","点击禁用该操作员");
+						obj.html("启用");
+					}
+				}else{
+					alert(data.message);
+				}
+            },     
+            error: function(err) {     
+                alert("登陆超时,操作失败！");    
+				location.reload();
+            }     
+        });    
+	};
+	
+	function ajaxToggleStatus(obj){
+		jQuery.ajax({      
+		 	data:{
+				operatorId:obj.attr("operatorId"),
+				status:1
+			},
+            type: "Post",     
+            url: "${request.contextPath}/my/operator/statusToggle.htm",     
+            dataType: "json",     
+            success: function(data) {  
+				if(data.success){
+					obj.parent().parent().remove();
+				}else{
+					alert(data.message);
+				}
+            },     
+            error: function(err) {     
+               alert("登陆超时,操作失败！");    
+			   location.reload(); 
+            }     
+        });    
+	};
+	
+	$("#reload").click(function(){
+		location.reload();
+	});
+});
+
+</script>

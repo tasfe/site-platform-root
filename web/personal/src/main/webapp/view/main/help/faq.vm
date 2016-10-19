@@ -1,0 +1,299 @@
+
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/helpcenter.css" rel="stylesheet" type="text/css">
+
+<div class="wrap">
+  <div class="page_title">
+    <h2></h2>
+  </div>
+  <div class="helpcenter_nav">
+    <ul>
+      <li><a href="#springUrl('/help/helpcenter.htm')">帮助中心首页</a></li>
+	  <li><a href="javascript:" style="cursor: default;">功能演示</a></li>
+      <li><a href="#springUrl('/help/faq.htm')" class="cur">常见问题</a></li>
+      <li><a href="#springUrl('/help/self.htm')">自助服务</a></li>
+    </ul>
+  </div>
+  <div class="mt30 ">
+    <div class="helpleft">
+      <div class="helpleftnav">
+        <div class="helpleftnav_top"></div>
+        <div class="helpleftnav_cont"> 
+          <h3>常见问题</h3>
+            <ul class="ul2">
+                <li>
+                	<a href="javascript:void(0)" class="cur"><i></i>注册</a>
+                    <dl class="subnav1">
+                        <dd><a href="javascript:" class="active" title="个人会员" data-href="FAQ_1_1.html">个人会员</a></dd>
+                        <dd><a href="javascript:" title="企业会员" data-href="FAQ_1_2.html">企业会员</a></dd>
+                    </dl>
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i></i>登录</a>
+                    <dl class="subnav1">
+                        <dd><a href="javascript:" title="登录流程" data-href="FAQ_2_0.html">登录流程</a></dd>
+                    </dl>
+                    
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i class="close"></i>充值</a>
+                    <dl class="subnav1">
+                    	<dd><a href="javascript:" title="充值"  data-href="FAQ_4_0.html">充值</a></dd>
+                    </dl>
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i class="close"></i>转账</a>
+                    <dl class="subnav1">
+                    	<dd><a href="javascript:" title="转账"  data-href="FAQ_5_0.html">转账</a></dd>
+                    </dl>
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i class="close"></i>提现</a>
+                    <dl class="subnav1">
+                    	<dd><a href="javascript:" title="提现"  data-href="FAQ_6_0.html">提现</a></dd>
+                    </dl>
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i class="close"></i>我的永达互联网金融</a>
+                    <dl class="subnav1">
+                        <dd><a href="javascript:" title="账户设置"  data-href="FAQ_7_2.html">账户设置</a></dd>
+                        <dd><a href="javascript:" title="银行账户"  data-href="FAQ_7_3.html">银行账户</a></dd>
+                    </dl>
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i class="close"></i>交易记录</a>
+                    <dl class="subnav1">
+                        <dd><a href="javascript:" title="交易记录可以查询多长时间内的记录"  data-href="FAQ_8_1.html">交易记录可以查询多长时间内的记录？</a></dd>
+                        <dd><a href="javascript:" title="如何查询充值记录"  data-href="FAQ_8_2.html">如何查询充值记录</a></dd>
+                        <dd><a href="javascript:" title="如何查询提现记录"  data-href="FAQ_8_4.html">如何查询提现记录</a></dd>
+                    </dl>
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i class="close"></i>安全中心</a>
+                    <dl class="subnav1">
+                        <dd><a href="javascript:" title="实名认证"  data-href="FAQ_9_1.html">实名认证</a></dd>
+                        <dd><a href="javascript:" title="实名认证"  data-href="FAQ_9_2.html">登录密码</a></dd>
+                        <dd><a href="javascript:" title="支付密码"  data-href="FAQ_9_4_0.html">支付密码</a></dd>
+                        <dd><a href="javascript:" title="数字证书"  data-href="FAQ_9_6.html">数字证书</a></dd>
+                        <dd><a href="javascript:" title="密码控件"  data-href="FAQ_9_15.html">密码控件</a></dd>
+                        <dd><a href="javascript:" title="快捷盾"  data-href="FAQ_9_7.html">快捷盾</a></dd>
+                        <dd><a href="javascript:" title="短信校验码"  data-href="FAQ_9_8.html">短信校验码</a></dd>
+                        <dd><a href="javascript:" title="绑定手机"  data-href="FAQ_9_9.html">绑定手机</a></dd>
+                        <dd><a href="javascript:" title="修改手机"  data-href="FAQ_9_10.html">修改手机</a></dd>
+                        <dd><a href="javascript:" title="解绑手机"  data-href="FAQ_9_11.html">解绑手机</a></dd>
+                        <dd><a href="javascript:" title="绑定邮箱"  data-href="FAQ_9_12.html">绑定邮箱</a></dd>
+                        <dd><a href="javascript:" title="修改邮箱"  data-href="FAQ_9_13.html">修改邮箱</a></dd>
+                        <dd><a href="javascript:" title="解绑邮箱"  data-href="FAQ_9_14.html">解绑邮箱</a></dd>
+						<dd><a href="javascript:" title="限额限次说明"  data-href="FAQ_9_16.html">限额限次说明</a></dd>
+                    </dl>
+                </li>
+                <li>
+                	<a href="javascript:void(0)"><i class="close"></i>应用中心</a>
+                    <dl class="subnav1">
+                        <dd style="display:none;"><a href="javascript:" title="AA收款"  data-href="FAQ_10_1.html">AA收款</a></dd>
+                        <dd><a href="javascript:" title="他人代付"  data-href="FAQ_10_2.html">他人代付</a></dd>
+                        <dd><a href="javascript:" title="话费充值"  data-href="FAQ_10_3.html">话费充值</a></dd>
+                        <dd><a href="javascript:" title="信用卡还款"  data-href="FAQ_10_4.html">信用卡还款</a></dd>
+                    </dl>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="helpleftnav_bot"></div>
+      </div>
+      <!-- helpleftnav  -->
+      <div class="fl" style="margin-top:20px;"><a href="javascript:" style="cursor: default;"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/helpcenter/ys.gif"></a></div>
+    </div>
+    <!-- helpleft -->
+    
+    <div class="helpcont">
+      <div class="helpbox">
+        <h3 class="helpboxh3">
+          <ul class="helpclasslist">
+            <li><a href="javascript:void(0)" class="cur">账户类</a></li>
+            <li><a href="javascript:void(0)">操作类</a></li>
+            <li><a href="javascript:void(0)">付款类</a></li>
+            <li><a href="javascript:void(0)">安全类</a></li>
+          </ul>
+          各类常见问题
+        </h3>
+        <style>
+		.helpclasstab{ height:120px;}
+		</style>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="javascript:void(0)" data-href="FAQ_1_1.html&0,0">·注册？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_1.html&7,0">·实名认证？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_2_1.html&1,0">·登录？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="javascript:void(0)" data-href="FAQ_7_2_0.html&5,0">·如何添加联系人？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_7_3_1.html&5,1">·如何添加银行卡？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="javascript:void(0)" data-href="FAQ_4_4.html&2,0">·如何充值？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_5_7.html&3,0">·如何转账？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_6_1.html&4,0">·如何提现？</a></li>
+          </ul>
+        </div>
+        <div class="helpclasstab">
+          <ul>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_2_1.html&7,1">·修改登录密码？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_2_2.html&7,1">·找回登录密码？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_4.html&7,2">·修改支付密码？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_5.html&7,2">·找回支付密码？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_6_1.html&7,3">·如何安装数字证书？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_6_4.html&7,3">·如何卸载数字证书？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_7_7.html&7,5">·如何激活快捷盾？</a></li>
+            <li><a href="javascript:void(0)" data-href="FAQ_9_7_8.html&7,5">·如何解绑快捷盾？</a></li>
+          </ul>
+        </div>
+      </div>
+      <!--helpbox  --> 
+      
+      <div class="helpbox">
+        <div class="helplistbox">
+          <div class="helplistboxdiv" style="border-bottom:1px solid #e1e1e1;">
+          		<p class="p1"><b>注册</b><br><a href="#">个人会员注册</a><a href="#">企业会员注册</a></p>
+                <p class="p2"><b>注册</b><br><a href="#">个人会员注册</a><a href="#">企业会员注册</a></p>
+                <p class="p3"><b>注册</b><br><a href="#">个人会员注册</a><a href="#">企业会员注册</a></p>
+          
+          </div>
+          <div class="helplistboxdiv" style="border-bottom:1px solid #e1e1e1;">
+          		<p class="p1">
+                    <b>账户资产</b><br>
+                    <a href="#">充值</a><a href="#">转账</a><a href="#">提现</a><a href="#">银行账户</a><a href="#">签约信息</a><a href="#">基本信息</a><a href="#">电子发票</a><a href="#">角色管理</a><a href="#">消息中心</a>
+                </p>
+                <p class="p2">
+                    <b>账户资产</b><br>
+                    <a href="#">充值</a><a href="#">转账</a><a href="#">提现</a><a href="#">银行账户</a><a href="#">签约信息</a><a href="#">基本信息</a><a href="#">电子发票</a><a href="#">角色管理</a><a href="#">消息中心</a>
+                </p>
+                <p class="p3">
+                    <b>账户资产</b><br>
+                    <a href="#">充值</a><a href="#">转账</a><a href="#">提现</a><a href="#">银行账户</a><a href="#">签约信息</a><a href="#">基本信息</a><a href="#">电子发票</a><a href="#">角色管理</a><a href="#">消息中心</a>
+                </p>
+          
+          </div>
+          <div class="helplistboxdiv nob">
+          		<p class="p1">
+                    <b>账户资产</b><br>
+                    <a href="#">充值</a><a href="#">转账</a><a href="#">提现</a><a href="#">银行账户</a><a href="#">签约信息</a><a href="#">基本信息</a><a href="#">电子发票</a><a href="#">角色管理</a><a href="#">消息中心</a>
+                </p>
+                <p class="p2">
+                    <b>账户资产</b><br>
+                    <a href="#">充值</a><a href="#">转账</a><a href="#">提现</a><a href="#">银行账户</a><a href="#">签约信息</a><a href="#">基本信息</a><a href="#">电子发票</a><a href="#">角色管理</a><a href="#">消息中心</a>
+                </p>
+                <p class="p3">
+                    <b>账户资产</b><br>
+                    <a href="#">充值</a><a href="#">转账</a><a href="#">提现</a><a href="#">银行账户</a><a href="#">签约信息</a><a href="#">基本信息</a><a href="#">电子发票</a><a href="#">角色管理</a><a href="#">消息中心</a>
+                </p>
+          
+          </div>
+        </div>
+      </div>
+      
+      <!-- helpbox -->
+      
+      <div class="helpbox">
+      	<iframe scrolling="no" frameborder="0" class="helpfaq_iframe fl" width="793"></iframe>
+      </div>
+      
+    </div>
+    <!--helpcont --> 
+    
+    
+  </div>
+  <!-- mt30 --> 
+  
+</div>
+
+<script src="../common/js/jquery-1.8.2.min.js"></script> 
+<script src="../common/js/js.js"></script> 
+<script>
+$(function(){
+	var tophref="${WEB_RESOURCE.staticAddress}wallet/help/";
+	$(".subnav1").hide();
+	$(".helpclasstab").eq(0).show();
+	$(".helpbox").eq(1).hide();
+	$(".helpbox").eq(2).hide();
+	$(".ul2 .cur").parent().find("dl").show();
+	
+	$(".helpclasslist a").click(function(){
+		$(this).addClass("cur").parent().siblings().find("a").removeClass("cur");
+		$(".helpclasstab").hide();
+		var i=$(this).parent().index();
+		$(".helpclasstab").eq(i).show();
+	})
+	
+	$(".ul2>li>a").click(function(){
+		$(this).addClass("cur").parent().siblings().find("a").removeClass("cur");
+		$("i",this).addClass("open").parent().siblings().find("i").removeClass("open");
+		$(".subnav1").hide();
+		$(this).parent().find("dl").show();
+		return false;
+	})
+	
+	$(".subnav1 a").click(function(){
+		$(this).parent().siblings().find("a").removeClass("active");
+		$(this).addClass("active").parent().parent().parent().siblings().find("a").removeClass("active");
+		
+		var href=$(this).attr("data-href");
+		$(".helpbox").eq(0).hide();
+		$(".helpbox").eq(1).hide();
+		$(".helpbox").eq(2).show();
+		href=tophref+href;
+		$(".helpfaq_iframe").attr("src",href);
+		
+		return false;
+	})
+	
+	
+	
+	$(".helpclasstab a").click(function(){
+		$(".helpbox").eq(0).hide();
+		$(".helpbox").eq(1).hide();
+		$(".helpbox").eq(2).show();
+		
+		var href=$(this).attr("data-href");
+		var ifhref=href.split("&");
+		
+		var i1=ifhref[1].split(",");
+		
+		$(".ul2 li a").removeClass("cur");
+		$(".ul2 .subnav1").hide();
+		$(".ul2 li").eq(i1[0]).find(".subnav1").show();
+		$(".ul2 li").eq(i1[0]).find("a:eq(0)").addClass("cur");
+		$(".ul2 li").eq(i1[0]).find(".subnav1 a").eq(i1[1]).addClass("active");
+		$(".helpfaq_iframe").attr("src", tophref+ifhref[0]);
+		
+		return false;
+	});
+	
+	var searchStr = (location.search).split("=");
+	var searchStr_len = searchStr.length;
+
+	if(searchStr_len>1){
+		$(".helpbox").eq(0).hide();
+		$(".helpbox").eq(1).hide();
+		$(".helpbox").eq(2).show();
+		var ifhref=searchStr[1].split("&")
+		
+		var i1=ifhref[1].split(",");
+		
+		$(".ul2 li a").removeClass("cur");
+		$(".ul2 .subnav1").hide();
+		$(".ul2 li").eq(i1[0]).find(".subnav1").show();
+		$(".ul2 li").eq(i1[0]).find("a:eq(0)").addClass("cur");
+		$(".ul2 li").eq(i1[0]).find(".subnav1 a").eq(i1[1]).addClass("active");
+		$(".helpfaq_iframe").attr("src", tophref+ifhref[0]);
+
+	}
+
+	
+})
+</script>
+

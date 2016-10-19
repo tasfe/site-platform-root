@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>永达互联网金融支付平台</title>
+</head>
+<body style="background:#fff;">
+
+<div id="updataStart" class="floatBoxIframe" style="height:80px; padding:25px 0 0 50px;">
+	<img class="fl" src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/loading.gif" width="48" height="49" alt="正在加载..." />
+    <span class="fl f14 ml20 mt16" id="updataStartMsg"></span>
+</div>
+
+<div id="updataEnd" class="floatBoxIframe" style="height:80px; padding:25px 0 0 50px; display:none">
+	<i class="success"></i>
+    <div class="msg"><p class="b f14">您的快捷盾证书已更新成功</p><span class="color_4c f12">您可以关闭当前页面后继续操作</span></div>
+</div>
+
+ <li style="display:none"><span id="needUpdataKjd" class="error" style="display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</span></li>
+
+
+<form id="autoForm" action="#springUrl('/certRenew/certRenew.htm')" method="POST">
+    <input type="hidden" id="csr" name="csr" value="">
+    <input type="hidden" id="certSn" name="certSn" value="">
+    <input type="hidden" id="origCert" name="origCert" value="">
+    <input type="hidden" id="pkcsInfo" name="pkcsInfo" value="">
+</form>
+
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>		
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+<script>
+$(function(){
+	//再次发起校验，这里填充出字段
+	doCheckHardCert("#springUrl('/hardcertActivate/getCertSns.htm')");
+
+	$("#csr").val(window.parent.csr);
+    $("#certSn").val(window.parent.certSn);
+    $("#origCert").val(window.parent.origCert);
+    $("#pkcsInfo").val(window.parent.pkcsInfo);
+
+	$.ajax({
+        type: 'post',
+        url: "#springUrl('/certRenew/certRenew.htm')",
+		data: "csr=" + encodeURIComponent($("#csr").val()) + "&certSn=" + encodeURIComponent($("#certSn").val()) + "&origCert=" + encodeURIComponent($("#origCert").val()) + "&pkcsInfo=" + encodeURIComponent($("#pkcsInfo").val()),
+        success: function(restP) {
+        	if(restP.success) {
+				if (restP.data.certSignBufP7.length > 0){
+					var flag = installCert(restP.data.certSignBufP7);
+					if(flag) {
+						$("#updataStart").hide();
+						$("#updataEnd").show();
+					} else {
+						$("#updataStart").show();
+						$("#updataEnd").hide();
+						$("#updataStartMsg").text(restP.message)
+					}
+				} else {
+					$("#updataStart").show();
+					$("#updataEnd").hide();
+					$("#updataStartMsg").text(restP.message)
+				}
+        	} else {
+				$("#updataStart").show();
+				$("#updataEnd").hide();
+				$("#updataStartMsg").text(restP.message)
+			}
+        } ,
+		cache: false,
+		error:function(){ $("#updataStartMsg").text(G.sysError); },
+        dataType: "json"
+    });
+})
+</script>
+</body>
+</html>

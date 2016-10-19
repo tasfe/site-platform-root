@@ -1,0 +1,37 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     <div class="inner_banner1">
+     	  <a target="_blank" href=""><img src=""></a>
+		  <i title="关闭"></i>
+     </div>
+     <div class="page_title"><h2>充值结果</h2></div>
+	<div class="safetyMain" style="height:300px;">
+				<div class="logiAmend_succeed">
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">付款成功，话费将在1-10分钟内到账。</p>
+				   <p>您还可以选择 <a href="#springUrl('/my/phoneRecharge.htm')">再次充值</a></p>
+				   <p>　</p>
+				   <p>充值号码：$!{phoneNo}</p>
+				   <p>交易编号：$!{tradeOrderNo}</p>
+				   <p>　</p>
+				   <p>　</p>
+				   <p>　</p>
+				   <p style="margin-left: -100px">温馨提示：话费充值高峰期有可能延迟到账，如果超过15分钟未到账，请联系卖家。</p>
+              </div>
+              
+         </div> 
+
+
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	$(".inner_banner1 i").click(function(){
+		$(this).parent().fadeOut();
+	});
+})
+</script>

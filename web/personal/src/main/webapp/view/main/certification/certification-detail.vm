@@ -1,0 +1,49 @@
+
+
+<!-- S 主要内容 -->
+<div class="wrap mt10">
+     <div class="login_h1">实名认证</div>
+     <div class="login_main">
+          
+          <div class="logiAmend_succeed" style="padding: 50px 0 0 400px;">
+                   <div class="loginTipsBox">
+                            <i class="tipsIcon succeed"></i>
+                            <p class="f16 bold mb10">已通过永达互联网金融实名认证</p>
+                            <p>您可以享受更多的永达互联网金融服务和保障</p>
+                   </div>
+          </div>
+          
+          <div class="loginInfo clearfix">
+          
+              <div class="header">您的实名认证信息</div>
+              <div class="body">
+              <style>
+			  .loginInfo .body{ display:inline-block;}
+			  .loginInfo .body ul li { float:left; _height:35px;}
+			  .loginInfo .body ul li strong{ float:left; text-align:left; width:305px;}
+			  </style>
+			       #if($!response.data.memberType == '1')
+                   <ul>
+                       <li><span>姓名：</span><strong>$!{response.data.realName}</strong></li>
+                       <li><span>身份证号：</span><strong>$!{response.data.authNo}</strong></li>
+                   </ul>
+				   #else
+				   <ul>
+                       <li><span>企业名称：</span><strong>$!{response.data.user.companyName}</strong></li>
+                       <li><span>营业执照号：</span><strong>$!{response.data.licenseNo}</strong></li>
+                       <li><span>组织机构代码证号：</span><strong>$!{response.data.organizationNo}</strong></li>
+                       <li><span>法人姓名：</span><strong>$!{response.data.legalPerson}</strong></li>
+                       <li><span>法人身份证号：</span><strong>$!{response.data.authNo}</strong></li>
+                       <li><span>代理人姓名：</span><strong>$!{response.data.user.proxyPerson}</strong></li>
+                       <li><span>代理人身份证号：</span><strong>$!{response.data.proxyPersonId}</strong></li>
+                   </ul>
+				   #end
+              
+              </div>
+              
+          </div>
+          
+          
+     </div>
+</div>
+<!-- E 主要内容 -->

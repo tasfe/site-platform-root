@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.authorize:authorize-service:1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/authorize/authorize-service/1.0.0-SNAPSHOT/authorize-service-1.0.0-20160929.054453-17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/authorize/authorize-service/1.0.0-SNAPSHOT/authorize-service-1.0.0-20160929.054453-17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/authorize/authorize-service/1.0.0-SNAPSHOT/authorize-service-1.0.0-20160929.054453-17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

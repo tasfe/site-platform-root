@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.mq:netfinworks-mq:1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/mq/netfinworks-mq/1.0.0-SNAPSHOT/netfinworks-mq-1.0.0-20131108.035312-12.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/mq/netfinworks-mq/1.0.0-SNAPSHOT/netfinworks-mq-1.0.0-20131108.035312-12-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/mq/netfinworks-mq/1.0.0-SNAPSHOT/netfinworks-mq-1.0.0-20131108.035312-12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

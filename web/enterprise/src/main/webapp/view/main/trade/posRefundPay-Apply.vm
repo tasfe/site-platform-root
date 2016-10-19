@@ -1,0 +1,122 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">退款申请</span>
+        </div>
+    </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>订单信息</h3>
+    </div>
+ 	#set($info =$baseInfoList)
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">交易订单号 </td>
+          <td class="tab_w2">$!{info.tradeVoucherNo}<br></td>
+		<tr/>
+		<tr class="cl">
+          <td  class="tab_w">商户订单号</td>
+          <td  class="Detail_tab_no tab_w2">$!{info.serialNumber}</td>
+        </tr>
+        <tr >
+          <td>创建时间</td>
+          <td >$!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>
+		<tr/>
+		<tr class="cl">
+          <td >交易类型</td>
+          <td class="Detail_tab_no">担保收单交易</td>
+        </tr>
+        <tr>
+          <td>交易金额（元）</td>
+          <td id="Detail_tabamount">$moneyUtil.getAmount($!info.payAmount)</td>
+		  <tr/>
+		  <tr class="cl">
+          <td>手续费（元）</td>
+          <td class="Detail_tab_no" >$!{moneyUtil.getAmount($!info.payeeFee)}</td>
+        </tr>
+        <tr >
+          <td>实际金额（元）</td>
+          <td >$moneyUtil.getAmount($!info.orderMoney)</td>
+          <input type="hidden" name="Amount" id="Amount" value="$moneyUtil.getAmount($!info.orderMoney)">
+		<tr/>
+		<tr class="cl">
+          <td class="cl">支付时间</td>
+          <td class="cl Detail_tab_no">$!dateUtil.getNewFormatDateString(${info.gmtpaid})</td>
+        </tr>
+        
+        #if(${info.orderState} == "100")
+           #set($tradeStatus="待支付")##待支付
+        #elseif(${info.orderState} == "201"||${info.orderState} == "301")
+           #set($tradeStatus="支付成功")##   付款成功=支付成功    交易成功视为支付成功
+        #elseif(${info.orderState} == "999"||${info.orderState} == "998")
+           #set($tradeStatus="交易失败")##  交易失败
+        #elseif($info.orderState == "401")
+           #set($tradeStatus="结算成功")##交易结束视为==结算成功
+        #end
+        
+        <tr >
+          <td>状态</td>
+          <td>$!{tradeStatus}</td>
+		<tr/>
+		<tr class="cl">
+          <td class="cl">可退金额</td>
+          <td class="cl Detail_tab_no">$!maxmoney</td>
+        </tr>
+      </table>
+    </div>
+    <form class="zz_form_1" id="withdrawForm" name="withdrawForm" action="${request.contextPath}/my/TradeRefundApply.htm" method="post">
+        <input type="hidden" name="refundFee" id="refundFee" value="$!{refundFee}">##退款费率
+		<input type="hidden" name="refundAmount" id="refundAmount" value="$refundAmount">##退款金额
+			<input type="hidden" name="remarks" id="remarks" value="$remarks">##备注
+			   <div class="mrlauto pay_pw" style="margin:20px 0 0 320px;"><span class="f14 b pw_lf">支付密码：</span><div class="pwdiv"><input name="payPassword" type="hidden" id="password" /></div>
+                    <div class="error" style=" height:30px; padding-left:77px;"></div>
+			   </div>
+			  <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:0" class="sqinfo">
+        <tr>
+            <td colspan="2" style="text-align:center"><input type="button" class="btn J_btn_qd btn_submit" value="确 定"></td>
+        </tr>
+    </table>
+    </form>
+	<br>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+
+        var jsonSubmit = {
+            jBtnSubmit:btn_submit,
+            cssClass:"btn_disabled",
+            urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+        };
+        var pgeditors = [
+            {
+                jPwInput:pgeditor,
+                jInput:$("#password"),
+                jTip:$(".error"),
+                txtEmpty:"请输入支付密码！"
+            }
+        ];
+        checkPgeditor({
+            jsonSubmit:jsonSubmit,
+            pgeditors:pgeditors,
+            callback:function(){
+                $(".zz_form_1").submit();
+            }
+        });
+	});
+})
+</script>

@@ -1,0 +1,208 @@
+#set($path = ${request.contextPath})
+<div id="money_zz" class="wrap">
+	<div class="page_title">
+    	<div class="fr page_title_right"><a href="#springUrl('/my/all-trade1.htm')">转账记录</a> | <a href="#springUrl('/help/faq.htm?=FAQ_5_0.html&3,0')">转账常见问题</a></div>
+    	<h2>转账</h2>
+    </div>
+    <div class="zz_tab_link"><a href="${path}/transfer/toTransferKjt.htm" class="tab_zz_kjt fl">转账到永达互联网金融账户</a>
+		<a href="${path}/bTransfer/toTransferBank.htm" class="tab_zz_yh fl cur">转账到银行账户</a></div>
+    <div class="pagebox pagebox1 pagezz relative">
+    	<div class="zz_step step step_2"><i></i><span class="s1">转账信息</span><span class="s2">转账审核</span><span class="s3">转账成功</span></div>
+        <div class="bank_cooper_title">转账到银行卡信息确认</div>
+        <form class="zz_form_1" action="${path}/bTransfer/confirmTransferBank.htm" method="post">
+            <div class="boxbg1">
+                	<table cellpadding="0" cellspacing="0" border="0"  class="sqinfo zzdyhk" style="margin-bottom:0;">
+                    <tr>
+                    	<td class="h3">开户名：</td>
+                        <td>$!{bankAcctInfo.realName}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">银行账号：</td>
+                        <td>$!{form.accountNo}</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">开户行：</td>
+						<td>$!{bankAcctInfo.bankName}&nbsp;$!{form.branchShortName} </td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">转账金额：</td>
+                        <td colspan="3"><span class="color_f6 b">$!{form.transMoney}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">服务费：</td>
+                        <td colspan="3"><span class="b">$!{form.serviceCharge}</span>元</td>
+                    </tr>
+                    <tr>
+                    	<td class="h3">总额：</td>
+                       	<td colspan="3"><span class="color_f6 b">$!{form.totalMoney}</span>元</td>
+                    </tr>
+                    <!--<tr>
+                    	<td class="h3">短信通知到：</td>
+                       	<td colspan="3">$!{form.mobile}</td>
+                    </tr>-->
+                    <tr>
+                    	<td class="h3">备注：</td>
+                        <td colspan="3">$!{form.remark}</td>
+                    </tr>
+                </table>
+                
+               <div class="mrlauto pay_pw" style="margin-top:20px; margin-left:26px;"><span class="f14 b fl">支付密码：</span><div class="pwdiv"><input name="payPassword" type="hidden" id="password" /></div><div class="error h22" style="line-height:14px; margin-left:83px; margin-top:-2px;"></div></div>
+                <div id="captchaDiv" style="margin-left:203px;display:none">
+					<label><span class="f14 limitLeft b fl">手机校验码：</span>
+						<input type="text" class="inputtext w80" id="sjyzm" name="mobileCaptcha" value="" style="_margin-left:3px;">
+						<input class="btn_mfhq ml10" type="button" value="">
+						<input id="bizType" name="bizType" type="hidden" value="PAY_TRANSFER">
+   					</label><br />
+                    <!--<div class="ml5 fl mt5">您当前手机校验还可使用*天！</div>-->
+					<div class="mainTips h20 error clear" style="margin-left:96px;"></div>
+               </div>
+			   <input id="signedData" name="signedData" type="hidden" />
+               <div class="red" style="margin-left:360px; margin-bottom:20px;" id="errorMsg"></div>
+			  <!-- <div id="needUpdataKjd" class="mb15" style="margin-left:299px;display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</div>-->
+                <div class="error" style=" height:30px; line-height:30px; padding-left:303px;"></div>                                    
+                <div class="btn_bottom_zzyhk"><input type="button" value="" class="btn_qrzz btn_submit ">
+					<input type="button" value="" style="width:100px" onClick="window.location.href='#springUrl("/bTransfer/toTransferBank.htm")'" class="btn_fh">
+				</div>
+            </div>
+        </form>
+        
+        <div class="faq_relevant">
+        	<h4>转账问题：</h4>
+            <dl>
+            	<dt>转账到永达互联网金融账户需要手续费吗？</dt>
+                <dd>答：永达互联网金融账户到账户转账是不收取手续费的。</dd>
+            </dl>
+            <dl>
+            	<dt>哪些情况下不能转账转出？</dt>
+                <dd>答：a)会员账户被冻结，无法转出<br>
+&nbsp;&nbsp;&nbsp;&nbsp;b)会员账户被加入转账黑名单<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c)会员账户后台注销；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d)会员账户未实名认证；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;e)当天转账次数超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f)当天会员支持的各种支付方式（余额、认证、快捷）次数、金额超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;g)转账收款方为未实名认证的个人或者企业会员；
+</dd>
+            </dl>
+            <dl>
+            	<dt>转账到银行卡和提现有什么区别？</dt>
+                <dd>答：<b>转账到卡：</b>是指将用户永达互联网金融账户余额或者储蓄卡中的钱转入自己或者他人的储蓄卡中。<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>提现：</b>是指把永达互联网金融账户的钱转到账户本人的储蓄卡中。</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+        </div>
+    </div>
+</div>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>		
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+#if($!{isCertActive} == 'yes')
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+#end
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+
+<script>
+$(function(){
+	var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+	window.pgeCtrl = pgeditor;
+	$(".pwdiv").append(pgeditor.load());
+	pgeditor.pgInitialize();
+	
+	$(".btn_mfhq").click(function(){
+		$('#captchaDiv .error').html("");
+		countDown($(this),60,"");
+		$.ajax({
+			url: '$!{path}/cert/sendMobileCertCode.htm',
+			type: 'post',
+			data: 'bizType=' + $('#bizType').val(),
+			dataType: "json",
+			success: function(result) {
+				if (!result || !result.success) {
+					if(result.message != ""){
+						$('#captchaDiv .error').text(result.message);	
+					}else{
+						$('#captchaDiv .error').text('获取验证码失败!');	
+					}
+				} else {
+					$('#captchaDiv .error').text('验证码发送成功!');
+				}
+			},
+			error: function(){
+				$('#captchaDiv .error').html(G.sysError);
+			}
+		});
+	});
+
+	function _submit(){
+		var jBtnSubmit = $(".btn_submit");
+		$.ajax({
+			url: '$!{path}/bTransfer/checkPayPassword.htm',
+			type: 'post',
+			data: 'payPassword=' + $('#password').val(),
+			dataType: "json",
+			success: function(result) {
+				if (result && !result.success) {
+					jBtnSubmit.attr("disabled", false).removeClass("btn_qrzz_disabled");
+					$(".pay_pw").find(".error").text(result.message);
+				} else {
+					var jForm = $(".zz_form_1");
+					if (cert) {
+						// 签名后提交
+						signAndSubmit(jForm, cert, [jForm.find('#password').val()]);
+					} else {
+						jForm.submit();
+					}
+				}
+			},
+			error:function(){
+				jBtnSubmit.attr("disabled", false).removeClass("btn_qrzz_disabled");
+				$(".pay_pw").find(".error").text("支付密码输入有误，请重新输入！");
+			}
+		});
+	}
+
+	$(".btn_submit").click(function(){
+		var jBtnSubmit = $(this);
+		jBtnSubmit.attr("disabled", true).addClass("btn_qrzz_disabled");
+		$(".error").text("");
+		if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+			var wid = pgeditor.settings.pgeWindowID;
+			pgeditor.pwdLength(function(){
+				if(outs[wid].length == 0){
+					$(".pay_pw").find(".error").text("请输入支付密码！");
+					jBtnSubmit.attr("disabled", false).removeClass("btn_qrzz_disabled");
+					return false;
+				}
+
+				//产生随机数加密
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+					//获得密文
+					setPwdResult(pgeditor,$('#password'),function(){
+						_submit();
+					});
+				});
+			});
+		}
+		else{
+			if (pgeditor.pwdLength() == 0) {
+				$(".pay_pw").find(".error").text("请输入支付密码！");
+				jBtnSubmit.attr("disabled", false).removeClass("btn_qrzz_disabled"); return false;
+			}
+
+			getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor]); //产生随机数去加密
+			setPwdResult(pgeditor,$('#password'));
+
+			_submit();
+		}
+	});
+	#if($!{isCertActive} == 'yes')
+	// 检查并提示证书更新
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+	// 检查硬证书
+	selectVerifyStyle("#springUrl('/certActive/getCertSns.htm')");
+	// 检查快捷盾是否插入
+	intervalCheckUSB();
+	#else
+	$("#captchaDiv").show();
+	#end
+})
+</script>

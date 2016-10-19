@@ -1,0 +1,6 @@
+<div id="footer">
+    <div class="wrap" >
+        <p class="link_us"><a class="a6" href="#springUrl('/static/aboutus.htm')">关于永达</a><span class="s">|</span><a class="a6" href="#springUrl('/static/service.htm')">格式条款</a><span class="s">|</span><a class="a6" href="#springUrl('/static/contactus.htm')">联系我们</a><span class="s">|</span><span>客服热线:0571-28276085</span></p>
+        <p class="copyright">永达版权所有 2015-2020　　经营许可证编号：浙B2-20160314　　浙ICP备16001583号</p>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<style type="text/css">
+    .aboutus-name { width:100%; height:222px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/aboutus/1.jpg) center top no-repeat;}
+    .aboutus-name h1 { height: 52px; padding: 80px 0 0 18px; line-height: 48px; font-size: 48px; color: #fff;}
+    .aboutus-name .wrap { height:222px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/aboutus/1-2.jpg) no-repeat;}
+    .aboutus-ydjs { height:248px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/aboutus/2.png) no-repeat;}
+    .aboutus-ydjs h2, .aboutus-jtjs h2, .aboutus-ywjj h2 { height: 26px; padding: 20px 0 20px; line-height: 24px; font-size: 24px; color: #333;}
+    .aboutus-ywjj h2 { padding-top: 60px;}
+    .aboutus-ydjs h2 i, .aboutus-jtjs h2 i, .aboutus-ywjj h2 i { float: left; display: inline; width: 10px; height: 10px; margin:2px 8px 0 0; background: #42a8ff; overflow: hidden; text-indent: -9999px;}
+    .aboutus-ydjs p, .aboutus-jtjs p, .aboutus-ywjj p { width: 455px; padding-left: 20px; line-height: 24px; font-size: 14px; color: #333;}
+    .aboutus-jtjs { width:100%; height:265px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/aboutus/3.jpg) center top no-repeat;}
+    .aboutus-jtjs .wrap { height:265px; background:url(${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/aboutus/3-2.jpg) no-repeat;}
+    .aboutus-jtjs h2 { padding: 30px 0 20px; color: #fff;}
+    .aboutus-jtjs p { width: 730px; color: #fff;}
+    .aboutus-ywjj p { width: auto;}
+</style>
+<div class="wrapbg">
+    <div class="aboutus-name">
+        <div class="wrap">
+            <h1>关于永达</h1>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <div class="aboutus-ydjs">
+            <h2><i>1、</i>公司简介</h2>
+            <p style="padding-bottom: 10px;">浙江永达互联网金融信息服务有限公司（以下简称“浙江永达”）成立于2015年9月，是上海永达（集团）股份有限公司控股子公司，是永达集团旗下从事互联网金融业务的公司。</p>
+            <p>浙江永达汇集了金融行业、第三方支付行业、互联网行业等领域的专业人员，拥有强大的技术开发团队、产品开发、运营管理团队及专业的风险管理团队，保障各项业务在安全、合规的基础上满足广大用户的需求和体验。</p>
+        </div>
+    </div>
+
+    <div class="aboutus-jtjs">
+        <div class="wrap">
+            <h2><i>2、</i>集团背景</h2>
+            <p>永达集团成立于1992年，主要经营汽车销售、汽车金融、汽车租赁三大产业，是中国领先的乘用车经销商和综合性服务提供商，于2012年在香港上市（上市主体：中国永达汽车服务控股有限公司，股票代码03669）。永达集团拥有广泛的全国性4S经销店网络，一直致力发展一站式的经营模式，提供新车销售、售后产品及服务，提供零部件、汽车用品维修、保养服务及汽车美容服务，经营二手车业务、汽车保险业务、汽车检测服务以及其他汽车相关业务。</p>
+        </div>
+
+    </div>
+
+    <div class="wrap">
+        <div class="aboutus-ywjj">
+            <h2><i>3、</i>业务介绍</h2>
+            <p style="padding-bottom: 10px;">浙江永达通过建立与多家金融机构的合作，切入到汽车互联网金融市场，为永达集团提供总对总模式下的各门店资金归集、帐户系统搭建及其他一揽子金融信息服务，以达到集团内部数据集中、资金统筹、财务管理的需求，促进永达集团的品牌精细运营与销售快速提升。</p>
+            <p>浙江永达将依托永达集团全国布点的近200家4S店，以强大的资金流量和用户流量为入口，打造产融结合、融融结合、线上线下结合的互联网汽车金融生态圈。</p>
+        </div>
+    </div>
+</div>

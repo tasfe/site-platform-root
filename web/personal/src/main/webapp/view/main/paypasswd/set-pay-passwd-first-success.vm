@@ -1,0 +1,26 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>支付密码设置</h2></div>
+	 
+     <div class="safetyMain">
+         <div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">恭喜您!您的支付密码已设置成功!</p>
+                   <p><em class="red time_left">10</em>秒后会自动跳转至<a href="${request.contextPath}/my/accountManage.htm">安全中心</a></p>
+              
+              </div>
+              
+         </div> 
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:10, url:"${request.contextPath}/my/accountManage.htm"});
+})
+</script>

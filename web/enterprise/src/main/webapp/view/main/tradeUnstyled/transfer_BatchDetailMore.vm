@@ -1,0 +1,50 @@
+<div class="tools"><a href="#" class="tools_dc gray1 fr">导出下载</a></div>
+ <div class="table_div">
+        <table border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+			<th width="130">商户订单号</th>
+            <th width="130">交易订单号</th>
+            <th width="128">收款人账户</th>
+            <th width="170">收款人账户信息</th>
+            <th width="100">金额<em>（元）</em></th>
+            <th width="79">服务费<em>（元）</em></th>
+            <th width="98">备注</th>
+            <th width="90">状态</th>
+          </tr>
+        </table>
+    </div>
+	<form action="${request.contextPath}/my/transferBatchMore.htm" id="form_search" method="post">
+	<input type="hidden" name="batchNo" value="$!response.data.batchNo">
+	<input type="hidden" name="id" value="$!response.data.id">
+    <table border="0" cellspacing="0" cellpadding="0" class="table1">
+	#foreach ($!tranInfo in $!response.data.page.infos)
+     <tr>
+	   <td width="130">$!tranInfo.sourceDetailNo</td> 
+       <td width="130">$!tranInfo.tradeVoucherNo</td>
+       <td width="128">$!tranInfo.payeeAccountNo</td>
+       <td width="170">$!tranInfo.payeeAccountInfo</td>
+       <td width="100"><span class="orange b">$!tranInfo.amount</span></td>
+       <td width="79">$!tranInfo.fee</td>
+       <td width="98">$!tranInfo.memo</td>
+	    <td width="90">
+	    #if($!tranInfo.status == "WP")
+			处理中
+		#elseif($!tranInfo.status == "I")
+			初始
+		#elseif($!tranInfo.status == "S")
+			成功
+		#elseif($!tranInfo.status == "F")
+			失败
+		#end
+		</td>
+    </tr>
+    #end
+</table>
+</form>
+<script>
+$(function(){
+	$(".tools_dc").click(function(){
+		$('#form_search').submit();
+	});
+})
+</script>

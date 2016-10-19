@@ -1,0 +1,133 @@
+
+<div class="container">
+  <div class="wrap">
+    <div class="page_title">
+      <h2>实名验证</h2>
+    </div>
+    <div class="box_e1e1e1 w998 smyz_index">
+      <div class="title">
+        <p class="level">您当前的安全等级为：
+			#if ($!response.data.certifyLevel == '1')
+			<span>实名校验</span>
+			#elseif ($!response.data.certifyLevel == '2')
+			<span>实名认证V1</span>
+			#elseif ($!response.data.certifyLevel == '3')
+			<span>实名认证V2</span>
+			#else
+			<span>未认证</span>
+			#end
+		</p>
+		#if ($!response.data.certifyLevel == '1')
+		<p class="levelInfo">您已完成实名校验，完成银行卡验证可升级为实名认证 V1。</p>
+		#elseif ($!response.data.certifyLevel == '2')
+		<p class="levelInfo">您已完成实名认证 V1，完成证件审核可升级为实名认证 V2。</p>
+		#elseif ($!response.data.certifyLevel == '3')
+		<p class="levelInfo">您已完成实名认证 V2，已达到最高等级。</p>
+		#else
+		<p class="levelInfo">您未实名认证，完成身份验证可升级为实名校验。</p>
+		#end
+      </div>
+	   #set($certifyLevel = $!response.data.certifyLevel)
+	   #set($Integer = 0)
+      <div class="smyz_step">
+        <div class="d1">身份验证</div>
+        <div class="d2">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><p>您可以提供您的身份证件信息来提升账户权益，并能保障账户安全</p></td>
+            </tr>
+          </table>
+        </div>
+		#if ($Integer.parseInt($certifyLevel) >= 1 || $!response.data.identitySts == 'checkPass')
+		<div class="d3"><div class="color_cc">审核成功</div></div>
+		#elseif ($!response.data.identitySts == 'checkReject')
+        <div class="d3"><span class="text red">验证失败</span><a href="#springUrl('/my/go-personal-verifyIdentity.htm?link=0400')" class="btn_text_1">重新验证</a></div>
+		#elseif ($!response.data.identitySts == 'init')
+        <div class="d3"><div class="color_cc">提交成功</div></div>
+		#else
+		<div class="d3"><a href="#springUrl('/my/go-personal-verifyIdentity.htm?link=0400')" class="btn_msyz">马上验证</a></div>
+		#end
+      </div>
+      <div class="smyz_step">
+        <div class="d1">银行账户认证</div>
+        <div class="d2">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><p>您可以提供银行卡信息来提升账户权益，并可以更好的保障账户安全。</p>
+              <p class="color_f60">银行账户认证需先完成身份验证。</p></td>
+            </tr>
+          </table>
+        </div>
+		#if ($Integer.parseInt($certifyLevel) >= 1 || $!response.data.identitySts == 'checkPass')
+			#if ($Integer.parseInt($certifyLevel) >= 2 || $!response.data.bankCardSts == 'checkPass')
+			<div class="d3"><div class="color_cc">审核成功</div></div>
+			#elseif ($!response.data.bankCardSts == 'init')
+			<div class="d3"><div class="color_cc">提交成功</div></div>
+			#elseif ($!response.data.bankCardSts == 'auditPass')
+			<div class="d3"><span class="text">打款成功</span><a href="#springUrl('/my/go-personal-verifyAmount.htm?link=0400')" class="btn_text_1">确认金额</a></div>
+			#elseif ($!response.data.bankCardSts == 'auditReject' || $!response.data.bankCardSts == 'checkReject')
+			<div class="d3"><span class="text red">验证失败</span><a href="#springUrl('/my/go-personal-verifyBankCard.htm?link=0400')" class="btn_text_1">重新验证</a></div>
+			#else
+			<div class="d3"><a href="#springUrl('/my/go-personal-verifyBankCard.htm?link=0400')" class="btn_msrz">马上认证</a></div>
+			#end
+		#else
+			
+		#end
+      </div>
+      <div class="smyz_step">
+        <div class="d1">证件审核</div>
+        <div class="d2">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><p>您可以上传您的身份验证证件的证件照来提升账户权益，并可以更好的保障账户安全。</p>
+              <p class="color_f60">证件审核需先完成身份验证和银行账户认证。</p></td>
+            </tr>
+          </table>
+        </div>
+		#if ($Integer.parseInt($certifyLevel) >= 2 || $!response.data.bankCardSts == 'checkPass')
+			#if($Integer.parseInt($certifyLevel) == 3 || $!response.data.realNameSts == 'checkPass')
+			<div class="d3"><div class="color_cc">审核成功</div></div>
+			#elseif ($!response.data.realNameSts == 'init')
+			<div class="d3"><div class="color_cc">审核中</div></div>
+			#elseif($!response.data.realNameSts == 'checkReject')
+			<div class="d3"><span class="text red">审核失败</span><a href="#springUrl('/my/go-personal-verifyRealName.htm?link=0400')" class="btn_text_1">重新上传</a></div>
+			#else
+			<div class="d3"><a href="#springUrl('/my/go-personal-verifyRealName.htm?link=0400')" class="btn_sczjz">上传证件照</a></div>
+			#end
+		#else
+			
+		#end
+      </div>
+      <div class="smyz_qx">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td colspan="2" class="th1">等级认证及对应权益</td>
+            <td class="th2">个人会员</td>
+            <td class="th3">企业会员</td>
+          </tr>
+          <tr>
+            <td class="td1">未实名认证</td>
+            <td class="td1_0">未认证任何信息材料</td>
+            <td class="td2"><p>仅可以单笔交易金额1万元以下的网银付款；</p><p>不能充值、转账、提现、使用余额支付；</p></td>
+            <td class="td3">仅可以单笔交易金额1万元以下的网银付款；不能充值、转账、提现、使用余额支付；</td>
+          </tr>
+          <tr>
+            <td class="td1">实名校验</td>
+            <td><div class="smyz_qx_1"></div></td>
+            <td rowspan="2" class="td2"><p>单笔收付款限额人民币 1万元（不含）以下；</p><p>日累计收付款限额人民币 5万元（不含）以下，<br />30天内双边收付限额5万元以下；</p><p>账户余额连续10天应小于5000元；</p><p>无法买卖金融产品；</p></td>
+            <td rowspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="td1">实名认证V1</td>
+            <td><div class="smyz_qx_2"></div></td>
+          </tr>
+          <tr>
+            <td class="td1">实名认证V2</td>
+            <td><div class="smyz_qx_3"></div></td>
+            <td class="td2"><p>单笔提现5万（不含）以下，每日不超过3次；</p><p>单笔转账到卡2000元（不含）以下；日累积不超过2000元；</p><p>单笔转账到账户10000元（不含）以下；日累积不超过50000元；</p><p>可以购买金融产品；</p></td>
+            <td class="td3">转账单笔200万，每日限额200万；</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>

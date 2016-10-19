@@ -1,0 +1,128 @@
+<div class="wrapbg">
+	<div class="wrap">
+		<div class="page_title">
+			<div class="title fl">
+				<i class="icon fl"></i>
+				<span class="tt fl">商户注册</span>
+			</div>
+		</div>
+		<div class="login_main">
+
+			<div class="step-wrap">
+				<span class="step-index step-index-cur">1</span>
+				<span class="step-name step-name-cur">验证账户名</span>
+				<span class="s"></span>
+				<span class="step-index">2</span>
+				<span class="step-name">完善账户信息</span>
+				<span class="s"></span>
+				<span class="step-index">3</span>
+				<span class="step-name">完成注册</span>
+			</div>
+
+			<div class="login_content_wrap">
+				<div class="login_content clearfix">
+					<form id="register-index-form" name="register-index-form" class="" action="${request.contextPath}/register/register-active.htm" method="POST">
+
+						<div class="row">
+							<label class="row_label" for="username">账户名：</label>
+							<div class="row_con">
+								<input id="username" name="username" type="text" data-placeholder="请输入注册的邮箱" class="login_input placeholder ">
+							</div>
+							<div class="clear"></div>
+							<div class="row_tip error"></div>
+						</div>
+
+						<div class="row row_yzm">
+							<label class="row_label" for="captcha_value">验证码：</label>
+							<div class="row_con">
+								<div class="yzm_i" id="yzm_i">
+									<input id="captcha_value" name="captcha_value" type="text" data-placeholder="请输入验证码" class="placeholder" data-input="yzm_i" ><i class="yzm_rw"></i>
+								</div>
+								<img id="randImage" src="#springUrl('/pvc.htm')" alt="验证码" title="点击更新验证码" class="yzm_img"></div>
+							<div class="row_tip error">$!{response.message}</div>
+						</div>
+
+						<div class="row" style="margin-bottom:0;">
+							<div class="checkbox pdlf170"><input type="checkbox" class="mr5" id="agree_xieyi" ><span><label for="agree_xieyi">我已阅读并同意</label><a href="javascript:" id="xieyi">《永达钱包服务协议》</a></span><div class="error h18"></div></div>
+						</div>
+
+						<div class="pdlf170">
+							<input class="btn btn_submit" type="button" value="下一步">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<script>
+	function iframeOk(){
+		initYes();
+		closeSW();
+	}
+	function iframeCancel(){
+		initNo();
+		closeSW();
+	}
+	function initNo(){
+		$("#agree_xieyi").attr("checked", false);
+		$(".btn_submit").attr("disabled", true).addClass("btn_disabled");
+	}
+	function initYes(){
+		$("#agree_xieyi").attr("checked", true);
+		$(".btn_submit").attr("disabled", false).removeClass("btn_disabled");
+	}
+	$(function(){
+		initNo();
+		
+		$("#username").blur(function(){
+			var username = jQuery.trim($(this).val());
+			username = username == $(this).attr("data-placeholder") ? "" : username;
+			checkAccount({cmd:"register", username:username, tipObj:$(this).parent().parent().find(".error"), async:true,url:"#springUrl('/login/checkLoginName.htm')"});
+		});
+		
+		$("#captcha_value").blur(function(){
+			var code = $(this).val();
+			code = code == $(this).attr("data-placeholder") ? "" : code;
+			checkVerificationCode({code:code, tipObj:$(this).parent().parent().parent().find(".error"), imgTipObj:$(".yzm_rw"), async:true,url:"#springUrl('/login/checkVerifiCode.htm')"});
+		});
+		
+		$("#xieyi").click(function(){
+			showWin("iframe","${request.contextPath}/view/xieyi/ServiceAgreement.html","",960,600,"请阅读：《永达钱包服务协议》");
+		});
+		
+		$("#agree_xieyi").click(function(){
+			if($(this).is(":checked")){
+				$(".btn_submit").attr("disabled", false).removeClass("btn_disabled");
+			}else {
+				$(".btn_submit").attr("disabled", true).addClass("btn_disabled");
+			}
+		});
+		
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+			
+			var username = jQuery.trim($("#username").val());
+			username = username == $("#username").attr("data-placeholder") ? "" : username;
+			var flag = checkAccount({cmd:"register", username:username, tipObj:$("#username").parent().parent().find(".error"), async:false,url:"#springUrl('/login/checkLoginName.htm')"});
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			var code = $("#captcha_value").val();
+			code = code == $("#captcha_value").attr("data-placeholder") ? "" : code;
+			flag = checkVerificationCode({code:code, tipObj:$("#captcha_value").parent().parent().parent().find(".error"), imgTipObj:$(".yzm_rw"), async:false,url:"#springUrl('/login/checkVerifiCode.htm')"});
+			if(!flag){ btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			var agree_xieyi = $("#agree_xieyi");
+			if(agree_xieyi.attr("checked") != "checked"){
+				agree_xieyi.parent().find(".error").text("请阅读并同意《永达钱包服务协议》");
+				
+				btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+			}
+			
+			$("#register-index-form").submit();
+		});
+	})
+</script>

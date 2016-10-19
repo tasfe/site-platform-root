@@ -1,0 +1,87 @@
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">支付密码修改</span>
+        </div>
+    </div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginList">
+              <form id="reset-paypasswd-form" name="reset-paypasswd-form" class="" action="${request.contextPath}/my/reSetPayPwd.htm" method="POST">
+               
+               <div class="login_limit" id="pwdiv_login_pw_new">
+                   <label><span class="f14 limitLeft">新支付密码：</span>
+                     <div class="pwdiv fl"><input name="payPwd" type="hidden" id="payPwd" data-type="11" /></div>
+                     <div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外</em>
+                   </label>
+                   <div class="mainTips ml160 error clear"></div>
+               </div>
+               
+               <div class="login_limit" id="pwdiv_login_pw_new2">
+                   <label><span class="f14 limitLeft">重新输入新支付密码：</span>
+                     <div class="pwdiv fl"><input name="repayPwd" type="hidden" id="repayPwd" data-type="11" /></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外</em>
+                   </label>
+                   <div class="mainTips ml160 error clear">$!response.message</div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确 认"></div>
+              </form>
+         </div>
+     </div>
+</div>
+</div>
+<script>
+	$(function(){
+        var pgeditor1 = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+        window.pgeCtrl = pgeditor1;
+        $("#pwdiv_login_pw_new .pwdiv").append(pgeditor1.load());
+        pgeditor1.pgInitialize();
+
+        var pgeditor2 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+        $("#pwdiv_login_pw_new2 .pwdiv").append(pgeditor2.load());
+        pgeditor2.pgInitialize();
+		
+		window.setInterval(function(){checkPwStrongPG(pgeditor1, $('#pwdiv_login_pw_new').find('.error'), $('#pwdiv_login_pw_new').find('.gradeIcon'), $('#pwdiv_login_pw_new').find('.gradeText'));},1000); //实时显示密码强度
+
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+
+            var jsonSubmit = {
+                jBtnSubmit:btn_submit,
+                cssClass:"btn_disabled",
+                urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+            };
+            var pgeditors = [
+                {
+                    jPwInput:pgeditor1,
+                    jInput:$("#payPwd"),
+                    jTip:$("#pwdiv_login_pw_new").find(".error"),
+                    txtEmpty:"请输入新的登录密码！",
+                    txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外"
+                },
+                {
+                    jPwInput:pgeditor2,
+                    jInput:$("#repayPwd"),
+                    jTip:$("#pwdiv_login_pw_new2").find(".error"),
+                    txtEmpty:"请输入新的登录密码！",
+                    numCompareEqual:0,
+                    txtCompareEqual:"您输入的两次登录密码不一致，请重新输入！"
+                }
+            ];
+            checkPgeditor({
+                jsonSubmit:jsonSubmit,
+                pgeditors:pgeditors,
+                callback:function(){
+                    $("#reset-paypasswd-form").submit();
+                }
+            });
+		});
+	})
+</script>

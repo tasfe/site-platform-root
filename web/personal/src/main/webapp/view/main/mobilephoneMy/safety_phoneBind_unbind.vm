@@ -1,0 +1,238 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>手机解绑</h2></div>
+
+     <div class="safetyMain">
+     	 <form id="form_submit" action="${request.contextPath}/my/unset-mobilephone-usemobilephone.htm" method="post">
+				    <input type="hidden" name="useType"  id="useType" value="$!response.data.useType"/>
+					<input type="hidden" name="mobile_password"  id="mobile_password"/>
+					<input type="hidden" name="bizType" value="$!response.data.mobileType"/>
+         <div class="loginCenter">
+               
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">选择取消绑定手机的方式：</span>
+                          <div class="select_div mr16 fl">
+                               <select id="type">
+                                    <option value="1">手机校验码+支付密码</option> 
+                                    ##<option value="2">证件号+安全问题+邮箱</option>
+                                    ##<option value="3">支付密码+安全问题</option>                                    
+                               </select>
+                          </div>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="clear"></div>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="login_limit" id="module1">
+                   <label>
+                          <span class="f14 limitLeft l_h30">请输入支付密码：</span>
+                          <div class="pwdiv fl"><input name="password" type="hidden" id="password" value=""/></div>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;">
+				    #if($!response.errors.error_passwd=='密码错误')
+					$!response.errors.error_passwd,还有$!response.errors.remainNum次输入机会
+					#else
+					$!response.errors.error_passwd
+					#end
+				   </div>
+               </div>
+               
+               <div class="login_limit" id="module2">
+                   <label><span class="f14 limitLeft">输入手机校验码：</span>
+                     <input type="text" class="inputtext w80" value="" name="mobileCaptcha" id="sjyzm">
+                     <input id="send_msg" class="btn_mfhq ml10" type="button" value=""><!--免费获取-->
+					 <input id="bizType" value="UNSET_MOBILE_M" type="hidden"/>
+					 
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error" id="codeError">$!response.data.mobileCaptcha_error</div>
+               </div>
+               
+               <div class="login_limit" id="module3" style="display:none">
+                   <label>
+                          <span class="f14 limitLeft">证件号：</span>
+                          <input id="CertificateNo" type="text" class="inputtext w232 placeholder" value="" data-placeholder="请输入实名认证证件号">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div id="module4" style="display:none">
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题1：</span>
+                          <span class="f14">预设的安全问题1</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers1">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题2：</span>
+                          <span class="f14">预设的安全问题2</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers2">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input id="confirm_button" class="btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form> 
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+	
+	$(".btn_mfhq").click(function(){
+		$("#codeError").html("");
+		countDown($(this),60,"");
+		
+		 jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+            success: function(response) {
+				$("#codeError").html(response.message);			
+			} ,
+			error:function(){$("#codeError").html(G.sysError)},
+            dataType: "json"
+        });
+		
+	});
+
+	
+	$("#type").change(function(){
+		if($(this).val() == "1") { $("#module1").show(); $("#module2").show(); $("#module3").hide(); $("#module4").hide(); }
+		if($(this).val() == "2") { $("#module1").hide(); $("#module2").hide(); $("#module3").show(); $("#module4").show(); }
+		if($(this).val() == "3") { $("#module1").show(); $("#module2").hide(); $("#module3").hide(); $("#module4").show(); }
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+        var flag;
+		
+		if($("#type").val() == "1"){
+            if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+                var wid = pgeditor.settings.pgeWindowID;
+                pgeditor.pwdLength(function(){
+                    if(outs[wid].length == 0){
+                        $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    //产生随机数加密
+                    getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor],function(){
+                        //获得密文
+                        setPwdResult(pgeditor,$('#password'),function(){
+                            $("form").submit();
+                        });
+                    });
+                });
+            }
+            else{
+                if (pgeditor.pwdLength() == 0) {
+                    $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入手机校验码");
+                if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+                getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+                setPwdResult(pgeditor,$('#password'));
+
+                $("form").submit();
+            }
+		}
+		else if($("#type").val() == "2"){
+			flag = checkMust($("#CertificateNo"),$("#CertificateNo").parent().parent().find(".error"),"请输入证件号");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			
+			flag = checkMust($("#answers1"),$("#answers1").parent().parent().find(".error"),"请输入答案");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			 
+			flag = checkMust($("#answers2"),$("#answers2").parent().parent().find(".error"),"请输入答案");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		}
+		else if($("#type").val() == "3"){
+            if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+                var wid = pgeditor.settings.pgeWindowID;
+                pgeditor.pwdLength(function(){
+                    if(outs[wid].length == 0){
+                        $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    flag = checkMust($("#answers1"),$("#answers1").parent().parent().find(".error"),"请输入答案");
+                    if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+                    flag = checkMust($("#answers2"),$("#answers2").parent().parent().find(".error"),"请输入答案");
+                    if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+                    //产生随机数加密
+                    getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+                        //获得密文
+                        setPwdResult(pgeditor,$('#password'),function(){
+                            $("form").submit();
+                        });
+                    });
+                });
+            }
+            else{
+                if (pgeditor.pwdLength() == 0) {
+                    $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                flag = checkMust($("#answers1"),$("#answers1").parent().parent().find(".error"),"请输入答案");
+                if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+                flag = checkMust($("#answers2"),$("#answers2").parent().parent().find(".error"),"请输入答案");
+                if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+                getSrandNum('/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+                setPwdResult(pgeditor,$('#password'));
+
+                $("form").submit();
+            }
+
+		}
+
+	});
+
+
+})
+</script>

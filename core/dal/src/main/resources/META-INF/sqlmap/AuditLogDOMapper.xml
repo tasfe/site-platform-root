@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.netfinworks.site.core.dal.daointerface.AuditLogDAO" >
+  <resultMap id="BaseResultMap" type="com.netfinworks.site.core.dal.dataobject.AuditLogDO" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="AUDIT_ID" property="auditId" jdbcType="VARCHAR" />
+    <result column="OPERATE_TYPE" property="operateType" jdbcType="VARCHAR" />
+    <result column="PROCESS_RESULT" property="processResult" jdbcType="VARCHAR" />
+    <result column="GMT_CREATED" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="AUDIT_REMARK" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="AUDITOR_ID" property="auditorId" jdbcType="VARCHAR" />
+    <result column="AUDITOR_NAME" property="auditorName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, AUDIT_ID, OPERATE_TYPE, PROCESS_RESULT,GMT_CREATED, GMT_MODIFIED,AUDIT_REMARK,AUDITOR_ID,AUDITOR_NAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ENT_AUDIT_LOG
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_ENT_AUDIT_LOG
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.netfinworks.site.core.dal.dataobject.AuditLogDO" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE" >
+      select to_char(sysdate,'yyyymm') || SEQ_T_ENT_AUDIT_LOG.nextval from dual
+    </selectKey>
+    insert into T_ENT_AUDIT_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="auditId != null" >
+        AUDIT_ID,
+      </if>
+      <if test="operateType != null" >
+        OPERATE_TYPE,
+      </if>
+      <if test="processResult != null" >
+        PROCESS_RESULT,
+      </if>
+      <if test="gmtCreated != null" >
+        GMT_CREATED,
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED,
+      </if>
+      <if test="auditRemark != null" >
+        AUDIT_REMARK,
+      </if>
+      <if test="auditorId != null" >
+        AUDITOR_ID,
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=VARCHAR},
+      <if test="auditId != null" >
+        #{auditId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="processResult != null" >
+        #{processResult,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorId != null" >
+        #{auditorId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netfinworks.site.core.dal.dataobject.AuditLogDO" >
+    update T_ENT_AUDIT_LOG
+    <set >
+      <if test="auditId != null" >
+        AUDIT_ID = #{auditId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null" >
+       OPERATE_TYPE = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="processResult != null" >
+        PROCESS_RESULT = #{processResult,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null" >
+        GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark != null" >
+         AUDIT_REMARK = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorId != null" >
+         AUDITOR_ID = #{auditorId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorName != null" >
+        AUDITOR_NAME = #{auditorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <sql id="T_ENT_AUDIT_LOG_query_condition" >
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="auditId != null and auditId.trim().length() != 0" >
+        AND (AUDIT_ID = #{auditId})
+      </if>
+      <if test="operateType != null and operateType.trim().length()!= 0" >
+        AND (OPERATE_TYPE = #{operateType})
+      </if>
+      <if test="processResult != null and processResult.trim().length()!= 0" >
+        AND (PROCESS_RESULT = #{processResult})
+      </if>
+      <if test="gmtCreated != null" >
+        AND (GMT_CREATED = #{gmtCreated})
+      </if>
+      <if test="gmtModified != null" >
+        AND (GMT_MODIFIED = #{gmtModified})
+      </if>
+      <if test="auditRemark != null and  auditRemark.trim().length()!= 0" >
+        AND (AUDIT_REMARK = #{auditRemark})
+      </if>
+      <if test="auditorId != null and auditorId.trim().length() != 0" >
+        AND (AUDITOR_ID = #{})
+      </if>
+      <if test="auditorName != null and  auditorName.trim().length()!= 0" >
+        AND (AUDITOR_NAME = #{auditorName})
+      </if>
+    </trim>
+  </sql>
+  <select id="query" resultMap="BaseResultMap" >
+    <include refid="PAGINATION.ORACLE_paginationStart" />
+    select 
+    <include refid="Base_Column_List" />
+     from T_ENT_AUDIT_LOG 
+    <if test="!fuzzy" >
+      <include refid="T_ENT_AUDIT_LOG_query_condition" />
+    </if>
+    <if test="order" >
+      order by GMT_CREATED desc
+    </if>
+    <include refid="PAGINATION.ORACLE_paginationEnd" />
+  </select>
+</mapper>

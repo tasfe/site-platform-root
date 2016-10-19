@@ -1,0 +1,267 @@
+<div class="" style=" width:100%; height:121px; background:url(${WEB_RESOURCE.staticAddress}wallet/common/images/cs_banner1.jpg) center top no-repeat;">
+</div>
+
+<div class="wrap relative mt30" style="height:623px; overflow:hidden">
+
+<div class="cs_box" id="MailService" style="display:none">
+	<div class="title">邮件客服<div class="close"></div></div>
+    <form id="ms_form">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cs_box_table">
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 您的邮件地址：</td>
+        <td class="td2"><input type="text" class="inputtext w232" id="ms_email"></td>
+        <td class="td3">请使用有效邮箱地址</td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22"></td>
+      </tr>
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 咨询\意见：</td>
+        <td class="td2"><input type="text" class="inputtext w232" id="ms_advice"></td>
+        <td class="td3"></td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22"></td>
+      </tr>
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 你想说的话：</td>
+        <td class="td2"><textarea class="textarea w232 hg100" id="ms_words"></textarea></td>
+        <td class="td3"></td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22"></td>
+      </tr>
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 验证码：</td>
+        <td class="td2"><input type="text" class="inputtext w138 fl"><img class="yzm_img fl pl15" title="点击更新验证码" alt="验证码" src="common/images/yzm.jpg" height="30" id="ms_yzm"></td>
+        <td class="td3"><a href="#@">看不清，换一张</a></td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22" style="height:40px;"></td>
+      </tr>
+      <tr>
+        <td class="td1"></td>
+        <td class="td2"><input type="button" class="btn_tjyjjy btn_submit1" value=""></td>
+        <td class="td3"></td>
+      </tr>
+    </table>
+    </form>
+</div>
+<div class="cs_box" id="CustomerComplaints" style="display:none;">
+	<div class="title">客户投诉<div class="close"></div></div>
+    <form id="cc_form">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cs_box_table">
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 投诉相关订单号：</td>
+        <td class="td2"><input type="text" class="inputtext w232"></td>
+        <td class="td3">充值类问题可填写，如果没有则空出</td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22"></td>
+      </tr>
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 选择投诉分类：</td>
+        <td class="td2"><div class="select_div"><select id="cc_type"><option value="-1">请选择</option></select></div></td>
+        <td class="td3"></td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22"></td>
+      </tr>
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 填写投诉内容：</td>
+        <td class="td2"><textarea class="textarea w232 hg100" id="cc_content"></textarea></td>
+        <td class="td3"></td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22"></td>
+      </tr>
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 您的联系方式：</td>
+        <td class="td2"><div class="select_div fl mr10"><select><option value="-1">电话回复</option></select></div><input type="text" class="inputtext w138 fl" id="cc_contact"></td>
+        <td class="td3"></td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22"></td>
+      </tr>
+      <tr>
+        <td class="td1"><span class="red f14">*</span> 验证码：</td>
+        <td class="td2"><input type="text" class="inputtext w138 fl"><img class="yzm_img fl pl15" title="点击更新验证码" alt="验证码" src="common/images/yzm.jpg" height="30" id="cc_yzm"></td>
+        <td class="td3"><a href="#@">看不清，换一张</a></td>
+      </tr>
+      <tr class="tr_tip">
+        <td>&nbsp;</td>
+        <td colspan="2" class="td_tip error h22" style="height:40px;"></td>
+      </tr>
+      <tr>
+        <td class="td1"></td>
+        <td class="td2"><input type="button" class="btn_tjyjjy btn_submit2" value=""></td>
+        <td class="td3"></td>
+      </tr>
+    </table>
+    </form>
+</div>
+<div class="cs_list">
+	<div class="item" id="cs_tel">
+    	<div class="img"></div>
+        <div class="type">电话客服</div>
+        <div class="des">7*24小时　　　　客服热线：400-611-0909</div>
+    </div>
+    <div class="item" id="cs_online">
+    	<div class="img"><a class="a_qq" target="_blank" href="http://crm2.qq.com/page/portalpage/wpa.php?uin=4006110909&aty=0&a=0&curl=&ty=1"></a></dd></div>
+        <div class="type">在线客服</div>
+        <div class="des">实时QQ聊天，只需QQ登录状态，直接交谈</div>
+    </div>
+    <div class="item" id="cs_email">
+    	<div class="img"></div>
+        <div class="type">邮件客服</div>
+        <div class="des">敬请期待，我们会做的更好！</div>
+    </div>
+    <div class="item" id="cs_complain">
+    	<div class="img"></div>
+        <div class="type">客户投诉</div>
+        <div class="des">敬请期待，我们会做的更好！</div>
+    </div>
+</div>
+
+</div>
+<a id="fix_online_kf" href="#"></a>
+<script src="common/js/jquery-1.8.2.min.js"></script>
+<script src="common/js/PassGuardCtrl.js"></script>
+<script src="common/js/demo.js"></script>
+<script src="common/js/js.js"></script>
+<script src="common/js/jcarousellite.js"></script>
+<script>
+$(function(){
+	$(".cs_list .item").hover(
+		function(){ $(this).addClass("addbg"); },
+		function(){ $(this).removeClass("addbg"); }
+	);
+	
+	$(".cs_list .img").hover(
+		function(){ $(this).addClass("img_hover"); },
+		function(){ $(this).removeClass("img_hover"); }
+	);
+	
+	$("#cs_email .img").click(function(){
+		//$(".cs_list").hide();
+		//$("#MailService").fadeIn();
+		/*
+		refreshVericode($("#ms_yzm"));
+		$(".error").text("");
+		$(".cs_list").fadeOut();
+		$("#MailService").show().animate({"left":0});
+		*/
+	});
+	
+	$("#cs_complain .img").click(function(){
+		/*
+		refreshVericode($("#ms_yzm"));
+		$(".error").text("");
+		$(".cs_list").fadeOut();
+		$("#CustomerComplaints").show().animate({"left":0});
+		//$("#CustomerComplaints").show().animate({"width":998});
+		*/
+	});
+	
+	$(".cs_box .title .close").click(function(){
+		$(".cs_list").fadeIn();
+		$(this).parent().parent().animate({"left":-999});
+	});
+	
+	$(".btn_submit1").click(function(){
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_tjyjjy_disabled");
+		var $tip = $(".error");
+		$tip.text("");
+		
+		var $ms_email = $("#ms_email");
+		var ms_email = $.trim($ms_email.val());
+		$ms_email.val(ms_email);
+		if(ms_email == ""){
+			$tip.text("请填写您的邮件地址");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		if (!RegExp(regexEnum.email).test(ms_email)){
+			$tip.text("您的邮件地址格式不正确");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		var $ms_advice = $("#ms_advice");
+		var ms_advice = $.trim($ms_advice.val());
+		if(ms_advice == ""){
+			$tip.text("请填写咨询\意见");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		var $ms_words = $("#ms_words");
+		var ms_words = $.trim($ms_words.val());
+		if(ms_words == ""){
+			$tip.text("请填写你想说的话");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		var $ms_yzm = $("#ms_yzm");
+		var ms_yzm = $ms_yzm.val();
+		if(ms_words == ""){
+			$tip.text("请填写验证码");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		$("#ms_form").submit();
+	});
+	
+	$(".btn_submit2").click(function(){
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_tjyjjy_disabled");
+		var $tip = $(".error");
+		$tip.text("");
+		
+		var $cc_type = $("#cc_type");
+		var cc_type = $cc_type.val();
+		if(cc_type == -1 || cc_type == "-1"){
+			$tip.text("请选择投诉分类");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		var $cc_content = $("#cc_content");
+		var cc_content = $.trim($cc_content.val());
+		if(cc_content == ""){
+			$tip.text("请填写投诉内容");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		var $cc_contact = $("#cc_contact");
+		var cc_contact = $.trim($cc_contact.val());
+		if(cc_contact == ""){
+			$tip.text("请填写您的联系方式");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		var $cc_yzm = $("#cc_yzm");
+		var cc_yzm = $cc_yzm.val();
+		if(cc_yzm == ""){
+			$tip.text("请填写验证码");
+			$btn_submit.attr("disabled", false).removeClass("btn_tjyjjy_disabled"); return false;
+		}
+		
+		$("#cc_form").submit();
+	});
+	
+	var searchStr = (location.search).split("=")
+	if(searchStr[1]==1){
+		$("#cs_email .img").click();
+	}else if(searchStr[1]==2){
+		$("#cs_complain .img").click();
+	}
+})
+</script>
+</body>
+

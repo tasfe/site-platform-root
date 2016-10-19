@@ -1,0 +1,31 @@
+
+<div class="user_infor_all">
+    <div class="wrap">
+         <div class="nav_top">
+            <div class="photo_box">
+              #if($response.data.member.faceImageUrl && $response.data.member.faceImageUrl != "null")
+	         	 	<img width="76" height="76" src="${WEB_RESOURCE.plateImageUrl}/$!response.data.member.faceImageUrl">
+        	  #end
+            </div>
+            <div class="edit_box">
+                <h2>欢迎您，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName</h2>
+                <ul class="clearfix">
+                #*<li>上次登录时间为：$!response.data.member.lastLoginTime  </li>*#
+                </ul>
+            </div>
+         </div>
+    </div>
+</div>
+    <div class="zhanghu_infor">
+        <div class="wrap">
+             <div class="choose">
+                  <b class="left_radius"></b>
+                  <b class="right_radius"></b>
+                  <span class="sp">账户余额：<b class="fc_r_ff">$!response.data.member.account.availableBalance</b> 元</span>
+                  <span class="sp">冻结余额：<b class="fc_r_ff">$!response.data.member.account.frozenBalance</b> 元</span>
+                  <a class="btn_h30_red bold" href="#springUrl('/my/recharge.htm')" >充  值</a>
+                  <a class="btn_h30 bold padding_30" href="#springUrl('/my/withdraw.htm')" >提现申请</a>
+                  <a class="btn_h30 bold padding_30" href="#springUrl('/my/transfer.htm')" >转账申请</a>
+             </div>
+        	<div class="div_empty">
+            </div>

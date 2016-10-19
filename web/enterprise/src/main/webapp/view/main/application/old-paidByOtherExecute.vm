@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>永达商户钱包</title>
+<link href="../common/css/style.css" rel="stylesheet" type="text/css">
+<link href="../common/css/account.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div id="header" >
+  <div class="wrap">
+    <div id="logo"><a href="/"><img src="../common/images/logo.jpg" alt="永达商户钱包"></a><img src="../common/images/logo_merchant.jpg" alt="商户专业版" class="logo_mp"></div>
+    <div class="fr"> 欢迎您<span class="username_header">XXXXXX</span><a href="#">退出</a> | <a href="#">帮助中心</a> | <a href="#">客服中心</a> | 客服电话：<span class="dh">0571-28276085</span> </div>
+  </div>
+</div>
+<div id="nav_con">
+  <ul>
+    <li class="hoverli first"> <a href="/" class="hovera">我的账户<i></i></a>
+      <ul class="subnav">
+        <li><a href="#"><span>首页</span></a></li>
+        <li><a href="#"><span>账户设置</span></a></li>
+        <li><a href="#"><span>联系人</span></a></li>
+        <li><a href="#"><span>操作员</span></a></li>
+      </ul>
+    </li>
+    <li class="hoverli"> <a href="#" class="hovera">资金管理<i></i></a>
+      <ul class="subnav">
+        <li><a href="#"><span>资金总览</span></a></li>
+        <li><a href="#"><span>充值</span></a></li>
+        <li><a href="#"><span>提现</span></a></li>
+        <li><a href="#"><span>转账</span></a></li>
+      </ul>
+    </li>
+    <li class="hoverli hoverli_cur cur"> <a href="#" class="hovera">审核管理<i></i></a>
+      <ul class="subnav">
+        <li><a href="#"><span>我的待审核</span></a></li>
+        <li><a href="#"><span>转账审核</span></a></li>
+        <li class="cur"><a href="#"><span>退款审核</span></a></li>
+        <li><a href="#"><span>提现审核</span></a></li>
+        <li ><a href="#"><span>应用审核</span></a></li>
+      </ul>
+    </li>
+    <li class="hoverli  "> <a href="#" class="hovera">交易管理<i></i></a>
+      <ul class="subnav">
+        <li  ><a href="#"><span>交易记录</span></a></li>
+        <li><a href="#"><span>收支明细</span></a></li>
+        <li><a href="#"><span>收支汇总</span></a></li>
+        <li><a href="#"><span>结算对账单</span></a></li>
+      </ul>
+    </li>
+    <li class="hoverli"> <a href="#" class="hovera">安全中心<i></i></a> </li>
+    <li class="hoverli last"> <a href="#" class="hovera">应用中心<i></i></a> </li>
+  </ul>
+</div>
+<div id="nav_con_2">
+  <div></div>
+</div>
+<div id="money_cz" class="wrap">
+  <div class="page_title">
+    <h2>代付订单审核详情</h2>
+  </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>代付信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">交易订单号 </td>
+          <td class="tab_w2">1234567890123456789012<br></td>
+          <td class="tab_w">批次号</td>
+          <td class="Detail_tab_no tab_w2">131561321561310651</td>
+        </tr>
+        <tr class="cl">
+          <td>商户订单号</td>
+          <td>123123123123123123</td>
+          <td>创建时间</td>
+          <td class="Detail_tab_no">2014-6-20 18:07:12</td>
+        </tr>
+        <tr>
+          <td>交易类型</td>
+          <td>转账-永达商户钱包账户</td>
+          <td>支付类型</td>
+          <td class="Detail_tab_no">余额支付</td>
+        </tr>
+        <tr class="cl">
+          <td>代付金额（元）</td>
+          <td>100.00</td>
+          <td>服务费（元）</td>
+          <td class="Detail_tab_no">2.00</td>
+        </tr>
+        <tr>
+          <td>总金额（元）</td>
+          <td>102.00</td>
+          <td>支付时间</td>
+          <td class="Detail_tab_no">2014-6-20 18:07:12</td>
+        </tr>
+        <tr class="cl">
+          <td>支付账户</td>
+          <td>永达商户钱包</td>
+          <td>状态</td>
+          <td class="Detail_tab_no">出款成功</td>
+        <tr>
+          <td>短信通知</td>
+          <td>是</td>
+          <td>备注</td>
+          <td class="Detail_tab_no"></td>
+        </tr>
+        </tr>
+      </table>
+    </div>
+    <div class="table_div">
+      <h3>收款方信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">账户名称</td>
+          <td class="tab_w2"><br></td>
+          <td  class="tab_w">帐号</td>
+          <td  class="Detail_tab_no tab_w2">kjtaccunt@ehaier.com</td>
+        </tr>
+      </table>
+    </div>
+    <div class="table_div">
+      <h3>申请信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">申请时间</td>
+          <td class="tab_w2">2014-06-18</td>
+          <td  class="tab_w">申请操作员</td>
+          <td  class="Detail_tab_no tab_w2">Admin</td>
+        </tr>
+      </table>
+    </div>
+    <div class="audit_select">
+      <ul>
+        <li>
+          <label>
+            <input name="audit" type="radio" value="审核通过" checked>
+            审核通过</label>
+        </li>
+        <li>
+          <label>
+            <input name="audit" type="radio" value="审核通过">
+            审核拒绝</label>
+        </li>
+      </ul>
+    </div>
+    <div class="audit_ok" >
+      <div style="margin-left:50px;">
+        <label><span class="f14">备　　注：</span>
+        <input type="text" class="inputtext wpw cutdown_words" name="auditRemark" data-tip-place="2" maxlength="50">
+        </label>
+        <div class="tip h22" style="margin-left:76px;"></div>
+      </div>
+      
+      <div style="margin-left:50px;">
+        <label><span class="f14 fl">支付密码：</span>
+          <div class="pwdiv fl" style="margin-left:6px;"><input name="password" type="hidden" id="password" /></div>
+        </label>
+        <div class="error h22 clear" style="margin-left:76px;"></div>
+      </div>
+      
+      <div style="margin-left:37px;">
+           <label><span class="f14 limitLeft fl">手机校验码：</span>
+             <input type="text" class="inputtext w80" value="" id="sjyzm" style="margin-left:6px;">
+             <input class="btn_mfhq ml10" type="button" value="">
+           </label>
+           <label class="ml5"></label>
+           <div class="mainTips h22 error" style="margin-left:90px;"></div>
+	   </div>
+      <div class="red" style="margin-left:128px; margin-bottom:20px;">请插入您的永达盾！</div>
+      
+      <div class="">
+      <input class="btn" id="btn_pass" type="button" value="确 认" style="margin-left:126px;">
+      </div> </div>
+    <div class="audit_ok" style="display:none">
+      <div style="margin-left:50px;">
+        <label><span class="f14">备　　注：</span>
+        <input type="text" class="inputtext wpw cutdown_words" name="RefuseRemark" data-tip-place="2" maxlength="50">
+        </label>
+        <div class="tip h22" style="margin-left:76px;"></div>
+      </div>
+      <div class="">
+      <input class="btn" id="btn_reject" type="button" value="确 认" style="margin-left:126px;">
+      </div> </div>
+  </div>
+</div>
+<a id="fix_online_kf" href="#"></a> 
+<script>
+$(function(){
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+
+	$(".btn_mfhq").click(function(){
+		countDown($(this),60);
+	});
+	
+	$(".audit_select input").each(function(index, element) {
+        var thisobj = $(this);
+		thisobj.click(function(){
+			$(".audit_ok").hide().eq(index).show();
+		});
+    });
+
+    function _submit(){
+        var btn_submit = $("#btn_pass");
+        if($("#sjyzm").attr("id") == "sjyzm"){
+            var flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入校验码！");
+            if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qrzz_disabled"); return false; }
+        }
+
+        $.ajax({
+            'url':'${request.contextPath}/my/verifyPayPass.htm',
+            'type':'post',
+            'contentType':"application/x-www-form-urlencoded; charset=UTF-8",
+            'dataType':'json',
+            'data':{"userName":"090"},
+            'success':function(data,statusText){
+                if(data.success){
+                    var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+                    html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">您的审核操作已成功！</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="">应用审核页面</a></span></span></i></td></tr></table>';
+                    html += '</div></div>';
+
+                    showWin('html', html, '', 600, 200, ' ', '', '');
+
+                    goUrlByTime({$obj:$(".time_left"), time:3, url:"http://www.baidu.com/"});
+                }
+                else {
+                    var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+                    html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">您的审核操作失败！</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="">应用审核页面</a></span></span></i></td></tr></table>';
+                    html += '</div></div>';
+
+                    showWin('html', html, '', 600, 200, ' ', '', '');
+
+                    goUrlByTime({$obj:$(".time_left"), time:3, url:""});
+                }
+            }
+        });
+    }
+
+	$("#btn_pass").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+        var flag;
+
+        var jsonSubmit = {
+            jBtnSubmit:btn_submit,
+            cssClass:"btn_disabled",
+            urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+        };
+        var pgeditors = [
+            {
+                jPwInput:pgeditor,
+                jInput:$("#password"),
+                jTip:$(".pwdiv").parent().parent().find(".error"),
+                txtEmpty:"请输入支付密码！"
+            }
+        ];
+        checkPgeditor({
+            jsonSubmit:jsonSubmit,
+            pgeditors:pgeditors,
+            callback:function(){
+                _submit();
+            }
+        });
+	});
+
+	$("#btn_reject").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qd_disabled");
+		$(".error").text("");
+		$.ajax({
+    		'url':'${request.contextPath}/my/verifyPayPass.htm',
+    		'type':'post',
+    		'contentType':"application/x-www-form-urlencoded; charset=UTF-8",
+    		'dataType':'json',
+    		'data':{"userName":"090"},
+    		'success':function(data,statusText){
+                var html = "";
+				if(data.success){
+	    			html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+					html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">您的审核操作已成功！</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="">应用审核页面</a></span></span></i></td></tr></table>';
+					html += '</div></div>';
+					
+					showWin('html', html, '', 600, 200, ' ', '', '');
+					
+					goUrlByTime({$obj:$(".time_left"), time:3, url:"http://www.baidu.com/"});
+				}
+				else {
+					html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+					html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">您的审核操作失败！</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="">应用审核页面</a></span></span></i></td></tr></table>';
+					html += '</div></div>';
+					
+					showWin('html', html, '', 600, 200, ' ', '', '');
+					
+					goUrlByTime({$obj:$(".time_left"), time:3, url:""});
+				}
+    		}
+    	});
+	});
+})
+</script>
+</body>
+</html>

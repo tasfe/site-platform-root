@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.mns:mns-client:1.0.2-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/mns/mns-client/1.0.2-SNAPSHOT/mns-client-1.0.2-20160622.100226-4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/mns/mns-client/1.0.2-SNAPSHOT/mns-client-1.0.2-20160622.100226-4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/mns/mns-client/1.0.2-SNAPSHOT/mns-client-1.0.2-20160622.100226-4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

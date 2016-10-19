@@ -1,0 +1,108 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/style.css" rel="stylesheet" type="text/css">
+<div id="money_cz" class="wrap">
+  <div class="page_title">
+    <h2>银行卡代扣记录详情</h2>
+  </div>
+  <div class="pagebox "> 
+	<div class="table_div">
+      <h3>交易记录</h3>
+    </div>
+	<div class="pagebox5">
+	#foreach($info in $response.data.list)
+  <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="tab_w">商户订单号</td>
+    <td class="tab_w2">$!{info.serialNumber}</td>
+	 <td class="tab_w">商户批次号</td>
+    <td class="Detail_tab_no tab_w2">$!{info.sourceBatchNo}<br></td>
+  </tr>
+   <tr class="cl">
+	<td class="tab_w">交易订单号</td>
+    <td class="tab_w2">$!{info.tradeVoucherNo}<br></td>
+	 <td class="tab_w">交易批次号</td>
+    <td class="Detail_tab_no tab_w2">$!{info.batchNo}</td>
+  </tr>
+  <tr>
+    <td class="tab_w">创建时间</td>
+    <td class="tab_w2">$!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>
+	 <td class="tab_w">支付时间</td>
+    <td class="Detail_tab_no tab_w2">$!dateUtil.getNewFormatDateString(${info.gmtpaid})</td>
+  </tr>
+  <tr class="cl">
+    <td class="tab_w">交易金额（元）</td>
+    <td class="tab_w2">$moneyUtil.getAmount($!info.payAmount)</td>
+    <td class="tab_w">服务费（元）</td>
+    <td class="Detail_tab_no tab_w2">$!{moneyUtil.getAmount($!info.payeeFee)}</td>##数据暂缺
+  </tr>
+  <tr>
+    <td class="tab_w">总金额（元）</td>
+    <td class="tab_w2">$moneyUtil.getAmount($!info.orderMoney)</td>
+    <td class="tab_w">交易类型</td>
+    <td class="Detail_tab_no tab_w2">银行卡代扣</td>##数据暂缺
+  </tr>
+  #if(${info.orderState} == "100")
+       #set($tradeStatus="处理中")##待支付
+       #set($moneycolor="money")
+    #elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+       #set($tradeStatus="处理中")##    
+    #elseif(${info.orderState} == "201")
+        #set($tradeStatus="支付成功")##   付款成功=支付成功
+    #elseif($info.orderState == "999")
+       #set($tradeStatus="交易失败")##   交易关闭视为交易失败
+    #end
+    
+    #if($info.tradeType == "INSTANT_TRASFER")
+        #if($info.orderState == "301" || $info.orderState == "401")
+           #set($tradeStatus="结算成功")##转账成功视为交易 成功
+        #end
+        #if($info.orderState == "998")
+           #set($tradeStatus="交易失败")##转账失败视为交易失败
+        #end
+    #else
+        #if($info.orderState == "301")
+           #set($tradeStatus="交易成功")##交易成功
+        #elseif($info.orderState == "401")
+           #set($tradeStatus="结算成功")##交易结束视为交易成功
+        #end
+     #end  ##  #待支付 #处理中 退款中  #交易成功  失败  退款失败      已退款    #等待发货       #等待确认收货
+  <tr class="cl">
+    <td class="tab_w">备注</td>
+    <td class="tab_w2">$!info.tradeMemo</td>
+    <td class="tab_w">交易状态</td>
+    <td class="Detail_tab_no tab_w2">$!{tradeStatus}</td>##数据暂缺
+  </tr>
+ </table>
+  <div class="table_div">
+      <h3>交易对象</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">用户姓名</td>
+        <td class="tab_w2">$!response.data.userName</td>
+        <td  class="tab_w">银行</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.bankName</td>
+      </tr>
+	  <tr class="cl">
+        <td class="tab_w">用户卡号</td>
+        <td class="tab_w2">$!response.data.cardNo</td>
+        <td  class="tab_w"></td>
+        <td  class="Detail_tab_no tab_w2"></td>
+      </tr>
+    </table>
+    </div>
+	<div>
+	#end
+
+<div class="fun_btn">
+	<a href="${request.contextPath}/my/TransactionRecords.htm" class="btn btn-bg recenternoml" style="margin-left: -50px;">返 回</a>
+</div>
+</div>
+</div>
+
+
+<a id="fix_online_kf" href="#"></a> 
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/js.js"></script>
+<script>
+</script>

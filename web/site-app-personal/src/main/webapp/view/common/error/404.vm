@@ -1,0 +1,14 @@
+<div id="" class="wrap">
+	<div class="page_title">
+    	<div class="fr page_title_right"></div>
+    	<h2></h2>
+    </div>
+    <div class="pagebox" style="height:440px;">
+    	<p style=" margin-top:180px; margin-left:370px;"><i class="err404"><span class="f14 b" style="padding-bottom:8px; display:block;">404 非常抱歉，您访问的页面不存在！</span>
+        <a href="#springUrl('/my/home.htm')" class="f12 color_f6">返回首页</a>
+        </i>
+        </p>
+        
+    </div>
+
+</div>

@@ -1,0 +1,402 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+	 <div class="inner_banner1">
+     	  <a target="_blank" href=""><img src=""></a>
+		  <i title="关闭"></i>
+     </div>
+     <div class="conth3_info"></div>
+	 <div class="account_infos">
+     	<div class="personal_info">
+        	<div class="personal_head">
+        		<img src="${WEB_RESOURCE.staticAddress}wallet/common/images/tx100.gif">
+                <div class="personal_user personal_bg1">
+                	<p class="p1">
+						<div style="overflow: hidden; height: 21px; padding: 0px 10px;" title="$!{response.data.member.memberName}">$!{response.data.member.memberName}</div>$!{response.data.loginName}</p>
+                   	<!--<p class="p2"><span>安全等级：低</span><a href="#">立即提升</a></p>-->
+                    <div class="personal_user_safetyinfo"></div>
+                </div>
+                <a href="#springUrl('/my/accountSetting.htm?link=0103')" class="personal_edit"></a>
+            </div>
+            <div class="auth_divinfo">
+				#if($!response.data.membertype == 'personal')
+				<p class="p1" style="padding-top:30px; height:52px; border-bottom:0;">
+					#if ($!response.data.certifylevel == '1')
+					<a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="auth_info"><i class="no"></i>实名校验</a>
+					#elseif ($!response.data.certifylevel == '2')
+					<a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="auth_info"><i class="no"></i>实名认证(V1)</a>
+					#elseif ($!response.data.certifylevel == '3')
+					<a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="auth_info"><i class="no"></i>实名认证(V2)</a>
+					#else
+					<a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="auth_info"><i class="no"></i>未认证</a>
+					#end
+					#if ($!response.data.verify_mobile)
+					<span class="binding_info"><i class="yes"></i>已绑定</span>
+					#else
+					<a href="#springUrl('/my/go-set-mobilephoneByPayPwd.htm')" class="binding_info"><i class="no"></i>未绑定</a>
+					#end
+					
+					#if ($!response.data.cert == "true")
+					 <span class="apply_info"><i class="yes"></i>已激活</span>
+					#else
+					 ##<a href="#springUrl('/my/accountManage.htm?link=0400')" class="apply_info"><i class="no"></i>未激活</a>
+					#end
+				</p>
+				#else
+            	<p class="p1" style="padding-top:30px; height:52px; border-bottom:0;">
+					#if ($!response.data.verify_name == 'checkPass')
+					<a href="#springUrl('/my/verifyAmount.htm')" class="auth_info"><i class="no"></i>金额认证</a>
+					#elseif ($!response.data.verify_name == 'PASS')
+					<a href="#springUrl('/my/certification-detail.htm')" class="auth_info color_4e"><i class="yes"></i>已认证</a>
+					#elseif ($!response.data.verify_name == 'init')
+					<a href="#" class="auth_info"><i class="no"></i>认证中</a>
+					#elseif ($!response.data.verify_name == 'checkReject')
+					<a href="#springUrl('/my/go-enterprise-certification.htm')" class="auth_info"><i class="no"></i>重新认证</a>
+					#else
+					<a href="#springUrl('/my/go-enterprise-certification.htm')" class="auth_info"><i class="no"></i>未认证</a>
+					#end
+					#if ($!response.data.verify_mobile)
+					<span class="binding_info"><i class="yes"></i>已绑定</span>
+					#else
+					<a href="#springUrl('/my/go-set-mobilephoneByPayPwd.htm')" class="binding_info"><i class="no"></i>未绑定</a>
+					#end
+					
+					#if ($!response.data.cert == "true")
+					 <span class="apply_info"><i class="yes"></i>已激活</span>
+					#else
+					 ##<a href="#springUrl('/my/accountManage.htm?link=0400')" class="apply_info"><i class="no"></i>未激活</a>
+					#end
+                 </p>
+				 #end
+                <!--<p class="p2">上次登录时间：2014年6月13日 9:30:12</p>-->
+				<input type="hidden" id="verifyName" name="verifyName" value="$!response.data.verify_name">
+				<input type="hidden" id="authRemind" name="authRemind" value="$!response.data.authRemind">
+            </div>
+        </div>
+        
+        <div class="personal_info_l">
+        	<div class="personal_left">
+            	<div class="personal_balance">
+            	
+                    <h3 class="f14" style="padding-bottom:16px;">基础账户</h3>
+					<p style="padding-bottom:16px;"><span class="color_f60 f22 yahei" >$!{moneyUtil.getAmount($!response.data.member.account.availableBalance)}</span> 元</p>
+					<a href="#springUrl('/my/all-trade1.htm?link=0201')" class="blue">查看交易记录</a>
+                     
+                    <p class="function_btn">
+						<a href="#springUrl('/my/recharge.htm')" class="personage_dep">充值</a>
+						<a href="#springUrl('/cash/toCashing.htm')" class="personage_btn">提现</a>
+						<a href="#springUrl('/transfer/toTransferKjt.htm')" class="personage_btn">转账</a>
+					</p>
+					<a href="#springUrl('/my/accountInfo.htm?link=0102')" class="amore">更多</a>
+                </div>
+            </div>
+            
+            <div class="personal_right pos_rel">
+            	<h3 class="bankM f14"><a href="#springUrl('/my/bankCardInfo.htm?link=0104')" class="amore fr mr16">管理</a>银行卡<span>$!{response.data.member.bankCardCount}</span>张</h3>
+                <h3 class="f14">便民服务</h3>
+                <div class="personal_applist_wrap">
+                	<ul class="personal_applist">
+                        <li>
+                             <a class="a" href="#springUrl('/my/phoneRecharge.htm')">
+                                <img width="70" height="70" class="img" src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app-10.gif" alt="话费充值">
+                                <p>话费充值</p>
+                             </a>
+							 <i class="hdicon1"></i>
+                        </li>
+                        <li>
+                             <a style="cursor:default;" href="javascript:void(0)">
+                                <img width="70" height="70" src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app-11.gif" alt="生活缴费">
+                                <p>生活缴费</p>
+                             </a>
+							 <i class="hdicon2"></i>
+                        </li>
+                         ## 个人会员不显示保理还贷业务
+                         #if(!$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_PERSONAL_USER")).isPersonal())
+	                        <li>
+	                             <a class="a" href="#springUrl('/factoringtransfer/toTransfer.htm')">
+	                                <img width="70" height="70" src="${WEB_RESOURCE.staticAddress}wallet/common/images/app/app-13.gif" alt="保利理财">
+	                                <p>保理还款</p>
+	                             </a>
+								 <i class="hdicon3"></i>
+	                        </li>
+                        #end
+                        <li class="moretis">
+                             <p>即将上线</p><p>尽请期待～</p>
+                        </li>
+                     </ul>
+                     <a href="javascript:;" class="btn_left">左</a>
+                     <a href="javascript:;" class="btn_right">右</a>
+                 </div>
+                 
+            </div>
+		</div>
+     </div>
+     
+     
+     <!-- S 最近交易记录 -->
+     <div class="dealRecord mt10">
+     	  <div class="dealH pos_rel">
+     	       <span class="ml20 bold f14">最近交易记录</span>
+     	       <span class="ml20 color_95">|<a href="${request.contextPath}/my/all-trade1.htm?link=0201">交易记录</a>|<a href="${request.contextPath}/my/pay-detail.htm?link=0205">收支明细</a><!--|<a href="#">收支汇总</a>|<a href="#">结算对账单</a>--></span>
+               <span class="triangleIcon"></span>
+     	  </div>
+     	  <div class="dealList">
+     	  	   <table class="dealList_table">
+                    <tr>                                              
+                       <th width="11%">创建时间</th>
+                       <th width="50%" style="text-align:left; padding-left:33px;">名称 | 交易号</th>
+                       <th width="19%">金额<em>（元）</em></th>
+                       <th width="10%">状态</th>
+                       <th width="10%">操作</th>
+                    </tr>
+                 </table>
+				 <table class="dealList_table2">
+        			#set ($i=1)
+                    #foreach ($!tradeInfo in $!response.data.pageList)
+						#set ($orderId=$tradeInfo.tradeVoucherNo)
+    					#if($i%2 != 0)
+                            #set ($odd_class="")
+                        #else
+                            #set ($odd_class="on")
+                        #end
+                        #set($i=$i+1)
+						
+						#if($!response.data.member.memberId == $tradeInfo.buyerId)
+    						#set($plusminus ="-")
+    						#set($moneycolor="orange f14 bold")
+                        #elseif($!response.data.member.memberId == $tradeInfo.sellerId)
+                           	#set($plusminus ="")
+    						#set($moneycolor="green f14 bold")
+						#end
+						
+						#if($!tradeInfo.status == 100 || $!tradeInfo.status == 110)
+                        	#if($!tradeInfo.buyerId == $!response.data.member.memberId)
+								 #set($tradeStatus="待支付")
+								 #set($tradeOper="<a href='javascript:void(0)' class='fk_caozao' data-id='$orderId&tradeType=$!tradeInfo.tradeType' data-type='$!{tradeInfo.tradeType.getCode()}'>付款<i class='fukuancaozao'></i></a>")
+                            #else
+								 #set($tradeStatus="等待对方付款")
+								 #set($tradeOper="")
+                            #end
+                        #elseif( $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+							 #set($tradeStatus="进行中")
+							 #set($tradeOper="")
+                        #elseif($!tradeInfo.status == 201)
+							 #set($tradeStatus="付款成功")
+							 #set($tradeOper="")
+                         #elseif($!tradeInfo.status == 301)
+                         	#if($!tradeInfo.tradeType=="INSTANT_TRASFER")
+							 #set($tradeStatus="成功")
+							 #set($tradeOper="<a href='${request.contextPath}/my/tradeDetail.htm?orderId=$orderId&tradeType=$!tradeInfo.tradeType&bizProductCode=$!tradeInfo.bizProductCode'>查看详情</a>")
+                            #else
+							 #set($tradeStatus="交易成功")
+							 #set($tradeOper="<a href='${request.contextPath}/my/tradeDetail.htm?orderId=$orderId&tradeType=$!tradeInfo.tradeType&bizProductCode=$!tradeInfo.bizProductCode'>查看详情</a>")
+                            #end
+                         #elseif($!tradeInfo.status == 401)
+                         	#if($!tradeInfo.tradeType=="INSTANT_TRASFER")
+							 #set($tradeStatus="成功")
+							 #set($tradeOper="<a href='${request.contextPath}/my/tradeDetail.htm?orderId=$orderId&tradeType=$!tradeInfo.tradeType&bizProductCode=$!tradeInfo.bizProductCode'>查看详情</a>")
+                            #else
+							 #set($tradeStatus="交易结束")
+							 #set($tradeOper="<a href='${request.contextPath}/my/tradeDetail.htm?orderId=$orderId&tradeType=$!tradeInfo.tradeType&bizProductCode=$!tradeInfo.bizProductCode'>查看详情</a>")
+                            #end
+                         #elseif($!tradeInfo.status == 999)
+							 #set($tradeStatus="交易关闭")
+							 #set($tradeOper="<a href='${request.contextPath}/my/tradeDetail.htm?orderId=$orderId&tradeType=$!tradeInfo.tradeType&bizProductCode=$!tradeInfo.bizProductCode'>查看详情</a>")
+                         #elseif($!tradeInfo.status == 998)
+							 #set($tradeStatus="失败")
+							 #set($tradeOper="<a href='${request.contextPath}/my/tradeDetail.htm?orderId=$orderId&tradeType=$!tradeInfo.tradeType&bizProductCode=$!tradeInfo.bizProductCode'>查看详情</a>")
+						#else
+                            #set($tradeStatus="")
+							#set($tradeOper="")
+						#end
+						
+						 #if($!tradeInfo.tradeMemo == "充值")
+    						 #if($!tradeInfo.status == "F")
+    							#set($tradeStatus="交易失败")
+    						 #elseif($!tradeInfo.status == "P")
+    							#set($tradeStatus="充值中")
+    						 #else
+    						    #set($tradeStatus="交易成功")
+    						 #end
+						 #end
+						 
+						 #if($!tradeInfo.status == "submitted")
+    						#set($tradeStatus="处理中")
+    					 #elseif($!tradeInfo.status == "failed")
+    					    #set($tradeStatus="交易失败")
+    					 #elseif($!tradeInfo.status == "success")
+    						#set($tradeStatus="交易成功")
+						 #end
+						 
+						 #if($!tradeInfo.status == "1")
+    						#set($tradeStatus="待支付")
+    					 #elseif($!tradeInfo.status == "3")
+    					    #set($tradeStatus="交易失败")
+    					 #elseif($!tradeInfo.status == "2")
+    						#set($tradeStatus="交易成功")
+						#elseif($!tradeInfo.status == "4")
+							#set($tradeStatus="交易关闭")
+						 #end
+    					
+        				<tr class=$odd_class> 
+                           <td width="11%" style="padding-left:10px;">$!dateUtil.getNoSecondDateString($!tradeInfo.gmtSubmit)</td>
+                           <td width="55%">
+							 <div class="ellipsis w295">$!tradeInfo.tradeMemo</div>
+							 <div class="ellipsis w295">$orderId</div>
+						   </td>
+                           <td width="16%"><span class="${moneycolor}">$!{plusminus}$!moneyUtil.getAmount($!tradeInfo.payAmount)</span>##<a href="javascript:void(0)" class="poptip"></a></td>
+                           <td width="10%">$tradeStatus </td>
+                           <td width="8%"><a href="javascript:void(0)" class="fk_caozao" data-id="$!{tradeInfo.tradeVoucherNo}" data-type="$!{tradeInfo.tradeType.getCode()}">$tradeOper</td>
+                        </tr>
+    				#end
+    				#if(!$!response.data.pageList || $!response.data.pageList.size()<=0)
+    					<div class="noTrans">您最近一个月没有交易记录哦~，<a href="${request.contextPath}/my/all-trade1.htm?link=0201">查看更早交易记录</a></div>
+                    #end
+                </table>
+                <p class="recordLink"><a href="${request.contextPath}/my/all-trade1.htm?link=0201">查看所有交易记录</a></p>
+               
+     	  </div>
+     </div>
+     <!-- E 最近交易记录 -->
+
+</div>
+<form action="#springUrl('/my/cardManage.htm')" id="bankCardForm" method="POST"><input type="hidden" id="bankCardId" name="bankCardId" value=""></form>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	$(".personal_applist .a").each(function(index){
+		$(this).hover(
+			function(){
+				var src = $(this).find(".img").attr("src");
+				src = src.replace(".gif", "-over.gif");
+				$(this).find(".img").attr("src", src);
+			},
+			function(){
+				var src = $(this).find(".img").attr("src");
+				src = src.replace("-over.gif", ".gif");
+				$(this).find(".img").attr("src", src);
+			}
+		);
+	});
+	
+	if($("#verifyName").val() == 'checkReject' && $("#authRemind").val() != 'false'){
+    	var html_smrz = '<div class="floatbox2"><div class="cont_info pt20b30l100">';
+    	html_smrz += '<table cellpadding="0" cellspacing="0" border="0" class="" width="100%"><tr><td class="b f16">您的实名认证未通过，请重新提交实名认证资料</td></tr></table>';
+    	html_smrz += '</div><div class="div_btn_submit"><input type="button" class="btn_qd" onclick="closeSW();"></div>';
+    	html_smrz += '</div>';
+    	showWin('html', html_smrz, '', 600, 230, '实名认证', '', '');
+		jQuery.ajax({
+			type:'get',
+			data:'',
+			cache:false,
+			url:"#springUrl('/my/authRemind.htm')",
+			success:function(data){
+				//设置实名提醒认证标志成功		
+			}
+		});
+	}
+
+	/*
+	$("#btn_addApp").hover(
+		function(){ $(this).attr("src", "${WEB_RESOURCE.staticAddress}wallet/common/images/add_on.gif"); },
+		function(){ $(this).attr("src", "${WEB_RESOURCE.staticAddress}wallet/common/images/add.gif"); }
+	);
+	*/
+	if($(".personal_bankcardlist li").length==1){
+		$(".w_addbankcard").show();$(".y_addbankcard").hide();
+	}
+
+	$(".personal_bankcardlist li").not("first").each(function(){
+		$(this).hover(function(){
+			if(!$(".personal_bankcardlist li").is(":animated")){
+			
+				var top=parseFloat($(this).css("top").replace("px",""));
+				top=top-10;
+				$(this).css({top:""+top+"px"});
+			
+			}
+		},function(){
+			if(!$(".personal_bankcardlist li").is(":animated")){
+		
+				var top=parseFloat($(this).css("top").replace("px",""));
+				top=top+10;
+				$(this).css({top:""+top+"px"});
+				
+			}
+		})
+	})
+	
+	$(".fk_caozao").click(function(){
+		$("#fc_caozao").remove();
+		var x=$(this).offset();
+		var left=x.left;
+		var top=x.top+20;
+		var id=$(this).attr("data-id");
+		var tradeType=$(this).attr("data-type");
+		
+		var html='<div class="fc_caozao" id="fc_caozao" style="left:'+left+'px; top:'+top+'px;"><ul><li>'
+			+ '<a target="_blank" href="${request.contextPath}/my/onePay.htm?tradeVoucherNo=' + id + '&tradeTypeCode=' + tradeType + '">付款</a></li><li>'
+			+ '<a href="${request.contextPath}/my/tradeDetail.htm?orderId='+id+'">详情</a></li></ul></div>';
+			
+		$("body").append(html).show();
+		
+		return false;
+		
+	})
+	
+	$(".poptip").click(function(){
+		$(".poptip").removeClass("poptip_cur");
+		$(this).addClass("poptip_cur");
+		var x=$(this).offset();
+		var left=x.left-170;
+		var top=x.top+126;
+		var id=$(this).attr("data-bankid");
+		
+		/*jQuery.ajax({                           
+            type:'GET',                            
+            data:id,                           
+            url:"getDetails.php?id="+id,                           
+            success:function(data){                                
+                var limits=data;            
+				addlimits($(this).parent(),left,top,limits.a,limits.b,limits.c,limits.d);
+            },
+            dataType:'text',
+            error:function (){                
+                alert("失败！");            
+            }
+        });*/
+		
+		var limits={"a":"银行卡支付","b":"36528.25","c":"中国工商银行","d":"2014-07-14  12:52:20"}
+		addlimits($("body"),left,top,limits.a,limits.b,limits.c,limits.d);
+		return false
+	});
+	$(document).bind('click',function(e){
+		var e = e || window.event; //浏览器兼容性
+		var elem = e.target || e.srcElement;
+		while (elem) { //循环判断至跟节点，防止点击的是div子元素
+			if(( elem.id && elem.id=='poptip1' )|| (elem.id && elem.id=='fc_caozao' )){return;}
+			elem = elem.parentNode;
+		}	
+		$("#poptip1").remove();
+		$("#fc_caozao").remove();
+
+	}); 
+	
+	$(".inner_banner1 i").click(function(){
+		$(this).parent().fadeOut();
+	});
+})
+function addlimits(obj,left,top,a,b,c,d){
+	$("#poptip1").remove();
+	var html='<div class="ui-poptip ui-poptip-white" id="poptip1" style="left:'+left+'px; top:'+top+'px;"><div class="ui-poptip-shadow"><div class="ui-poptip-container"><div class="ui-poptip-arrow ui-poptip-arrow-8"><em>◆</em><span>◆</span></div><div class="ui-poptip-content" style="width: auto; height: auto;"><div class="tb-inner tb-bank-intro " id="J-limitTable" style="width:300px;"><table><thead><tr><th>类型</th><th>金额</th><th>说明</th></tr></thead><tbody><tr><td>'+a+'</td><td>'+b+'</td><td>'+c+'</td></tr><tr><td style="background:#e9e9e9;">支付时间</td><td colspan="2">'+d+'</td></tr></tbody></table></div></div></div></div></div>';
+	obj.append(html).show();
+	var h=$("#poptip1").height();
+	top=top-h-7;
+	$("#poptip1").css("top",top);
+}
+
+function cardManage(id){
+	$("#bankCardId").val(id);
+	$("#bankCardForm").submit();
+}
+</script>

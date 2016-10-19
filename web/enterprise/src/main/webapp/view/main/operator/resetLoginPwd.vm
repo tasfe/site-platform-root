@@ -1,0 +1,164 @@
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/PassGuardCtrl.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/passwordOcx.js"></script>
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/css/ocx.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//密码控件js
+if(navigator.userAgent.indexOf("MSIE")<0){
+    navigator.plugins.refresh();
+}
+var pgeditor = new jQuery.pge({
+      pgePath: "${WEB_RESOURCE.staticAddress}enterpriseWallet/ocx/",
+      pgeId: "_ocx_password",//控件ID
+      pgeEdittype: 0,//控件类型,0星号,1明文
+      pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+      pgeEreg2: "[\\s\\S]{6,12}", //输入完毕后字符类型判断条件
+      pgeMaxlength: 12,//允许最大输入长度
+      pgeTabindex: 2,//tab键顺序
+      pgeClass: "ocx_style",//控件css样式
+      pgeInstallClass: "ocx_style",//针对安装或升级
+      pgeOnkeydown:"FormSubmit()",//回车键响应函数
+      tabCallback:"_ocx_password_confrim"
+});
+ 
+var pgeditorConfrim = new jQuery.pge({
+      pgePath: "${WEB_RESOURCE.staticAddress}enterpriseWallet/ocx/",//控件文件目录
+      pgeId: "_ocx_password_confrim",//控件ID
+      pgeEdittype: 0,//控件类型,0星号,1明文
+      pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+      pgeEreg2: "[\\s\\S]{6,12}", //输入完毕后字符类型判断条件
+      pgeMaxlength: 12,//允许最大输入长度
+      pgeTabindex: 2,//tab键顺序
+      pgeClass: "ocx_style",//控件css样式
+      pgeInstallClass: "ocx_style",//针对安装或升级
+      pgeOnkeydown:"FormSubmit()",//回车键响应函数
+      tabCallback:"_ocx_password"
+});
+
+ 
+ window.onload = function(){  
+    pgeditor.pgInitialize();//初始化控件
+	pgeditorConfrim.pgInitialize();
+ }  
+</script>
+
+<!--所有用户所有信息-->
+   <div class="user_infor_all">
+   </div>    
+        
+        <div class="zhanghu_infor">
+            <div class="wrap">
+                     <div class="account_number_manager">
+                     
+                            <div class="user_ibox">
+                                
+                                
+                                    <h2 class="h2_titform"><em>重置登录密码</em></h2>
+                                    
+                                    <form class="" id="setPassWordForm" action="#springUrl('/my/operator/resetLoginPwd.htm')" method="POST">
+                                            <input type="hidden" id="loginName" name="loginName" value="$!response.data.operatorVO.loginName"/>
+                                			<input type="hidden" id="nickName" name="nickName" value="$!response.data.operatorVO.nickName"/>
+                                			<input type="hidden" id="memberId" name="memberId" value="$!response.data.operatorVO.memberId"/>
+                                			<input type="hidden" id="operatorId" name="operatorId" value="$!response.data.operatorVO.operatorId"/>   	
+                                            <div class="form-horizontal center_form clearfix"> 
+                                                 <div class="control-group">
+                                                    <label class="control-label" for="payPassword"><i class="fc_r_ff">*</i>操作员账号：</label>
+                                                    <div class="controls l-hg30">
+														$!response.data.operatorVO.loginName
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="payPassword"><i class="fc_r_ff">*</i>操作员姓名：</label>
+                                                    <div class="controls l-hg30">
+														$!response.data.operatorVO.nickName
+                                                    </div>
+                                                </div> 
+                                                <div class="control-group">
+                                                    <label class="control-label" for="payPassword">新密码：</label>
+                                                    <div class="controls">
+														<input class="in_txt" type="hidden" id="loginPwd" name="loginPwd" value=""/>
+														<script type="text/javascript">
+                                                        	pgeditor.generate()
+                                                        </script>
+														#if($response.errors.op_login_pwd_is_not_null)
+                                                           <label class="error"> #springMessageText($!response.errors.op_login_pwd_is_not_null,"") </label>
+                                                        #end
+                                                        #if($response.errors.op_login_pwd_re_not_equal)
+                                                           <label class="error"> #springMessageText($!response.errors.op_login_pwd_re_not_equal,"") </label>
+                                                        #end
+                                                    </div>
+                                                </div>   
+                                                <div class="control-group">
+                                                    <label class="control-label" for="payPassword">确认密码：</label>
+                                                    <div class="controls">
+														<input class="in_txt" type="hidden" id="loginPwdConfirm" name="loginPwdConfirm" value=""/>
+														<script type="text/javascript">
+                                                        	pgeditorConfrim.generate()
+                                                        </script>
+														#if($response.errors.op_login_pwd_re_is_not_null)
+                                                           <label class="error"> #springMessageText($!response.errors.op_login_pwd_re_is_not_null,"") </label>
+                                                        #end
+                                                    </div>
+                                                </div>   
+                                                <div class="control-group">                
+                                                    <div class="controls">
+													  <input type="submit" id="updateSubmit" class="btn_h40_red bold" value="确 定 修 改" />
+													  <input type="button" onclick="goBackOrClose();" class="btn_h40_gray bold marl10" value="返   回" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </form>
+                                        
+                            </div>                                                          
+                      </div>
+             </div>
+        </div>
+
+<script type="text/javascript">
+
+ $("#updateSubmit").click(function(){
+	$(".error").remove();
+	if(pgeditor.pwdLength()==0){
+    	$("#_ocx_password").parent().append('<label class="error">新密码不能为空</label>');
+       	$("#_ocx_password").focus();
+       	return false;
+    }
+  
+   	if(pgeditor.pwdValid()==1){
+    	$("#_ocx_password").parent().append('<label class="error">新密码只能为6-12位</label>');
+       	$("#_ocx_password").focus();
+       	return false;
+    }  
+
+	if(pgeditorConfrim.pwdLength()==0){
+    $("#_ocx_password_confrim").parent().append('<label class="error">确认密码不能为空</label>');
+       	$("#_ocx_password_confrim").focus();
+       	return false;
+    }
+  
+  	if(pgeditorConfrim.pwdValid()==1){
+    $("#_ocx_password_confrim").parent().append('<label class="error">确认密码只能为6-12位</label>');
+       	$("#_ocx_password_confrim").focus();
+       	return false;
+    }  
+
+	if(pgeditor.pwdHash()!=pgeditorConfrim.pwdHash()){
+	   $("#_ocx_password").parent().append('<label class="error">两次密码输入不一致</label>');
+       $("#_ocx_password").focus();
+	   return false;
+	}
+	jQuery.ajax({
+      url: "${request.contextPath}/ocx/generateRandomKey.htm",
+      type: "POST",
+   	  async: false,
+      success: function(result){
+            pgeditor.pwdSetSk(result);
+    		pgeditorConfrim.pwdSetSk(result);//需用2个控件时使用
+      }
+	});
+     setPwdResult(pgeditor,$('#loginPwd'));
+     setPwdResult(pgeditorConfrim,$('#loginPwdConfirm'));
+    return true;
+	
+});
+
+</script>

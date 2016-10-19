@@ -1,0 +1,119 @@
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">解绑</span>
+        </div>
+    </div>
+     
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+                
+                <div class="usbConBox clearfix">
+                
+               <div class="usbCenter">
+              <form action = "#springUrl('/certUnbind/step2.htm')" method="post">
+                          <div class="login_limit hg50">
+                               <label><span class="f14  bold limitLeft">您绑定的手机号码：</span>
+                                 <span class="f14 bold">$!{mobile}</span>
+                                 <div class="clear"></div>
+                                 <span class="ml161 c86 f12">永达将会向您的手机发送短信校验码，请确保您的手机能够接收短信。</span>
+                               </label>
+                               <label class="ml5"></label>
+                           </div>
+                           
+                           <div class="login_limit">
+                               <label><span class="f14 limitLeft b">$!{company}：</span>
+                                 <input type="text" class="inputtext w232" value="" id="busCode" name="busCode">
+                               </label>
+                               <label class="ml5"></label>
+                               <div class="mainTips ml160 error">$!{licenseNoMessage}</div>
+                           </div>
+                           
+                           <div class="login_limit">
+                               <label>
+                                      <span class="f14 limitLeft b">支付密码：</span>
+                                      <div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div>
+                               </label>
+                               <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                               <div class="mainTips ml160 error" style="clear:both;">$!{payPasswordmessage}</div>
+                           </div>
+                           <input type="hidden" name="certSn" value="$!{certSn}">
+						   <div id= "mobileMessage" class="mainTips ml160 error"></div>
+                           <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="提 交"></div>
+                          </form>
+                     </div>
+                </div>
+               
+               
+       		    <div class="usbKeyFaq">
+                    <h4>永达盾问题：</h4>
+                    <dl>
+                        <dt>如何解绑永达盾？</dt>
+                        <dd>答：点击解绑永达盾，按照相关操作要求输入信息后可解绑永达盾。</dd>
+                    </dl>
+                    <dl>
+                        <dt>解绑永达盾后是否还可以重新绑定？</dt>
+                        <dd>答：可以，插入永达盾，重新绑定即可。</dd>
+                    </dl>
+                     <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+                </div>
+          </div>
+     </div>
+</div>
+</div>
+<script>
+	$(function(){
+		
+		var mobile = "$!{mobile}";
+		if( mobile == null || mobile == "") {
+			$("#mobileMessage").html("您的账户尚未绑定手机号码!");
+			$(".btn_submit").attr("disabled", true).addClass("btn_disabled");
+		}
+
+        var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+        window.pgeCtrl = pgeditor;
+        $(".pwdiv").append(pgeditor.load());
+        pgeditor.pgInitialize();
+		
+		$("#busCode").blur(function(){
+			checkMust($("#busCode"),$("#busCode").parent().parent().find(".error"),"请输入营业执照号")
+		});
+		
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+			
+			var flag = checkMust($("#busCode"),$("#busCode").parent().parent().find(".error"),"请输入营业执照号");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			//flag = isValidBusCode($("#busCode").val());
+			//if(!flag) { $("#busCode").parent().parent().find(".error").text("请输入正确的营业执照号码！"); btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+
+            var jsonSubmit = {
+                jBtnSubmit:btn_submit,
+                cssClass:"btn_disabled",
+                urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+            };
+            var pgeditors = [
+                {
+                    jPwInput:pgeditor,
+                    jInput:$("#password"),
+                    jTip:$(".pwdiv").parent().parent().find(".error"),
+                    txtEmpty:"请输入支付密码！"
+                }
+            ];
+            checkPgeditor({
+                jsonSubmit:jsonSubmit,
+                pgeditors:pgeditors,
+                callback:function(){
+                    $("form").submit();
+                }
+            });
+		});
+	})
+</script>

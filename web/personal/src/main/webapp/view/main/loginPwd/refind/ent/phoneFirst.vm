@@ -1,0 +1,89 @@
+<div class="zhanghu_infor">
+     <!-- S 流程 -->
+     <div class="findFlow-login">
+          <p class="findFlow-one"></p>
+          <p class="findFlow-two" style="display:none;"></p>
+          <p class="findFlow-three" style="display:none;"></p>
+     </div>
+     <!-- E 流程 -->
+     <div class="wrap">
+             <div class="account_number_manager">
+             
+                    <div class="user_ibox">
+                            <h2 class="h2_titform"><em>登录密码找回</em>你正在通过手机进行身份认证 </h2>
+                            <form action="${request.contextPath}/my/refind/loginPwd/ent/checkTelMsgCode.htm" method="POST">  
+                                    <div class="form-horizontal center_form clearfix">                                
+                                        <div class="control-group">
+                                            <label class="control-label" for="payPassword">手机号码：</label>
+                                            <div class="controls l-hg30">
+                                                $!{enterpriseMember.mobileStar}
+                                            </div>
+                                        </div>   
+                                        <div class="control-group">
+                                            <label class="control-label" for="payPassword"><i class="fc_r_ff">*</i>请输入校验码：</label>
+                                            <div class="controls">
+                                              <input type="text" id="phoneVerifyCode" name="phoneVerifyCode" class="in_txt" style="width:110px;" /><span id="send_msg" class="btn_h30 btn_suffix">发送验证码</span><span id="mobileCaptchaTip" class="suc_tip" hidden="true"></span>
+											  #if($!{errorMsg})
+												<label class='error'>${errorMsg}</label>
+											  #end
+											</div>
+                                        </div>   
+                                        <div class="control-group">                
+                                            <div class="controls">
+                                              <button id="goNext" type="submit" class="btn_h40_red bold">下一步</button><a href="javascript:history.go(-1);" class="btn_forget f_12 marl20">重选找回方式</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                    </div>                                                          
+              </div>
+     </div>
+</div>
+	
+	
+<script type="text/javascript">
+
+	$("#mobileCaptchaTip").hide();
+    $("#send_msg").click(function(){
+		$(".error").remove();
+    	        if($("#send_msg").attr("disabled")) {
+    	            return;
+    	        }
+    	        $('#send_msg').countDown({
+    	            text:"秒后重新获取",
+    	            endText:"发送验证码",
+    	            isDisabled:true,
+    	            count:120
+    	        });
+              jQuery.ajax({
+                type: 'POST',
+                url: "#springUrl('/my/refind/loginPwd/ent/ajaxSendSms.htm')" ,
+    			data: {},
+				cache:false,
+                success: function(response) {
+                 if(response.success) {
+    	             if($("#back-mobileCaptcha")) {
+    	                $("#back-mobileCaptcha").hide();
+    	             }
+    				$("#mobileCaptchaTip").html("校验码已发送");
+                    $("#mobileCaptchaTip").show();
+                 } else {
+                    $("#mobileCaptchaTip").html("若长时间未收到校验码，请联系客服 400-611-0909");
+    				$("#mobileCaptchaTip").show();
+                 }
+                } ,
+                dataType: "json"
+            });
+      });
+  
+	$("#goNext").click(function(){
+		$(".error").remove();
+		var success=true;
+		if($("#phoneVerifyCode").val()==""){
+			$("#phoneVerifyCode").parent().append("<label class='error'>校验码不能为空</label>");
+			success=false;
+		}
+		return success;
+	});
+	
+</script>

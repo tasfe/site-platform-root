@@ -1,0 +1,169 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>手机绑定修改</h2></div>
+     
+     <div class="safetyTab"><a href="${request.contextPath}/my/changeBindPhone.htm" class="tabOne fl">原手机号码可用</a><a href="${request.contextPath}/my/changeBindPhoneByLisence.htm" class="tabTwo fl cur">原手机号码不可用</a></div>
+
+     <div class="safetyMain">
+     	 <form action="${request.contextPath}/my/validLisenceNo.htm" method="POST">
+			<input type="hidden" name="useType" value="LisenceNo"/>
+         <div class="loginCenter">
+         
+              ## <div class="login_limit">
+               ##    <label>
+               ##           <span class="f14 limitLeft">选择修改绑定手机的方式：</span>
+               ##           <div class="select_div mr16 fl">
+                ##               <select id="type">
+                ##                    <option value="1">通过邮箱取回</option> 
+                                    ##<option value="2">通过支付密码+安全问题取回</option>                                    
+               ##                </select>
+                ##          </div>
+               ##    </label>
+               ##    <label class="ml5"></label>
+               ##    <div class="clear"></div>
+              ##     <div class="mainTips ml230 error"></div>
+             ##  </div>
+               
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">支付密码：</span>
+                          <div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error">
+				   #if($!response.data.error_passwd=='密码错误')
+					$!response.data.error_passwd,还有$!response.data.remainNum次输入机会
+					#else
+					$!response.data.error_passwd
+					#end
+				   </div>
+               </div>
+               <div id="tab1">
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">证件号：</span>
+                          <input id="CertificateNo" type="text" class="inputtext w232 placeholder" value="" data-placeholder="请输入实名认证证件号" name="busCode">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error">
+				   #if($!response.data.licenseNo_error=='licenseNo_error')
+					证件号验证失败
+					#end
+				   </div>
+               </div>
+               </div>
+               
+               <div id="tab2" style="display:none">
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题1：</span>
+                          <span class="f14">预设的安全问题1</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers1">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题2：</span>
+                          <span class="f14">预设的安全问题2</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers2">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="c_btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form>
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+	
+	$("#type").change(function(){
+		if($(this).val() == "1") { $("#tab1").show(); $("#tab2").hide(); }
+		if($(this).val() == "2") { $("#tab1").hide(); $("#tab2").show(); }
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+
+        if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+            var wid = pgeditor.settings.pgeWindowID;
+            pgeditor.pwdLength(function(){
+                if(outs[wid].length == 0){
+                    $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                /*if($("#type").val() == "1"){*/
+                flag = checkMust($("#CertificateNo"),$("#CertificateNo").parent().parent().find(".error"),"请输入证件号");
+                if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+                /*}
+                 else if($("#type").val() == "2"){
+                 flag = checkMust($("#answers1"),$("#answers1").parent().parent().find(".error"),"请输入答案");
+                 if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+                 flag = checkMust($("#answers2"),$("#answers2").parent().parent().find(".error"),"请输入答案");
+                 if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+                 }*/
+
+                //产生随机数加密
+                getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor],function(){
+                    //获得密文
+                    setPwdResult(pgeditor,$('#password'),function(){
+                        $("form").submit();
+                    });
+                });
+            });
+        }
+        else{
+            if (pgeditor.pwdLength() == 0) {
+                $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                return false;
+            }
+            /*if($("#type").val() == "1"){*/
+            flag = checkMust($("#CertificateNo"),$("#CertificateNo").parent().parent().find(".error"),"请输入证件号");
+            if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+            /*}
+             else if($("#type").val() == "2"){
+             flag = checkMust($("#answers1"),$("#answers1").parent().parent().find(".error"),"请输入答案");
+             if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+             flag = checkMust($("#answers2"),$("#answers2").parent().parent().find(".error"),"请输入答案");
+             if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+             }*/
+            getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+            setPwdResult(pgeditor,$('#password'));
+
+            $("form").submit();
+        }
+	});
+})
+</script>

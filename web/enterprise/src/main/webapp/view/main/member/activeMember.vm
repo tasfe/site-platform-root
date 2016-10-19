@@ -1,0 +1,155 @@
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/PassGuardCtrl.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/enterprise/js/passwordOcx.js"></script>
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/css/ocx.css" rel="stylesheet" type="text/css" />
+<script>
+	//密码控件js
+	if(navigator.userAgent.indexOf("MSIE")<0){
+	   navigator.plugins.refresh();
+	}
+	
+	var pgeditor = new jQuery.pge({
+		pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",//控件文件目录
+		pgeId: "_ocx_password",//控件ID
+		pgeEdittype: 0,//控件类型,0星号,1明文
+		pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+		pgeEreg2: "[\\s\\S]{6,12}",	//输入完毕后字符类型判断条件
+		pgeMaxlength: 12,//允许最大输入长度
+		pgeTabindex: 2,//tab键顺序
+		pgeClass: "ocx_style",//控件css样式
+		pgeInstallClass: "ocx_style",//针对安装或升级
+		pgeOnkeydown:"FormSubmit()",//回车键响应函数
+	    tabCallback:"_ocx_password2",
+		pgeOnfocus:"ocxfocus()"
+		//pgeOnfocus:"hideHit()"
+	});
+	
+	var pgeditor3 = new jQuery.pge({
+		pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",//控件文件目录
+		pgeId: "_ocx_password2",//控件ID
+		pgeEdittype: 0,//控件类型,0星号,1明文
+		pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+		pgeEreg2: "[\\s\\S]{6,12}",	//输入完毕后字符类型判断条件
+		pgeMaxlength: 12,//允许最大输入长度
+		pgeTabindex: 2,//tab键顺序
+		pgeClass: "ocx_style",//控件css样式
+		pgeInstallClass: "ocx_style",//针对安装或升级
+		pgeOnkeydown:"FormSubmit()",//回车键响应函数
+	    tabCallback:"_ocx_password3",
+		pgeOnfocus:"ocxfocus3()"
+	});
+	
+		
+	window.onload = function(){	 
+	   pgeditor.pgInitialize();//初始化控件
+	   pgeditor3.pgInitialize();//初始化控件
+	   window.setInterval("GetLevel('${WEB_RESOURCE.staticAddress}wallet/img/ocx')",800); //实时显示密码强度
+    }   
+</script>
+<!--网银充值-->
+<div class="min_height6">
+<div class="wrap">
+    <h2 class="h2_titform">为保障您的账户交易安全，您必须设置一个永达账户支付密码完成永达账户激活。</h2>
+    <form class="" id="setPassWordForm" action="#springUrl('/my/active/active-member.htm')" method="POST">
+             <input type="hidden" name="newPasswd" id="newPasswd" value=""/>
+             <input type="hidden" name="renewPasswd" id="renewPasswd" value=""/>
+             
+             <input type="hidden" id="merState" name="merState"  value="$!response.data.merState" />
+             <span style="color:red">$!{$!response.data.message}</span>
+        <div class="form-horizontal center_form clearfix">
+                <div class="control-group">
+                    <label class="control-label" for="idCardType">用户名：</label>
+                    <div class="controls">
+                      <span class="con_txt14">$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).loginName</span>
+                    </div>
+                </div>  
+           		#parse("main/ocx/iniPassword.vm")
+                #parse("main/ocx/passwordStrength.vm")
+                #parse("main/ocx/reiniPassword.vm")
+            <div class="control-group">
+                <div class="controls">
+                  <input type="submit" id="set_pay_passwd_submit" class="btn_h40_red bold" value="确    定" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div></div>
+
+<!--<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.cookie.js${WEB_RESOURCE.staticVersion}"></script>-->
+
+<script>
+
+$(function(){
+          #if($response.errors.password_equal_login_password)
+            $("#new_password_error").html('<label class="error"> #springMessageText($!response.errors.password_equal_login_password,"")</label>');
+          #elseif($response.errors.paypasswd_not_exist)
+              $("#new_password_error").html('<label class="error"> #springMessageText($!response.errors.paypasswd_not_exis,"")</label>');
+          #elseif($response.errors.error_passwd_parten)
+              $("#renew_password_error").html('<label class="error"> #springMessageText($!response.errors.error_passwd_parten,"")</label>');
+          #elseif($response.errors.repassword_password_not_same)
+            $("#renew_password_error").html('<label class="error"> #springMessageText($!response.errors.repassword_password_not_same,"")</label>');
+          #end
+     });
+
+var  ocxfocus= function(){
+    $("#new_password_error").html("");
+      }
+  var  ocxfocus3= function(){
+    $("#renew_password_error").html("");
+  }
+
+//表单提交
+$("#set_pay_passwd_submit").click(function() {
+    $("#newpasswd_error").html('');
+    $("#renewpasswd_error").html('');
+
+     if(pgeditor.pwdLength()==0){
+             $("#new_password_error").html('<label class="error">支付密码不能为空</label>');
+             $("#_ocx_password").focus();
+             return false;
+    }
+
+    if(pgeditor.pwdValid()==1){
+         $("#new_password_error").html('<label class="error">支付密码不符合要求，请输入6-12位字符或数字</label>');
+         $("#_ocx_password").focus();
+         return false;
+    }
+
+    if(pgeditor3.pwdLength()==0){
+             $("#renew_password_error").html('<label class="error">重新输入支付密码不能为空</label>');
+             $("#_ocx_password").focus();
+             return false;
+    }
+
+    if(pgeditor3.pwdValid()==1){
+         $("#renew_password_error").html('<label class="error">重新输入支付密码不符合要求，请输入6-12位字符或数字</label>');
+         $("#_ocx_password").focus();
+         return false;
+    }
+
+
+    jQuery.ajax({
+        url: "#springUrl('/ocx/generateRandomKey.htm')",
+        type: "POST",
+        async: false,
+        success: function(result){
+            pgeditor.pwdSetSk(result);
+            pgeditor3.pwdSetSk(result);
+        }
+    });
+
+    var PwdResult = setPwdResult(pgeditor,$('#newPasswd'));
+    var PwdResult3 = setPwdResult(pgeditor,$('#renewPasswd'));
+
+    if(PwdResult!=PwdResult3){
+        $("#renew_password_error").html('<label class="error">两次输入支付密码不同</label>');
+        $("#_ocx_password").focus();
+        return false
+    }
+    return true;
+   });
+
+$(window).load(function(){
+    //jQuery.cookie('yd_ent_user_name','$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName',{path: '/enterpriseWallet',domain: '${WEB_RESOURCE.staticAddressDomain}'});
+});
+
+</script>

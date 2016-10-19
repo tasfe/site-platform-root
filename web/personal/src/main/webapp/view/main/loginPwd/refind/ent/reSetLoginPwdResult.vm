@@ -1,0 +1,21 @@
+<div class="zhanghu_infor">
+     <!-- S 流程 -->
+     <div class="findFlow-login">
+          <p class="findFlow-one" style="display:none;"></p>
+          <p class="findFlow-two" style="display:none;"></p>
+          <p class="findFlow-three"></p>
+     </div>
+     <!-- E 流程 -->
+     <div class="wrap">
+             <div class="account_number_manager">
+                    <div class="user_ibox">
+                            <h2 class="h2_titform"><em>登录密码找回</em>你正在重置你的登录密码</h2>   	
+                            <div class="form-horizontal center_form clearfix">                                
+                                  <p class="main_tip f_24 fc_yellow"><span class="ico_suc"></span>成功设置登录密码</p>
+                                  <p class="main_tip"><a href="${request.contextPath}/my/home.htm" class="btn_forget f_12 marl50">返回钱包首页</a></p>
+                            </div>
+                                    
+                    </div>                                                          
+              </div>
+     </div>
+</div>

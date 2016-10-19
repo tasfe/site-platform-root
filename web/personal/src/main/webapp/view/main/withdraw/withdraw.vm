@@ -1,0 +1,428 @@
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/PassGuardCtrl.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/passwordOcx.js"></script>
+<link href="${WEB_RESOURCE.staticAddress}wallet/css/ocx.css" rel="stylesheet" type="text/css" />
+<script src="${WEB_RESOURCE.staticAddress}wallet/js/plugin/jquery-ui-1.10.3.custom.min.js${WEB_RESOURCE.staticVersion}"></script>
+<link href="${WEB_RESOURCE.staticAddress}wallet/css/plugin/jquery-ui-1.10.3.custom.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen"  id="theme_date">
+<script  src="${WEB_RESOURCE.staticAddress}wallet/js/withdraw.js"></script>
+<style>
+#bank_cord_tip{ display:none; position:absolute; left:0; top:-35px; padding:0 8px; height:32px; line-height:32px; font-size:20px; border:1px solid #bbb; background-color:#f3f3f3;}
+/*模糊匹配 */
+.custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+.custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    /* support: IE7 */
+    *height: 1.7em;
+    *top: 0.1em;
+  }
+.custom-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+	width:275px;
+	font-weight:normal;
+	color:#000;
+	padding-left:7px;
+  }
+.ui-autocomplete {max-height: 300px;overflow-y: auto;overflow-x: hidden;}
+.ui-tooltip {z-index:1000000}
+</style>
+
+<script>
+	//密码控件js
+	if(navigator.userAgent.indexOf("MSIE")<0){
+	   navigator.plugins.refresh();
+	}
+	
+	var pgeditor = new jQuery.pge({
+		pgePath: "${WEB_RESOURCE.staticAddress}wallet/ocx/",//控件文件目录
+		pgeId: "_ocx_password",//控件ID
+		pgeEdittype: 0,//控件类型,0星号,1明文
+		pgeEreg1: "[\\s\\S]*",//输入过程中字符类型限制
+		pgeEreg2: "[\\s\\S]{6,12}",	//输入完毕后字符类型判断条件
+		pgeMaxlength: 12,//允许最大输入长度
+		pgeTabindex: 2,//tab键顺序
+		pgeClass: "ocx_style",//控件css样式
+		pgeInstallClass: "ocx_style",//针对安装或升级
+	    tabCallback:"_ocx_password2",
+		pgeOnfocus:"ocxfocus()"
+	});	
+		
+	window.onload = function(){	 
+	   pgeditor.pgInitialize();//初始化控件
+    }   
+</script>
+<div class="min_height6">
+<div class="wrap">
+    <div class="recharge_bar">
+        <span class="sp">提现账户：<b>$!response.data.member.memberName</b></span><span class="sp">账户可提现余额：<b class="fc_r_ff">$!response.data.accountBalance</b> 元</span>
+        <span class="right_span"><a href="#springUrl('/my/all-cach.htm')">查询提现记录</a></span>
+    </div>
+
+    <form id="withdraw_form" class="form-horizontal recharge_form" action="#springUrl('/my/cach-success.htm')" method="POST">
+             <input type="hidden" id="passwd" name="passwd" value=""/>
+          <div class="control-group">
+            <label class="control-label" for="">选择银行卡：</label>
+            <div class="controls">
+              <ul class="bind_bank">
+              #set($n = 1)
+              #foreach ($!bankcard in $!response.data.banks)
+                <li><label class="f_12"><input class="mart2_ie7" id="bankcardId"  name="bankcardId" type="radio"
+                #if($!bankCardId == "" && $n == 1)
+                	checked="true"
+                #elseif ($!bankCardId == $!bankcard.bankcardId)
+                	checked="true"
+                #end
+                #set($n=$n+1)
+                value="$!bankcard.bankcardId"> $!bankcard.bankName 尾号：$!bankcard.bankAccountNumMask 开户人：$!bankcard.realName  
+               
+               #if($response.data.member.memberType.getCode() == "2")
+                    #if($bankcard.cardAttribute == "0")
+                        （对公）
+                    #else
+                        （对私）
+                    #end
+                #end
+                </label><a class="del" href="#" id="$!bankcard.bankcardId">删除</a></li>
+                #end
+                <li class="bor_no"><span id="addBank" class="btn_h24 fc_3 mart10">+添加银行卡</span></li>
+              </ul>
+            </div>
+             <div class="controls" id="withdraw_bankcard_error">
+            #springMessageText($!response.errors.bankcardid_is_empty,"")</div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="moneyNum">提现金额：</label>
+            <div class="controls pos_rel">
+              <input type="text" id="moneyNum" name="moneyNum" class="in_txt" value="$!{cashNum}" maxlength="9"> <p id="withdraw_money_error"></p>
+              <span class="placeholder">请在此输入您的提现金额</span>
+            </div>
+          </div>
+         	#parse("main/ocx/withdraw_password.vm")
+          <div class="control-group">
+            <div class="controls"><input type="button" id="go_submit" class="btn_h40_red bold" value="提交" /><a class="marl20 f_12" href="#springUrl('/my/home.htm')">返回钱包首页</a></div>
+          </div>
+    </form>
+</div>
+</div>
+<div class="del_bank_dialog" id="delBankDialog">
+    <span class="wram_icobg"></span>
+    <h2>确定删除该银行卡么？</h2>
+</div>
+<div class="del_bank_dialog" id="addBankDialogBusy">
+    <span class="wram_icobg"></span>
+    <h2>添加银行卡？</h2>
+    <p>系统繁忙，请等待。</p>
+</div>
+<div class="del_bank_dialog" id="realNameDialog">
+    <span class="wram_icobg"></span>
+    <h2>未进行实名认证，无法绑卡</h2>
+    <p>请先进行实名认证后再绑卡。</p>
+</div>
+<div class="add_bank_dialog" id="addBankDialog">
+    <form id="withdraw_bank_form" name="withdraw_bank_form" action="#springUrl('/my/addBankAccount.htm')" method="POST" class="form-horizontal" >
+    	<input id="memberType"  name="memberType" type="hidden" />
+          <div class="control-group">
+            <label class="control-label" for="">银行账户类型：</label>
+            <div class="controls">
+              <span class="con_txt14 bold">借记卡</span>
+            </div>
+          </div>
+          
+           <div id = "personalInfo">
+              <div class="control-group">
+            <label class="control-label" for="">开户人真实姓名：</label>
+            <div class="controls">
+              <span class="con_txt14 bold" id="realname" name="realname">$!response.data.realName</span>
+              <input id="realName"  name="realName" type="hidden" />
+            </div>
+          </div>
+          </div>
+          <div id = "entpriseInfo">
+          <div class="control-group">
+            <label class="control-label" for="">开户人真实姓名：</label>
+            <div class="controls">
+              <span class="con_txt14 bold" ><input id="realName"  name="realName" class="rName" type="text" maxlength="64"/></span>&nbsp; <span style="color:red">*</span>
+              <p id="realName_error"> </p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">卡属性:</label>
+            <div class="controls">
+              <span class="con_txt14 bold" >
+              <input name="cardAttribute" id="cardAttribute" class="cAttribute0" type="radio" value="0" /> 对公 &nbsp;&nbsp; 
+              <input name="cardAttribute"id="cardAttribute" class="cAttribute1" type="radio" value="1" /> 对私</span>  &nbsp; <span style="color:red">*</span>
+              <p id="cardAttribute_error"> </p>
+            </div>
+          </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="">开户银行所在省、直辖市：</label>
+            <div class="controls">
+                <select id="provSelect" name="province" class="select"  onchange="selectCity(this.value)">
+                  <option value="" selected="selected">请选择省份</option>
+                </select>
+                <p id="provSelectTip_error"> </p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">开户银行所在城市：</label>
+            <div class="controls">
+                <select id="citySelect" name="city" class="select" onchange="selectBranch(this.value)">
+                  <option value="" selected="selected">请选择城市</option>
+                </select>
+                <p class="f_12 fc_9">如果找不到所在城市，可以选择所在地区或者上级城市。</p>
+                <p id="citySelectTip_error"> </p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">选择银行：</label>
+            <div class="controls">
+                <select id="bankSelect" name="bankCode" class="select" onchange="selectBranch(this.value)">
+                  <option value="" selected="selected">请选择银行</option>
+                </select>
+                <p id="bank_error"> </p>
+
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">支行名称：</label>
+            <div class="controls">
+                <select id="branchSelect"  name="branchCode" class="select">
+                  <option value="" selected="selected">请选择支行</option>
+                </select>
+                <input type="hidden" id="branchBack">
+                 <p id="branch_error"> </p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="">银行卡号：</label>
+            <div class="controls pos_rel">
+              <input type="text" id="bankAccountNum" name="bankAccountNum" class="in_txt"  maxlength="32">
+              <span id="bank_cord_tip"></span>
+              <p class="f_12 fc_9">此银行卡号开户名必须与上方开户名一致，否则提现会失败。</p>
+              <p id="banknum_error"> </p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls"> <label id="withdraw_add_bankcard_submit" class="btn_h40_red bold" >提交</label>
+            </div>
+          </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+$(function(){
+	  #if($response.errors.error_passwd_is_locked)
+		$("#password_error").html('<label id="perror" class="error"> #springMessageText($!response.errors.error_passwd_is_locked,"")</label>');															
+		
+	            #if($!response.errors.remainNum)
+    					$("#perror").append("，锁定时间还剩余 $!response.errors.remainNum 分钟");
+				#end
+	  #end
+	  #if($response.errors.error_passwd_not_right)
+		$("#password_error").html('<label id="pwerror" class="error"> #springMessageText($!response.errors.error_passwd_not_right,"")</label>');
+				#if($!response.errors.remainNum)
+                  $("#pwerror").append("，您还有 $!response.errors.remainNum 次机会");															  													  				#end					
+	  #end	
+	  
+ });
+
+var  ocxfocus= function(){
+	$("#password_error").html('');
+};
+
+$(function(){
+	jQuery("#go_submit").removeAttr("disabled");
+	$("#moneyNum").focus(function(){
+        $("#withdraw_money_error").html("");
+    });
+	$("#withdraw_form").validate({
+                rules:{
+                        moneyNum:{
+                            required:true,
+                            positive:true,
+                            max:100000
+                        }
+
+                 }
+        });
+     //焦点验证提现金额
+    QJW.placeHolder("placeholder","in_txt");
+    $("#go_submit").click(function() {
+		if(!$("#withdraw_form").valid()){
+			return;
+		}
+	    var bank=$("input[name='bankcardId']:checked").val();
+	    if(!bank) {
+	        $("#withdraw_bankcard_error").html('<label  class="error">请选择提现银行卡!</label>');
+	        return false;
+	    } else {
+        	$("#withdraw_bankcard_error").html('');
+        }
+	    var balance = parseFloat("$!response.data.accountBalance");
+	    var moneyNum = parseFloat($("#moneyNum").val());
+	    if(balance < moneyNum) {
+	        $("#withdraw_money_error").html('<label  class="error">提现金额不能大于账户余额!</label>');
+	        return false;
+	    }
+		 
+		 if(pgeditor.pwdLength()==0){
+			 $("#password_error").html('<label class="error">支付密码不能为空</label>');
+    		 return false;
+	    }
+	
+		if(pgeditor.pwdValid()==1){
+			 $("#password_error").html('<label class="error">支付密码不符合要求，请输入6-12位字符或数字</label>');
+			 return false;
+		}
+		
+		jQuery.ajax({
+			url: "#springUrl('/ocx/generateRandomKey.htm')",
+			type: "POST",
+			async: false,
+			success: function(result){
+				pgeditor.pwdSetSk(result);
+			}
+		});
+
+        setPwdResult(pgeditor,$('#password'));
+        /**if($("#withdraw_form").valid()){
+        	jQuery("#go_submit").addClass("disabled").attr("disabled","disabled");
+        };**/
+		$("#withdraw_form").submit();
+		jQuery("#go_submit").addClass("disabled").attr("disabled","disabled");
+        return true;
+    });
+    $("realName").blur(function(){
+         QJW.passWordLeng($(this).val());
+
+    });
+
+ });
+
+//提交绑卡表单的验证
+
+	$(".rName").focus(function(){
+		$("#realName_error").html("");
+	});
+	
+	$(".cAttribute0").focus(function(){
+		$("#cardAttribute_error").html("");
+	});
+	$(".cAttribute1").focus(function(){
+		$("#cardAttribute_error").html("");
+	});
+
+    $("#withdraw_add_bankcard_submit").click(function () {
+	  if($("#memberType").val() == "2"){
+		var realName=$("#realName").val() 
+		 if(jQuery.isEmpty(realName)) {
+            $("#realName_error").html("<label class='error'>请输入户名!</label>");
+            return false;
+        } else {
+            $("#realName_error").html("");
+        }
+	  }
+ 	if($("#memberType").val() == "2"){
+		var cardAttribute=$('input:radio[name="cardAttribute"]:checked').val();
+		if(jQuery.isEmpty(cardAttribute)) {
+            $("#cardAttribute_error").html("<label class='error'>请选择卡属性!</label>");
+            return false;
+        } else {
+            $("#cardAttribute_error").html("");
+        }
+	 }
+
+        var province=$("#provSelect").val();
+        if(jQuery.isEmpty(province)) {
+            $("#provSelectTip_error").html("<label class='error'>请选择省份!</label>");
+            return false;
+        } else {
+            $("#provSelectTip_error").html("");
+        }
+        var city=$("#citySelect").val();
+        if(jQuery.isEmpty(city)) {
+            $("#citySelectTip_error").html("<label class='error'>请选择城市!</label>");
+            return false;
+        } else {
+            $("#citySelectTip_error").html("");
+        }
+        var bank=$("#bankSelect").val();
+        if(jQuery.isEmpty(bank)) {
+            $("#bank_error").html("<label class='error'>请选择银行!</label>");
+            return false;
+        } else {
+            $("#bank_error").html("");
+        }
+        var bank=$("#branchSelect").val();
+        if(jQuery.isEmpty(bank)) {
+            $("#branch_error").html("<label class='error'>请选择支行!</label>");
+            return false;
+        } else {
+            $("#branch_error").html("");
+        }
+        var paypasswd = $("#bankAccountNum").val();
+        if(jQuery.isEmpty(paypasswd)) {
+             $("#banknum_error").html("<label class='error'>银行卡号不能为空，请输入！</label>");
+            return false;
+        } else if(!jQuery.isBankcard(paypasswd)) {
+            $("#banknum_error").html("<label class='error'>银行卡号格式不对，请重新输入！</label>");
+            return false;
+        }
+      jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/addBankAccount.htm')" ,
+            data: $('#withdraw_bank_form').serialize(),
+            success: function(response) {
+            	ajaxSuc();
+            	if(response.success){
+            		var url = '/my/withdraw.htm?bankCard='+response.data.bankCard;
+					window.location.href="#springUrl('" + url + "')";
+            	} else {
+	            	$("#banknum_error").html("<label class='error'>"+response.message+"</label>");
+            	}
+            } ,
+            error: function(data) {
+                ajaxSuc();
+                $("#banknum_error").html("<label class='error'>对不起,添加银行卡失败!</label>");
+            },
+            dataType: "json"
+        });
+    });
+
+	function ajaxStart(){
+		$("body").ajaxStart(function() {
+			if(typeof($(".ajax_start").attr("class"))=="undefined"){
+				$("body").append("<div class='ajax_start' style='z-index:1000000'><p class='loding'><img src='${WEB_RESOURCE.staticAddress}wallet/image/ajax-loader.gif'>数据加载中...</p></div>");
+				$(".ajax_start").fadeIn("fast");
+			}
+			else{
+				$(".ajax_start").html("<p class='loding' style='z-index:1000000'><img src='${WEB_RESOURCE.staticAddress}wallet/image/ajax-loader.gif'>数据加载中...</p>").fadeIn("fast");
+			}
+		});
+}
+
+	function ajaxSuc(){
+			$(".ajax_start").remove();
+	}
+	$(document).ajaxStart(function(){
+			ajaxStart();
+		});
+	$(document).ajaxComplete(function(){
+		ajaxSuc();
+	});
+	$(document).ajaxStop(function(){
+		ajaxSuc();
+	});
+
+
+</script>
+

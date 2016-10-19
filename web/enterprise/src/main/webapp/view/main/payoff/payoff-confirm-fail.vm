@@ -1,0 +1,96 @@
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="appcenter" class="wrap">
+	<div class="page_title">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">代发工资</span>
+		</div>
+		<div class="right fr"><a href="#springUrl('/static/dfgz.htm')">什么是代发工资</a> | <a href="#springUrl('/my/TransactionRecords.htm?link=0401&txnType=6')">代发工资记录</a> | <a href="#springUrl('/help/faq.htm')">常见问题</a></div>
+	</div>
+    <div class="pagebox pagebox1 pagedfgz">
+    	<div class="zz_step step step_2"><i></i><span class="s1">上传模版</span><span class="s2">代发工资审核</span><span class="s3">代发工资完成</span></div>
+        <div class="bank_cooper_title "><span class="b">代发工资信息错误：</span></div>
+        <form class="zz_form_1">
+            <div class="boxbg1 w860">
+            	<div class="p49" style=" padding-bottom:0;">
+                    <table cellpadding="0" cellspacing="0" border="0" class="zzkjt_info2">
+                    	<tr>
+                        	<th width="50">序号</th>
+                            <th width="350">收款人信息</th>
+                            <th width="86">金额(元)</th>
+                            <th width="271">错误信息</th>
+                        </tr>
+                        #foreach($transfer in ${sessionPage.dataList})
+							#if($transfer.payoffType == 0)
+								<tr class="jcontext">
+                                	<td>$!{transfer.orderNo}</td>
+                                    <td>$!{transfer.kjtTransfer.kjtAccountName}&nbsp;$!{transfer.kjtTransfer.kjtAccount}</td>
+                                    <td>$!{transfer.kjtTransfer.transferAmount}</td>
+                                    <td class="text_l">$!{transfer.errorInfo}</td>
+                                </tr>
+                            #else
+                                <tr class="jcontext">
+                                	<td>$!{transfer.orderNo}</td>
+                                    <td>$!{transfer.bankTransfer.accountName}&nbsp;($!{transfer.bankTransfer.bankName}&nbsp;
+										$!{transfer.bankTransfer.branchBankName}&nbsp;$!{transfer.bankTransfer.accountNo})</td>
+                                    <td>$!{transfer.bankTransfer.transferAmount}</td>
+                                    <td class="text_l">$!{transfer.errorInfo}</td>
+                                </tr>
+							#end
+						#end
+                    </table>
+                    <div class="tabpagediv">
+                        #set($sessionPageUrl = $!{request.contextPath}+'/payoff/getSessionPage.htm?type=error')
+                        #parse("/common/control/session-page.vm")
+                    </div>
+                </div>
+                <div class="btn_bottom_zz row3" style="padding-top:32px;">
+					<input type="button" value="重新上传" class="btn" onclick="window.location.href='#springUrl("/payoff/toPayoff.htm")'">
+				</div>
+            </div>
+        </form>
+        
+        <div class="faq_relevant">
+        	<h4>代发工资问题：</h4>
+            <dl>
+            	<dt>什么是代发工资？</dt>
+				<dd>答：是永达推出的增值服务，是指您可以通过永达账户来为您公司员工发放工资、奖金等薪资的服务。</dd>
+            </dl>
+            <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+// 显示分页数据
+function showPageDataList(dataList) {
+	if (!dataList || dataList.length == 0) {
+		return;
+	}
+	
+	var jtable = $('.zzkjt_info2');
+	jtable.find('.jcontext').remove();
+	var len = dataList.length;
+	for (var i=0; i<len; i++) {
+		var transfer = dataList[i];
+		var tdHtml = '';
+		if(transfer.payoffType == 0) {
+			tdHtml += '<tr class="jcontext">'
+				+ '<td>' + transfer.orderNo + '</td>'
+				+ '<td>' + transfer.kjtTransfer.kjtAccountName + '(' + transfer.kjtTransfer.kjtAccount + ')</td>'
+				+ '<td>' + transfer.kjtTransfer.transferAmount + '</td>'
+				+ '<td class="text_l">' + transfer.errorInfo + '</td></tr>';
+		} else {
+			tdHtml += '<tr class="jcontext">'
+				+ '<td>' + transfer.orderNo + '</td>'
+				+ '<td>' + transfer.bankTransfer.accountName + '&nbsp;(' + transfer.bankTransfer.bankName + '&nbsp;'
+				+ transfer.bankTransfer.branchBankName + '&nbsp;' + transfer.bankTransfer.accountNo + ')</td>'
+				+ '<td>' + transfer.bankTransfer.transferAmount + '</td>'
+				+ '<td class="text_l">' + transfer.errorInfo + '</td></tr>'
+		}
+		
+		jtable.append(tdHtml);
+	}
+}
+</script>

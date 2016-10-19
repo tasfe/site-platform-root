@@ -1,0 +1,470 @@
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+      </div>
+    <div class="pagebox">
+    	<form id="form_search" action="${request.contextPath}/my/all-trade1.htm" method="post">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<div class="search_row pl30 mt10">
+           
+            <div class="data_div mr16 fl"><input class="datapick" type="text" name="queryStartTime" value="$!response.data.queryStartTime" id="startDate" readonly="readonly"><span>至</span><input class="datapick" type="text" value="$!response.data.queryEndTime" id="endDate" name="queryEndTime" readonly="readonly"></div>
+            <ul class="data_range fl"><li class="data_range_week" data-value="7">一周内</li><li class="data_range_month" data-value="30">一个月内</li><li class="data_range_quarter" data-value="90">三个月内</li><li class="data_range_year" data-value="365">一年内</li><input type="hidden" class="data_range_value"></ul>
+        </div>
+        <div class="search_row">
+            <dl class="search_dl" id="search_dl1">
+            <dt>查询类型：</dt>
+            ##<dd data-value="0" #if($!{response.data.txnType}==0) class="cur" #end>全部</dd>
+			<dd data-value="1" #if($!{response.data.txnType}==1) class="cur" #end>消费购物</a></dd>
+			<dd data-value="2" #if($!{response.data.txnType}==2) class="cur" #end>转账到账户</a></dd>
+			<dd data-value="3" #if($!{response.data.txnType}==3) class="cur" #end>转账到卡</a></dd>
+			##<dd data-value="4" #if($!{response.data.txnType}==4) class="cur" #end>代发工资到账户</a></dd>
+			<dd data-value="6" #if($!{response.data.txnType}==6) class="cur" #end>话费充值</a></dd>
+			#if($!response.data.userType == 0)##如果是0表示供应商
+				#if($!response.data.accountType == 205)##205表示供应商开通了保理账户
+        			<dd data-value="7" #if($!{response.data.txnType}==7) class="cur" #end>保理放贷</a></dd>
+        			<dd data-value="8" #if($!{response.data.txnType}==8) class="cur" #end>保理代扣</a></dd>
+        			<dd data-value="9" #if($!{response.data.txnType}==9) class="cur" #end>保理还款</a></dd>
+				#end
+			#elseif($!response.data.userType == 1)##如果是1表示核心企业
+				<dd data-value="9" #if($!{response.data.txnType}==9) class="cur" #end>保理还款</a></dd>
+			#end
+		<!--
+            <dd data-value="3">代发</dd>
+            <dd data-value="4">AA收款</dd>
+            
+            <dd data-value="6">手机充值</dd>
+            <dd data-value="6">信用卡还款</dd>
+		-->
+            <input type="hidden" class="search_dl_value" name="txnType" id="txnType" value="$!response.data.txnType">
+            </dl>
+        </div>
+		<div class="search_row" id="search_row1" style="display:none;">
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!{response.data.txnState}!=1100 && $!{response.data.txnState}!=1201 && $!{response.data.txnState}!=1401) class="cur" #end>全部</dd>
+            <dd data-value="1100" #if($!{response.data.txnState}==1100) class="cur" #end>待支付</dd>
+			<dd data-value="1201" #if($!{response.data.txnState}==1201) class="cur" #end>已支付</dd>
+			<dd data-value="1401" #if($!{response.data.txnState}==1401) class="cur" #end>交易结束</dd>
+			<input type="hidden" class="search_dl_value" name="tradeStatus"  value="$!response.data.txnState">
+            </dl>
+        </div>
+		<div class="search_row" id="search_row2" style="display:none;">
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!{response.data.txnState}!=2100 && $!{response.data.txnState}!=2998 && $!{response.data.txnState}!=2401) class="cur" #end>全部</dd>
+            <dd data-value="2100" #if($!{response.data.txnState}==2100) class="cur" #end>待支付</dd>
+			##<dd data-value="2201" #if($!{response.data.txnState}==2201) class="cur" #end>处理中</dd>
+			<dd data-value="2401" #if($!{response.data.txnState}==2401) class="cur" #end>成功</dd>
+			<dd data-value="2998" #if($!{response.data.txnState}==2998) class="cur" #end>失败</dd>
+			<input type="hidden" class="search_dl_value" name="tradeStatus"  value="$!response.data.txnState">
+            </dl>
+        </div>
+		<div class="search_row" id="search_row3" style="display:none;">
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!{response.data.txnState}!=3221 && $!{response.data.txnState}!=3222 && $!{response.data.txnState}!=3223) class="cur" #end>全部</dd>
+            <dd data-value="3221"#if($!{response.data.txnState}==3221)class="cur"#end>处理中</dd>
+            <dd data-value="3222" #if($!{response.data.txnState}==3222)class="cur"#end>出款成功</dd>
+			<dd data-value="3223" #if($!{response.data.txnState}==3223)class="cur"#end>失败</dd>
+			<input type="hidden" class="search_dl_value" name="tradeStatus"  value="$!response.data.txnState">
+            </dl>
+        </div>
+		<div class="search_row" id="search_row6" style="display:none;">
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!response.data.txnState!="1" && $!response.data.txnState!="2" && $!response.data.txnState!="3" && $!response.data.txnState!="4")class="cur"#end>全部</dd>
+            <dd data-value="1" #if($!response.data.txnState=="1")class="cur"#end>待支付</dd>
+            <dd data-value="2" #if($!response.data.txnState=="2")class="cur"#end>交易成功</dd>
+			<dd data-value="3" #if($!response.data.txnState=="3")class="cur"#end>交易失败</dd>
+			<dd data-value="4" #if($!response.data.txnState=="4")class="cur"#end>交易关闭</dd>
+			<input type="hidden" class="search_dl_value" name="tradeStatus"  value="$!response.data.txnState">
+            </dl>
+        </div>
+		<div class="search_row" id="search_row7" style="display:none;">
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!{response.data.txnState}!=7100 && $!{response.data.txnState}!=7998 && $!{response.data.txnState}!=7401) class="cur" #end>全部</dd>
+            <dd data-value="7100" #if($!{response.data.txnState}==7100) class="cur" #end>待支付</dd>
+			<dd data-value="7401" #if($!{response.data.txnState}==7401) class="cur" #end>成功</dd>
+			<dd data-value="7998" #if($!{response.data.txnState}==7998) class="cur" #end>失败</dd>
+			<input type="hidden" class="search_dl_value" name="tradeStatus"  value="$!response.data.txnState">
+            </dl>
+        </div>
+		<div class="search_row" id="search_row8" style="display:none;">
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!{response.data.txnState}!=8100 && $!{response.data.txnState}!=8998 && $!{response.data.txnState}!=8401) class="cur" #end>全部</dd>
+            <dd data-value="8100" #if($!{response.data.txnState}==8100) class="cur" #end>待支付</dd>
+			##<dd data-value="2201" #if($!{response.data.txnState}==2201) class="cur" #end>处理中</dd>
+			<dd data-value="8401" #if($!{response.data.txnState}==8401) class="cur" #end>成功</dd>
+			<dd data-value="8998" #if($!{response.data.txnState}==8998) class="cur" #end>失败</dd>
+			<input type="hidden" class="search_dl_value" name="tradeStatus"  value="$!response.data.txnState">
+            </dl>
+        </div>
+		<div class="search_row" id="search_row9" style="display:none;">
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!{response.data.txnState}!=9100 && $!{response.data.txnState}!=9998 && $!{response.data.txnState}!=9401) class="cur" #end>全部</dd>
+            <dd data-value="9100" #if($!{response.data.txnState}==9100) class="cur" #end>待支付</dd>
+			<dd data-value="9401" #if($!{response.data.txnState}==9401) class="cur" #end>成功</dd>
+			<dd data-value="9998" #if($!{response.data.txnState}==9998) class="cur" #end>失败</dd>
+			<input type="hidden" class="search_dl_value" name="tradeStatus"  value="$!response.data.txnState">
+            </dl>
+        </div>
+		<input type="hidden" value="$!{response.data.txnType}" />
+		<input type="hidden" value="$!response.data.txnState" />
+		<div class="search_row">
+        	<input type="button" value="" class="btn_chaxun ml30">
+        </div>
+		#if($!response.data.txnType!=6)
+        <div class="tools"><a href="#" class="tools_dc gray1 fr ml20">导出下载</a></div>
+		#else
+		<div class="tools"></div>
+        #end
+        <div class="table_div">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+            <th width="110">创建时间</th>
+            <th width="300" style="text-align:center;">名称|交易号</th>
+            <th width="218" style="text-align:center;">对方</th>
+            <th width="140">金额<em>（元）</em></th>
+            <th width="100">状态</th>
+            <th width="100">操作</th>
+          </tr>
+        </table>
+        </div>
+		
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+			#if($!response.data.txnType==0 || $!response.data.txnType==1 || $!response.data.txnType==2 ||$!response.data.txnType==7||$!response.data.txnType==8||$!response.data.txnType==9)
+			#set ($i=1)
+			#set($inComeCount=0)
+			#set($outPayCount=0)
+          #foreach ($!tradeInfo in $!response.data.page.infos)
+			
+			#set ($orderId=$tradeInfo.tradeVoucherNo)
+            #if($i%2 != 0)
+              #set ($odd_class="")
+            #else
+              #set ($odd_class="on")
+            #end
+              #set($i=$i+1)
+        <tr>                                              
+           <td width="110">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtSubmit)</td>
+           <td width="300" style="text-align:center;">
+           <div class="ellipsis w295">$!tradeInfo.tradeMemo</div>
+           <div class="ellipsis w295">交易号：$orderId</div>
+           </td>
+	   #if($!tradeInfo.sellerId == $!response.data.member.memberId)
+		  <td width="218" style="text-align:center;"><div class="ellipsis w168" style="width:218px;">$!tradeInfo.buyerName</div></td>
+		  <td width="140"><span class="green f14 bold">$!moneyUtil.getAmount($!tradeInfo.payAmount)</span></td>
+		  #set($inComeCount=$inComeCount+1)   
+	   #elseif($!tradeInfo.buyerId == $!response.data.member.memberId)
+		  <td width="218" style="text-align:center;"><div class="ellipsis w168" style="width:218px;">$!tradeInfo.sellerName</div></td>
+		  <td width="140"><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.payAmount)</span></td>
+		  #set($outPayCount=$outPayCount+1)
+	   #end
+	   
+	   #if($!tradeInfo.status == 100 || $!tradeInfo.status == 110)
+		  #if($!tradeInfo.buyerId == $!response.data.member.memberId)
+			 <td width="100"><span>待支付</span></td>
+			 <td width="100">
+				<a href="javascript:void(0)" class="fk_caozao" data-id="$orderId&tradeType=$!tradeInfo.tradeType" data-type="$!{tradeInfo.tradeType.getCode()}">付款<i class="fukuancaozao"></i>
+				</a>
+			 </td>
+		  #else
+			 <td width="100"><span>等待对方付款</span></td>
+			 <td width="100"></td>
+		  #end
+	   #elseif( $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+			 <td width="100"><span>进行中</span></td>
+			 <td width="100"><span></span></td>
+	   #elseif($!tradeInfo.status == 201)
+			 <td width="100"><span>已支付</span></td>
+			 <td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$orderId&tradeType=$!tradeInfo.tradeType">查看详情</a></td>
+	   #elseif($!tradeInfo.status == 301)
+			#if($!tradeInfo.tradeType=="INSTANT_TRASFER")
+				<td width="100"><span>成功</span></td>
+				<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$orderId&tradeType=$!tradeInfo.tradeType">查看详情</a></td>
+			#else
+				<td width="100"><span>交易成功</span></td>
+				<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$orderId&tradeType=$!tradeInfo.tradeType">查看详情</a></td>
+			#end
+	   #elseif($!tradeInfo.status == 401)
+			#if($!tradeInfo.tradeType=="INSTANT_TRASFER")
+				<td width="100"><span>成功</span></td>
+				<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$orderId&tradeType=$!tradeInfo.tradeType">查看详情</a></td>
+			#else
+				<td width="100"><span>交易结束</span></td>
+				<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$orderId&tradeType=$!tradeInfo.tradeType">查看详情</a></td>
+			#end
+	   #elseif($!tradeInfo.status == 999)
+				<td width="100"><span>交易关闭</span></td>
+				<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$orderId&tradeType=$!tradeInfo.tradeType">查看详情</a></td>
+	   #elseif($!tradeInfo.status == 998)
+				<td width="100"><span>失败</span></td>
+				<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$orderId&tradeType=$!tradeInfo.tradeType">查看详情</a></td>
+	   #else
+				<td width="100"><span></span></td>
+				<td width="100"><span></span></td>
+	   #end
+              </tr>
+        </tr>
+		#end
+		#if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+              <tr>
+                  <td colspan="10">无交易信息！</td>
+              </tr>
+       #end
+        <tr class="noborder">
+           <td colspan="6">
+           	<div class="fl table1_bottom_left">收入共<b class="b">$!inComeCount</b>笔：<span class="bold green">$response.data.income</span>元 | 支出共<b class="b">$!outPayCount</b>笔：<span class="bold orange">$response.data.outpay</span>元</div>
+            <div>#parse("common/control/pagePost.vm")</div>
+           </td>
+        </tr>
+		#end
+		 #if($!response.data.txnType==3)
+			#foreach ($!tradeInfo in $!response.data.page.infos)
+		  <tr class=$odd_class>
+                <td class="time" width="100">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime) </td>
+				<td width="300" style="text-align:center;">
+					<div class="ellipsis w295">转账到银行卡</div>
+					<div class="ellipsis w295">$!tradeInfo.fundoutOrderNo</div>
+				</td>
+    			<td width="218" style="text-align:center;">$!{tradeInfo.bankName} <br/>$!{tradeInfo.cardNo}</td>
+				<td width="140"><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+    			#if($!tradeInfo.status == "submitted")
+                     <td width="100"><span>处理中</span></td>## 原来是-已提交，原型
+                #elseif($!tradeInfo.status == "failed")
+                     <td width="100"><span>失败</span></td>
+                #elseif($!tradeInfo.status == "success")
+                     <td width="100"><span>出款成功</span></td>
+    			#end
+    			<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$!tradeInfo.fundoutOrderNo&tradeType=$!tradeInfo.tradeType" >查看详情</a></td>
+           </tr>
+		   #end
+		   #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+              <tr>
+                  <td colspan="10">无转账信息！</td>
+              </tr>
+		   #end
+		   <tr class="noborder">
+           <td colspan="6">
+            <div>#parse("common/control/pagePost.vm")</div>
+           </td>
+        </tr>
+		 #end
+		   #if($!response.data.txnType==4)
+			#foreach ($!tradeInfo in $!response.data.page.infos)
+		  <tr class=$odd_class>
+                <td class="time" width="100">$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime) </td>
+				<td width="300" style="text-align:center;">
+					<div class="ellipsis w295">代发工资到账户</div>
+					<div class="ellipsis w295">$!tradeInfo.orderId</div>
+				</td>
+    			<td width="218" style="text-align:center;">$!tradeInfo.buyerName</td>
+				<td width="140"><span class="green f14 bold">$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+    			<td width="100">
+					#if($!tradeInfo.state=="待支付")
+				          #set($state="处理中")
+				    #elseif($!tradeInfo.state=="付款成功")
+				          #set($state="处理中")
+					#elseif($!tradeInfo.state=="转账成功")
+						#set($state="出款成功")
+					#elseif($!tradeInfo.state=="交易完成")
+					      #set($state="出款成功")
+					 #elseif($!tradeInfo.state=="交易关闭")
+						#set($state="关闭")
+					#end
+					$state
+				</td>
+    			<td width="100"><a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId=$!tradeInfo.orderId&tradeType=$!tradeInfo.tradeType" >查看详情</a></td>
+           </tr>
+		   #end
+		   #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+              <tr>
+                  <td colspan="10">无代发工资信息！</td>
+              </tr>
+		   #end
+        <tr class="noborder">
+           <td colspan="6">
+            <div>#parse("common/control/pagePost.vm")</div>
+           </td>
+        </tr>
+		   #end
+		   
+		   #if($!response.data.txnType==6)
+			#foreach ($!rechargeOrderList in $!response.data.rechargeResponse.rechargeOrderList)
+		  <tr class=$odd_class>
+                <td class="time" width="100">$!dateUtil.getNewFormatDateString($!rechargeOrderList.gmtCreate) </td>
+				<td width="300" style="text-align:center;">
+					<div class="ellipsis w295">话费充值-充值$!rechargeOrderList.rechargeAmount元  $!rechargeOrderList.rechargePhone</div>
+					<div class="ellipsis w295">交易号：$!rechargeOrderList.tradeOrderNo</div>
+				</td>
+    			<td width="218" style="text-align:center;">永达互联网金融信息服务有限公司</td>
+				<td width="140"><span class="orange f14 bold">-$!moneyUtil.getAmount($!rechargeOrderList.payAmount)</span></td>
+					#if($!rechargeOrderList.payStatus=="F001")
+						<td width="100">待支付</td>
+				        <td width="100">
+							<a href="${request.contextPath}/my/onePay.htm?tradeOrderNo=$!rechargeOrderList.tradeOrderNo&tradeTypeCode=11">
+							付款</a>
+						</td>
+				    #elseif($!rechargeOrderList.payStatus=="F002"&&$!rechargeOrderList.rechargeStatus!="F002")
+				        <td width="100">交易成功</td>
+						<td width="100"></td>
+					#elseif($!rechargeOrderList.rechargeStatus=="F002")
+						<td width="100">交易失败</td>
+						<td width="100"></td>
+					#elseif($!rechargeOrderList.payStatus=="F003")
+						<td width="100">交易关闭</td>
+						<td width="100"></td>
+					#end
+           </tr>
+		   #end
+		   #if(!$!response.data.rechargeResponse.rechargeOrderList || $!response.data.rechargeResponse.rechargeOrderList.size()<=0)
+              <tr>
+                  <td colspan="10">无话费充值信息！</td>
+              </tr>
+		   #end
+        <tr class="noborder">
+           <td colspan="6">
+            <div>#parse("common/control/pagePost_1.vm")</div>
+           </td>
+        </tr>
+		 #end
+        </table>
+		
+			
+		<div class="faq_relevant" style="padding:40px 40px 0;">
+                <h4>转账问题：</h4>
+            <dl>
+            	<dt>转账到永达互联网金融账户需要手续费吗？</dt>
+                <dd>答：永达互联网金融账户到账户转账是不收取手续费的。</dd>
+            </dl>
+            <dl>
+            	<dt>哪些情况下不能转账转出？</dt>
+                <dd>答：a)会员账户被冻结，无法转出<br>
+&nbsp;&nbsp;&nbsp;&nbsp;b)会员账户被加入转账黑名单<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c)会员账户后台注销；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d)会员账户未实名认证；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;e)当天转账次数超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f)当天会员支持的各种支付方式（余额、认证、快捷）次数、金额超限；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;g)转账收款方为未实名认证的个人或者企业会员；
+</dd>
+            </dl>
+            <dl>
+            	<dt>转账到银行卡和提现有什么区别？</dt>
+                <dd>答：<b>转账到卡：</b>是指将用户永达互联网金融账户余额或者储蓄卡中的钱转入自己或者他人的储蓄卡中。<br>&nbsp;&nbsp;&nbsp;&nbsp;<b>提现：</b>是指把永达互联网金融账户的钱转到账户本人的储蓄卡中。</dd>
+            </dl>
+               <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+        
+    </form>
+	<form id="withdrawForm" action="${request.contextPath}/my/all-trade-download.htm" method="post">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<input  type="hidden" value="$!response.data.queryStartTime" id="startDate" name="queryStartTime" >
+	    <input  type="hidden" value="$!response.data.queryEndTime" id="endDate" name="queryEndTime">
+		<input type="hidden" class="search_dl_value" name="txnType" id="txnType" value="$!response.data.txnType"  >
+		<input type="hidden" class="search_dl_value" name="txnState" id="txnState" value="$!response.data.txnState">
+	</form>
+    </div>
+
+</div>
+
+<script>
+function toQuerySubmit(currentPage){
+       	 $("#currentPage").val(currentPage);
+       	 $("#form_search").submit();
+}
+
+var time = 5; 
+$(function(){
+	$(".fk_caozao").click(function(){
+		$("#fc_caozao").remove();
+		var x=$(this).offset();
+		var left=x.left;
+		var top=x.top+20;
+		var id=$(this).attr("data-id");
+		var tradeType=$(this).attr("data-type");
+		
+		var html='<div class="fc_caozao" id="fc_caozao" style="left:'+left+'px; top:'+top+'px;"><ul><li>'
+			+ '<a target="_blank" href="${request.contextPath}/my/onePay.htm?tradeVoucherNo=' + id + '&tradeTypeCode=' + tradeType + '">付款</a></li><li>'
+			+ '<a href="${request.contextPath}/my/tradeDetail.htm?txnType=$!response.data.txnType&orderId='+id+'">详情</a></li></ul></div>';
+		$("body").append(html).show();
+		
+		return false
+		
+	})
+	
+	$(document).bind('click',function(e){
+		var e = e || window.event; //浏览器兼容性
+		var elem = e.target || e.srcElement;
+		while (elem) { //循环判断至跟节点，防止点击的是div子元素
+			if(elem.id && elem.id=='fc_caozao' ){return;}
+			elem = elem.parentNode;
+		}	
+		$("#fc_caozao").remove();
+
+	}); 
+
+	
+
+})
+var dayRang = 367;
+function doSearch() {
+	var beginDateObj = $('#startDate');
+	var endDateObj = $('#endDate');
+	var beginDateValue = beginDateObj.val();
+	var endDateValue = endDateObj.val();
+	if (beginDateValue != "" || endDateValue != "") {
+		if (beginDateValue == "") { alert("开始时间为空！"); return false; }
+		else if (endDateValue == "") { alert("结束时间为空！"); return false; }
+		else {
+			if (compareDate(beginDateValue, endDateValue) < 0) {
+				alert("起始时间不能大于结束时间！");
+				return false;
+			}
+			else {
+				var maxdate = GetDateRangStr(((beginDateValue).split(" "))[0], dayRang-1);
+				maxdate = getDateValue(maxdate);
+				var enddate = getDateValue(((endDateValue).split(" "))[0]);
+				if (compareDate(enddate, maxdate) < 0) {
+					alert("请选择一年内您要查询的记录！");
+					return false;
+				}
+			}
+		}
+	}
+	$("#form_search").submit();
+}
+$(function(){
+	setClearStartDate('#startDate', '#endDate', dayRang);
+	setClearEndDate('#startDate', '#endDate', dayRang);
+	$(".data_range_week").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_7", "h:m"); });
+	$(".data_range_month").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_31", "h:m"); });
+	$(".data_range_quarter").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_92", "h:m"); });
+	$(".data_range_year").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_367", "h:m"); });
+	$(".btn_chaxun").click(function(){
+		doSearch();
+	});
+	$(".tools_dc").click(function(){
+		$('#withdrawForm').submit();
+	});
+
+	
+	$("#search_dl1 dd").each(function(){
+		var cur=$(this).attr("class");
+		var v=$(this).attr("data-value");
+		if(cur=="cur"){
+			$("#search_row1,#search_row2,#search_row3,#search_row6,#search_row7,#search_row8,#search_row9").hide();
+			$("#search_row"+v+"").show();	
+		}
+		$(this).click(function(){
+			$("#search_row1,#search_row2,#search_row3,#search_row6,#search_row7,#search_row8,#search_row9").hide();
+			$("#search_row"+v+"").show();
+		})
+	})
+	
+})
+</script>

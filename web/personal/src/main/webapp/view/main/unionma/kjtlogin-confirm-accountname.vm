@@ -1,0 +1,70 @@
+ <link href="${WEB_RESOURCE.staticAddress}wallet/common/css/account2.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrap">
+     <div class="safetyMain">
+		<div class="usbKeyCon_tips w655px">
+						因永达互联网金融系统升级，为提升您的帐号资金安全，请完成以下信息确认。完成信息确认后，您将可以继续使用永达互联网金融的服务。
+                 </div>
+				 <div class="content w697px">
+		<div class="title">请确认您的账户名</div>	</div>
+         <div class="loginCenter">
+              <form class="from1" id="form1" name="form1" action="${request.contextPath}/my/kjtlogin-success.htm" method="post">
+				 
+		         <div class="login_limit">
+					<label>选择后，将使用您选择的账户名进行登录。您可以在我的永达互联网金融-账户设置中进行账户名的修改
+                   </label>
+				   <br />
+				   <br />
+                   <label>账户名：</span>$!{response.data.loginName}
+                   </label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error">
+                <span></span>
+				</div>
+               </div>
+			   
+			  ## <div class="login_limit">
+			 ##	#if($!{response.data.email} =="false")
+              ##      <label><span class="f14 limitLeft">邮箱：</span>未绑定
+               ##     </label>
+			 ##	 #else
+				 ##	<label><span class="f14 limitLeft">邮箱：</span>$!{response.data.email}
+              ##      </label>
+			 ##	#end
+              ##   <label class="ml5"></label>
+              ##   <div class="mainTips ml160 error">
+             ##    <span></span>
+				 ##</div>
+              ##  </div>
+			   
+			   ## <div class="login_limit">
+			 ##	#if($!{response.data.mobile} =="false")
+               ##     <label><span class="f14 limitLeft">手机：</span>未绑定
+              ##      </label>
+			  ##  #else
+			 ##	<label><span class="f14 limitLeft">手机：</span>$!{response.data.mobile}
+               ##     </label>
+			 ##	#end
+              ##   <label class="ml5"></label>
+              ##   <div class="mainTips ml160 error">
+              ##   <span></span>
+			 ##	</div>
+              ##  </div>
+			<div class="error pdlf170"></div>
+           <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value="">
+				<input  type="hidden" name="Mid" id="Mid" value="$!{response.data.Mid}"/>
+				<input  type="hidden" name="status" id="status" value="$!{response.data.status}"/>
+			<input  type="hidden" name="gotype" id="gotype" value="$!{response.data.gotype}"/></div>
+              </form>
+         </div>      
+         </div> 
+</div>
+  <!-- E 主要内容 -->
+  <script>
+
+$(function(){
+    $(".btn_submit").click(function(){
+    	 $("#form1").submit();
+	});
+})
+</script>

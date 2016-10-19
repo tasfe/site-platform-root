@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <link rel="stylesheet" href="css/pullToRefresh.css" />
+  <title>系统消息</title>
+</head>
+<body style="display: none; overflow:scroll">
+<div class="yd-wrap messageWrap" id="">
+  <header class="msgNav">
+    <div class="msgNavItem J_Link" data-href="/message.html" toTab="J_MyMessage">我的消息</div>
+    <div class="msgNavItem J_Link msgNavItemActive" data-href="/messageSys.html" toTab="J_SysMessage">系统消息</div>
+  </header>
+ <!-- <div class="msgList" link="#" id="J_MyMessage" style="display:none">
+    <ul class="shuaxinList">
+      <li>
+      <div class="msgListItem">
+        <h2 class="index-floorF1Title"><span class="msgPointer"></span>测试</h2>
+        <h3 class="index-floorF1Desc">这是描述</h3>
+        <h3 class="index-floorF1Desc msgTime">2016-5-25 19:50</h3>
+      </div>
+      </li>
+    </ul>
+  </div>-->
+  <div class="msgList" link="#" id="wrapper" style="margin-top:13px;">
+    <ul class="shuaxinList">
+    <!--  <li>
+      <div class="msgListItem">
+        <h2 class="index-floorF1Title"><span class="msgPointer"></span>测试</h2>
+        <h3 class="index-floorF1Desc">这是描述</h3>
+        <h3 class="index-floorF1Desc msgTime">2016-5-25 19:50</h3>
+      </div>
+      </li>
+       <li>
+      <div class="msgListItem">
+        <h2 class="index-floorF1Title"><span class="msgPointer"></span>测试</h2>
+        <h3 class="index-floorF1Desc">这是描述</h3>
+        <h3 class="index-floorF1Desc msgTime">2016-5-25 19:50</h3>
+      </div>
+      </li>
+       <li>
+      <div class="msgListItem">
+        <h2 class="index-floorF1Title"><span class="msgPointer"></span>测试</h2>
+        <h3 class="index-floorF1Desc">这是描述</h3>
+        <h3 class="index-floorF1Desc msgTime">2016-5-25 19:50</h3>
+      </div>
+      </li>-->
+    </ul>
+  </div>
+</div>
+
+<div class="nocard" id="msgNodata" style="display:none;background:#F0EFF5;z-index:999999;position:fixed;top:39px;left:0px;width:100%;height:95%;">
+  <img src="images/none.png">
+  <p style="color:#999;">暂无数据</p>
+</div>
+
+
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/pullToRefresh.js"></script>
+<script>
+  var J_Message = $("#wrapper"),
+          currentPage = 1,
+          ids = ",",
+          idFirst = 0,
+          idLast = 0;
+
+  function loadData(reload){
+    if(reload){
+      currentPage = 1;
+      ids = ",";
+    }
+
+    // 获取系统消息 未考虑缓存数据
+    tools.ajaxSubmit({
+      "type": "GET",
+      "data": {"currentPage":currentPage,"pageSize":5},//pageSize 5
+      "url": gurl + "/message/system/weixin",
+      "suc_suc": function(response){
+        var data = response.data.pageData;
+        if(reload && (data == undefined || data.length == 0)){
+          $("#msgNodata").show();
+          return false;
+        }
+
+        var _html = "";
+        for(var i = 0, len = data.length; i < len; i++){
+          var _data = data[i];
+          // 如果记录未显示
+          if(ids.indexOf("," + _data.id + ",") < 0){
+            ids += _data.id + ",";
+            _html += '<li><div class="msgListItem">'
+                    + '<h2 class="index-floorF1Title"><span class="msgP ointer"></span>' + _data.title + '</h2>'
+                    + '<h3 class="index-floorF1Desc finderDesc">' + _data.newsContent + '</h3>'
+                    + '<h3 class="index-floorF1Desc msgTime">' + (new Date(_data.newsDate)).format("yyyy-MM-dd") + '</h3>'
+                    + '</div></li>';
+          }
+        }
+        if(!reload){
+          J_Message.find(".shuaxinList").append(_html);
+        }
+        else{
+          J_Message.find(".shuaxinList").html(_html);
+        }
+
+        currentPage++;
+
+        J_Message.find(".msgListItem").unbind().click(function(){
+          //
+        });
+      },
+      "complete": function(){
+        $("body").show();
+        wrapper.refresh();
+      }
+    });// ajaxSubmit
+  }
+
+  refresher.init({
+    id: "wrapper",
+    pullDownAction: Refresh,
+    pullUpAction: Load
+  });
+  // 重新开始
+  function Refresh() {
+    loadData(true);
+  }
+  Refresh();
+  // 加载新内容
+  function Load() {
+    loadData();
+  }
+
+  /*$(".msgNavItem").click(function(){
+    var toTab = $(this).attr("toTab");
+
+    $(".msgNavItem").removeClass("msgNavItemActive");
+    $(this).addClass("msgNavItemActive");
+
+    $(".msgList").hide();
+    $("#"+toTab).show();
+  });*/
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<div class="zhanghu_infor">
+    <div class="wrap">
+         <div class="account_number_manager">
+            <div class="user_ibox">
+                <h2 class="h2_titform"><em>解绑手机</em></h2>
+                    <div class="form-horizontal center_form clearfix">                              
+						#if($!response.success) 
+							<p class="main_tip f_24 fc_yellow">
+    							<span class="ico_suc"></span>
+    							#springMessageText($!response.message, "")
+    						</p>
+							 <p class="main_tip">现在您可以：<a href="#springUrl('/my/go-set-mobilephone.htm')" class="btn_forget f_12"> 重新绑定</a><em> 丨 </em><a href="#springUrl('/my/home.htm')" class="btn_forget f_12"> 返回我的钱包</a></p>
+						#else
+							<p class="main_tip f_24 fc_yellow">
+								<span class="ico_err"></span>
+								#springMessageText($!response.message, "")
+    						</p>
+							<p class="main_tip">现在您可以：<a href="#springUrl('/my/go-unset-mobilephone.htm')" class="btn_forget f_12"> 重新解绑</a><em> 丨 </em><a href="#springUrl('/my/home.htm')" class="btn_forget f_12"> 返回我的钱包</a></p>
+						#end
+                    </div>
+            </div>                                                          
+          </div>
+     </div>
+</div>

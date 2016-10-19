@@ -1,0 +1,164 @@
+<link href="${WEB_RESOURCE.staticAddress}wallet/common/css/style.css" rel="stylesheet" type="text/css">
+
+
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+      </div>
+    <div class="pagebox">
+    	<form id="form_search" action="${request.contextPath}/my/all-cach1.htm" method="post">
+        <input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<div class="search_row pl30 mt10">
+        	<label class="fl  b" style="margin-top:7px;">起止时间：</label>
+            <div class="data_div mr16 fl"><input class="datapick" type="text" value="$!response.data.startDate" id="startDate" name="startDate" readonly="readonly"><span>至</span><input class="datapick" type="text" value="$!response.data.endDate" id="endDate" name="endDate" readonly="readonly"></div>
+            <ul class="data_range fl"><li class="data_range_week" data-value="7">一周内</li><li class="data_range_month" data-value="30">一个月内</li><li class="data_range_quarter" data-value="90">三个月内</li><li class="data_range_year" data-value="365">一年内</li><input type="hidden" class="data_range_value"></ul>
+        </div>
+
+		<div class="search_row">
+        	<input type="button" value="" class="btn_chaxun ml30">
+        </div>
+        <div class="tools"><a href="#" class="tools_dc gray1 fr ml20">导出下载</a></div>
+        
+        <div class="table_div">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+          <tr>
+            <th width="110">创建时间</th>
+            <th width="220">交易号</th>
+            <th width="120">名称</th>
+            <th width="140">金额<em>（元）</em></th>
+            <th width="140">服务费<em>（元）</em></th>
+            <th width="170">提现账户</th>
+            <th width="">状态</th>
+          </tr>
+        </table>
+        </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table1">
+			#set ($i=1)
+			#foreach ($!tradeInfo in $!response.data.page.infos)
+			   #if($i%2 != 0)
+                  #set ($odd_class="")
+               #else
+                  #set ($odd_class="on")
+			   #end
+		    #set($i=$i+1)
+        <tr class=$odd_class>                                              
+           <td width="110">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime)</td>
+           <td width="220" >$!tradeInfo.fundoutOrderNo</td>
+		   #if($tradeInfo.productCode=="10211")
+				<td width="120" >提现-快速提现</td>
+		   #elseif($tradeInfo.productCode=="10210")
+				<td width="120" >提现-普通提现</td>
+		   #end
+           <td width="140"><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+		   
+           <td width="140"><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.fee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.fee)</span></td>
+		   
+           <td width="170"><div class="ellipsis w168">$!tradeInfo.bankName<br>$!tradeInfo.cardNo</div></td>
+           #if($!tradeInfo.status == "submitted")
+               <td><span>处理中</span></td>
+           #elseif($!tradeInfo.status == "failed")
+               <td><span>提现失败</span></td>
+           #elseif($!tradeInfo.status == "success")
+               <td><span>提现成功</span></td>
+           #end
+        </tr>
+        #end
+        #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+           <tr>
+               <td colspan="10">无提现信息！</td>
+           </tr>
+        #end
+        <tr class="noborder">
+           <td colspan="6">
+           	
+            <div>#parse("common/control/pagePost.vm")</div>
+           </td>
+        </tr>
+        </table>
+		<div class="faq_relevant" style="padding:40px 40px 0;">
+                <h4>提现问题：</h4>
+            <dl>
+            	<dt>什么是提现？</dt>
+                <dd>答：提现是指将永达互联网金融账户中的可用余额转到提现的银行账户上的操作。</dd>
+            </dl>
+            <dl>
+            	<dt>提现失败怎么办？</dt>
+                <dd>答：提现成功，请用户联系银行查询是否已经到账，若未到账，不排除后续可能会退票，大概需要7个工作日，款项退回到您的永达互联网金融账户中。</dd>
+            </dl>
+			<dl>
+            	<dt>哪些情况下不能进行提现？</dt>
+                <dd>答：a) 会员账户被冻结，无法提现；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;b) 会员账户被加入提现黑名单；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c) 会员账户后台已注销；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;d) 会员账户未实名认证；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;e) 会员账户可用余额不足；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f) 当天提现次数、金额超限；
+</dd>
+            </dl>
+                <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+        
+    </form>
+	<form id="withdrawForm" action="${request.contextPath}/my/all-cach-download.htm" method="post">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+		<input  type="hidden" value="$!response.data.startDate" id="startDate" name="startDate" >
+	    <input  type="hidden" value="$!response.data.endDate" id="endDate" name="endDate">
+	</form>
+    </div>
+
+</div>
+
+<script>
+function toQuerySubmit(currentPage){
+       	 $("#currentPage").val(currentPage);
+       	 $("#form_search").submit();
+}
+
+var dayRang = 367;
+var dayRangTxt = "一年内";
+function doSearch() {
+	var beginDateObj = $('#startDate');
+	var endDateObj = $('#endDate');
+	var beginDateValue = beginDateObj.val();
+	var endDateValue = endDateObj.val();
+	if (beginDateValue != "" || endDateValue != "") {
+		if (beginDateValue == "") { alert("开始时间为空！"); return false; }
+		else if (endDateValue == "") { alert("结束时间为空！"); return false; }
+		else {
+			if (compareDate(beginDateValue, endDateValue) < 0) {
+				alert("起始时间不能大于结束时间！");
+				return false;
+			}
+			else {
+				var maxdate = GetDateRangStr(((beginDateValue).split(" "))[0], dayRang-1);
+				maxdate = getDateValue(maxdate);
+				var enddate = getDateValue(((endDateValue).split(" "))[0]);
+				if (compareDate(enddate, maxdate) < 0) {
+					alert("请在" + dayRangTxt + "天内查询信息！");
+					//alert("请在90天内查询信息！");
+					return false;
+				}
+			}
+		}
+	}
+
+	$("#form_search").submit();
+}
+
+$(function(){
+	setClearStartDate('#startDate', '#endDate', dayRang);
+	setClearEndDate('#startDate', '#endDate', dayRang);
+	$(".data_range_week").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_7", "h:m"); });
+	$(".data_range_month").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_31", "h:m"); });
+	$(".data_range_quarter").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_92", "h:m"); });
+	$(".data_range_year").click(function(){ setTime_2($('#startDate'), $('#endDate'), "last_367", "h:m"); });
+	$(".btn_chaxun").click(function(){
+		doSearch();
+	});
+	$(".tools_dc").click(function(){
+		$('#withdrawForm').submit();
+	});
+})
+
+</script>

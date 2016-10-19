@@ -1,0 +1,165 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">登录密码修改</span>
+		</div>
+	</div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginList">
+              <form id="reset-paypasswd-form" name="reset-paypasswd-form" class="" action="${request.contextPath}/my/do-reset-ent-loginpasswd.htm" method="POST">
+              <div class="login_limit" id="pwdiv_login_pw_old">
+                   <label><span class="f14 limitLeft">输入旧密码：</span>
+                     <div class="pwdiv fl"><input name="oldPasswd" type="hidden" id="oldPasswd" data-type="1" /></div>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error clear"></div>
+               </div>
+               
+               <div class="login_limit" id="pwdiv_login_pw_new">
+                   <label><span class="f14 limitLeft">输入新密码：</span>
+                     <div class="pwdiv fl"><input name="newPasswd" type="hidden" id="newPasswd" data-type="11" /></div>
+                     <div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外</em>
+                   </label>
+                   <div class="mainTips ml160 error clear"></div>
+               </div>
+               
+               <div class="login_limit" id="pwdiv_login_pw_new2">
+                   <label><span class="f14 limitLeft">确认新密码：</span>
+                     <div class="pwdiv fl"><input name="renewPasswd" type="hidden" id="renewPasswd" data-type="11" /></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外</em>
+                   </label>
+                   <div class="mainTips ml160 error clear">
+				   #if($response.errors.repassword_password_not_same.length() > 0)
+        				#springMessageText($!response.errors.repassword_password_not_same,"您输入的两次登录密码不一致，请重新输入！")
+                   #elseif($response.errors.newloginpwd_equal_oldloginpwd.length() > 0)
+        				#springMessageText($!response.errors.newloginpwd_equal_oldloginpwd,"新登录密码不能和旧登录密码相同！")
+				   #elseif($response.errors.login_password_equal_pay.length() > 0)
+        				#springMessageText($!response.errors.login_password_equal_pay,"新登录密码不能和支付密码相同！") 
+				   #elseif($response.errors.login_password_is_locked.length() > 0)
+        				#springMessageText($!response.errors.login_password_is_locked,"旧登录密码已被锁定！") 
+				   #elseif($response.errors.login_password_is_error.length() > 0)
+        				#springMessageText($!response.errors.login_password_is_error,"旧登录密码输入错误，还有$!{response.data.remainNum}次机会！") 
+				   #end
+				   $!{response.message}
+				   </div>
+               </div>
+               <input id="signedData" name="signedData" type="hidden" />
+			  <div class="red" style="margin-left:160px; margin-bottom:20px;" id="errorMsg"></div>
+			   <div id="needUpdataKjd" class="mb15" style="margin-left:160px;display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</div>
+               <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确 认"></div>
+              </form>
+         </div>
+     </div>
+</div>
+</div>
+<OBJECT id="ukeyadmin" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+#if($!{response.data.isCertActive} == 'yes')
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+#end
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>	
+<script>
+	$(function(){
+		doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+
+				var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+				window.pgeCtrl = pgeditor;
+				$("#pwdiv_login_pw_old .pwdiv").append(pgeditor.load());
+				pgeditor.pgInitialize();
+
+				var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+				$("#pwdiv_login_pw_new .pwdiv").append(pgeditor1.load());
+				pgeditor1.pgInitialize();
+
+				var pgeditor2 = newPgeditor(3,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+				$("#pwdiv_login_pw_new2 .pwdiv").append(pgeditor2.load());
+				pgeditor2.pgInitialize();
+		
+		window.setInterval(function(){checkPwStrongPG(pgeditor1, $('#pwdiv_login_pw_new').find('.error'), $('#pwdiv_login_pw_new').find('.gradeIcon'), $('#pwdiv_login_pw_new').find('.gradeText'));},1000); //实时显示密码强度
+		/*
+		$("#oldPasswd").blur(function(){
+			checkMust($(this), $(this).parent().parent().find(".error"), "请输入登录密码！");
+		});
+		
+		$("#newPasswd").blur(function(){
+			checkPW($(this), $(this).parent().parent().find(".error"));
+		});
+		
+		$("#newPasswd").keyup(function(e){
+			checkPwStrong($(this), $(this).parent().parent().find(".error"), $(this).parent().parent().find(".gradeIcon"), $(this).parent().parent().find(".gradeText"));
+		});
+		
+		$("#renewPasswd").blur(function(){
+			checkPW2($("#newPasswd"), $(this), $(this).parent().parent().find(".error"));
+		});
+		*/
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+			/*
+			var flag = checkMust($("#oldPasswd"), $("#oldPasswd").parent().parent().find(".error"), "请输入旧密码");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			flag = checkPW($("#newPasswd"), $("#newPasswd").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			
+			flag = checkPW2($("#newPasswd"), $("#renewPasswd"), $("#renewPasswd").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+			*/
+			var jsonSubmit = {
+				jBtnSubmit:btn_submit,
+				cssClass:"btn_disabled",
+				urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+			};
+			var pgeditors = [
+				{
+					jPwInput:pgeditor,
+					jInput:$("#oldPasswd"),
+					jTip:$("#pwdiv_login_pw_old").find(".error"),
+					txtEmpty:"请输入登录密码！"
+				},
+				{
+					jPwInput:pgeditor1,
+					jInput:$("#newPasswd"),
+					jTip:$("#pwdiv_login_pw_new").find(".error"),
+					txtEmpty:"请输入新的登录密码！",
+					txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外"
+				},
+				{
+					jPwInput:pgeditor2,
+					jInput:$("#renewPasswd"),
+					jTip:$("#pwdiv_login_pw_new2").find(".error"),
+					txtEmpty:"请输入新的登录密码！",
+					numCompareEqual:1,
+					txtCompareEqual:"您输入的两次登录密码不一致，请重新输入！"
+				}
+			];
+			checkPgeditor({
+				jsonSubmit:jsonSubmit,
+				pgeditors:pgeditors,
+				callback:function(){
+					$("#reset-paypasswd-form").submit();
+				}
+			});
+		});
+		#if($!{response.data.isCertActive} == 'yes')
+    	// 检查提醒证书更新
+    	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+    	// 检查证书
+    	selectVerifyStyle("#springUrl('/certActive/getCertSns.htm')");
+    	// 检查永达盾是否插入
+    	intervalCheckUSB();
+    	#else
+    	$("#captchaDiv").show();
+    	#end
+		
+	})
+</script>

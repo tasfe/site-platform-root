@@ -1,0 +1,357 @@
+<div class="index-main-top">
+	<div class="wrap">
+		<div class="fr">
+			<div class="downczsc"><a class="down" href="#springUrl('/help/self.htm#czscxz')">下载操作手册</a></div>
+			<div class="account-balance">
+				<div class="title">账户余额</div>
+				<div class="balance" id="J_balance">$!{response.data.account.availableBalance}</div>
+				<a class="btn btn_disabled" href="javascript:;" data-href="#springUrl('/recharge/toInputMoney.htm?link=0202')" style="border-top:1px solid #68b9ff !important; border-right:1px solid #68b9ff !important;">充值</a>
+				<a class="btn btn_disabled" href="javascript:;" data-href="#springUrl('/cash/toInputCashInfo.htm?link=0203')" style="border-top:1px solid #68b9ff !important; border-right:1px solid #68b9ff !important;">提现</a>
+				<a id="J_ZZ" class="btn btn_disabled last" href="javascript:;" data-href="#springUrl('/transfer/toTransferKjt.htm?link=0204')" style="border-top:1px solid #68b9ff !important; border-right:0 none !important;">转账</a>
+			</div>
+			<div class="account-statement">
+				<div class="time fl"><i class="icon fl"></i>$!response.data.yesterday</div>
+				<a class="down btn" #if ($!response.data.yesterday_settlefile) href="$response.data.yesterday_settlefile"  target="_blank" #else href="#" onclick="alert('暂无对账单下载');return false;" #end><i class="icon fr"></i>对账单下载</a>
+			</div>
+		</div>
+
+		<div class="welcome">你好，<strong class="name">$!{response.data.member.operator_login_name}</strong></div>
+		<div class="comname ellipsis">$!{response.data.member.enterpriseName}</div>
+		<ul class="status clearfix">
+			#if ($!response.data.verify_mobile)
+			<li class="l1_on"><i></i><a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')" class="gray1">已绑定</a></li>
+			#else
+			<li class="l1"><i></i><a href="#springUrl('/my/go-set-mobilephone-verify.htm?link=0500')">未绑定</a></li>
+			#end
+			#if ($!response.data.verify_name == 'checkPass')
+			<li class="l2"><i></i><a href="#springUrl('/my/verifyAmount.htm?link=0500')">金额认证</a></li>
+			#elseif ($!response.data.verify_name == 'PASS')
+			<li class="l2_on"><i></i><a href="#springUrl('/my/certification-detail.htm?link=0500')" class="gray1">已认证</a></li>
+			#elseif ($!response.data.verify_name == 'init')
+			<li class="l2_on"><i></i><a href="#">认证中</a></li>
+			#elseif ($!response.data.verify_name == 'checkReject')
+			<li class="l2"><i></i><a href="#springUrl('/my/go-enterprise-certification.htm?link=0500')">重新认证</a></li>
+			#else
+			<li class="l2"><i></i><a href="#springUrl('/my/go-enterprise-certification.htm?link=0500')">未认证</a></li>
+			#end
+			#if ($!response.data.cert == "true")
+			<li class="l3_on"><i></i><a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')" class="gray1">已激活</a></li>
+			#else
+			<li class="l3"><i></i><a href="#springUrl('/securityCenter/safetyDetails.htm?link=0500')">未激活</a></li>
+			#end
+			#if ($!response.data.verify_email)
+			<li class="l4_on"><i></i><a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')" class="gray1">已绑定</a></li>
+			#else
+			<li class="l4"><i></i><a href="#springUrl('/my/go-set-email.htm?link=0500')">未绑定</a></li>
+			#end
+		</ul>
+		<div class="reserved-information clearfix">
+			<span>预留信息：</span>
+			<span id="left_mes">$!{response.data.member.summary}</span>
+			<span><input type="text" data-placeholder="请输入6-20位字符的预留信息！" value="$!{response.data.member.summary}" class="login_input placeholder" id="left_mes_input" style="display: none;"></span>
+			<span><a id="modify_left_mes" class="ml20" href="#">修改</a><a id="set_left_mes" class="ml20" href="#" style="display: none;">保存</a></span>
+		</div>
+		<div class="time-ip">
+			上次登录时间：$!{dateUtil.getNewFormatDateString($!response.data.lastLoginTime)}
+			<span style="padding: 0 10px;"></span>
+			上次登录IP：$!response.data.lastLoginIp
+		</div>
+	</div>
+</div>
+
+<div class="wrap">
+	<div class="index-last-record">
+		<span class="title fl"><i class="icon fl"></i><i class="triangleIcon"></i>最近交易记录</span>
+		<span class="link fr"><a href="#springUrl('/my/TransactionRecords.htm?link=0401')">交易记录</a><span class="s">|</span><a href="#springUrl('/my/pay-detail.htm?link=0402')">收支明细</a><span class="s">|</span><a href="#springUrl('/my/applicationRecord.htm?link=0403')">申请记录</a><span class="s">|</span><a href="#springUrl('/my/all-settlement1.htm?link=0404')">对账单下载</a></span>
+	</div>
+	<div class="tablediv">
+	
+		<table class="table">
+			<tr>
+				<th width="8%">创建时间</th>
+				<th width="18%">交易订单号</th>
+				<th width="23%">商户订单号</th>
+				<th width="15%" class="left">交易类型</th>
+				<th width="10%">金额<em>（元）</em></th>
+				<th width="10%">服务费<em>（元）</em></th>
+				<th width="8%">支付时间</th>
+				<th width="8%">状态</th>
+			</tr>
+			<!--<tr>
+				<td>2016.1.1<br/><span>19:19:19</span></td>
+				<td class="left">112123123123121223112312</td>
+				<td class="left">41231233424212312334</td>
+				<td class="left">淘宝购物-淘宝购物-淘宝购物-淘宝购物-</td>
+				<td>-234234.22</td>
+				<td>5.00</td>
+				<td>2016.1.1<br/>19:19:19</td>
+				<td>状态</td>
+			</tr>-->
+			#set ($i=1)
+			#set($tradeType = "")
+			#set($tradeStatus = "")
+			#set($plusminus ="")
+			#set($moneycolor="")
+			#foreach($info in $response.data.list)
+			#if($i%2 != 0)
+			#set ($odd="")
+			#else
+			#set ($odd="on")
+			#end
+			#set($i=$i+1)
+
+			#if(${info.orderState} == "100")
+			  #set($tradeStatus="待支付")
+			  #set($moneycolor="money")
+			#elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+			  #set($tradeStatus="处理中")
+			#elseif(${info.orderState} == "201")
+			  #set($tradeStatus="支付成功")
+			#elseif(${info.orderState} == "301"&&${info.TradeType} == "pos消费")
+			  #set($tradeStatus="支付成功")
+			#elseif($info.orderState == "999")
+			  #set($tradeStatus="失败")
+			#end
+            
+             #if($info.orderState == "900"||$info.orderState == "901")
+			   #set($tradeStatus="撤销中")
+			 #elseif($info.orderState == "951")
+			   #set($tradeStatus="撤销成功")
+			 #elseif($info.orderState == "952")
+			   #set($tradeStatus="撤销失败")
+			 #end
+            
+			#if($info.tradeType == "INSTANT_TRASFER" || $info.TradeType=="委托付款到永达账户" || $info.TradeType=="代发工资到账户"|| $info.TradeType=="保理放贷"|| $info.TradeType=="保理代扣")
+			#if($info.orderState == "301" || $info.orderState == "401"||$info.orderState == "222")
+			  #set($tradeStatus="成功")
+			#end
+			  #if($info.orderState == "998"||$info.orderState == "223")
+			  #set($tradeStatus="失败")
+			#end
+			#else
+			 #if($info.orderState == "301")
+			   #set($tradeStatus="交易成功")
+			 #elseif($info.orderState == "401")
+			   #set($tradeStatus="结算成功")
+			 #elseif($info.orderState == "998")
+			   #set($tradeStatus="交易失败")
+			 #end
+			#end
+
+			#if($info.tradeType == "充值")
+			#if($info.orderState == "F")
+			#set($tradeStatus="失败")
+			#elseif($info.orderState == "P")
+			#set($tradeStatus="充值中")
+			#else
+			#set($tradeStatus="成功")
+			#end
+			#end
+
+			#if($info.orderState == "submitted")
+			#set($tradeStatus="处理中")
+			#elseif($info.orderState == "failed")
+			#set($tradeStatus="失败")
+			#elseif($info.orderState == "success")
+			#set($tradeStatus="出款成功")
+			#end
+
+			#if($response.data.memberId == $info.sellerId)
+				#set($plusminus ="")
+				#set($moneycolor="green f14 bold")
+			#elseif($response.data.memberId == $info.buyerId)
+				#set($plusminus ="-")
+				#set($moneycolor="orange  f14 bold")
+			#end
+			#if($info.TradeType=="INSTANT_TRASFER")
+			#set($tradeType ="普通转账交易")
+			#elseif($info.TradeType=="INSTANT_ACQUIRING")
+			#set($tradeType ="即时到账收单交易")
+			#elseif($info.TradeType=="PREPAY_ACQUIRING")
+			#set($tradeType ="下订收单交易")
+			#elseif($info.TradeType=="REFUND_ACQUIRING")
+			#set($tradeType ="收单退款交易")
+			#elseif($info.TradeType=="FUND_SHARE")
+			#set($tradeType ="基金支付收单交易")
+			#elseif($info.TradeType=="TRUST_COLLECT")
+			#set($tradeType ="银行卡代扣交易")
+			#else
+			#set($tradeType =$info.TradeType)
+			#end
+			
+			#if($info.TradeType=="pos消费")
+			  #set($tradeType ="POS交易-消费")
+			#elseif($info.TradeType=="ENSURE_ACQUIRING")
+			  #set($tradeType ="担保收单交易")
+			#elseif($info.TradeType=="pos撤销")
+			  #set($tradeType ="POS交易-撤销")
+			#end
+			
+			<tr class=$odd>
+				<td>$!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>
+				<td class="left">$!{info.tradeVoucherNo}</td>
+				#if($info.TradeType=="委托付款到永达账户" || $info.TradeType=="保理放贷"|| $info.TradeType=="保理代扣")
+				<td class="left">&nbsp;</td>
+				#else
+				<td class="left">$!{info.serialNumber}</td>
+				#end
+				<td class="left">$tradeType</td>
+				<td><span class="${moneycolor}">$!{plusminus}$!{moneyUtil.getAmount($!info.payAmount)}</span></td>
+				<td>$!{moneyUtil.getAmount($!info.payeeFee)}</td>
+				<td>$!dateUtil.getNewFormatDateString(${info.gmtpaid})</td>
+				<td>$tradeStatus</td>
+			</tr>
+			#end
+		</table>
+		
+		#if(!$response.data.list || $response.data.list.size()<=0)
+		<div class="noTrans">您最近一个月没有交易记录哦~，<a href="#springUrl('/my/TransactionRecords.htm?link=0401')">查看更早交易记录</a></div>
+		#end
+		<p class="recordLink"><a href="#springUrl('/my/TransactionRecords.htm?link=0401')">查看所有交易记录</a></p>
+	</div>
+</div>
+
+<div class="wrap" style="margin-bottom: 85px;">
+	<div class="contentList mt10">
+		<div class="faq">
+ 	  	   <div class="header"><span>常见问题</span><a href="#springUrl('/help/faq.htm')" class="more">更多</a></div>
+ 	  	   <div class="body">
+ 	  	   	    <ul>
+ 	  	   	    	<li><a href="#springUrl('/help/faq.htm?=FAQ_2_2.html&1,0')" target="_blank">如何进行实名认证？</a></li>
+ 	  	   	    	<li><a href="#springUrl('/help/faq.htm?=FAQ_8_1_2.html&7,0')" target="_blank">如何找回登录密码？</a></li>
+ 	  	   	    	<li><a href="#springUrl('/help/faq.htm?=FAQ_8_2_2.html&7,1')" target="_blank">如何找回支付密码？</a></li>
+ 	  	   	    	<li><a href="#springUrl('/help/faq.htm?=FAQ_8_3_3.html&7,2')" target="_blank">如何绑定手机？</a></li>
+ 	  	   	    </ul>
+ 	  	   </div>
+ 	    </div>
+		
+		<div class="notice">
+ 	  	   <div class="header"><span>公告</span></div>
+ 	  	   <div class="body">
+ 	  	   	    <ul>
+					<li><a href="#">2016年3月3日永达商户钱包正式上线</a></li>
+ 	  	   	    </ul>
+ 	  	   </div>
+ 	     </div>
+		
+		<div class="clear"></div>
+    </div>
+</div>
+<!-- E 主要内容 -->
+<!--<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.cookie.js"></script>-->
+<script>
+	$("#J_balance").html(fomatMoney($!{response.data.account.availableBalance}));
+	/*
+$imgs = $(".account_bottom_banner .img");
+$imgs_nav = $(".account_bottom_banner li");
+var si_num = $(".account_bottom_banner .img").length;
+var si_index = 0;
+function slideImg() {
+	$imgs.eq(si_index).fadeOut();
+	si_index++;
+	si_index = si_index >= si_num ? 0 : si_index;
+	$imgs.eq(si_index).fadeIn();
+
+	$imgs_nav.removeClass("select").eq(si_index).addClass("select");
+}
+function slideImgGo(index) {
+	if (si_index != index) {
+		$imgs.eq(si_index).fadeOut();
+		$imgs.eq(index).fadeIn();
+		$imgs_nav.removeClass("select").eq(index).addClass("select");
+
+		si_index = index;
+	}
+}*/
+$(function(){
+	/*
+	var si_t = setInterval("slideImg()", 5000);
+	$(".account_bottom_banner").hover(
+		function () { clearInterval(si_t); },
+		function () { si_t = setInterval("slideImg()", 5000); }
+	);
+	
+	($imgs_nav).each(function (index) {
+		$(this).click(function () {
+			slideImgGo(index)
+		});
+	})
+	*/
+
+	jQuery.ajax({
+		type: "post",
+		url:"#springUrl('/my/toModifySummary.htm')",
+		data: "",
+		dataType: "JSON",
+		success: function(result) {
+			if (result.success) {
+				$("#modify_left_mes").show();
+			}
+			else{
+				$("#modify_left_mes").remove();
+				$("#set_left_mes").remove();
+				$("#left_mes_input").remove();
+			}
+		}
+	});
+
+	$("#modify_left_mes").click(function(){
+		$(this).hide();
+		$("#left_mes").hide();
+
+		$("#left_mes_input").show();
+		$("#set_left_mes").show();
+		return false;
+	});
+	$("#set_left_mes").click(function(){
+		var jBtnSave = $("#set_left_mes");
+		var jBtnModify = $("#modify_left_mes");
+		var jInput = $("#left_mes_input");
+		var jText = $("#left_mes");
+		var val = $.trim(jInput.val());
+		if(jInput.attr("data-placeholder") != undefined){
+			val = val == jInput.attr("data-placeholder") ? "" : val;
+		}
+		if(val == "" || val.length < 6 || val.length > 20){
+			alert("请输入6-20位字符的预留信息！");
+			return false;
+		}
+		jQuery.ajax({
+			type: "post",
+			url:"/my/modifySummary.htm",
+			data: "summary="+val,
+			dataType: "JSON",
+			success: function(result) {
+				if (result.success) {
+					jInput.hide();
+					jBtnSave.hide();
+
+					jText.text(val).show();
+					jBtnModify.show();
+				}
+				else{
+					alert(G.sysError);
+				}
+			},
+			error: function(){
+				alert(G.sysError);
+			}
+		});
+		return false;
+	});
+
+	$(".personage_set").click(function(){
+		window.location.href = '${request.contextPath}/my/accountManage.htm';
+	});
+
+	//jQuery.cookie('yd_ent_user_name','$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName',{path: '/site-web-enterprise',domain: '${WEB_RESOURCE.staticAddressDomain}'});
+
+	// test
+	var loginName = '$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).loginName';
+	if(loginName == "suka@yongdapay.cn"){
+		var J_ZZ = $("#J_ZZ");
+		J_ZZ.attr("href",J_ZZ.data("href"));
+		J_ZZ.removeClass("btn_disabled");
+	}
+})
+</script>

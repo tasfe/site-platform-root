@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+	<formset>
+		<form name="registerForm">
+			<field property="email" depends="required,email,maxlength">
+				<arg position="0" key="邮箱" />
+				<arg name="maxlength" position="1" key="${var:maxlength}"/> 
+				<var> 
+					<var-name>maxlength</var-name> 
+					<var-value>32</var-value> 
+				</var>
+			</field>
+			<field property="password" depends="required,minlength,maxlength">
+				<arg position="0" key="密码" />
+				<arg name="minlength" position="1" key="${var:minlength}"/>  
+                <arg name="maxlength" position="1" key="${var:maxlength}"/>
+				<var> 
+					<var-name>minlength</var-name> 
+					<var-value>6</var-value> 
+				</var> 
+				<var> 
+					<var-name>maxlength</var-name> 
+					<var-value>32</var-value> 
+				</var> 
+			</field>
+		</form>
+	</formset>
+</form-validation>

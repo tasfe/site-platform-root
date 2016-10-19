@@ -1,0 +1,42 @@
+<div class="wrapbg">
+<div class="wrap">
+     <div class="page_title safety">
+          <div class="title fl">
+               <i class="icon fl"></i>
+               <span class="tt fl">邮箱绑定修改</span>
+          </div>
+     </div>
+
+     <div class="safetyMain">
+     	 #if($!response.success) 
+         <div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">恭喜您!您的邮箱$!response.data.email已成功绑定!</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至<a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')">安全中心</a></p>
+              </div>
+              
+         </div> 
+		 #else
+		<div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">对不起!您的邮箱绑定失败!</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至<a href="#springUrl('/securityCenter/safetyIndex.htm?link=0500')">安全中心</a></p>
+              </div>
+              
+         </div> 
+		 #end
+          
+          
+     </div>
+     
+</div>
+</div>
+<script>
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:3, url:"#springUrl('/securityCenter/safetyIndex.htm?link=0500')"});
+})
+</script>

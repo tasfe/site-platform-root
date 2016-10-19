@@ -1,0 +1,84 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/css/zTreeStyle/zTreeStyle.css${WEB_RESOURCE.staticVersion}" rel="stylesheet" media="screen">	
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/js/jquery.ztree.all-3.5.min.js${WEB_RESOURCE.staticVersion}"></script>
+<!--网银充值-->
+<div class="min_height6">
+<div class="wrap">
+    <h2 class="h2_titform"><em>权限修改</em></h2>
+    <div class="form-horizontal center_form clearfix">
+		
+        <div class="control-group">
+            <label class="control-label"><i class="fc_r_ff">*</i>操作员账号：</label>
+            <div class="controls pos_rel">$!operatorVO.loginName
+			</div>
+        </div>
+		
+		<div class="control-group">
+            <label class="control-label"><i class="fc_r_ff">*</i>操作员姓名：</label>
+            <div class="controls pos_rel">$!operatorVO.nickName
+			</div>
+        </div>
+		<div class="control-group">
+            <label class="control-label"><i class="fc_r_ff">*</i>勾选权限：</label>
+            <div class="controls pos_rel ztree" id="tree" >
+			</div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+				<input type="button" id="submit" class="btn_h40_red bold" value="确    认" />
+				<input type="button" onclick="goBackOrClose();" class="btn_h40_gray bold marl10" value="返   回" />
+            </div>
+        </div>
+    </div>
+	<form class="" id="setPassWordForm" action="#springUrl('/my/operator/setPermission.htm')" method="POST">
+		<input type="hidden" id="operatorId" name="operatorId" value="$!operatorVO.operatorId"/>
+		<input type="hidden" id="changeCheckIds" name="changeCheckIds" value=""/>
+		<input type="hidden" id="changeNoCheckIds" name="changeNoCheckIds" value=""/>
+		
+    </form>
+	
+			
+</div></div>
+
+<script type="text/javascript">
+var zTreeObj;
+   var setting = {
+   		view: {
+				showIcon: false
+			},
+   		check: {
+			enable: true
+		}
+   };
+   var zNodes = ${treeNodes};
+   $(document).ready(function(){
+      zTreeObj =jQuery.fn.zTree.init($("#tree"), setting, zNodes);
+      $("#submit").click(function(){
+       	  	var changeNodes = zTreeObj.getChangeCheckedNodes(); 
+			var changeCheckIds="";
+			var changeNoCheckIds="";
+			if(changeNodes!=""){
+        		var ids="";
+           	    for(var i=0;i<changeNodes.length;i++){
+					var id=changeNodes[i].id;
+					if(changeNodes[i].checked){
+						if(changeCheckIds!=""){
+							changeCheckIds=changeCheckIds+",";
+						}
+						changeCheckIds=changeCheckIds+id
+					}else{
+						if(changeNoCheckIds!=""){
+							changeNoCheckIds=changeNoCheckIds+",";
+						}
+						changeNoCheckIds=changeNoCheckIds+id;
+					}
+				   
+				}
+				$("#changeCheckIds").val(changeCheckIds);
+				$("#changeNoCheckIds").val(changeNoCheckIds);
+			}
+			$("#setPassWordForm").submit();
+   		});
+	  
+   });
+
+</script>

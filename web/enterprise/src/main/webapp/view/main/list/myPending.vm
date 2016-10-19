@@ -1,0 +1,221 @@
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+	<div class="page_title audit">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">我的待审核</span>
+		</div>
+	</div>
+	<div class="pagebox">
+    <form id="form_search" action="${request.contextPath}/my/all-audit.htm?shStatus=1" method="post">
+		<input type="hidden" name="isPending" id="isPending" value="1">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+        <div class="search_row mt10">
+        	<label class="label1 fl">申请时间：</label>
+			<input type="hidden" name="queryByTime" value="gmtCreated" />
+            <div class="data_div mr16 fl"><input class="datapick" type="text" value="$!response.data.startDate" name="startDate" id="startDate" readonly><span>至</span><input class="datapick" type="text" value="$!response.data.endDate" name="endDate" id="endDate" readonly></div>
+        </div>
+        <div class="search_row" id="search_type">
+            <dl class="search_dl">
+            <dt>审核类型：</dt>
+            <dd #if(!$!response.data.auditType || $!response.data.auditType == "") class="cur" #end>全部</dd>
+            <dd data-value="withdraw" #if($!response.data.auditType == "withdraw")class="cur" #end>提现</dd>
+            <dd data-value="transfer" #if($!response.data.auditType == "transfer")class="cur" #end>转账</dd>
+            <dd data-value="refund" #if($!response.data.auditType == "refund")class="cur" #end>退款</dd>
+            ##<dd data-value="payoff" #if($!response.data.auditType == "payoff")class="cur" #end>代发工资</dd>
+			##<dd data-value="daifu">代付订单</dd>
+            <input type="hidden" class="search_dl_value" name="auditType" value="$!response.data.auditType">
+            </dl>
+        </div>
+        <div class="search_row">
+        	<label class="label1 fl">关 键 字：</label>
+            <div class="select_div mr16 fl">
+				<select name="selectType" id="keyword">
+				#if(!$!response.data.auditType || $!response.data.auditType == "")
+					<option value="tranVoucherNo" #if($!response.data.selectType == "tranVoucherNo") selected = "selected" #end>交易订单号/批次号</option>
+					<option value="origTranVoucherNo" #if($!response.data.selectType == "origTranVoucherNo") selected = "selected" #end>原交易订单号</option>
+    				<option value="refundNo" #if($!response.data.selectType == "refundNo") selected = "selected" #end>退款订单号</option>
+    				<option value="tranSourceVoucherNo" #if($!response.data.selectType == "tranSourceVoucherNo") selected = "selected" #end>商户订单号</option>
+				#elseif($!response.data.auditType == "withdraw")
+					<option value="tranVoucherNo" #if($!response.data.selectType == "tranVoucherNo") selected = "selected" #end>交易订单号</option>
+				#elseif($!response.data.auditType == "transfer")
+					<option value="tranVoucherNo" #if($!response.data.selectType == "tranVoucherNo") selected = "selected" #end>交易订单号/批次号</option>
+					<option value="tranSourceVoucherNo" #if($!response.data.selectType == "tranSourceVoucherNo") selected = "selected" #end>商户订单号</option>
+				#elseif($!response.data.auditType == "refund")
+					<option value="tranVoucherNo" #if($!response.data.selectType == "tranVoucherNo") selected = "selected" #end>退款订单号/批次号</option><!--退款订单号暂时没提供-->
+					<option value="origTranVoucherNo" #if($!response.data.selectType == "origTranVoucherNo") selected = "selected" #end>原交易订单号</option>
+					<option value="tranSourceVoucherNo" #if($!response.data.selectType == "tranSourceVoucherNo") selected = "selected" #end>原商户订单号</option>
+				#elseif($!response.data.auditType == "payoff")
+        			<option value="tranVoucherNo" #if($!response.data.selectType == "tranVoucherNo") selected = "selected" #end>批次号</option>
+				#end
+			</select></div>
+            <input class="inputtext w177" type="text" value="$!response.data.value" name="value">
+        </div>
+        <div class="search_row">
+        	<input type="button" value="查 询" class="btn J_btn_chaxun ml30">
+        </div>
+		</form>
+		
+		<form id="form_batchAudit" action="${request.contextPath}/my/batchAudit.htm" method="POST">
+			<div class="tools"><a href="#" class="tools_dc gray1 fr">导出下载</a></div>
+			<div class="table_div">
+				<table class="table1">
+					<tr>
+						<th width="55" class="left pl15"><label><input type="checkbox" class="checkbox_all fl"> <em>全选</em></label></th>
+						<th width="70">审核类型</th>
+						<th width="155">交易订单号/批次号</th>
+						<th width="90">申请时间</th>
+						<th width="115">金额<em>（元）</em></th>
+						<th width="110">服务费<em>（元）</em></th>
+						<th width="120">申请人</th>
+						<th width="190">收款账户</th>
+						<th width="60">操作</th>
+					</tr>
+					#foreach ($!tradeInfo in $!response.data.page.infos)
+					<tr>
+						<td class="left pl15">
+							#if($!tradeInfo.shStatus == "1")
+							<input type="checkbox" name="id" value="$!tradeInfo.id" class="checkbox">
+							#end
+						</td>
+						<td>
+							#if($!tradeInfo.auditType=="withdraw")
+							提现
+							#elseif($!tradeInfo.auditType=="transfer_kjt" || $!tradeInfo.auditType=="transfer_bank" || $!tradeInfo.auditType=="transfer" || $!tradeInfo.auditType=="pay_to_card")
+							转账
+							#elseif($!tradeInfo.auditType=="refund")
+							退款
+							#elseif($!tradeInfo.auditType=="payoff_kjt"||$!tradeInfo.auditType=="payoff_bank")
+							代发工资
+							#elseif($!tradeInfo.auditType=="daifu")
+							代付订单
+							#end
+						</td>
+						<td>$!tradeInfo.transId</td>
+						<td>$!tradeInfo.gmtCreated</td>
+						<td><span class="orange  f14 bold">-$!tradeInfo.amount</span></td>
+						<td><span class="orange  f14 bold">$!tradeInfo.fee</span></td>
+						<td>$!tradeInfo.operatorName</td>
+						<td><p>$!tradeInfo.payeeBankInfo</p> $!tradeInfo.payeeNo</td>
+						<td><a href="${request.contextPath}/$!tradeInfo.skipURL?id=$!tradeInfo.id">查看详情</a></td>
+					</tr>
+					#end
+					#if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+					<tr>
+						<td colspan="9">无待审核信息！</td>
+					</tr>
+					#end
+
+					<tr class="nbb">
+						<td colspan="9">
+							<div class="fl table1_bottom_left2"><input type="button" value="审 核" class="btn J_btn_shenhe"></div>
+							<div class="nav_page mt16">#parse("common/control/paginator_1.vm")</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+    </form>
+	
+	<form id="myPending" name="myPending" action="${request.contextPath}/my/downloadExaExcel.htm" method="post">
+		<input type="hidden" name="auditType" id="auditType" value="myPennding">
+		<input type="hidden" name="startDate" id="startDate" value="$!response.data.startDate">
+		<input type="hidden" name="endDate" id="endDate" value="$!response.data.endDate">
+		<input type="hidden" name="shStatus" id="shStatus" value="1">
+		<input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.pageInfo.currentPage">
+		<input type="hidden" name="selectType" id="selectType" value="$!response.data.selectType">
+		<input type="hidden" name="queryByTime" id="queryByTime" value="$!response.data.queryByTime">
+		<input type="hidden" name="value" id="value" value="$!response.data.value">
+    </form>
+	
+    </div>
+    
+</div>
+</div>
+<script>
+function toQuerySubmit(currentPage){
+        $("#currentPage").val(currentPage);
+        $("#form_search").submit();
+}
+
+var dayRang = 92;
+function doSearch() {
+	var beginDateObj = $('#startDate');
+	var endDateObj = $('#endDate');
+	var beginDateValue = beginDateObj.val();
+	var endDateValue = endDateObj.val();
+	if (beginDateValue != "" || endDateValue != "") {
+		if (beginDateValue == "") { alert("开始时间为空！"); return false; }
+		else if (endDateValue == "") { alert("结束时间为空！"); return false; }
+		else {
+			if (compareDate(beginDateValue, endDateValue) < 0) {
+				alert("起始时间不能大于结束时间！");
+				return false;
+			}
+			else {
+				var maxdate = GetDateRangStr(((beginDateValue).split(" "))[0], dayRang-1);
+				maxdate = getDateValue(maxdate);
+				var enddate = getDateValue(((endDateValue).split(" "))[0]);
+				if (compareDate(enddate, maxdate) < 0) {
+					alert("请选择三个月内您要查询的记录！");
+					return false;
+				}
+			}
+		}
+	}
+	$("#form_search").submit();
+}
+
+$(function(){
+	setClearStartDate('#startDate', '#endDate', dayRang);
+	setClearEndDate('#startDate', '#endDate', dayRang);
+	
+	$(".J_btn_chaxun").click(function(){
+		doSearch();
+	});
+
+	$("#search_type dd").each(function(index){
+		$(this).click(function(){
+			switch(index){
+				case 0:
+					$("#keyword").html('<option value="tranVoucherNo">交易订单号/批次号</option><option value="origTranVoucherNo">原交易订单号</option><option value="tranVoucherNo">退款订单号</option><option value="tranSourceVoucherNo">商户订单号</option>');
+				break;
+				case 1:
+					$("#keyword").html('<option value="tranVoucherNo">交易订单号</option>');
+				break;
+				case 2:
+					$("#keyword").html('<option value="tranVoucherNo">交易订单号/批次号</option><option value="tranSourceVoucherNo">商户订单号</option>');
+				break;
+				case 3:
+					$("#keyword").html('<option value="tranVoucherNo">退款订单号/批次号</option><option value="origTranVoucherNo">原交易订单号</option><option value="tranSourceVoucherNo">原商户订单号</option>');
+				break;
+				case 4:
+					$("#keyword").html('<option value="tranVoucherNo">批次号</option>');
+				break;
+			}
+		});
+	});
+
+	$(".checkbox_all").click(function(){
+		var $thisobj = $(this);
+		var isCheck = $thisobj.attr("checked");
+		if(isCheck == "checked") $(".checkbox").attr("checked", true);
+		else $(".checkbox").attr("checked", false);
+	});
+	$(".checkbox").click(function(){
+		var $thisobj = $(this);
+		var isCheck = $thisobj.attr("checked");
+		if(isCheck == "checked") { var len = $(".checkbox").length; var flag = true; for(var i = 0; i < len; i++){ if($(".checkbox").eq(i).attr("checked") != "checked") { $(".checkbox_all").attr("checked", false); flag = false; break; } } if(flag) $(".checkbox_all").attr("checked", true);}
+		else { $(".checkbox_all").attr("checked", false);}
+	});
+	
+	$(".J_btn_shenhe").click(function(){
+		if($(".checkbox:checked").length == 0) { alert("请选择您要审核的内容！"); return false; }
+		$('#form_batchAudit').submit();
+	});
+	
+	$(".tools_dc").click(function(){
+		$('#myPending').submit();
+	});
+})
+</script>
+

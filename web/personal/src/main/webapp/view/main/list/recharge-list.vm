@@ -1,0 +1,142 @@
+                     <div class="trade_all">
+                         <div class="tab">
+                               <em class="icon_left"></em>
+                               <em class="icon_right"></em>
+                               <a class="fr" href="#springUrl('/my/megerPay.htm')">合并付款</a>
+                               <ul class="clearfix">
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-trade.htm')" hidefocus="true">交易记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem cur">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-recharge.htm')" hidefocus="true">充值记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-cach.htm')" hidefocus="true">提现记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-transfer.htm')" hidefocus="true">转账记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-refund.htm')" hidefocus="true">退款记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                               </ul>
+
+                         </div>
+                         <form id="queryForm" name="queryForm" action="#springUrl('/my/all-recharge.htm')" method="post" >
+                         <ul class="select_by_time">
+                            <li>
+
+                                时间：
+                                       <input name="startDate"  id="startDate" type="text"  class="date-picker"  readonly="readonly"/>
+                                 至
+                                      <input name="endDate"  id="endDate" type="text"  class="date-picker"  readonly="readonly"/>
+                                      <input id="search" class="btn_h24"  type="button" value="搜索"/>
+                            </li>
+                         </ul>
+                         			  <input type="hidden" id="currentPage" name="currentPage" />
+                          </form>
+                         <table class="list_check_table business_record">
+                           <colgroup>
+                                    <col width="150px">
+                                    <col width="100px">
+                                    <col width="350px">
+                                    <col width="180px">
+                                    <col width="140px">
+                                    <col width="80px">
+                            </colgroup>
+                            <tr>
+                                <th class="time">创建时间</th>
+                                <th>名称</th>
+                                <th>交易订单</th>
+                                <th>交易渠道</th>
+                                <th>金额</th>
+                                <th>状态</th>
+                            </tr>
+                               #set ($i=1)
+                             #foreach ($!tradeInfo in $!response.data.page.infos)
+                                #if($i%2 != 0)
+                                    #set ($odd_class="time")
+                                #else
+                                    #set ($odd_class="odd")
+                                #end
+                                #set($i=$i+1)
+                                <tr class=$odd_class>
+                                    <td class="time">$!dateUtil.getNoSecondDateString($!tradeInfo.gmtPaySubmit) </td>
+                                    <td>充值</td>
+                                    <td>$!tradeInfo.paymentVoucherNo</td>
+                                    <td>$!tradeInfo.payMode.getMessage()</td>
+                                    <td class="fc_green">+$!moneyUtil.getAmount($!tradeInfo.amount)</td>
+                                     #if($!tradeInfo.paymentStatus == "F")
+                                         <td><span>失败</span></td>
+                                     #elseif($!tradeInfo.paymentStatus == "S")
+                                         <td><span>成功</span></td>
+                                     #elseif($!tradeInfo.paymentStatus == "R")
+                                     	<td><span>已退款</span></td>
+                                     #else
+                                         <td><span>操作中</span></td>
+                                     #end
+                                </tr>
+                                #end
+                             #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+                           	<tr>
+                            	<td colspan="10">无充值信息！</td>
+                            </tr>
+                            #end
+                         </table>
+                         #parse("common/control/paginator.vm")
+                     </div>
+             </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+ $(window).resize(function() {
+	$(".date-picker").datepicker( "hide" );
+	$(".date-picker").blur();
+});
+	 $(function(){
+
+		    //日期控件初始化
+			$('.date-picker').datepicker( {
+				dateFormat: 'yy-mm-dd',
+				maxDate: new Date()
+			});
+
+			 var initStartdate = '$!response.data.startDate';
+			 var initEnddate = '$!response.data.endDate';
+			 $( "#startDate" ).datepicker( "setDate", initStartdate );
+			 $( "#endDate" ).datepicker( "setDate", initEnddate );
+
+			$(".btn_h24_red").click(function(){
+					  var tradeVoucherNo = $(this).attr("id");
+					  var tradeType = $(this).data("data");
+					  window.location.href="#springUrl('/my/onePay.htm?tradeVoucherNo=')" + tradeVoucherNo + "&tradeType=" + tradeType;
+				  })
+
+	  });
+
+	  $("#search").click(function(){
+			return toQuerySubmit(1);
+	  });
+
+	    function toQuerySubmit(sendPage){
+			var startDate = $( "#startDate" ).val();
+			var endDate = $( "#endDate" ).val();
+			if(endDate < startDate)  {
+				jQuery.dialog({
+						 title: "消息", 
+						 lock: true,
+			             content: "输入的截止时间必须大于起始时间！",
+						 height: 110,
+						 width:300,
+			             ok:function(){}
+						 });
+				return false;
+			}else{
+				queryForm.currentPage.value =  sendPage;
+				$("#queryForm")[0].submit();
+				return true;
+			}
+	   }
+
+	</script>

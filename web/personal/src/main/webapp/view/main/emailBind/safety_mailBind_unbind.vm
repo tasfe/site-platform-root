@@ -1,0 +1,142 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>解除绑定邮箱</h2></div>
+
+     <div class="safetyMain">
+     	 <form>
+		 <input type="hidden" name="bizType"  id="bizType" value="$!response.data.mobileType"/>
+		 <input type="hidden" name="useType"  id="useType" value="$!response.data.useType"/>
+         <div class="loginCenter">
+         
+           ##   <div class="login_limit">
+             ##      <label>
+              ##            <span class="f14 limitLeft">选择解除绑定邮箱的方式：</span>
+                ##          <div class="select_div mr16 fl">
+								
+                  ##             <select id="type">
+                                   ## <option value="1">安全问题</option> 
+                    ##                <option value="2">手机校验码</option> 
+                      ##         </select>
+                        ##  </div>
+                 ##  </label>
+                 ##  <label class="ml5"></label>
+                 ##  <div class="clear"></div>
+                  ## <div class="mainTips ml160 error">
+				##	#if($!response.data.hasPhoneBind != 'Y')
+				##	请先绑定手机再进行邮箱解绑
+				##    #end
+				 ##  </div>
+             ##  </div>
+              
+               
+              <div id="module1" style="display:none">
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题1：</span>
+                          <span class="f14">预设的安全问题1</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers1">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题2：</span>
+                          <span class="f14">预设的安全问题2</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers2">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               </div>
+               
+               <div id="module2" >
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">手机号码：</span>
+                          <span class="f14">$!response.data.mobile</span>
+                          <a href="${request.contextPath}/my/changeBindPhone.htm" class="f14 ml30 orange">更换绑定手机</a>##${request.contextPath}/my/changeBindPhone.htm
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">手机校验码：</span>
+                     <input type="text" class="inputtext w80" value="" id="sjyzm">
+                     <input class="btn_mfhq ml10" id="send_msg" type="button">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error" id="model2Error">$!response.data.mobileCaptcha_error</div>
+               </div>
+               </div>
+               <div class="loginAmendBtn"> <input class="c_btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         </form> 
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+	$(".btn_mfhq").click(function(){
+		$("#model2Error").html("");
+		countDown($(this),60,"");
+         jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+            success: function(response) {
+				$("#model2Error").html(response.message);
+			} ,
+			error:function(){$("#model2Error").html(G.sysError)},
+            dataType: "json"
+  });
+		
+	});
+	
+	/*$("#type").change(function(){
+		if($(this).val() == "1") { $("#module1").show(); $("#module2").hide(); }
+		if($(this).val() == "2") { $("#module1").hide(); $("#module2").show(); }
+	});*/
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		var flag = false;
+		/*
+		if($("#type").val() == "1"){
+			flag = checkMust($("#answers1"),$("#answers1").parent().parent().find(".error"),"请输入答案");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			
+			flag = checkMust($("#answers2"),$("#answers2").parent().parent().find(".error"),"请输入答案");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			
+			$("form").submit();
+		}
+		else if($("#type").val() == "2"){*/
+			flag = checkMobileVerificationCode({"data":{mobileCaptcha:$("#sjyzm").val(),bizType:$("#bizType").val(),useType:$("#useType").val()},"tipObj":$("#sjyzm").parent().parent().find(".error"),"url":"#springUrl('/my/unset-email-usemobilephone.htm')","async":false})
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			window.location.href="${request.contextPath}/my/go-unset-emailResult.htm";
+			//$("form").submit();
+		/*}*/
+		
+	});
+})
+</script>
+

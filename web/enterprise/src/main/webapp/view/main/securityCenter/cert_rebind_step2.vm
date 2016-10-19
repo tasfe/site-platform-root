@@ -1,0 +1,111 @@
+<div class="wrapbg">
+<div class="wrap">
+
+    <div class="page_title safety">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">永达盾</span>
+        </div>
+    </div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+
+              <div class="step-wrap">
+                  <span class="step-index">1</span>
+                  <span class="step-name">验证身份</span>
+                  <span class="s"></span>
+                  <span class="step-index step-index-cur">2</span>
+                  <span class="step-name step-name-cur">输入手机校验码</span>
+                  <span class="s"></span>
+                  <span class="step-index">3</span>
+                  <span class="step-name">激活成功</span>
+              </div>
+               
+               <!--<div class="usbKeyCon_tips w410">永达互联网金融已向您的手机186****0232发送了手机验证短信，请输入手机校验码。</div>-->
+               <form action="#springUrl('/certRebind/checkAuthCode.htm')" method = "post">
+				<input type="hidden">
+               <div class="usbKeyCenter">
+
+                   
+                 <div class="login_limit">
+                   <label><span class="f14 limitLeft">校验码：</span>
+                     <input type="text" class="inputtext w80" value="" id="sjyzm" name="authCode">
+                     <input class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <label class="ml5"></label>
+                   <div id= "authCodeTip" class="mainTips ml160 error"></div>
+               </div>
+                   
+                           <div class="loginAmendBtn" style="padding-left:161px;"> <input class="btn btn_submit" type="button" value="确 认"></div>
+               
+               </div>
+               </form>
+               <div class="usbKeyFaq">
+                    <h4>永达盾问题：</h4>
+                    <dl>
+                        <dt>什么是永达盾？</dt>
+                        <dd>答：永达盾是我司推出的安全产品，是为了更好的保障用户的账户资金安全，防止用户账户和资金被盗。</dd>
+                    </dl>
+                    <dl>
+                        <dt>申请购买永达盾需要提供什么信息？</dt>
+                        <dd>答：申请时除需要支付永达盾的费用外，无需提供额外的信息</dd>
+                    </dl>
+                    <dl>
+                        <dt>永达盾可以申请多个吗？</dt>
+                        <dd>答：可以，一个操作员即申请一个永达盾，假如您有3个操作员账号，您就可以申请3个永达盾。</dd>
+                    </dl>
+                     <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的账户</a></div>
+                </div>
+          </div>
+      		<input type="hidden" name="bizType"  id="bizType" value="KJTSHILED_ACTIVE"/>
+      		<input type="hidden" name="certSn"  id="certSn" value="$!{certSn}"/>
+     </div>
+     
+</div>
+</div>
+<form id="form2" action="#springUrl('/certRebind/certRebind.htm')" method="post"><input type="hidden" id="rebindcertSn" name="certSn"/></form>
+<script>
+$(function(){
+	$(".btn_mfhq").click(function(){
+        var jThis = $(this);
+        sendPhoneCode({
+            jBtn:jThis,
+            jTip:$('#authCodeTip'),
+            url:"#springUrl('/my/mobile/sendMessage.htm')",
+            txtSuccess:"校验码已发送",
+            txtFail:"若长时间未收到校验码，请联系客服 0571-28276085"
+        });
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		
+		var flag = checkMust($("#sjyzm"),$(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		//$("form").submit();
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/certRebind/checkAuthCode.htm')",
+            data: "authCode=" + $("#sjyzm").val() + "&certSn=" + $("#certSn").val(),
+            success: function(restP) {
+            	if(restP.success) {
+            		var certSn = restP.data.certSn;
+            		$("#rebindcertSn").val(certSn);
+             		$("#form2").submit();
+             	} else {
+             		$("#authCodeTip").html(restP.message);
+             		btn_submit.attr("disabled", false).removeClass("btn_disabled");
+             	}
+            } ,
+			cache: false,
+			error:function(){ $("#authCodeTip").html(G.sysError); },
+            dataType: "json"
+        });
+	});
+})
+</script>

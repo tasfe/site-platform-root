@@ -1,0 +1,126 @@
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+    </div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/accountSetting.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/securityInfo.htm')">
+     	  	   	             <span class="subNavIcon aqsz"></span>
+                             <span class="subNavTxt">安全设置</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/contacts/toContactsHome.htm')">
+     	  	   	             <span class="subNavIcon lxr"></span>
+                             <span class="subNavTxt">联系人</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1">基本信息</div>
+     	  	   <div class="account_set_right_con">
+     	  	   	    
+     	  	   	    <div class="set_right_info clearfix">
+
+     	  	   	    	 <div class="serve_info clearfix">
+     	  	   	    	 	  <p>
+     	  	   	    	 	     <span class="si1">登录密码：</span>
+     	  	   	    	 	     <span class="si2">登录永达互联网金融账户时需要使用的密码</span>
+     	  	   	    	 	     <span class="si3"><a href="#springUrl('/my/reset-login-passwd.htm')">修改登录密码</a></span>
+     	  	   	    	 	  </p>
+     	  	   	    	 	  <p>
+     	  	   	    	 	     <span class="si1">支付密码：</span>
+     	  	   	    	 	     <span class="si2">在帐号资金变动、修改账户信息时需要输入的密码</span>
+								 #if(!$!response.data.isSetPayPwd == 'false')
+									<span class="si3"><a href="${request.contextPath}/my/go-set-pay-passwd.htm">设置支付密码</a></span>	
+								 #else
+     	  	   	    	 	     <span class="si3"><a href="#springUrl('/my/reset-pay-passwd.htm')">修改支付密码</a> | <a href="#springUrl('/my/go-get-paypasswd-index.htm')">找回支付密码</a></span>
+     	  	   	    	 	     #end
+							  </p>
+							  <!--
+     	  	   	    	 	  <p>
+     	  	   	    	 	     <span class="si1">安全保护问题：</span>
+     	  	   	    	 	     <span class="si2">保护账户安全的3个安全保护问题</span>
+     	  	   	    	 	     <span class="si3"><a href="#">修改</a></span>
+     	  	   	    	 	  </p>
+							  
+     	  	   	    	 	  <p>
+     	  	   	    	 	     <span class="si1">数字证书：</span>
+     	  	   	    	 	     <span class="si2">申请数字证书后，只能在安装数字证书的电脑支付 </span>
+								 #if ($!response.data.soft == "true")
+     	  	   	    	 	     <span class="si3" id="security"><em>已申请</em></span>
+								 #else
+								 <span class="si3" id="security"><em><a href="#springUrl('/my/accountManage.htm?link=0400')">未申请</a></em></span>
+								 #end
+     	  	   	    	 	  </p>-->
+     	  	   	    	 </div>
+
+     	  	   	    </div>
+
+     	  	   </div>
+
+     	  </div>
+     	  <!-- S 右边内容 -->
+
+     </div>
+
+</div>
+<!-- E 主要内容 -->
+<form action="#springUrl('/softcertActivate/gotoview.htm')" id="softCertForm" method="POST"><input type="hidden" id="btype" name="btype" value=""></form>
+<script>
+	$(function(){
+		$(".serve_info p").hover(function(){
+    		$(this).addClass("hover");
+    	},function(){
+    		$(this).removeClass("hover");
+    	});
+		/*
+		jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/softcertActivate/checkSoftCert.htm')",
+			dataType: "json",
+			cache: false,
+            success: function(response) {
+             if(response.success) {
+				var certSns = response.data.certSns;
+				for(var i = 0; i < certSns.length; i++) {
+					certArr = filterCerts("", 1 , certSns[i]);
+					if(certArr != null && certArr.length > 0) { // 是证书用户，并且本机安装了证书
+						$("#btype").val("isCertUser");
+						$("#security").html('<a href="#" onclick="javascript:submit();">已安装</a>');
+						return;
+					} 
+				}
+				// 是证书用户，但本机未安装了证书
+				$("#btype").val("NotInstallCertUser");
+				$("#security").html('<a href="#" onclick="javascript:submit();">未安装</a>');
+             } else {
+			 	//非证书用户isNotCertUser
+				$("#btype").val("isNotCertUser");
+                $("#security").html('<a href="#" onclick="javascript:submit();">未申请</a>');
+             }
+            },
+        });
+		*/
+	})
+	
+	function submit(){
+		$("#softCertForm").submit();
+	}
+</script>

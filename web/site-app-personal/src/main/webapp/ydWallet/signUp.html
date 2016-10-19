@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <!--<meta http-equiv="Access-Control-Allow-Origin" content="https://res.wx.qq.com,https://testfp.udcredit.com">-->
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <title>注册</title>
+</head>
+<body style="background:#F6F6F6">
+<div class="yd-wrap getPwWrap" style="z-index:1;" id="">
+  <div class="me-list">
+    <ul class="yd-itemList">
+      <li><span class="leftTitle">账号</span><input type="tel" class="yd-input-noBorder input-pointer" placeholder="请输入手机号" id="signUpMobile" /></li>
+      <li><span class="leftTitle">验证码</span><input type="text" class="yd-input-noBorder input-pointer" placeholder="验证码" id="signUpYzm"/><span class="yd-layouts-right"><img alt="验证码" data-for="signUpYzm" id="J_ImgYzm" src="" /></span></li>
+      <li><span class="leftTitle">短信码</span><input type="tel" class="yd-input-noBorder" style="width:45%" placeholder="6位校验码" name="" id="authCode"/><span class="sendMsg yd-layouts-right sendMsgGray" id="sendMsg" send="send" onClick="return false;" style="margin-top:7px">获取短信</span></li>
+    </ul>
+   </div>
+  <div class="yd-btn-big yd-btn-disabled" id="wxSignUp-next">下一步</div>
+</div>
+<div class="yd-wrap getPwWrap upInAnimation" style="z-index:2;display:none" id="wx-msgCheck">
+
+  <div class="me-list">
+    <ul class="yd-itemList">
+        <li><span class="leftTitle">登录密码</span><input type="password" class="yd-input-noBorder" style="width:45%;" placeholder="密码为6-20位数字或字母组合" name="" id="signUpPwd"/></li>
+    </ul>
+  </div>
+  <div class="yd-btn-big" id="wxCkMsg-next">确定</div>
+</div>
+<div class='dialogWrap' style='display:none'>
+</div>
+<!--弹窗说明-->
+<div class="dialog-cardInfo animationBounceIn" style="display:none" id="ydWx-diaLog">
+  <h2 class="dialog-alertTitle" style="min-height:50px" id="ydWx-diaLogText">提示</h2>
+  <div class='diaLog-alertBtnArea' style="width:300px"><div class='diaLogBtn closeDiaLog-alert' style="width:300px">确定</div></div>
+</div>
+
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!--<script async src="js/yongda_ud_fp.js"></script>-->
+<script async src="https://service.udcredit.com:10000/sdk/device-fingerprint/web?partnerCode=201601141404&appKey=wIqeiVOn6oxloDvzbD3X"></script>
+<script>
+    var J_Phone = $("#signUpMobile"),
+            J_Phone_val = "",
+            J_VeriCodeImg = $("#J_ImgYzm"),
+            J_VeriCode = $("#signUpYzm"),
+            J_VeriCode_val = "",
+            J_PhoneCode = $("#authCode"),
+            J_PhoneCode_val = "",
+            J_Pw = $("#signUpPwd"),
+            J_Pw_val = "";
+
+    //注册 下一步
+    $("#wxSignUp-next").click(function(){
+        if($(this).hasClass("yd-btn-disabled")) return false;
+
+        if(!tools.checkMust(J_Phone,"手机号不能为空",true)){
+            return false;
+        }
+        else if(!tools.checkRegex(J_Phone,"请输入正确的手机号",regexEnum.phone,true)){
+            return false;
+        }
+
+        if(!tools.checkMust(J_VeriCode,"验证码不能为空",true)){
+            return false;
+        }
+
+        if(!tools.checkMust(J_PhoneCode,"短信码不能为空",true)){
+            return false;
+        }
+
+        J_Phone_val = clearKG(J_Phone.val()); // 账号
+        J_VeriCode_val = J_VeriCode.val(); // 验证码
+        J_PhoneCode_val = J_PhoneCode.val();// 短信码
+
+        tools.ajaxSubmit({
+            "jBtnSubmit": $("#wxSignUp-next"),
+            "url": gurl + "/register",
+            "data": {"username":J_Phone_val,"vercode":J_VeriCode_val,"mobileVercode":J_PhoneCode_val},
+            "suc_suc": function(response){
+                //接口返回成功时，跳转至下一步（显示短信验证码页面） ↓
+                $("#wx-msgCheck").show();
+            },
+            "suc_err": function(response){
+                yonda.Tip(getErrCodeMessage(response) || "操作失败");
+                tools.refreshVeriCode(J_VeriCodeImg);
+            }
+        });
+
+    });
+
+    //填写登录密码点击下一步
+    $("#wxCkMsg-next").click(function(){
+        if($(this).hasClass("yd-btn-disabled")) return false;
+
+        if(!tools.checkMust(J_Pw,"密码不能为空")){
+            return false;
+        }
+        else if(!tools.checkStrong(J_Pw,"密码为6-20位数字或字母组合")){
+            return false;
+        }
+
+        //J_Phone_val = clearKG(J_Phone.val()); // 账号
+        J_Pw_val = J_Pw.val();
+
+        tools.ajaxSubmit({
+            "jBtnSubmit": $("#wxCkMsg-next"),
+            "url": gurl + "/setLoginPwd",
+            "data": {"loginPassword":J_Pw_val},
+            "suc_suc": function(){
+                var storage = window.sessionStorage;
+                var preUrl = storage.getItem("curUrl");
+                if(preUrl == undefined || preUrl == "")
+                    preUrl = linkPre + "/main.html?time=" + new Date().getTime();
+
+                yonda.Tip("注册成功");
+                setTimeout(function(){
+                    window.location.href = preUrl;
+                },1200);
+
+                //window.location.href ="main.html?time=" + new Date().getTime();// + "&golink=" + golink;
+            }
+        });
+
+    });
+
+    // 刷新图片验证码
+    tools.refreshVeriCode(J_VeriCodeImg);
+    J_VeriCodeImg.click(function(){
+        tools.refreshVeriCode(J_VeriCodeImg);
+    });
+
+    //重发短信验证码
+    $("#sendMsg").click(function(){
+        if($(this).hasClass("sendMsgGray")) return false;
+
+        if(!tools.checkMust(J_Phone,"手机号不能为空",true)){
+            return false;
+        }
+        else if(!tools.checkRegex(J_Phone,"请输入正确的手机号",regexEnum.phone,true)){
+            return false;
+        }
+
+        if(!tools.checkMust(J_VeriCode,"验证码不能为空",true)){
+            return false;
+        }
+        sendMsgUnActive();
+        J_Phone_val = clearKG(J_Phone.val()); // 账号
+        J_VeriCode_val = J_VeriCode.val(); // 验证码
+
+        /*if($(this).data("first") == "false")
+            tools.refreshVeriCode(J_VeriCodeImg);
+
+        $(this).data("first","false");*/
+
+        tools.ajaxSubmit({
+            "url": gurl + "/sendMobileMessage",
+            "data": {"username":J_Phone_val,"vercode":J_VeriCode_val,"type":1},
+            "suc_suc": function(response){
+                //接口返回成功时，跳转至下一步（显示短信验证码页面） ↓
+                //$("#wx-msgCheck").show();
+                settime(document.getElementById("sendMsg"));
+                yonda.Tip(response.message);
+            },
+            "suc_err": function(response){
+                yonda.Tip(response.message);
+                tools.refreshVeriCode(J_VeriCodeImg);
+            }
+        });
+        //$("#upInAnimation").hide();
+        //tools.refreshVeriCode(J_VeriCodeImg);
+        /*tools.ajaxSubmit({
+         "url": gurl + "sendMobileMessage",
+         "data": {"username":J_Phone_val,"vercode":J_VeriCode_val,"type":1},
+         "suc_suc": function(){
+         settime(document.getElementById("sendMsg"));
+         }
+         });*/
+    });
+
+    J_VeriCode.css("width","100px");
+    J_Phone.bind("input propertychange",function(){
+        var jThis = $(this);
+        var val = jThis.val().replace(/[^\d]/g,'');
+        jThis.val(val);
+        if(val.length > 7){
+            val = val.substring(0,3) + " " + val.substring(3,7)
+                    + " " + val.substring(7);
+        }
+        else if(val.length > 3){
+            val = val.substring(0,3) + " " + val.substring(3);
+        }
+        jThis.val(val);
+    });
+
+    J_Phone.blur(function(){
+        if(clearKG(J_Phone.val()) != "" && J_VeriCode.val() != "")
+            sendMsgActive();
+
+        if(clearKG(J_Phone.val()) != "" && J_VeriCode.val() != "" && J_PhoneCode.val() != ""){
+            $("#wxSignUp-next").removeClass("yd-btn-disabled");
+        }
+        else{
+            $("#wxSignUp-next").addClass("yd-btn-disabled");
+        }
+    });
+    J_VeriCode.blur(function(){
+        if(clearKG(J_Phone.val()) != "" && J_VeriCode.val() != "")
+            sendMsgActive();
+
+        if(clearKG(J_Phone.val()) != "" && J_VeriCode.val() != "" && J_PhoneCode.val() != ""){
+            $("#wxSignUp-next").removeClass("yd-btn-disabled");
+        }
+        else{
+            $("#wxSignUp-next").addClass("yd-btn-disabled");
+        }
+    });
+    J_PhoneCode.blur(function(){
+        if(clearKG(J_Phone.val()) != "" && J_VeriCode.val() != "" && J_PhoneCode.val() != ""){
+            $("#wxSignUp-next").removeClass("yd-btn-disabled");
+        }
+        else{
+            $("#wxSignUp-next").addClass("yd-btn-disabled");
+        }
+    });
+/*
+tipMsg("内容");     调用此方法 进行强提示
+yonda.Tip("内容");  调用此方法 进行弱提示
+*/
+</script>
+</body>
+</html>

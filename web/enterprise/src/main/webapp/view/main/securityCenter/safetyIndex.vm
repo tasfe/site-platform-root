@@ -1,0 +1,142 @@
+<div class="wrapbg">
+<div class="wrap">
+
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">安全中心</span>
+		</div>
+	</div>
+     
+     <div class="safetyMain">
+		  <!--
+          <div class="safetyGrade">
+          	   <div class="safetyGradeT">您当前的安全等级为：<img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/safetyImg2.gif" width="271" height="15" alt=""><em class="ml10 color_f6 b">中</em></div>
+          	   <span class="txt c_ff9d73">您的账户安全有待改善，请安装下方安全工具!</span>
+          </div>
+			-->
+          <div class="safetyinfo">
+          	   <ul>
+          	     	<li>
+          	     	     <span class="s1">登录密码：</span>
+          	     	     <span class="s2">登录时需验证，保护账户信息</span>
+          	     	     <span class="s3"><a href="#springUrl('/my/reset-ent-login-passwd.htm')">修改登录密码</a></span>
+          	     	</li>
+          	     	<li>
+          	     	     <span class="s1">支付密码：</span>
+          	     	     <span class="s2">资金变动或账户信息变更时需验证，安全级别更高。</span>
+          	     	     <span class="s3"><a href="#springUrl('/my/reset-pay-passwd.htm')">修改支付密码</a> <em>|</em> <a href="#springUrl('/my/go-get-paypasswd-index.htm')">找回支付密码</a></span>
+          	     	</li>
+          	     	<li>
+          	     	     <span class="s1">手机绑定：</span>
+						 #if ($!response.data.verify_mobile)
+          	     	     <span class="s2">您绑定的手机：$!response.data.verify_mobile</span>
+          	     	     <span class="s3"><!--<a href="#springUrl('/my/go-unset-mobilephone.htm')">解绑</a> <em>|</em>--><a href="#springUrl('/my/go-reset-mobilephone.htm')"> 修改</a> </span>
+						 #else
+						 <span class="s2">尚未手机认证</span>
+						 <span class="s3"><a href="#springUrl('/my/go-set-mobilephone-verify.htm')">绑定</a>  </span>
+						 #end
+					</li>
+          	     	<li>
+          	     	     <span class="s1">邮箱绑定：</span>
+						 #if ($!response.data.verify_email)
+          	     	     <span class="s2">您绑定的邮箱为：$!response.data.verify_email</span>
+          	     	     <span class="s3"><a href="#springUrl('/my/go-unset-email.htm')">解绑</a> <em>|</em><a href="#springUrl('/my/go-reset-email.htm')"> 修改</a> </span>
+						 #else
+						 <span class="s2">尚未邮箱认证</span>
+						 <span class="s3"><a href="#springUrl('/my/go-set-email.htm')">绑定</a> </span>
+						 #end
+					</li>
+          	   </ul>
+          </div>
+
+          <div class="safetyProduct">
+          	   
+          	   <div class="spBox clearfix">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/attestationImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">实名认证</p>
+						#if ($!response.data.verify_name == 'PASS')
+          	   	    	<p class="con">您已通过实名认证</p>
+						#else
+          	   	    	<p class="con">认证您的网络身份，账户更加安全！</p>
+						#end
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:65px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">中</div>
+          	   	    <div class="sp4">
+						#if ($!response.data.verify_name == 'checkPass')
+						<a href="#springUrl('/my/verifyAmount.htm')" class="btn">金额认证</a>
+						#elseif ($!response.data.verify_name == 'PASS')
+						<a href="#springUrl('/my/certification-detail.htm')" class="btn">查看详情</a>
+						#elseif ($!response.data.verify_name == 'init')
+						<a href="javascript:" class="btn_rzz"></a>
+						#elseif ($!response.data.verify_name == 'checkReject')
+						<a href="#springUrl('/my/go-enterprise-certification.htm')" class="btn">重新认证</a>
+						#else
+						<a href="#springUrl('/my/go-enterprise-certification.htm')" class="btn">立即认证</a>
+						#end
+					</div>
+          	   </div>
+			   
+			   <div class="spBox clearfix">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/DigitalCertificateImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">数字证书</p>
+          	   	    	<p class="con color_59">申请后，只能在安装数字证书的电脑上支付。</p>
+                        <p class="con mt10">支持的操作系统：Windows XP/Windows 7/Windows 8/ Windows 10/Windows Vista</p>
+                        <p class="con">支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等</p>
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:65px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">中</div>
+          	   	    <div class="sp4"><a href="#" class="btn" id="btn_szzs">查看详情</a></div>
+          	   </div>
+               
+               <div class="spBox clearfix">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/shieldImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">永达盾<span class="color_f6 ml20">（68元）</span></p>
+          	   	    	<p class="con">1、永达盾激活后，只有插入永达盾后，才能进行转账、提现、审核等涉及资金变动的操作。</p>
+          	   	    	<p class="con">支持的操作系统：Windows XP/Windows 7/Windows 8/ Windows 10/Windows Vista</p>
+          	   	    	<p class="con">支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等</p>
+          	   	    	<p class="con">2、永达盾是数字证书的升级，实现随时随地更安全的支付。</p>
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div></div></div>
+          	   	    </div>
+                    <div class="sp5">高</div>
+          	   	    <div class="sp4"><a href="#springUrl('/securityCenter/safetyDetails.htm')" class="btn">查看详情</a></div>
+          	   </div>
+			   
+			   <div class="spBox clearfix nobb">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/controlImg.gif" width="138" height="93" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">安全控件</p>
+          	   	    	<p class="con">安装后，安全控件会实时保护您的密码及账号不被窃取，并及时发现交易风险，有效制止仿冒网站的交易诈骗。</p>
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:65px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">中</div>
+          	   	    <div class="sp4"></div>
+          	   </div>
+          </div>
+     </div>
+</div>
+</div>
+<script>
+$(function(){
+	$(".safetyinfo li").hover(
+		function(){ $(this).addClass("cur"); },
+		function(){ $(this).removeClass("cur"); }
+	);
+	
+	$("#btn_szzs").click(function(){
+		window.location.href = "#springUrl('/softcertActivate/appCenterTemp.htm')";
+	});
+})
+</script>

@@ -1,0 +1,120 @@
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+  <div class="page_title audit">
+    <div class="title fl">
+      <i class="icon fl"></i>
+      <span class="tt fl">退款审核详情</span>
+    </div>
+  </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>退款信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">退款交易号 </td>
+          <td class="tab_w2">$!response.data.transId<br></td>
+          <td  class="tab_w">退款金额（元）</td>
+          <td  class="Detail_tab_no tab_w2">$!response.data.amount</td>
+        </tr>
+        <tr class="cl">
+          <td>已退服务费（元）</td>
+          <td >$!response.data.fee</td>
+          <td >创建时间</td>
+          <td class="Detail_tab_no">$!response.data.gmtCreated</td>
+        </tr>
+        <tr  >
+          <td>退款原因</td>
+          <td>$!response.data.refundMemo</td>
+		  <td>退款状态</td>
+          <td >
+		  #if($!response.data.shStatus == '1')
+			审核中
+		  #elseif($!response.data.shStatus == '2')
+			审核通过
+		  #else
+			审核失败
+		#end
+		  </td>
+        </tr>
+      </table>
+    </div>
+    <div class="table_div">
+      <h3>订单信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">交易订单号</td>
+          <td class="tab_w2">$!response.data.origTranVoucherNo<br></td>
+          <td  class="tab_w">批次号（仅批量转账）</td>
+          <td  class="Detail_tab_no tab_w2"></td>
+        </tr>
+        <tr class="cl">
+          <td>商户订单号</td>
+          <td >$!response.data.ext</td>
+		  <td>创建时间</td>
+          <td class="cl" >$!response.data.tra_orderData<br /></td>
+        </tr>
+        <tr >
+		  <td>交易类型</td>
+          <td>$!response.data.tra_type</td>
+          <td>原始订单服务费（元）</td>
+          <td class="Detail_tab_no">$!response.data.tra_fee</td>
+        </tr>
+        <tr class="cl">
+          <td> 实际金额（元）</td>
+          <td >$!response.data.payAmount</td>
+		  <td>状态</td>
+          <td class="Detail_tab_no">$!response.data.orderState</td>
+        </tr>
+		<tr>
+		  <td>交易金额（元）</td>
+          <td >$!response.data.tra_amount</td>
+		</tr>
+      </table>
+    </div>
+    <div class="table_div">
+      <h3>申请信息</h3>
+    </div>
+    <div class="pagebox5">
+      <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="tab_w">申请时间</td>
+          <td class="tab_w2">$!response.data.gmtCreated</td>
+          <td  class="tab_w">申请操作员</td>
+          <td  class="Detail_tab_no tab_w2">$!response.data.operatorName</td>
+        </tr>
+      </table>
+    </div>
+	#if($!response.data.shStatus != "1")
+    <div class="table_div">
+      <h3>审核信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">审核时间</td>
+        <td class="tab_w2">$!response.data.auditData</td>
+        <td  class="tab_w">审核操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.auditorName</td>
+      </tr>
+      <tr>
+        <td class="tab_w">审核结果</td>
+        #if($!response.data.shStatus == "1")
+          <td >审核中</td>
+		  #elseif($!response.data.shStatus == "2")
+          <td>审核通过 </td>
+		  #else
+		  <td>审核拒绝</td>
+		  #end
+        <td  class="tab_w">审核说明</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.remark</td>
+      </tr>
+    </table>
+    </div>
+	#end
+  </div>
+</div>
+</div>

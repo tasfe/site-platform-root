@@ -1,0 +1,97 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title operator">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">操作员</span>
+		</div>
+	</div>
+     <form class="form1" action="${request.contextPath}/my/operator/operator-index.htm" method="GET">
+     <div class="operBox">
+          <p class="tipsImg"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/operImgA.gif"  alt="为了您操作的安全性，请先输入支付密码确保操作安全！"></p>
+          <div class="operCon"><span class="bold fl">支付密码：</span><div class="pwdiv"><input name="pay_pw" type="hidden" id="pay_pw" /></div></div>
+		  
+          <div class="error h22" style="padding-left:392px;">
+			#if($response.errors.passwd_not_right.length() > 0)
+				#springMessageText($!response.errors.passwd_not_right,"您输入的支付密码不正确，请重新输入！")
+				#if($!response.errors.passwd_remainNum.length() > 0)，
+					您还有 $!response.errors.passwd_remainNum 次机会#end
+            #elseif($response.errors.passwd_is_locked.length() > 0)
+				#springMessageText($!response.errors.passwd_is_locked,"您输入的支付密码已被锁定！") 
+				#if($!response.errors.passwd_remainNum.length() > 0)
+					，锁定时间还剩余 $!response.errors.passwd_remainNum 分钟#end
+	        #end
+		  </div>
+		  <input id="signedData" name="signedData" type="hidden" />
+		  <div class="red" style="margin-left:360px; margin-bottom:20px;" id="errorMsg"></div>
+		  <div id="needUpdataKjd" class="mb15" style="margin-left:360px;display:none"><span></span>，<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</div>
+          <div class="operP"><input class="btn btn_submit" type="button" value="确 认"></div>
+     </div>
+</form>
+</div>
+</div>
+<OBJECT id="ukeyadmin" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+#if($!{response.data.isCertActive} == 'yes')
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+#end
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+<script>
+$(function(){
+			var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+			window.pgeCtrl = pgeditor;
+			$(".pwdiv").append(pgeditor.load());
+			pgeditor.pgInitialize();
+
+			function _submit(){
+				var btn_submit = $(".btn_submit");
+				var jForm = $(".form1");
+				if (cert) {
+					// 签名后提交
+					signAndSubmit(jForm, cert, [jForm.find('#pay_pw').val()]);
+				} else {
+					jForm.submit();
+				}
+				//$(".form1").submit();
+			}
+
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+
+		var jsonSubmit = {
+			jBtnSubmit:btn_submit,
+			cssClass:"btn_disabled",
+			urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+		};
+		var pgeditors = [
+			{
+				jPwInput:pgeditor,
+				jInput:$("#pay_pw"),
+				jTip:$(".error"),
+				txtEmpty:"请输入支付密码！"
+			}
+		];
+		checkPgeditor({
+			jsonSubmit:jsonSubmit,
+			pgeditors:pgeditors,
+			callback:function(){
+				_submit();
+			}
+		});
+	});
+	#if($!{response.data.isCertActive} == 'yes')
+	// 检查提醒证书更新
+	doCheckHardCert("#springUrl('/certActive/getCertSns.htm')");
+	// 检查证书
+	selectVerifyStyle("#springUrl('/certActive/getCertSns.htm')");
+	// 检查永达盾是否插入
+	intervalCheckUSB();
+	#else
+	$("#captchaDiv").show();
+	#end
+})
+</script>

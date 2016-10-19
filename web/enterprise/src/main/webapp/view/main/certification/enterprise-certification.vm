@@ -1,0 +1,869 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/lhgcalendar.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/jquery.lightbox-0.5.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title certification">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">实名认证</span>
+        </div>
+    </div>
+
+     <div class="login_main">
+
+         <div class="step-wrap">
+             <span class="step-index step-index-cur">1</span>
+             <span class="step-name step-name-cur">备案信息</span>
+             <span class="s"></span>
+             <span class="step-index">2</span>
+             <span class="step-name">资金账户信息</span>
+             <span class="s"></span>
+             <span class="step-index">3</span>
+             <span class="step-name">法人信息</span>
+         </div>
+		  
+		  <input type="hidden" id="compType" name="compType" value="$response.data.companyType" />
+		  <input type="hidden" id="imageUrl4_1" name="imageUrl4_1" value="$!response.data.imageUrl4_1"/>
+    	  <input type="hidden" id="imageUrl4_2" name="imageUrl4_2" value="$!response.data.imageUrl4_2"/>
+    	  <input type="hidden" id="imageUrl4_3" name="imageUrl4_3" value="$!response.data.imageUrl4_3"/>
+    	  <input type="hidden" id="imageUrl4_4" name="imageUrl4_4" value="$!response.data.imageUrl4_4"/>
+          
+          <style type="text/css">.lhgcal_foot_time{display:none}</style>
+          <div class="login_content_wrap_t">
+          <div class="login_content clearfix">
+                <div id="tab1">
+					<div class="row_rank">
+                      <label class="row_label" for=""><i class="red">*</i>企业名称：</label>
+                      <div class="row_con"><input id="corpLicenceName" name="corpLicenceName" type="text" class="login_input" value="$!{response.data.companyName}" maxlength="50"></div>
+                      <div class="clear"></div>
+               		  <div class="pl190 h20 error"></div>
+                </div>
+                  <div class="row_rank">
+                      <label class="row_label" for=""><i class="red">*</i>营业执照号：</label>
+                      <div class="row_con"><input id="corpLicenceNo" name="corpLicenceNo" type="text" class="login_input" value=""></div>
+                      <div class="clear"></div>
+               		  <div class="pl190 h20 error"></div>
+                </div>
+                <div class="row_rank">
+                          <label class="row_label" for=""><i class="red">*</i>营业执照期限：</label>
+                          <div class="row_con" style="width:260px;">
+                                <input id="endDate" name="endDate" class="datapick" type="text" value="" readonly style="float:left;">
+                                <span class="ml20"><label><input type="checkbox" class="checkbox longtime"><em class="f14 ml10">长期</em></label></span>
+                          </div>
+                          <div class="clear"></div>
+                          <div class="pl190 h20 error"></div>
+                 </div>
+                 
+                 <div class="row_rank">
+                          <label class="row_label" for=""><i class="red">*</i>营业执照副本扫描件：</label>
+                    <div class="row_con">
+                          <form id="form1" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                            <input id="file1" type="text" class="login_input" readonly>
+							<input type="hidden" id="imageUrl1" name="imageUrl1" value="$!response.data.imageUrl1"/>
+                            <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl1" forpath="file1"></div>
+                            <a class="viewImg zj" href="#" title="营业执照副本扫描件"></a>
+                          </form>
+                           <div class="msg"></div>
+						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                   	</div>
+                          <div class="clear"></div>
+                   <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                   <div class="pl190 h20 error"></div>
+            </div>
+                 
+        	 <div class="row_rank">
+                  <label class="row_label" for=""><i class="red">*</i>组织机构代码证号：</label>
+                  <div class="row_con"><input class="login_input register_corpOrganizeNo register_corpOrganizeNo1" id="corpOrganizeNo1" name="corpOrganizeNo1" type="text" maxlength="20"><em class="f12 color_b3 pl10">请输入有效的组织机构代码证号！</em></div>
+                  <div class="clear"></div>
+           		  <div class="pl190 h20 error"></div>
+            </div>
+                  
+                  <div class="row_rank">
+                    <label class="row_label" for=""><i class="red">*</i>组织机构代码证扫描件：</label>
+                          <div class="row_con">
+                          <form id="form2" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                                <input id="file2" type="text" class="login_input"  readonly="readonly">
+								<input type="hidden" id="imageUrl2" name="imageUrl2" value="$!response.data.imageUrl2"/>
+                                <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl2" forpath="file2"></div>
+                           <a class="viewImg zj" href="#" title="组织机构代码证扫描件"></a>
+                           </form>
+                           <div class="msg"></div>
+						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                    </div>
+                          <div class="clear"></div>
+                    <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                    <div class="pl190 h20 error"></div>
+                 </div>
+                 
+                  <div class="row_rank">
+                          <label class="row_label" for=""><i class="red">*</i>税务登记证扫描件：</label>
+                          <div class="row_con">
+                          		<form id="form3" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                                <input id="file3" type="text" class="login_input" readonly>
+								<input type="hidden" id="imageUrl3" name="imageUrl3" value="$!response.data.imageUrl3"/>
+                                <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl3" forpath="file3"></div>
+                           <a class="viewImg zj" href="#" title="税务登记证扫描件"></a>
+                           </form>
+                           <div class="msg"></div>
+						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                    </div>
+                          <div class="clear"></div>
+                          <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                          <div class="pl190 h20 error"></div>
+                 </div>
+                  
+                  <div class="row_rank">
+                          <label class="row_label" for="">其他证件扫描件：</label>
+                          <div class="row_con">
+                          <form id="form4" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                                <input id="file4" type="text" class="login_input" readonly>
+								<input type="hidden" id="imageUrl4" name="imageUrl4" value="$!response.data.imageUrl4"/>
+								
+                                <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl4" forpath="file4"></div>
+                           <a class="viewImg zj" href="#" title=""></a>
+                           </form>
+                           <div class="msg"></div>
+						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                    	  </div>
+                          <div class="clear"></div>
+                 		  <div class="other_filelist"></div>
+                          <div class="clear"></div>
+                          <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                    <div class="text pl190 color_b3 mt10 mb10"><a href="javascript:void(0)" class="btn_fs mr10" data-index="1">添加上传</a>可扩展多张上传,最多可扩展5张</div>
+                          <div class="pl190 h20 error"></div>
+                 </div>
+                 
+                 <div class="row_rank">
+                          <label class="row_label" for="">ICP证（备案）号：</label>
+                          <div class="row_con">
+                                <input  type="text" class="icp_ba login_input" id="icpNo" name="icpNo" maxlength="30"><em class="f12 color_b3 pl10">请输入有效的ICP证（备案）号</em>
+                  		 </div>
+                       <div class="clear"></div>
+                       <div class="pl190 h20 error"></div>
+                 </div>
+                 
+                  <div class="row_rank">
+                          <label class="row_label" for=""><i class="red">*</i>企业地址：</label>
+                          <div class="row_con">
+                                <div class="select_div mr16"><select id="province1" class="province"><option value="-1">--请选择省份--</option></select></div>
+                                <div class="select_div mr16"><select id="city1" class="city"><option value="-1">--请选择城市--</option></select></div>
+                                <div class="select_div mr16"><select id="town1" class="town"><option value="-1">--请选择区/县--</option></select></div>
+                    </div>
+                          <div class="clear"></div>
+                          <div class="pl190 h20 error"></div>
+                 </div>
+                  
+                  <div class="row_rank">
+                          <label class="row_label" for=""><i class="red">*</i>详细地址：</label>
+                          <div class="row_con">
+                                <input id="corpAddr1" name="corpAddr1" type="text" class="login_input register_corpAddr">
+                    </div>
+                          <div class="clear"></div>
+                          <div class="pl190 h20 error " id="addrError"></div>
+                 </div>
+                 
+                  <div class="row_rank" id="url1">
+                          <label class="row_label" for="">经营网址：</label>
+                          <div>
+                          <div class="row_con">
+                                <input  type="text" id="site" name="site" class="login_input url cutdown_words" maxlength="50"  data-tip-place="2">
+                                <a href="javascript:void(0)" class="btn_fsMin f12">添加网址</a>
+                                <em class="f12 color_b3 pl10">如：www.yongdapay.com</em>
+                          </div>
+                          <div class="pl190 h20 clear tip"></div>
+                          </div>
+                          <div class="website"></div>
+                   </div>
+                   
+                   <div class="row_rank">
+                          <label class="row_label" for="">经营范围：</label>
+                          <div class="row_con">
+                                <input type="text" id="scope" name="scope" class="login_input cutdown_words" maxlength="200" data-tip-place="2">
+                          </div>
+                          <div class="clear"></div>
+                          <div class="pl190 color_b3 tip h20" ></div>
+                   </div>
+                   
+                   <div class="certificateBtn"><div class="error h22 error_submit1" id="commonError"></div><input class="btn btn_submit btn_submit1" type="button" value="下一步"><input class="btn btn-bg ml20" type="button" value="返 回" onclick="goBackOrClose();"></div>
+                  </div>
+                  <!-- TAB1 -->
+                  <div id="tab2">
+					<div class="row_rank">
+                          <label class="row_label" for=""><i class="red">*</i>组织名称：</label>
+                          <div class="row_con"><input id="regName" name="regName" type="text" class="login_input" value=""></div>
+                          <div class="clear"></div>
+                   		  <div class="pl190 h20 error"></div>
+                    </div>
+                  	<div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>登记证件名称：</label>
+                         <div class="row_con">
+                              <input id="registration" name="registration" type="text" class="login_input">
+                          </div>
+                         <div class="clear"></div>
+                         <div class="text pl190 color_b3">如您单位是民办学校、民间救援组织等非国家性质的单位，请输入：民办非企业单位登记证<br>如您单位是公办学校、公立医院院等国家性质的单位，请输入：事业单位法人证<br>如：司法、教育、公安等行政单位，不需要输入证件名</div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>登记证件号码：</label>
+                         <div class="row_con">
+                              <input id="idNum" name="idNum" type="text" class="login_input cutdown_words" maxlength="64" data-tip-place="2">
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 color_b3 tip h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>登记证件扫描件：</label>
+                         <div class="row_con">
+                         <form id="form5" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                              <input id="file5" type="text" class="login_input"  readonly="readonly">
+							  <input type="hidden" id="imageUrl5" name="imageUrl5" value="$!response.data.imageUrl5"/>
+                              <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl5" forpath="file5"></div>
+                              <a class="viewImg zj" href="#" title="登记证件扫描件"></a>
+                           </form>
+						   <div class="msg"></div>
+						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                          </div>
+                         <div class="clear"></div>
+                         <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>登记证件有效期：</label>
+                         <div class="row_con">
+                              <input id="endDate2" name="endDate2" class="datapick" type="text" value="" readonly>
+                              <span class="ml20">
+                              <label><input type="checkbox" class="checkbox longtime2"><em class="f14 ml10">长期</em></label></span> </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>组织机构代码证号：</label>
+                         <div class="row_con">
+                              <input class="login_input register_corpOrganizeNo register_corpOrganizeNo2" id="corpOrganizeNo2" name="corpOrganizeNo2" type="text" maxlength="20">
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>组织机构代码证扫描件：</label>
+                         <div class="row_con">
+                         <form id="form6" action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data">
+                              <input id="file6" type="text" class="login_input" readonly>
+							  <input type="hidden" id="imageUrl6" name="imageUrl6" value="$!response.data.imageUrl6"/>
+                              <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl6" forpath="file6"></div>
+                              <a class="viewImg zj" href="#" title="组织机构代码证扫描件"></a>
+                          </form>
+						  <div class="msg"></div>
+						   <iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="other_filelist"></div>
+                         <div class="clear"></div>
+                         <div class="text pl190 color_b3">请上传清晰的彩色原件扫描件或数码照，格式要求：jpg、jpeg、bmp,大小不超过3M。</div>
+                         <!-- <div class="text pl190 color_b3 mt10 mb10"><a href="javascript:void(0)" class="btn_fs mr10" data-index="2">添加上传</a>可扩展多张上传,最多可扩展5张</div> -->
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank">
+                          <label class="row_label" for="">ICP证（备案）号：</label>
+                          <div class="row_con">
+                                <input  type="text" id="icpNo2" name="icpNo2" class="icp_ba login_input" maxlength="30"><em class="f12 color_b3 pl10">请输入有效的ICP证（备案）号</em>
+                  		 </div>
+                       <div class="clear"></div>
+                       <div class="pl190 h20 error"></div>
+                 </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>地址：</label>
+                         <div class="row_con">                                
+                              <div class="select_div mr16 fl">
+                                   <select id="province2" class="province">
+                                        <option value="">--请选择省份--</option>
+                                   </select>
+                              </div>
+                              <div class="select_div mr16 fl">
+                                   <select id="city2" class="city">
+                                        <option value="">--请选择城市--</option>
+                                   </select>
+                              </div>
+                              <div class="select_div mr16 fl">
+                                   <select id="town2" class="town">
+                                        <option value="">--请选择区/县--</option>
+                                   </select>
+                              </div>
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error" id="addrError2"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for=""><i class="red">*</i>详细地址：</label>
+                         <div class="row_con">
+                              <input id="corpAddr2" name="corpAddr2" type="text" class="login_input register_corpAddr">
+                         </div>
+                         <div class="clear"></div>
+                         <div class="pl190 h20 error"></div>
+                    </div>
+                    <div class="row_rank" id="url2">
+						 
+						 <label class="row_label" for="">经营网址：</label>
+                          <div>
+                          <div class="row_con">
+                                <input  type="text" id="site2" name="site2" class="login_input url cutdown_words" maxlength="50"  data-tip-place="2">
+                                <a href="javascript:void(0)" class="btn_fsMin f12">添加网址</a>
+                                <em class="f12 color_b3 pl10">如：www.yongdapay.com</em>
+                          </div>
+                          <div class="pl190 h20 clear tip"></div>
+                          </div>
+                          <div class="website"></div>
+                    </div>
+                    <div class="row_rank">
+                         <label class="row_label" for="">经营范围：</label>
+                          <div class="row_con">
+                                <input type="text" id="scope2" name="scope2" class="login_input cutdown_words" maxlength="200" data-tip-place="2">
+                          </div>
+                          <div class="clear"></div>
+                          <div class="pl190 color_b3 tip h20"></div>
+
+                    </div>
+                    <div class="certificateBtn"><div class="error h22 error_submit2"></div><input class="btn btn_submit btn_submit2" type="button" value="下一步"><input class="btn btn-bg ml20" type="button" value="返 回"  onclick="goBackOrClose();"></div>
+                  </div>
+                  <!-- tab2 -->
+                 
+          </div>
+          </div>
+     </div>
+     
+</div>
+</div>
+<!-- E 主要内容 -->
+
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcore.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcalendar.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.form.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.lightbox-0.5.pack.js"></script>
+<script>
+var baseUrl = "${request.contextPath}/site/getFile.htm?fileName=";
+
+function delrow(obj){
+	$(obj).parent().parent().remove();
+}
+function delrowUrl(obj){
+	$(obj).parent().parent().parent().remove();
+	$(".btn_fsMin").show();
+}
+
+function successUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl){
+	$("#" + input_path_id).val(input_path);
+	$("#" + input_imgurl_id).val(input_imgurl);
+	
+	$("#" + input_path_id).parent().find(".viewImg").attr("href",baseUrl + input_imgurl).html('<img src="'+(baseUrl + input_imgurl)+'" style="width:45px; height:28px; border:0;" />').css("visibility","visible");
+	//encodeURIComponent(input_imgurl)
+	
+	$("#" + input_path_id).parent().show().parent().find(".msg").text("");
+}
+function errorUploadFile(input_path_id, input_imgurl_id, input_path, input_imgurl){
+	$("#" + input_path_id).val("");
+	
+	var tipObj = $("#" + input_path_id).parent().parent().parent().find(".error");
+	if(!tipObj.hasClass("error")) tipObj = $("#" + input_path_id).parent().parent().parent().parent().find(".error");
+		
+	tipObj.text("上传失败，请重新上传！");
+	$("#" + input_path_id).parent().find(".viewImg").attr("href","").html('').css("visibility","hidden");
+	
+	$("#" + input_path_id).parent().show().parent().find(".msg").text("");
+}
+function imgint(){
+	$("#file1,#imageUrl1,#file2,#imageUrl2,#file3,#imageUrl3,#file4,#imageUrl4,#file5,#imageUrl5,#file6,#imageUrl6").val("");
+	$(".viewImg").empty();
+}
+
+$(function(){
+	imgint();
+	//初始化图片上传  
+	/*	
+	if($("#comtype").val()=="1"){$("#tab1").show();$("#tab2").hide();}else{$("#tab2").show();$("#tab1").hide();}
+	$("#comtype").change(function(){
+		if($(this).val()=="1"){
+			$("#tab1").show();
+			$("#tab2").hide();
+		}else{
+			$("#tab2").show();
+			$("#tab1").hide();
+		}
+	});
+	*/
+	
+	initProvinces();
+	
+	// 显示省份列表
+    var provArr = null;
+	var cityArr = null;
+    function initProvinces() {
+    	jQuery.ajax({
+        	type: "get",
+    		url: "${request.contextPath}/my/queryAllProvCities.htm",
+    		data: "",
+    		dataType: "JSON",
+    		success: function(result) {
+    			if (result && result.success) {
+    				// 省份
+    				provArr = result.messageObj;
+    				var jprov = $('.province');
+    				jprov.html('<option value="-1">--请选择省份--</option>');
+    				var provOptHtml = '';
+    				var len = provArr.length;
+    				for (var i=0; i<len; i++) {
+    					provOptHtml += '<option value="' + provArr[i].provId + '">' + provArr[i].provShortName + '</option>'
+    				}
+    				jprov.append(provOptHtml).bind('change', function() {
+    					initCities($(this).val());
+						$('.town').html('<option value="-1">--请选择区/县--</option>');
+    				});
+    			}
+    		}
+        });
+    }
+	
+	// 根据省份初始化该省下的市
+    function initCities(provId) {
+		
+    	var len = provArr.length;
+    	for (var i=0; i<len; i++) {
+    		if (provId == provArr[i].provId) {
+    			showCities(provArr[i].cityInfos);
+    		}
+    	}
+    }
+	
+	// 显示城市
+    function showCities(cityInfos) {
+    	var jCity = $('.city');
+    	jCity.html('<option value="-1">--请选择城市--</option>');
+		
+		cityArr = cityInfos;
+    
+    	var len = cityInfos.length;
+    	var cityOptHtml = '';
+    	for (var i=0; i<len; i++) {
+    		cityOptHtml += '<option value="' + cityInfos[i].cityId + '">' + cityInfos[i].cityShortName + '</option>'
+    	}
+    	jCity.append(cityOptHtml);
+    }
+	$('.city').bind('change', function() {
+    	initTowns($(this).val());
+    });
+	
+	// 根据市初始化该市下的县区
+    function initTowns(cityId) {
+    	var len = cityArr.length;
+    	for (var i=0; i<len; i++) {
+    		if (cityId == cityArr[i].cityId) {
+    			showTowns(cityArr[i].areaInfos);
+    		}
+    	}
+    }
+	
+	// 县区
+    function showTowns(areaInfos) {
+    	var jTown = $('.town');
+    	jTown.html('<option value="-1">--请选择区/县--</option>');
+    
+    	var len = areaInfos.length;
+    	var townOptHtml = '';
+    	for (var i=0; i<len; i++) {
+    		townOptHtml += '<option value="' + areaInfos[i].areaCode + '">' + areaInfos[i].areaShortName + '</option>'
+    	}
+    	jTown.append(townOptHtml);
+    }
+	if($("#compType").val() == "0"){
+		$("#tab1").show();
+		$("#tab2").hide();	
+	}else{
+		$("#tab1").hide();
+		$("#tab2").show();	
+	}
+	
+
+	//$("#endDate").val(GetDateStr(60));
+	//$("#endDate2").val(GetDateStr(60));
+	
+	//营业执照号
+	$("#corpLicenceNo").blur(function () {
+		checkMust($(this), $(this).parent().parent().find(".error"), "请输入营业执照号！");
+		//checkCorpLicenceNo($(this).parent().parent().find(".error"), value);
+	});
+	
+	J("#endDate").calendar({
+        format: 'yyyy-MM-dd',
+        minDate: GetDateStr(60),
+		onSetDate:function(){
+			if(this.getDateStr("date") == "0-0-0") $("#endDate").parent().parent().find(".error").text("请选择营业执照上的有效时间");
+			else {
+				$("#endDate").parent().parent().find(".error").text("");
+				$(".longtime").attr("checked", false);
+			}
+		}
+    });
+	
+	//营业执照期限日期
+	$("#endDate").blur(function () {
+		checkMust($(this), $(this).parent().parent().find(".error"), "请选择营业执照上的有效时间");
+	});
+	
+	//长期
+	$(".longtime").click(function(){
+		if($(this).is(":checked")){
+			$(this).parent().parent().parent().find(".datapick").val("长期")
+			$("#endDate").parent().parent().find(".error").text("");
+		}else{
+			$(this).parent().parent().parent().find(".datapick").val("");
+			$("#endDate").parent().parent().find(".error").text("请选择营业执照上的有效时间");
+		}
+	});
+	
+	//上传图片
+	$("body").delegate(".btn_liulan","click",function(){
+		var pathid = $(this).attr("forpath");
+		var imgid = $(this).attr("forimg");
+		var jIframe = $(this).parent().parent().parent().find(".iframe_upload").contents();
+		
+		jIframe.find("#input_path_id").val(pathid);
+		jIframe.find("#input_imgurl_id").val(imgid);
+		jIframe.find("#file_select").click();
+		
+	});
+
+	
+	 //组织结构代码
+	$(".register_corpOrganizeNo").blur(function () {
+		checkCorpOrganizeNo($(this), $(this).parent().parent().find(".error"), "请输入有效的组织机构代码证号！");
+	});
+	
+	var index_1 = 0;
+	var index_2 = 0;
+	//添加上传图片
+	$(".btn_fs").click(function(){
+		var html = "";
+		
+		var _index = $(this).attr("data-index");
+		if(_index == "1") {
+			index_1++;
+			html = '<div class="row_con" style="padding:10px 0 0 190px;"> <form action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data"><input id="file4_' + index_1 + '" type="text" class="login_input" readonly> <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl4_' + index_1 + '" forpath="file4_' + index_1 + '"></div> <a class="viewImg zj" href="#" title="其他证件扫描件"></a><span class="color_b3" onClick="delrow(this)" style="margin-left:20px;  cursor:pointer;">删除</span></form><div class="msg"></div><iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe></div><div class=clear></div>';
+		}
+		else if(_index == "2") {
+			index_2++;
+			html = '<div class="row_con" style="padding:10px 0 0 190px;"> <form action="${request.contextPath}/my/uploadFile.htm" method="post" enctype="multipart/form-data"><input id="file4_' + index_2 + '" type="text" class="login_input" readonly> <div class="relative inline"><input type="button" value="浏 览" class="btn_liulan" forimg="imageUrl4_' + index_2 + '" forpath="file4_' + index_2 + '"></div> <a class="viewImg zj" href="#" title="其他证件扫描件"></a><span class="color_b3" onClick="delrow(this)" style="margin-left:20px;  cursor:pointer;">删除</span></form><div class="msg"></div><iframe class="iframe_upload" src="${request.contextPath}/my/goFile.htm"></iframe></div><div class=clear></div>';
+		}
+		
+		var other_filelist = $(this).parent().parent().find(".other_filelist")
+		var i = $(".row_con",other_filelist).length;
+		if(i < 4){
+			other_filelist.append(html);
+			if(_index == "1") $("#viewImg" + index_1).lightBox({
+				imageLoading: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-ico-loading.gif',
+				imageBtnClose: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-close.gif',
+				imageBtnPrev: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-prev.gif',
+				imageBtnNext: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-next.gif'
+			});
+			else if(_index == "2") $("#viewImg" + index_2).lightBox({
+				imageLoading: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-ico-loading.gif',
+				imageBtnClose: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-close.gif',
+				imageBtnPrev: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-prev.gif',
+				imageBtnNext: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-next.gif'
+			});
+		}else{
+			alert("最多上传5个其他证件扫描件！");
+		}
+	})
+	
+	//详细地址
+	$(".register_corpAddr").blur(function () {
+		checkMust($(this), $(this).parent().parent().find(".error"), "请输入您公司的详细地址！");
+	});
+	
+	//添加经营网址
+	$(".btn_fsMin").click(function(){
+		var html='<div><div class="row_con" style="padding:10px 0 0 190px;"><input type="text" class="login_input url cutdown_words" maxlength="50"  data-tip-place="2"><span><span class="color_b3" onClick="delrowUrl(this)" style="margin-left:20px;  cursor:pointer;">删除</span></span></div><div class="pl190 h20 clear tip"></div></div>';
+		
+		var website=$(this).parent().parent().parent().find(".website");
+		var i=$(".row_con",website).length;
+		if(i>=3){
+			$(this).hide();
+		}
+		if(i<4){
+			website.append(html);
+		}else{
+			$(this).hide();
+			alert("您最多可以输入5个有效网址！");
+		}
+	});
+	/*
+	$("body").delegate(".url","blur",function(){
+		var tipObj = $(this).parent().parent().find(".tip");
+		if(!tipObj.hasClass("tip")) tipObj = $(this).parent().parent().parent().find(".tip");
+		tipObj.text("");
+		if($.trim($(this).val()) != ""){
+			if(!tipObj.hasClass("error")) tipObj.addClass("error");
+			checkUrl($(this), tipObj, "您输入的网址格式不正确，请重新输入，如：www.yongdapay.com")
+		}
+	});
+	*/
+	
+	
+	J("#endDate2").calendar({
+        format: 'yyyy-MM-dd',
+        minDate: GetDateStr(60),
+		onSetDate:function(){
+			if(this.getDateStr("date") == "0-0-0") $("#endDate2").parent().parent().find(".error").text("请选择登记证件上的有效时间");
+			else {
+				$("#endDate2").parent().parent().find(".error").text("");
+				$(".longtime2").attr("checked", false);
+			}
+		}
+    });
+	
+	$("#endDate2").blur(function () {
+		checkMust($(this), $(this).parent().parent().find(".error"), "请选择登记证件上的有效时间");
+	});
+	
+	$(".longtime2").click(function(){
+		if($(this).is(":checked")){
+			$(this).parent().parent().parent().find(".datapick").val("长期");
+			$("#endDate2").parent().parent().find(".error").text("");
+		}else{
+			$(this).parent().parent().parent().find(".datapick").val("");
+			$("#endDate2").parent().parent().find(".error").text("请选择登记证件上的有效时间");
+		}
+	});
+	
+	$('.viewImg').lightBox({
+				imageLoading: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-ico-loading.gif',
+				imageBtnClose: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-close.gif',
+				imageBtnPrev: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-prev.gif',
+				imageBtnNext: '${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/lightbox-btn-next.gif'
+			});
+	
+	$(".btn_submit1").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#corpLicenceName");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入企业名称！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var thisObj = $("#corpLicenceNo");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入营业执照号！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#endDate");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请选择营业执照上的有效时间！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		
+		thisObj = $("#file1");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传营业执照证件！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#corpOrganizeNo1");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkCorpOrganizeNo(thisObj, tipObj, "请输入有效的组织机构代码证号！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#file2");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传组织机构代码证！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#file3");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传税务登记证！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#register_corpProvince1");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		var value = thisObj.val();
+		if(value == "-1" || value == ""){
+			tipObj.text("请选择您公司地址！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		thisObj = $("#corpAddr1");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请输入您公司的详细地址！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var urlObj = $("#url1 .url");
+		var urlObj_len = urlObj.length;
+		var sites = "";
+		for(var i = 0; i < urlObj_len; i++){
+			tipObj = urlObj.eq(i).parent().parent().find(".tip");
+			if($.trim(urlObj.eq(i).val()) != ""){
+				if(!tipObj.hasClass("error")) tipObj.addClass("error");
+				flag = checkUrl(urlObj.eq(i), tipObj, "您输入的网址格式不正确，请重新输入，如：www.yongdapay.com")
+				if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+				sites = sites + jQuery.trim(urlObj.eq(i).val())+",";
+			}
+		}
+		
+		sites = sites.substring(0,sites.length-1);
+		var province = $('#province1 option:selected').text();
+		var city = $('#city1 option:selected').text();
+		var town = $('#town1 option:selected').text();
+		
+		if(province == "" || province =="--请选择省份--"){
+			$("#addrError").text("请选择省份");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		if(city == "" || city =="--请选择城市--"){
+			$("#addrError").text("请选择城市");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		if(town == "" || town =="--请选择区/县--"){
+			$("#addrError").text("请选择区/县");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		jQuery.ajax({
+        	type: "post",
+    		url: "${request.contextPath}/my/enterprise-certification.htm",
+    		dataType: "json",
+    		data: {compType:$("#compType").val(),corpLicenceName:$("#corpLicenceName").val(),corpLicenceNo:$("#corpLicenceNo").val(),endDate:$("#endDate").val(),imageUrl1:$("#imageUrl1").val(),
+			corpOrganizeNo1:$("#corpOrganizeNo1").val(),imageUrl2:$("#imageUrl2").val(),imageUrl3:$("#imageUrl3").val(),imageUrl4:$("#imageUrl4").val(),
+			icpNo:$("#icpNo").val(),corpAddr1:$("#corpAddr1").val(),site:sites,scope:$("#scope").val(),
+			province:province,city:city,town:town,imageUrl4_1:$("#imageUrl4_1").val(),imageUrl4_2:$("#imageUrl4_2").val(),
+			imageUrl4_3:$("#imageUrl4_3").val(),imageUrl4_4:$("#imageUrl4_4").val()},
+    		success: function(result){
+    			if (result.success) {
+					var otherFile = result.data.otherUrl;
+					$("#commonError").text("")
+    				window.location.href = '${request.contextPath}/my/go-account-certification.htm?otherFile='+encodeURIComponent(otherFile);
+    			}else{
+					$("#commonError").html(result.message);
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				}
+    		},
+    		error: function(XMLHttpRequest, textStatus, errorThrown){
+    			$("#commonError").text(G.sysError);
+    			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				window.location.href="${request.contextPath}/index.htm";
+    		}
+        });
+		
+	});
+	
+	$(".btn_submit2").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#regName");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入组织名称！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var thisObj = $("#registration");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入登记证件名称！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var thisObj = $("#idNum");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var flag = checkMust(thisObj, tipObj, "请输入登记证件号码！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#file5");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传登记证件扫描件！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#endDate2");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请选择登记证件上的有效时间！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#corpOrganizeNo2");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkCorpOrganizeNo(thisObj, tipObj, "请输入有效的组织机构代码证号！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		thisObj = $("#file6");
+		tipObj = thisObj.parent().parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请上传组织机构代码证！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var province = $('#province2 option:selected').text();
+		var city = $('#city2 option:selected').text();
+		var town = $('#town2 option:selected').text();
+		
+		if(province == "" || province =="--请选择省份--"){
+			$("#addrError2").text("请选择省份");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		if(city == "" || city =="--请选择城市--"){
+			$("#addrError2").text("请选择城市");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		if(town == "" || town =="--请选择区/县--"){
+			$("#addrError2").text("请选择区/县");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		thisObj = $("#corpAddr2");
+		tipObj = thisObj.parent().parent().find(".error");
+		flag = checkMust(thisObj, tipObj, "请输入您公司的详细地址！");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var urlObj = $("#url2 .url");
+		var urlObj_len = urlObj.length;
+		var sites = "";
+		for(var i = 0; i < urlObj_len; i++){
+		    tipObj = urlObj.eq(i).parent().parent().find(".tip");
+			if($.trim(urlObj.eq(i).val()) != ""){
+    			flag = checkUrl(urlObj.eq(i), tipObj, "您输入的网址格式不正确，请重新输入，如：www.yongdapay.com")
+    			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+    			sites = sites + jQuery.trim(urlObj.eq(i).val())+",";
+			}
+		}
+		
+		sites = sites.substring(0,sites.length-1);
+		
+		jQuery.ajax({
+        	type: "post",
+    		url: "${request.contextPath}/my/enterprise-certification.htm",
+    		dataType: "json",
+    		data: {compType:$("#compType").val(),corpLicenceName:$("#regName").val(),registration:$("#registration").val(),corpLicenceNo:$("#idNum").val(),
+			endDate:$("#endDate2").val(),imageUrl5:$("#imageUrl5").val(),imageUrl6:$("#imageUrl6").val(),
+			corpOrganizeNo1:$("#corpOrganizeNo2").val(),
+			icpNo:$("#icpNo2").val(),corpAddr1:$("#corpAddr2").val(),site:sites,scope:$("#scope2").val(),
+			province:province,city:city,town:town,imageUrl4_1:$("#imageUrl4_1").val(),imageUrl4_2:$("#imageUrl4_2").val(),
+			imageUrl4_3:$("#imageUrl4_3").val(),imageUrl4_4:$("#imageUrl4_4").val(),imageUrl4:""},
+    		success: function(result){
+    			if (result.success) {
+					$("#commonError").text("");
+    				window.location.href = '${request.contextPath}/my/go-account-certification.htm';
+    			}else{
+					$("#commonError").html(result.message);
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				}
+    		},
+    		error: function(XMLHttpRequest, textStatus, errorThrown){
+    			$("#commonError").text(G.sysError);
+    			btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				window.location.href="${request.contextPath}/index.htm";
+    		}
+        });
+	});
+
+
+})
+
+
+
+
+
+</script>

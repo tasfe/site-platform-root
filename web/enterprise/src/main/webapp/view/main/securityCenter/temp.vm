@@ -1,0 +1,37 @@
+<form action="#springUrl('/softcertActivate/gotoview.htm')" method="GET"><input type="hidden" id="btype" name="btype" value=""></form>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/cert.js"></script>
+<script>
+$(function(){
+	jQuery.ajax({
+        type: 'GET',
+        url: "#springUrl('/softcertActivate/checkSoftCert.htm')",
+		dataType: "json",
+		cache: false,
+        success: function(response) {
+         if(response.success) {
+			var certSns = response.data.certSns;
+			for(var i = 0; i < certSns.length; i++) {
+				certArr = filterCerts("", 0 , certSns[i]);
+				if(certArr != null && certArr.length > 0) { // 是证书用户，并且本机安装了证书
+					$("#btype").val("isCertUser");
+					$("form").submit();
+					return;
+				} 
+			}
+			// 是证书用户，但本机未安装了证书
+			$("#btype").val("NotInstallCertUser");
+			$("form").submit();
+         } else {
+		 	//非证书用户isNotCertUser
+            $("#btype").val("isNotCertUser");
+			$("form").submit();
+         }
+        }
+	});
+})
+</script>

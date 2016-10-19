@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <title>我的</title>
+   <style>
+  .scroll{position:absolute; overflow-y:scroll; overflow-x:hidden; -webkit-overflow-scrolling: touch; top:0; left:0; bottom:0; right:0}
+  </style>
+</head>
+<body style="display: none;">
+<div class="yd-wrap meWrap scroll">
+  <header id="J_GoUserInfo" class="me-header J_Link" data-href="/userInfo.html">
+    <div class="me-userInfo">
+      <div class="me-userHeader">
+        <img id="J_HeadPic" src="#" >
+      </div>
+      <div id="J_Account" class="me-userMobile">-</div>
+    </div>
+  </header>
+  <section class="me-walletInfo">
+    <div id="J_BalanceInfo" class="me-walletInfoItem me-walletInfoItemFirst J_Link" data-href="/balance.html">
+      <span id="J_Balance" class="me-walletInfoNumber">0.00</span>
+      <span class="me-walletInfoTitle">余额</span>
+    </div>
+    <div id="J_BankCardInfo" class="me-walletInfoItem J_Link" data-href="/cardList.html">
+      <span id="J_BankCardNum" class="me-walletInfoNumber">0</span>
+      <span class="me-walletInfoTitle">银行卡</span>
+    </div>
+  </section>
+  <div class="me-contentList" style="overflow:hidden;">
+    <div class="me-list" style="background:#FBFBFB;">
+      <ul class="yd-itemList itemMarginLeft">
+        <li class="J_LinkToken" data-href="/insurance/remote/manage" data-linkpre="/"><i class="icon-me icon-baodan" style="margin-left:-9px;">&nbsp;</i>我的保单<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+        <li class="J_LinkToken" data-href="/youka/remote/add" data-linkpre="/"><i class="icon-me icon-youka" style="margin-left:-9px;">&nbsp;</i>我的油卡<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+        <li class="J_Link" data-href="/message.html"><i class="icon-me icon-xiaoxi" style="margin-left:-9px;">&nbsp;</i>消息中心<span id="J_PointerXiaoXi" class="msgPointer" style="width:6px;height:6px;margin-left:10px;vertical-align:middle; display:none;"></span><span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+        <li class="J_Link" data-href="/helpCenter.html"><i class="icon-me icon-wenti" style="margin-left:-9px;">&nbsp;</i>常见问题<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+      </ul>
+    </div>
+    <div class="me-list" style="margin-top:2%;background:#FBFBFB;">
+      <ul class="yd-itemList itemMarginLeft">
+        <li class="J_Link" data-href="/setting.html"><i class="icon-me icon-shezhi" style="margin-left:-9px;">&nbsp;</i>设置<span class="yd-layouts-right"><i class="icon-me icon-arrow">&nbsp;</i></span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="bottomNav">
+  <div class="bottomNavItem" id="J_ShouYe">
+    <span class="bottomNavIcon icon-shouye"></span>
+    <span class="bottomNavText">首页</span>
+  </div>
+  <div class="bottomNavItem" id="J_FaXian">
+    <span class="bottomNavIcon icon-faxian"></span>
+    <span class="bottomNavText">发现</span>
+  </div>
+  <div class="bottomNavItem" id="J_WoDe">
+    <span class="bottomNavIcon icon-wode wode-active"></span>
+    <span class="bottomNavText">我的</span>
+  </div>
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!--<script async src="js/yongda_ud_fp.js"></script>-->
+<script async src="https://service.udcredit.com:10000/sdk/device-fingerprint/web?partnerCode=201601141404&appKey=wIqeiVOn6oxloDvzbD3X"></script>
+<script>
+  var overscroll = function(el) {
+      el.addEventListener('touchstart', function() {
+        var top = el.scrollTop
+          , totalScroll = el.scrollHeight
+          , currentScroll = top + el.offsetHeight;
+        //If we're at the top or the bottom of the containers
+        //scroll, push up or down one pixel.
+        //
+        //this prevents the scroll from "passing through" to
+        //the body.
+        if(top === 0) {
+          el.scrollTop = 1;
+        } else if(currentScroll === totalScroll) {
+          el.scrollTop = top - 1;
+        }
+      });
+      el.addEventListener('touchmove', function(evt) {
+        //if the content is actually scrollable, i.e. the content is long enough
+        //that scrolling can occur
+        if(el.offsetHeight < el.scrollHeight)
+          evt._isScroller = true;
+      });
+    }
+    overscroll(document.querySelector('.scroll'));
+    document.body.addEventListener('touchmove', function(evt) {
+      //In this case, the default behavior is scrolling the body, which
+      //would result in an overflow.  Since we don't want that, we preventDefault.
+      if(!evt._isScroller) {
+        evt.preventDefault();
+      }
+});
+
+//-------------------分割线
+  var wHeight=$(window).height();
+  wHeight=wHeight-60;
+  $(".meWrap").height(wHeight);
+  var J_HeadPic = $("#J_HeadPic"),
+          J_Account = $("#J_Account"),
+          J_Balance = $("#J_Balance"),
+          J_BankCardNum = $("#J_BankCardNum");
+
+  tools.ajaxSubmit({
+    "url": gurl + "/getAllUserInfo",
+    "suc_suc": function(response){
+      // 已登录 则填值
+      $("body").show();
+      var data = response.data;
+
+      var storage = window.sessionStorage;
+      storage.setItem("userinfo",JSON.stringify(data.userinfo));
+      var jUserInfo = $.parseJSON(storage.getItem("userinfo"));
+      J_HeadPic.attr("src",storage.getItem("txurl"));
+      J_Account.text(jUserInfo.loginName);
+      J_Balance.text(parseFloat(jUserInfo.account.availableBalance.amount).toFixed(2));
+      J_BankCardNum.text(jUserInfo.bankCardCount);
+
+      //J_PointerXiaoXi
+    }
+  });// ajaxSubmit
+
+  // 获取我的消息 未考虑缓存数据
+  tools.ajaxSubmit({
+    "type": "GET",
+    "data": {"currentPage":1,"pageSize":1,"isRead":"no"},//pageSize 5
+    "url": gurl + "/message/my/weixin",
+    "suc_suc": function(response){
+      $("body").show();
+      var data = response.data.pageData;
+      if(data.length >= 1){
+        $("#J_PointerXiaoXi").show();
+      }
+    }
+  });// ajaxSubmit
+
+  $(".scroll").css("overflow-x","hidden");
+  $(".scroll").css("overflow-y","scroll");
+</script>
+</body>
+</html>

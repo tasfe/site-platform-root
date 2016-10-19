@@ -1,0 +1,99 @@
+<div class="zhanghu_infor">
+     <div class="wrap">
+             <div class="account_number_manager">
+             
+                    <div class="user_ibox">
+                        
+                        
+                            <h2 class="h2_titform"><em>找回登录密码</em>正在为账户<i class="fc_r_red"> $!{loginName} </i>找回登录密码，请选择找回方式</h2>
+                            <ul class="zhaohui_ul">
+                                <li class="pngFixBg marb20">
+                                    <span class="tit phone pngFixBg">通过手机号找回</span><br />
+                                    <span class="marl120">
+										#if($!{personMember.mobileStar})
+											如果你的${personMember.mobileStar}手机还在正常使用，推荐选择此方式
+										#end
+										</span>
+                                    <span class="btn_span">
+										#if($!{personMember.mobileStar})
+											<button id="goRefindPhone" type="button" class="btn_h40_red bold">立即找回</button>
+										#else
+											<span style="color:red">您没有绑定手机</span>
+										#end</span>
+                                </li>
+								
+								
+                                <li class="pngFixBg marb20">
+                                    <span class="tit mail pngFixBg">通过邮箱找回</span><br />
+                                    <span class="marl120">
+										#if($!{personMember.email})
+											如果你的$!{personMember.email}邮箱还在正常使用，推荐选择此方式
+										#end
+										</span>
+                                    <span class="btn_span">
+										#if($!{personMember.email})
+											<button id="goRefindEmail" type="button" class="btn_h40_red bold">立即找回</button>
+										#else
+											<span style="color:red">您没有绑定邮箱</span>
+										#end
+										</span>
+                                </li>
+								
+								<!--
+                                <li class="pngFixBg marb20">
+                                    <span class="tit service pngFixBg">通过人工找回</span><br />
+                                    <span class="marl120">提交客服进行登录密码重置</span>
+                                    <span class="btn_span"><button id="rechargeSubmit" type="button" class="btn_h40_red bold">立即找回</button></span>
+                                </li>
+								-->
+                            </ul>
+                            
+                            
+                    </div>                                                          
+              </div>
+     </div>
+</div>
+	
+<script type="text/javascript">
+
+	$("#goRefindPhone").click(function(){
+		location.href="${request.contextPath}/my/refind/loginPwd/phoneFirst.htm";
+	});
+	
+	$("#goRefindEmail").click(function(){
+		location.href="${request.contextPath}/my/refind/loginPwd/goRefindEmail.htm";
+	});
+	
+	
+	$("#loginName").blur(function(){
+    	$(this).parent().children(".error").remove();
+    	if($(this).val()==""){
+    		$(this).parent().append("<label class='error'>账户名不能为空</label>");
+    		return false;
+    	}
+    	ajaxCheckLoginNameIsExist($(this));
+	});
+	
+    function ajaxCheckLoginNameIsExist(obj){
+    	jQuery.ajax({      
+    	 	data:{
+    			loginName:obj.val()
+    		},
+            type: "Post",     
+            url: "${request.contextPath}/my/refind/loginPwd/checkLoginNameIsExist.htm",     
+            dataType: "json",     
+            success: function(data) {  
+    			if(data){
+					
+    			}else{
+    				obj.parent().append("<label class='error'>账户名未注册</label>");
+    			}
+            },     
+            error: function(err) {     
+            }     
+        });    
+    };
+
+
+</script>
+

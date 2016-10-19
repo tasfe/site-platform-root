@@ -1,0 +1,675 @@
+#set($path = ${request.contextPath})
+<!-- S 主要内容 -->
+<div class="wrap ">
+     <div class="page_title">
+    	<h2></h2>
+    </div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/accountSetting.htm')">
+     	  	   	             <span class="subNavIcon jbxx"></span>
+                             <span class="subNavTxt">基本信息</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock" href="#springUrl('/my/securityInfo.htm')">
+     	  	   	             <span class="subNavIcon aqsz"></span>
+                             <span class="subNavTxt">安全设置</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/contacts/toContactsHome.htm')">
+     	  	   	             <span class="subNavIcon lxr"></span>
+                             <span class="subNavTxt">联系人</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+          <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1">添加联系人</div>
+               <div class="account_set_right_con_100">
+               		<div class="bankcx_xz" style="padding-left:263px; padding-top:60px;"><label><input type="radio" name="addr"  id="kjt_lxr" checked="checked">添加永达互联网金融用户联系人</label><label><input type="radio" name="addr" id="bank_lxr">添加银行账户联系人</label></div>
+	
+    	<div class="tab1" >
+		<form id="kjtContactsForm">
+		<table cellpadding="0" cellspacing="0" border="0" class="bankcx " id="addAccountlist"  style="">
+            <tr><td width="354" class="text_l b f14">永达互联网金融帐号：</td><td><input type="text" class="inputtext w198 kjtzz" id="kjtAccount0" name="kjtAccountList" value="$!{kjtContacts}"></td></tr>
+		</table>
+        <table  border="0" cellspacing="0" cellpadding="0" style="margin:0" class="bankcx">
+            <tbody>
+            	<tr>
+                    <td style="padding:0;" width="354"></td>
+                    <td style="padding:0;"><div style="height:30px; line-height:30px;" class="error"></div></td>
+                </tr>
+                <tr>
+                    <td width="354"></td>
+                    <td><a class="a_add" href="javascript:" onclick="addAccount()" style="float:left; margin-right:5px; background-position:0 8px;">添加账户</a> <span style=" float:left; height:28px; line-height:28px;">注：最多可添加5人</span></td>
+                </tr>
+             </tbody>
+         </table>
+		 </form>
+        </div>
+        
+        <table cellpadding="0" cellspacing="0" border="0" class="bankcx tab2" style="display:none;">
+			<form id="addcontactbankform">
+			<tr><td width="354" class="text_l b f14">银行账户类型：</td><td><div class="select_div"><select id="cardAttr" name="cardAttr"><option value="1" selected>个人</option><option value="0">企业</option></select></div></td></tr>
+            <tr><td width="354" class="text_l b f14">开户名：</td><td><input type="text" class="inputtext w198" id="addAccountname" name="accountName"> <a style="color: #08c;" href="javascript:void(0)" class="f12" id="unfamiliarLink">选择生僻字</a></td></tr>
+            <tr><td class="text_l b f14">开户支行：</td><td><input type="text" class="inputtext w198" id="branchName" name="branchName"> <input type="button" value="查询支行信息" class="cxzhxx" ></td></tr>
+            <tr><td class="text_l b f14">银行账号：</td><td><input type="text" class="inputtext w198" id="accountNo" name="accountNo"></td></tr>
+            <tr><td class="text_l b f14">确认银行账号：</td><td><input type="text" class="inputtext w198" id="confirmAccountNo" name="confirmAccountNo"></td></tr>
+				
+				
+			<input type="hidden" id="bankCode" name="bankCode" class="bankCode"/>
+			<input type="hidden" id="bankName" name="bankName" class="bankName"/>
+			<input type="hidden" name="province" class="province"/>
+			<input type="hidden" name="city" class="city"/>
+			<input type="hidden" name="branchCode" value="" class="branchCode"/>
+          
+            <tr><td style="padding:0;"></td><td style="padding:0;"><div class="error h22"></div></td></tr>
+			</form>
+		</table>
+		
+		<div class="div_btn_submit"> <input type="button" class="btn_qr btn_sumbit"><input type="button" class="btn_fh ml30" onclick="history.go(-1);return false;"></div>
+                    
+               </div>
+
+
+     	  </div>
+     	  <!-- S 右边内容 -->
+
+     </div>
+
+</div>
+<style>
+.tabzcct td.text_l{ padding:0;}
+</style>
+<script>
+var time = 3; 
+var un=[
+		["a","奡靉叆"],["b","仌昺竝霦犇愊贲琲礴埗別骉錶"],["c","旵玚棽琤翀珵楮偲赪瑒篪珹捵茝鷐铖宬査嶒"],["d","耑昳菂頔遆珰龘俤叇槙璗惇"],["e","峩"],["f","仹汎沨昉璠雰峯洑茀渢棻棻頫"],["g","玍冮芶姏堽粿筦嘏釭"],["h","郃浛訸嗃瓛翃隺鋐滈翚翯竑姮葓皜袆淏皞翙銲鉷澒澔閤婳黃峘鸻鈜褘锽谹嫮"],["i",""],["j","冏泂劼莙濬暕珒椈珺璟競煚傑玦鑑瑨瑨琎勣寯烱浕斚倢瑴畯雋傢峤"],["k","凱堃蒯鹍崑焜姱衎鵾愷鎧"],["l","玏呂俍冧倞琍綝壘孋瓅璘粦琍麗樑秝鍊崚链镠皊箖菻竻鸰琭瓈騄浬瑠嶺稜欐昽"],["m","劢忞旻旼濛嫚媺铓鋩洺媌媔祃牻慜霂楙媄瑂"],["n","婻寗嫟秾迺柟薿枏"],["o",""],["p","芃玭玶罴毰珮蘋慿弸掽逄砯"],["q","玘佺耹踆骎啟蒨慬勍嵚婍璆碏焌駸綪锜荍釥嶔啓"],["r","汭瑈瑢讱镕婼叡蒻羢瀼"],["s[sh]","屾昇妽珅姼甡湦骦塽挻甦鉥燊遂陞莦湜奭佀聖骕琡"],["t","沺凃禔慆弢颋譚曈榃湉珽瑱橦镋渟黇頲畑媞鰧"],["u",""],["v",""],["w","卍彣炆溦娬韡暐偉湋妏硙珷娒"],["x","仚旴忺炘昍烜爔斅豨勲敩虓鈃禤燮瑄晞賢翾譞諕璿琇晛焮珣晅郤禼皛哓肸谞迿咲婞昫缐姁猇欻箮翛暁"],["y","乂冘弌贠伝伃杙沄旸玙玥垚訚堯溁嫈澐颺熤儀赟祎瑀湧燚嬿鋆嫄愔贇彧崟韻龑颙晹媖顒禕羕炀弇湲霙嫕浥飏峣曣億雲愔洢暘钖垟詠燿鹓歈貟瑩燏暎畇娫矞祐溳崯颍煬靷谳異軏繄"],["z[zh]","烝梽喆禛誌曌衠淽枬詟炤昝珘赒"]
+		];
+$(function(){
+	//生僻字
+	int();
+	$("#unfamiliarLink").click(function(){
+		var top=$(this).offset().top;
+		var left=$(this).offset().left;
+		$(".unfamiliar").css({"left":left-200,"top":top+11}).show();
+		$(".unfamiliar-spells a:first").addClass("selected");
+		return false;
+	})
+	
+	$(".unfamiliar-spells a").live("hover",function(){
+		$(this).addClass("selected").siblings().removeClass("selected");
+		$(".unfamiliar-words").empty();
+		var id=$(this).attr("data-id");
+		var str=un[id][1];
+		for(i=0;i<str.length;i++){
+			var html='<a style="z-index:10;" class="unfamiliar-word" href="javascript:void(0)">'+str.charAt(i)+'</a>'
+			$(".unfamiliar-words").append(html)			
+		}
+		return false;
+	})
+	$(".unfamiliar-words a").live("click",function(){
+		var v=$(this).text();
+		var t=$("#addAccountname").val();
+		var newval=t+v;
+		$(".unfamiliar").hide();
+		$("#addAccountname").val(newval);
+	})
+	$(document).bind('click',function(e){
+		var e = e || window.event; //浏览器兼容性
+		var elem = e.target || e.srcElement;
+		while (elem) { //循环判断至跟节点，防止点击的是div子元素
+			if (elem.id && elem.id=='unfamiliar') {return;}
+			elem = elem.parentNode;
+		}
+		
+		$('.unfamiliar').hide(); //点击的不是div或其子元素
+	}); 
+
+	$("#kjt_lxr").attr("checked","checked");
+	$(".tab1").show();
+	$(".tab2").hide();
+	
+		
+	$("input[name=addr]").click(function(){
+		if($(this).is(":checked")){
+			if($(this).attr("id")=="kjt_lxr"){
+				$(".tab1").show();
+				$(".tab2").hide();
+			}else if($(this).attr("id")=="bank_lxr"){
+				$(".tab1").hide();
+				$(".tab2").show();
+			}
+		}
+		
+		
+	})
+	
+	
+	// 初始化可选择的银行信息
+	initCorpBanks('infoedit');
+	
+	// 初始化所有省市、支行
+	initProvinces('infoedit');
+	
+	
+	$(".btn_sumbit").click(function(){
+		//永达互联网金融联系人 确认
+		if($(".tab1").is(":visible")){
+			var err=true;
+			$(".tab1 .error").text("");
+			$("#addAccountlist .kjtzz").each(function(){
+				var v=$(this).val();
+				if(v==""){
+					$(".tab1 .error").text("请输入联系人帐号！");
+					err=false;
+				}
+			});
+			if(err==false){return false;}
+			
+			// 整理要添加的永达互联网金融账户
+			var paramData = getFormInputParam('kjtAccountList');
+			
+			jQuery.ajax({           
+                type: 'post',
+                data: paramData,   
+                url: '$!{path}/contacts/toAddKjtContacts.htm',
+    			dataType: 'json',
+				cache:false,
+                success: function(data) { 
+    				if (!data || !data.success || !data.messageObj || data.messageObj == "") {
+    					$(".tab1 .error").text("您输入的账号不存在！");
+            			return false;
+    				}
+    				
+    				var dataObj = data.messageObj;
+            		var tableContent = "";
+    				var status = 0;
+            		$(dataObj).each(function(i, item) {
+    					// 检查是否永达互联网金融账号不存在
+    					if (!item.contactIdentity) {
+    						status = -1;
+    					}else{
+    						tableContent += '<tr><td width="153" class="text_l"><span class="b">永达互联网金融账号：</span></td><td width="200">'
+        					+item.contactIdentity+'</td><td><input type="text" class="inputtext w198 placeholder username" data-placeholder="请输入备注" name="remarkList" maxlength="20" ></td></tr><tr><td width="153" class="text_l"><span class="b"></span></td><td width="200"></td><td ><div class="error h22"></div></td></tr>';		
+    					}
+                    });
+		
+    				if (status == -1) {
+    					$(".tab1 .error").text("您输入的账号不存在！");
+    					return false;
+    				}
+					
+            		var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+        			html += '<form class="lxr_form" id="kjt_qr_form"><table cellpadding="0" cellspacing="0" border="0" class="bankcx f14 tabzcct">';
+        			html += tableContent;
+        			html += '</table></form>';
+        			html += '</div></div>';
+        			html += '<div class="div_btn_submit"> <input type="button" class="btn_qrtjia" id="kjtcontact_qr"><input type="button" class="btn_cxtj ml30" onclick="closeSW();"></div></div>';
+        			
+        			var s=dataObj.length,h="";
+					
+        			if(s==1){
+        				h=280;
+        			}else if(s==2){
+        				h=330;
+        			}else if(s==3){
+        				h=380;
+        			}else if(s==4){
+        				h=430;
+        			}else if(s==5){
+        				h=480;
+        			}
+        			showWin('html', html, '', 640, h, '确认联系人', '', '');
+					$(".placeholder").blur();
+                    }
+        });
+	
+			
+			
+			
+		//银行联系人 确认	
+		}else if($(".tab2").is(":visible")){
+			
+			var addAccountname=$("#addAccountname").val();
+			var addAccountbank=$("#branchName").val();
+			var addAccountbankuser=$("#accountNo").val();
+			var addAccountbankuser2=$("#confirmAccountNo").val();
+			
+			var err=true;
+			$(".tab2 .error").text("");
+			if(addAccountname==""){$(".tab2 .error").text("请输入联系人的开户名");return false;}
+			if(addAccountbank==""){$(".tab2 .error").text("请输入联系人的支行信息");return false;}
+			if(addAccountbankuser==""){$(".tab2 .error").text("请输入银行账户信息");return false;}
+			if(addAccountbankuser2==""){$(".tab2 .error").text("请输入确认银行账户信息");return false;}
+			if(addAccountbankuser!=addAccountbankuser2){$(".tab2 .error").text("您输入的两遍银行账户信息不一致，请重新输入！");return false;}
+			
+			if(!RegExp(regexEnum.bankcard).test(addAccountbankuser)){$(".tab2 .error").text("请输入8-26位数字组成的银行账户");return false;}
+			if(!RegExp(regexEnum.bankcard).test(addAccountbankuser2)){$(".tab2 .error").text("请输入8-26位数字组成的银行账户");return false;}
+			
+			var paramStr = getParamStr($("#addcontactbankform").serializeArray());
+			
+			jQuery.ajax({           
+                type: 'post',
+                data: paramStr,    
+                url: '$!{path}/contacts/toAddBankContacts.htm',
+    			dataType: 'json',
+				cache:false,
+                success: function(data) {
+    				if (!data || !data.success || !data.messageObj) {
+    					$(".tab2 .error").html("您添加的银行账号不存在");
+            			return false;
+    				}
+    				var dataObj = data.messageObj;
+    				if (!dataObj.contactIdentity) {
+    					$(".tab2 .error").html("您添加的银行账号不存在");	
+    					return false;
+    				}
+					
+					jQuery.ajax({
+                        type:'post', 
+                        data: paramStr, 
+						cache:false,
+                        url:"$!{path}/contacts/addBankContacts.htm",                           
+                        success:function(data){
+							if(data.success){
+                				var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+                    			html += '<form class="lxr_form"><table cellpadding="0" cellspacing="0" border="0" class="bankcx f14" width="100%">';
+                    			html += '<tr><td style="text-align:center;"><i class="txsh_wq2"><span class="f16 b">银行联系人添加成功！</span></i></td></tr>';
+                    			html += '</table>';
+                    			
+                    			html += '<div class="div_btn_submit"><span class="red" id="number"></span>秒后将自动返回<a href="#springUrl('/contacts/toContactsHome.htm')">联系人管理</a>页面</div></div>';
+                    			
+                    			
+                    			showWin('html', html, '', 640, 280, '确认联系人', '', '');
+                    			number();
+							}else{
+								if(data.message){
+									$(".tab2 .error").text(data.message);
+								}else{
+									$(".tab2 .error").text("添加银行卡联系人失败！"); 	
+								}
+								
+							}
+                        },
+                        dataType:'json',
+                        error:function (){                
+            				$(".tab2 .error").text("添加银行卡联系人失败！"); 
+                        }
+                    });
+					
+					
+    			},
+                error: function (){
+                	$(".tab2 .error").text("添加银行卡联系人失败！");          
+                }
+            });
+			
+			
+		}
+		
+	});
+	//确认永达互联网金融联系人确认-提交
+	$("#kjtcontact_qr").live("click",function(){
+		var err=true;		
+		var paramData = '';
+    	$('#kjt_qr_form input[name="remarkList"]').each(function(index, obj) {
+			if($(obj).val()==""||$(obj).val()=="请输入备注"){
+				$(this).parent().parent().next().find(".error").text("请输入备注");
+				err=false;
+				return false;
+			}
+    		if (index == 0) {
+    			paramData += 'remarkList=' +  $(obj).val();
+    		} else {
+    			paramData += '&remarkList=' +  $(obj).val();
+    		}
+    	});
+		if(err==false){return false;}
+		
+		jQuery.ajax({
+        	type: "post",
+    		url: "$!{path}/contacts/addKjtContacts.htm",
+    		data: paramData,
+			cache:false,
+    		dataType: "JSON",
+    		success: function(result){
+				if (result && result.success) {
+					window.location.href = '${request.contextPath}/contacts/toContactsHome.htm';
+				} else {
+					alert("添加联系人失败！");
+				}
+				closeSW();
+    		}
+        });
+	});
+	
+	$(".cxzhxx").click(function(){
+		var html = '<div id="branchFloat" class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		html += '<div class="bankcx_xz" style="display:none;"><label><input type="radio" name="infoType" value="0" checked>地区查询</label>'
+			+ '<label><input type="radio" name="infoType" value="1">行号查询</label><a href="#">什么是行号？</a></div>';
+		html += '<table id="addrTable" cellpadding="0" cellspacing="0" border="0" class="bankcx">';
+		html += '<tr><td width="184" class="text_l">开户银行：</td><td><div class="select_div">'
+			+ '<select name="bankSeq" id="bankName2">'
+				+ '<option value="-1">--请选择--</option></select></div></td></tr>';
+		html += '<tr><td class="text_l">地区：</td>';
+		html += '<td><div class="select_div" style="margin-right:10px;">'
+			+ '<select name="bankSeq" id="province" >'
+				+ '<option value="-1">--请选择省份--</option></select></div>'
+			+ '<div class="select_div"><select name="bankSeq" id="city">'
+				+ '<option value="-1">--请选择城市--</option></select></div></td></tr>';
+		html += '<tr><td class="text_l">开户网点：</td><td class="pt10">'
+		+ '<select name="bankSeq" id="subBranch" class="chzn-select w232" >'
+		+ '<option value="-1">--请选择--</option></select></td></tr>';
+		html += '</table>';
+		html += '<table id="branchCodeTable" style="display:none" cellpadding="0" cellspacing="0" border="0" class="bankcx">'
+			+ '<tr><td width="184" class="text_l">支行行号：</td><td><input name="branchCode" class="inputtext w232 placeholder" data-placeholder="请输入行号并点击查询" />&nbsp;&nbsp;'
+				+ '<a href="javascript:void(0)" click="queryBranch()">查询</a>'
+			+'</td></tr>'
+			+ '<tr><td width="184" class="text_l">支行名称：</td><td><input name="branchName" class="inputtext w232" readonly="true" /></td></tr>'
+			+ '</table>';
+		html += '</div></div>';
+		html += '<div class="div_btn_submit"><input type="button" class="btn_qr branch_qr">'
+			+ '<input type="button" class="btn_qx ml30" onclick="closeSW();"></div></div>';
+		
+		showWin('html', html, '', 700, 400, '查询支行信息', '', '');
+		
+		$("#branchFloat #subBranch").chosen();
+		// 初始化可选择的银行信息
+    	initCorpBanks('branchFloat');
+    	
+    	// 初始化所有省市、支行
+    	initProvinces('branchFloat');
+		
+		// 地区、行号切换事件
+		$('input[name="infoType"]').bind('change', function() {
+			if ($(this).is(':checked')) {
+				var radioVal = $(this).val();
+				if (radioVal == 0) {
+					$('#branchFloat #addrTable').show();
+					$('#branchFloat #branchCodeTable').hide();
+				} else {
+    				$('#branchFloat #addrTable').hide();
+    				$('#branchFloat #branchCodeTable').show();
+    			}
+			} 
+		});
+		
+		// 初始化行号
+		$('#branchFloat input[name="branchCode"]').focus();
+		
+		$("#bankName2").live("change",function(){
+        	// 初始化所有省
+        	$("#province").val("-1");
+    		//初始化城市
+			$("#city").html('<option value="-1">--请选择城市--</option>');
+			$("#subBranch").html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+		});
+		
+		$("#city").bind('change', function() {
+    		initBranches("branchFloat", $('#bankName2').val(), $(this).val());
+    	});
+		
+		// 初始化查询支行信息确认事件
+		$('#branchFloat .branch_qr').bind('click', function() {
+			var infoType = $('#branchFloat input:checked[name="infoType"]').val();
+			if (0 == infoType || '0' == infoType) {
+				// 地区查询
+				
+				if($("#bankName2").val()==""||$("#bankName2").val()=="-1"){
+					alert("请选择您的开户银行");return false;
+				}
+				if($("#province").val()==""||$("#province").val()=="-1"){
+					alert("请选择您开户银行所在地区");return false;
+				}
+				if($("#city").val()==""||$("#city").val()=="-1"){
+					alert("请选择您开户银行所在地区");return false;
+				}
+				if($("#subBranch").val()==""||$("#subBranch").val()=="-1"){
+					alert("请输入您的开户银行支行名称");return false;
+				}
+				
+				var jBranch = $('#branchFloat #subBranch option:selected');
+				var bankBranch = $('#branchFloat #bankName2 option:selected');
+				var provBranch = $('#branchFloat #province option:selected');
+				var cityBranch = $('#branchFloat #city option:selected');
+
+				$('#branchName').val(jBranch.text());
+				
+				$('.bankName').val(bankBranch.text());
+				$('.bankCode').val(bankBranch.val());
+				$('.province').val(provBranch.text());
+				$('.city').val(cityBranch.text());
+				$('.branchCode').val(jBranch.attr("for2"));
+				
+				
+				
+				
+			} else {
+				if($('#branchFloat input[name="branchCode"]').val()==""){
+					alert("请输入银行账号信息");
+					return false;
+				}else if(!RegExp(regexEnum.bankcard).test($('#branchFloat input[name="branchCode"]').val())){
+					alert("请输入8-26位数字组成的银行账号信息！");
+					return false;
+				}
+				
+				if($('#branchFloat input[name="branchName"]').val()==""){
+					alert("请查询支行信息");
+					return false;
+				}
+				$('#branchName').val($('#branchFloat input[name="branchName"]').val());
+				$('#branchCode').val($('#branchFloat input[name="branchCode"]').val());
+			}
+			closeSW();
+		});
+	});
+	
+	
+})
+
+//倒计时
+function number(){  
+	window.setTimeout("number()",1000);  
+	if(time >= 0){  
+	   var obj = document.getElementById("number");  
+	   obj.innerHTML = "";  
+	   obj.innerHTML = ""+time+"";  
+	   time--;  
+	}  else{
+		location.href="#springUrl('/contacts/toContactsHome.htm')";
+	}
+}  
+
+//删除联系人
+function del(obj){
+	$(obj).parent().parent().remove();
+	if($("#addAccountlist tr").length==4){
+		if(window.parent.document.getElementById("sw_box") != null)window.parent.resetShowWinWH(814,500);
+	}else if($("#addAccountlist tr").length<4){
+		if(window.parent.document.getElementById("sw_box") != null)window.parent.resetShowWinWH(814,470);
+	}
+
+}
+
+
+//添加永达互联网金融账户
+function addAccount(){
+	
+	var trIndex = $("#addAccountlist tr").index();
+	var h='<tr><td width="288" class="text_l b f14">永达互联网金融帐号：</td><td><input id="kjtAccount' + trIndex + '" type="text" name="kjtAccountList" class="inputtext w198 kjtzz" value="">&nbsp;'
+		+ '<a href="javascript:void(0)" class="delthis" onClick="del(this)">删除</a></td></tr>'
+	if(trIndex < 4){
+		$("#addAccountlist").append(h);
+	}else{
+		alert("一次最多可添加5个联系人！");
+		return false;
+	}
+
+	
+}
+
+// 整理Ajax参数
+function getFormInputParam(name) {
+	var paramData = '';
+	$('#kjtContactsForm input[name="' + name + '"]').each(function(index, obj) {
+		if (index == 0) {
+			paramData += name + '=' +  $(obj).val();
+		} else {
+			paramData += '&' + name + '=' +  $(obj).val();
+		}
+	});
+	return paramData;
+}
+
+// 显示银行列表
+function initCorpBanks(pDivId) {
+	jQuery.ajax({
+    	type: "get",
+		url: "$!{path}/contacts/queryCorpBanks.htm",
+		data: "",
+		cache:false,
+		dataType: "JSON",
+		success: function(result) {
+			if (result && result.success) {
+				var bankArr = result.messageObj;
+				var optHtml = '';
+				var len = bankArr.length;
+				for (var i=0; i<len; i++) {
+					optHtml += '<option value="' + bankArr[i].bankId + '">' + bankArr[i].bankName + '</option>'
+				}
+				
+				var jBank = $('#' + pDivId + ' #bankName2');
+				jBank.append(optHtml);
+				selOneOption(jBank, 'text', $("#bankName2").val());
+			}
+		}
+    });
+}
+
+// 显示省份列表
+var provArr = null;
+function initProvinces(pDivId) {
+	jQuery.ajax({
+    	type: "get",
+		url: "$!{path}/contacts/queryAllProvCities.htm",
+		data: "",
+		cache:false,
+		dataType: "JSON",
+		success: function(result) {
+			if (result && result.success) {
+				// 省份
+				provArr = result.messageObj;
+				var jprov = $('#' + pDivId + ' #province');
+				jprov.html('<option value="-1">--请选择省份--</option>');
+				
+				var provOptHtml = '';
+				var len = provArr.length;
+				for (var i=0; i<len; i++) {
+					provOptHtml += '<option value="' + provArr[i].provId + '">' + provArr[i].provShortName + '</option>'
+				}
+				jprov.append(provOptHtml).bind('change', function() {
+					initCities(pDivId, $(this).val());
+					$("#subBranch").html('<option value="-1">--请选择支行--</option>').trigger("liszt:updated");
+					selOneOption($(this), 'text', $("#province").val());
+				});
+			}
+		}
+    });
+}
+
+// 根据省份初始化该省下的市
+function initCities(pDivId, provId) {
+	var len = provArr.length;
+	for (var i=0; i<len; i++) {
+		if (provId == provArr[i].provId) {
+			showCities(pDivId, provArr[i].cityInfos);
+		}
+	}
+}
+
+// 显示城市
+function showCities(pDivId, cityInfos) {
+	var jCity = $('#' + pDivId + ' #city');
+	jCity.html('<option value="-1">--请选择城市--</option>');
+
+	var len = cityInfos.length;
+	var cityOptHtml = '';
+	for (var i=0; i<len; i++) {
+		cityOptHtml += '<option value="' + cityInfos[i].cityId + '">' + cityInfos[i].cityShortName + '</option>'
+	}
+	jCity.append(cityOptHtml);
+	
+	selOneOption(jCity, 'text', $("#city").val());
+}
+
+// 初始化某市某某银行的支行
+function initBranches(pDivId, bankCode, cityId) {
+	jQuery.ajax({
+    	type: "get",
+		url: "$!{path}/contacts/queryBranches.htm",
+		data: "cityId=" + cityId + "&bankCode=" + bankCode,
+		cache:false,
+		dataType: "JSON",
+		success: function(result) {
+			if (result && result.success) {
+				var jBranch = $('#' + pDivId + ' #subBranch');
+				var branchArr = result.messageObj;
+				jBranch.html('<option value="-1">--请选择支行--</option>');
+				
+				var optHtml = '';
+				var len = branchArr.length;
+				for (var i=0; i<len; i++) {
+					optHtml += '<option value="' + branchArr[i].branchId  + '" for2="' + branchArr[i].branchNo + '">' + branchArr[i].branchName + '</option>'
+				}
+				jBranch.append(optHtml);
+				selOneOption(jBranch, 'text', $("#subBranch").val());
+				jBranch.trigger("liszt:updated");
+			}
+		}
+    });
+}
+
+// 选中指定的选项
+function selOneOption(jSelectObj, type, value) {
+	if(!jSelectObj || !type || !value) {
+		return;
+	}
+	
+	jSelectObj.find('option').each(function() {
+		var jOpt = $(this);
+		if (type == 'text') {
+			if (jOpt.text() == value) {
+				jOpt.attr("selected",true);
+			}
+		} else {
+			if (jOpt.val() == value) {
+				jOpt.attr("selected",true);
+			}
+		}
+	});
+}
+function int(){
+	var html='<div class="unfamiliar" id="unfamiliar" style="width: 500px; z-index: 700; position: absolute; l"><div class="unfamiliar-spells"></div><div class="unfamiliar-words"></div></div>';
+	$("body").append(html);
+	$(un).each(function(i,items){
+		var html='<a data-id="'+i+'" title="'+items[0]+'" class="unfamiliar-spell" href="javascript:void(0)">'+items[0]+'</a>'
+		$(".unfamiliar-spells").append(html);
+	});
+	var str=un[0][1];
+	for(i=0;i<str.length;i++){
+		var html='<a style="z-index:10;" class="unfamiliar-word" href="javascript:void(0)">'+str.charAt(i)+'</a>'
+		$(".unfamiliar-words").append(html)			
+	}
+}
+</script>

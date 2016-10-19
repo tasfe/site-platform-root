@@ -1,0 +1,78 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title safety">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">手机绑定</span>
+		</div>
+	</div>
+
+     <div class="safetyMain">
+     	 
+         <div class="loginCenter">
+              <form id="set-mobile-form" name="set-mobile-form" class="" action="${request.contextPath}/my/set-mobilephone.htm" method="POST">
+              <div class="login_limit">
+                   <label><span class="f14 limitLeft">手机号码：</span>
+                     <input type="text" class="inputtext w232" value="" id="mobile" name="mobile">
+                   </label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">手机校验码：</span>
+                     <input type="text" class="inputtext w80 fl" value="" id="mobileCaptcha" name="mobileCaptcha">
+                     <input class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <label class="ml5"></label>
+                   <div id="mobileCaptchaTip" class="mainTips ml160 error">$!response.data.mobileCaptcha_error</div>
+           </div>
+               
+		   <input type="hidden" name="bizType"  id="bizType" value="$!response.data.bizType"/>
+		                  
+           <div class="loginAmendBtn"> <input class="btn btn_submit" type="button" value="确 认"></div>
+              </form>
+         </div>
+     </div>
+</div>
+</div>
+<script>
+$(function(){
+	$(".btn_mfhq").click(function(){
+		var jMobile = $("#mobile");
+		var jThis = $(this);
+		sendPhoneCode({
+			jBtn:jThis,
+			jTip:$('#mobileCaptchaTip'),
+			jMobile:jMobile,
+			jMobileTip:jMobile.parent().parent().find(".error"),
+			url:"#springUrl('/my/mobile/sendMessage.htm')",
+			txtSuccess:"校验码已发送",
+			txtFail:"若长时间未收到校验码，请联系客服 0571-28276085"
+		});
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#mobile");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var value = $.trim(thisObj.val());
+		if (value == "") {
+			tipObj.text("请输入需要绑定的手机号码！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		else if (!RegExp(regexEnum.mobile).test(value)){
+			tipObj.text("您输入的手机号码错误，请重新输入！");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		var flag = checkMust($("#mobileCaptcha"),$("#mobileCaptcha").parent().parent().find(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		$("#set-mobile-form").submit();
+	});
+})
+</script>

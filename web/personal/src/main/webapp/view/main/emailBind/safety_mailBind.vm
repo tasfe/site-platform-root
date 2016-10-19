@@ -1,0 +1,251 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>邮箱绑定 </h2></div>
+
+     <div class="safetyMain">
+     	 <form id="moduleOne" action="${request.contextPath}/my/go-set-emailByValidPayPwd.htm" method="POST">
+			<input type="hidden" name="type" id="type" value="$!response.data.type"/>
+         <div class="loginCenter">
+         
+            ##  <div class="login_limit">
+               ##    <label>
+                   ##       <span class="f14 limitLeft">选择绑定邮箱的方式：</span>
+                     ##     <div class="select_div mr16 fl">
+						##	   #if($!response.data.hasBind=="Yes")
+                      ##         <select id="type">
+                       ##             <option value="1">支付密码</option> 
+                       ##             <option value="2">手机验证码</option>
+                                    ##<option value="3">安全问题</option>                                    
+                        ##       </select>
+						##	   #else
+						##		<select id="type">
+                       ##             <option value="1">支付密码</option> 
+                        ##            ##<option value="3">安全问题</option>                                    
+                         ##      </select>
+						##	   #end
+                        ##  </div>
+             ##      </label>
+             ##      <label class="ml5"></label>
+             ##      <div class="clear"></div>
+              ##     <div class="mainTips ml160 error"></div>
+            ##  </div>
+              #if($!response.data.hasPayPwd == "true")
+				<div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">邮箱地址：</span>
+                          <input type="text" class="inputtext w232" value="" id="email" name="email">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+				<div class="login_limit" id="module1">
+                   <label>
+                          <span class="f14 limitLeft l_h30">请输入支付密码：</span>
+                          <div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div>
+						  <a class="f_12 marl10" href="#springUrl('/my/go-get-paypasswd-index.htm')">忘记密码？</a>
+                   </label>
+                   <div class="color_b3 ml10 fl" style="padding-top:5px;"></div>
+                   <div class="mainTips ml160 error" style="clear:both;">
+				  #if($!response.data.error_passwd=='密码错误')
+					<span>$!response.data.error_passwd,还有$!response.data.remainNum次输入机会</span>
+				#else
+					<span>$!response.data.error_passwd</span>
+					#end
+				   </div>
+               </div>
+			   #end
+			   </form> 
+               
+			   <form id="moduleTwo" action="${request.contextPath}/my/go-set-EmialByMobileForm.htm" method="POST">
+				<input type="hidden" name="bizType" id="bizType" value="$!response.data.bizType"/>
+				<input type="hidden" name="mobile" id="iphone" value="$!response.data.mobile"/>
+				<input type="hidden" name="type" id="type" value="$!response.data.type"/>
+				#if($!response.data.hasBind == "true")
+					<div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">邮箱帐号：</span>
+                          <input type="text" class="inputtext w232" value="" id="email" name="email">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               <div id="module2" >##style="display:none"
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">手机号码：</span>
+                          <span class="f14">$!response.data.Secretmobile</span>
+                          <a href="${request.contextPath}/my/changeBindPhone.htm" class="f14 ml30 orange">更换绑定手机</a>
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">输入手机校验码：</span>
+                     <input type="text" class="inputtext w80" value="" id="sjyzm" name="mobileCaptcha">
+                     <input id="send_msg" class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <label class="ml5"></label>
+                   <div id="codeError" class="mainTips ml160 error"></div>
+               </div>
+               </div>
+			   #end
+                </form>
+			   
+			   
+               <div id="module3" style="display:none">
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题1：</span>
+                          <span class="f14">预设的安全问题1</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers1">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">安全问题2：</span>
+                          <span class="f14">预设的安全问题2</span>
+                   </label>
+               </div>
+               <div class="login_limit">
+                   <label>
+                          <span class="f14 limitLeft">答案：</span>
+                          <input type="text" class="inputtext w232" value="" id="answers2">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error"></div>
+               </div>
+               </div>
+               
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              
+         </div> 
+         
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+    var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+    window.pgeCtrl = pgeditor;
+    $(".pwdiv").append(pgeditor.load());
+    pgeditor.pgInitialize();
+	
+	$("#email").blur(function(){
+			var jThis = $(this);
+			var f=checkMust(jThis,jThis.parent().parent().find(".error"),"请输入邮箱帐号！");
+			if(!f){return false;}
+			var f=checkEmail(jThis,jThis.parent().parent().find(".error"),"邮箱格式不正确！");
+			if(!f){return false;}
+		})
+	
+	$(".btn_mfhq").click(function(){
+		$("#codeError").html("");
+		countDown($(this),60,"");
+		
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/mobile/newSendMessage.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+            success: function(response) {
+				$("#codeError").html(response.message);
+			} ,
+			error:function(){$("#codeError").html(G.sysError)},
+            dataType: "json"
+      	  });
+		
+	});
+	
+	/*$("#type").change(function(){
+		if($(this).val() == "1") { $("#module1").show(); $("#module2").hide(); $("#module3").hide(); }
+		if($(this).val() == "2") { $("#module1").hide(); $("#module2").show(); $("#module3").hide(); }
+		if($(this).val() == "3") { $("#module1").hide(); $("#module2").hide(); $("#module3").show(); }
+	});*/
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		var pwdOrmobile= "$!response.data.type";
+		var flag = checkMust($("#email"),$("#email").parent().parent().find(".error"),"请输入邮箱帐号");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		flag = checkEmail($("#email"),$(".error"),"邮箱格式不正确");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		if(pwdOrmobile == "payPwd"){
+            if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+                var wid = pgeditor.settings.pgeWindowID;
+                pgeditor.pwdLength(function(){
+                    if(outs[wid].length == 0){
+                        $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    //产生随机数加密
+                    getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor],function(){
+                        //获得密文
+                        setPwdResult(pgeditor,$('#password'),function(){
+                            $("#moduleOne").submit();
+                        });
+                    });
+                });
+            }
+            else{
+                if (pgeditor.pwdLength() == 0) {
+                    $(".pwdiv").parent().parent().find(".error").text("请输入密码！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                getSrandNum('${request.contextPath}/ocx/generateRandomKey.htm',[pgeditor]); //产生随机数去加密
+                setPwdResult(pgeditor,$('#password'));
+
+                $("#moduleOne").submit();
+            }
+
+		}
+		else if(pwdOrmobile == "mobile"){
+			flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入手机校验码");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			
+	  jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/my/newValidMobileCaptcha.htm')" ,
+			data: "bizType=" + $("#bizType").val()+"&mobileCaptcha="+$("#sjyzm").val(),
+            success: function(response) {
+				if(!response.success){
+					$("#codeError").html("手机验证码错误");
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+				}else{
+					$("#moduleTwo").submit();
+				}
+			} ,
+			error:function(){
+			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+			},
+            dataType: "json"
+        });
+
+		}
+		/*else if($("#type").val() == "3"){
+			flag = checkMust($("#answers1"),$("#answers1").parent().parent().find(".error"),"请输入答案");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			
+			flag = checkMust($("#answers2"),$("#answers2").parent().parent().find(".error"),"请输入答案");
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		}*/
+	});
+	  
+})
+</script>

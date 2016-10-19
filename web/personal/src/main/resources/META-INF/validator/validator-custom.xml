@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+	<formset>
+		<form name="appBaseInfoForm">
+			<field property="appName" depends="required,maxlength">
+				<arg position="0" key="APP名称" />
+				<arg name="maxlength" position="1" key="${var:maxlength}"/> 
+				<var> 
+					<var-name>maxlength</var-name> 
+					<var-value>32</var-value> 
+				</var>
+			</field>
+		</form>
+	</formset>
+</form-validation>

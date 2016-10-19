@@ -1,0 +1,144 @@
+<div class="wrap">
+     
+     <div class="page_title"><h2>修改账户名</h2></div>
+     <div class="safetyMain">
+     	 <div id="div1" style="text-align: center;line-height: 28px;display:none">我们向您填写的$!{response.data.sendGoals}发送了一条校验码，查收后填写，请勿泄漏。</div>
+         <div class="loginCenter">
+              <form class="from1" id="nameSetForm" name="" action="${request.contextPath}/my/accountNamemodify.htm" method="post">
+				 
+			<input type="hidden" name="sendObject" id="sendObject" value="$!response.data.sendObject">
+			<input type="hidden" name="verify" id="verify" value="$!{response.data.verify}">
+			<input type="hidden" name="IDcardvalue" id="IDcardvalue" >
+               
+               <div class="login_limit">
+                   <label><span class="f14 limitLeft">校验码：</span>
+                     <input type="text" class="inputtext w80" value="" name="mobileCaptcha" id="sjyzm">
+                     <input class="btn_mfhq ml10" type="button" value="">
+					 #if($!response.data.sendObject == "mobile")
+						<input type="hidden" name="bizType"  id="bizType" value="ACC_UPD_TOPHONE"/>
+					 #elseif($!response.data.sendObject == "email")
+						<input type="hidden" name="bizType"  id="bizType" value="ACC_UPD_TOEMAIL"/>
+					 #end
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="mainTips ml160 error" id="codeError">$!response.data.validCode_error</div>
+				</div>
+				
+		   #if($!{response.data.verify} =='true')
+		             <div class="login_limit">
+                   <label><span class="f14 limitLeft">身份证号：</span>
+                     <input type="text" class="inputtext w232" name="idCard" value="" id="idCard">
+                   </label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error">$!{response.message}
+                <span></span>
+				</div>
+               </div>
+            #end   
+			<div class="error pdlf170"></div>
+           <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+
+$(function(){
+	$("#idCard").blur(function(){
+			var jThis = $(this);
+			var f=checkMust(jThis,jThis.parent().parent().find(".error"),"请输入您的证件号码！");
+			if(!f){return false;}
+			
+			var jCardtype = $("#idCard");
+			var jTip = jThis.parent().parent().find(".error");
+			if(jCardtype.val() == "idCard") {
+				checkIdCard(jThis,jTip,"请输入18位身份证号码！");
+			}
+			else {
+				var value = jThis.val();
+				if(value.length > 19) { jTip.text("证件号码位数不能超过19位！");}
+			}
+			$("#IDcardvalue").val(jThis.val());
+		})
+	$(".btn_mfhq").click(function(){
+		var jThis = $(this);
+		$("#div1").hide();
+		$("#codeError").html("");
+		countDown(jThis,60,"");
+		var sendObject="$!response.data.sendObject";
+		if(sendObject == 'mobile'){
+			$.ajax({
+					url: '#springUrl('/my/send-mobile.htm')',
+					type: 'post',
+					data: 'bizType=' + $('#bizType').val(),
+					dataType: "json",
+					success: function(result) {
+						if (!result || !result.success) {
+							if(result.message != ""){
+								$('#captchaDiv .error').text(result.message);	
+							}else{
+								$('#captchaDiv .error').text('获取验证码失败!');	
+							}
+						} else {
+							$('#captchaDiv .error').text('验证码发送成功!');
+						}
+					},
+					error:function(){$('#captchaDiv .error').text(G.sysError)}
+				});
+		}else if(sendObject== 'email'){
+				$.ajax({
+						url: '#springUrl('/my/send-mail.htm')',
+						type: 'post',
+						data: 'bizType=' + $('#bizType').val(),
+						dataType: "json",
+						success: function(result) {
+							if (!result || !result.success) {
+								if(result.message != ""){
+									$('#captchaDiv .error').text(result.message);	
+								}else{
+									$('#captchaDiv .error').text('获取验证码失败!');	
+								}
+							} else {
+								$('#captchaDiv .error').text('验证码发送成功!');								
+							}
+						},
+						error:function(){$('#captchaDiv .error').text(G.sysError)}
+					});
+		}
+		$("#div1").show();
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		
+		var verify ="$!response.data.verify";
+		if(verify =="true"){
+    		var thisObj = $("#idCard");
+    		var tipObj = thisObj.parent().parent().find(".error");
+    		var value = $.trim(thisObj.val());
+    		if (value == "") {
+    			tipObj.text("请输入身份证号！");
+    			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+    		}
+    		else if (!RegExp(regexEnum.idcard).test(value)){
+    			tipObj.text("身份证号格式不正确！");
+    			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+    		}
+		}
+		flag = checkMust($("#sjyzm"),$("#sjyzm").parent().parent().find(".error"),"请输入校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		
+
+		
+		$("#nameSetForm").submit();
+	});
+})
+</script>

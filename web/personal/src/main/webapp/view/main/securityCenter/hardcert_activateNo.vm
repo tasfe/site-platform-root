@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2></h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               
+          <div class="activateTit pos_rel">
+          
+              <ul>
+                   <li><span class="bold f16">快捷盾</span><span class="ml10">（<em class="bold red">68</em>元）</span></li>
+                   <li class="mt5">申请后账户安全等级为：<span class="spBar"><span style="width:125px;"></span></span><span class=" ml10 green">高</span></li>
+              </ul>
+              
+              <span class="imgAct"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/shieldImg.gif" alt=""></span>
+          
+          </div>  
+                
+          <div class="usbConBox clearfix" style="padding:25px; width:870px;">
+          
+               <p class="bold">激活快捷盾后，只有在插入快捷盾的情况下，才能进行转账、提现、审核等涉及资金变动的操作。</p>
+               <p class="mt20 l_h20" style="color:#858689;">支持的操作系统：Windows XP/Windows 7/Windows Vista<br>支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等</p>
+               
+               <ul class="actList">
+                   <li style="color:#595757;"><input type="button" class="btn_jhszzs" style="display:none"><input class="saBtn_szzs" type="button" value=""><!--若还没有快捷盾，<a href="#">点击申请</a>--></li>
+				   <!--<li><p class="actCon_tips">支付盾暂不支持您当前的浏览器[？]</p></li>-->
+                   <li><p class="actCon_tips" style="display:none"></p></li>
+               </ul>
+          
+          </div>
+          
+          
+          <div class="usbKeyFaq" style="padding:30px 70px 50px">
+                    <h4>快捷盾问题：</h4>
+                    <dl>
+                        <dt>什么是快捷盾？</dt>
+                        <dd>答：快捷盾是永达互联网金融推出的安全产品，是为了更好的保障用户的账户资金安全，防止用户账户和资金被盗。</dd>
+                    </dl>
+					<dl>
+                        <dt>收到快捷盾后该怎么操作？</dt>
+                        <dd>答：请您先仔细阅读《快捷盾用户使用手册》，然后登录永达互联网金融账户，根据激活向导进行激活操作。</dd>
+                    </dl>
+					<dl>
+                        <dt>申请快捷盾的前提条件是什么？</dt>
+                        <dd>答：1、所有通过永达互联网金融个人实名认证的永达互联网金融账户。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、通过永达互联网金融商家实名认证的永达互联网金融账户。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3、永达互联网金融数字证书用户（证书已登录情况下）。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4、支持的操作系统：Windows2000/XP、Vista、win7版本的操作系统。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5、支持的浏览器：支持windows所有【非64位IE内核浏览器】。</dd>
+                    </dl>
+                   <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+            <input type="hidden" name="certificationType"  id="certificationType" value="hard"/>
+          	<input type="hidden" name="certificationStatus"  id="certificationStatus" value="UNBIND"/>
+      
+     </div>
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<form id="form2" action="#springUrl('/hardcertActivate/step1.htm')" method="post"></form>
+<form id="form3" action="#springUrl('/hardcertRebind/step1.htm')" method="post"><input type="hidden" id="rebindcertSn" name="certSn" /></form>
+
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>		
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+<script>
+function isRightKey(){
+	var realName = '$!realName';
+	var memberType = '$!memberType';
+	if(realName == null || realName == ''){
+		$(".btn_jhszzs").hide();
+		$(".saBtn_szzs").show();
+		if(memberType == '1'){
+			var tip = '您的账户尚未进行身份认证，请先<a href="#springUrl('/my/go-personal-certification.htm')">身份认证</a>';
+		}else{
+			var tip = '您的账户尚未进行身份认证，请先<a href="#springUrl('/my/go-enterprise-certification.htm')">身份认证</a>';
+		}
+		$(".actCon_tips").html(tip).show();
+		return;
+	}
+	var mobile = '$!mobile';
+	if(mobile == null || mobile == ''){
+		$(".btn_jhszzs").hide();
+		$(".saBtn_szzs").show();
+		var tip = '您的账户尚未绑定手机号码，请先<a href="#springUrl('/my/go-set-mobilephoneByPayPwd.htm')">绑定手机</a>';
+		$(".actCon_tips").html(tip).show();
+		return;
+	}
+
+	$(".actCon_tips").text("").hide();
+	jQuery.ajax({
+        type: 'GET',
+        url: "#springUrl('/hardcertActivate/getCertSns.htm')" ,
+        data: "status=" + $("#certificationStatus").val() + "&type=" + $("#certificationType").val() ,
+		
+        success: function(response) {
+         if(response.success) {
+			var certSns = response.data.certSns;
+         	var certSn = null;
+         	for(var i = 0; i < certSns.length; i++){
+         		certSn = filterCerts("",0,certSns[i]);
+				
+         		if(certSn != null && certSn.length >= 1) {
+					$(".btn_jhszzs").show();
+					$(".saBtn_szzs").hide();
+					return;
+         		}
+         	}
+			$(".actCon_tips").text("请插入原快捷盾").show();
+			$(".btn_jhszzs").hide();
+			$(".saBtn_szzs").show();
+         	//$("#form2").submit();
+         } else {
+            //$("#form2").submit();
+			return;
+         }
+        } ,
+		cache: false,
+		error:function(){
+			$(".actCon_tips").text(G.sysError).show();
+			$(".btn_jhszzs").hide();
+			$(".saBtn_szzs").show();
+		},
+        dataType: "json"
+    });
+}
+
+$(document).ready(function(){
+	//检测是否插入了快捷盾
+	var ret = checkKeySeriaNo();
+	if(ret == 1) {
+		$(".btn_jhszzs").show();
+		$(".saBtn_szzs").hide();
+		$(".actCon_tips").text("").hide();
+	}else {
+		$(".btn_jhszzs").hide();
+		$(".saBtn_szzs").show();
+		$(".actCon_tips").text("请先插入快捷盾，再进行激活").show();
+	}
+	
+	isRightKey();
+	//实时检测是否插入快捷盾
+	window.setInterval("isRightKey()",5000);
+	
+	$(".btn_jhszzs").click(function(){
+		$(".actCon_tips").text("").hide();
+		jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/hardcertActivate/getCertSns.htm')" ,
+            data: "status=" + $("#certificationStatus").val() + "&type=" + $("#certificationType").val() ,
+			
+            success: function(response) {
+             if(response.success) {
+				var certSns = response.data.certSns;
+             	var certSn = null;
+             	for(var i = 0; i < certSns.length; i++){
+             		certSn = filterCerts("",0,certSns[i]);
+					
+             		if(certSn != null && certSn.length >= 1) {
+					    $("#rebindcertSn").val(certSns[i]);
+						$("#form3").submit();
+						return;
+             		}
+             	}
+				$(".actCon_tips").text("请插入原快捷盾").show();
+				$(".btn_jhszzs").hide();
+				$(".saBtn_szzs").show();
+             	//$("#form2").submit();
+             } else {
+                $("#form2").submit();
+             }
+            } ,
+			cache: false,
+			error:function(){
+				$(".actCon_tips").text(G.sysError).show();
+    			$(".btn_jhszzs").hide();
+    			$(".saBtn_szzs").show();
+			},
+            dataType: "json"
+        });
+	});
+	
+});
+</script>
+</body>
+</html>

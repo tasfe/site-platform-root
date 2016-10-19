@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>快捷盾</h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               
+               <div class="tx_step step step_2" style="margin-left:80px; padding-bottom:10px;"><i></i><span class="s1">验证身份</span><span class="s2">下载激活</span><span class="s3">激活成功</span></div>
+               
+               <!--<div class="usbKeyCon_tips w410">永达互联网金融已向您的手机186****0232发送了手机验证短信，请输入手机校验码。</div>-->
+               <form action="#springUrl('/hardcertRebind/checkAuthCode.htm')" method = "post">
+               <div class="usbKeyCenter">
+
+                   
+                 <div class="login_limit">
+                   <label><span class="f14 limitLeft">校验码：</span>
+                     <input type="text" class="inputtext w80" value="" id="sjyzm" name="authCode">
+                     <input class="btn_mfhq ml10" type="button" value="">
+                   </label>
+                   <label class="ml5"></label>
+                   <div class="authCodeTip error clear" id="authCodeTip" style="padding-left:180px;"></div>
+               </div>
+                   
+                   
+                           <div class="loginAmendBtn" style="padding-left:181px;"> <input class="btn_qr btn_submit" type="button" value=""></div>
+               
+               </div>
+               </form>
+               <div class="usbKeyFaq">
+                    <h4>快捷盾问题：</h4>
+                    <dl>
+                        <dt>什么是快捷盾？</dt>
+                        <dd>答：快捷盾是永达互联网金融推出的安全产品，是为了更好的保障用户的账户资金安全，防止用户账户和资金被盗。</dd>
+                    </dl>
+					<dl>
+                        <dt>收到快捷盾后该怎么操作？</dt>
+                        <dd>答：请您先仔细阅读《快捷盾用户使用手册》，然后登录永达互联网金融账户，根据激活向导进行激活操作。</dd>
+                    </dl>
+					<dl>
+                        <dt>申请快捷盾的前提条件是什么？</dt>
+                        <dd>答：1、所有通过永达互联网金融个人实名认证的永达互联网金融账户。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、通过永达互联网金融商家实名认证的永达互联网金融账户。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3、永达互联网金融数字证书用户（证书已登录情况下）。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4、支持的操作系统：Windows2000/XP、Vista、win7版本的操作系统。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;5、支持的浏览器：支持windows所有【非64位IE内核浏览器】。</dd>
+                    </dl>
+                   <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+                </div>
+               
+               
+               
+          </div>
+      		<input type="hidden" name="bizType"  id="bizType" value="KJTSHILED_ACTIVE"/>
+      		<input type="hidden" name="certSn"  id="certSn" value="$!{certSn}"/>
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+
+
+
+<form id="form2" action="#springUrl('/hardcertRebind/certRebind.htm')" method="post"><input type="hidden" id="rebindcertSn" name="certSn"/></form>
+<script>
+$(function(){
+	$(".btn_mfhq").click(function(){
+		$("#authCodeTip").html("");
+		countDown($(this),60,"");
+		$("#authCodeTip").html("");
+		jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/my/mobile/sendMessage.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+            success: function(response) {
+             if(response.success) {
+				$("#authCodeTip").html("校验码已发送");
+             } else {
+                $("#authCodeTip").html("若长时间未收到校验码，请联系客服 400-611-0909");
+             }
+            } ,
+			cache: false,
+			error:function(){ $("#authCodeTip").html(G.sysError); },
+            dataType: "json"
+        });
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		var flag = checkMust($("#sjyzm"),$(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		
+		//$("form").submit();
+		jQuery.ajax({
+            type: 'POST',
+            url: "#springUrl('/hardcertRebind/checkAuthCode.htm')",
+            data: "authCode=" + $("#sjyzm").val() + "&certSn=" + $("#certSn").val(),
+            success: function(restP) {
+            	if(restP.success) {
+            		var certSn = restP.data.certSn;
+            		$("#rebindcertSn").val(certSn);
+             		$("#form2").submit();
+             	} else {
+             		$("#authCodeTip").html(restP.message);
+             		btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+             	}
+            } ,
+			cache: false,
+			error:function(){ $("#authCodeTip").html(G.sysError); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");},
+            dataType: "json"
+        });
+	});
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+ <div class="trade_all">
+<div class="wrap">
+    <h2 class="h2_titform"><span class="warn_tip fr">合并付款不能进行永达互联网金融钱包的充值操作</span><em>合并付款</em>尚未付款（<i>#if($response.data.page.pageInfo.totalItem) $!response.data.page.pageInfo.totalItem #else 0 #end</i>）笔</h2>
+                                <script type="text/javascript">
+                                var tradeGrid = {
+                                    tradeArr: new Array(),
+                                    totalFee : 0.00,
+                                    currentSize:0
+                                }
+                                </script>
+        <form id="queryForm" name="queryForm" action="/my/megerPay.htm" method="post" >
+		<ul class="select_by_time">
+            <li>
+            		时间：
+                      <input name="startDate"  id="startDate" type="text"  class="date-picker"  readonly="readonly"/>
+                 	至
+                      <input name="endDate"  id="endDate" type="text"  class="date-picker"  readonly="readonly"/>
+                        <input id="search" class="btn_h24"  type="button" value="搜索"/>
+                         <input type="hidden" id="currentPage" name="currentPage" />
+            </li>
+         </ul>
+        </form>
+    <form class="" action="/my/somePay.htm" method="POST">
+        <table id="pay_Merge" class="list_check_table business_record">
+                            <colgroup>
+                                    <col width="35px">
+                                    <col width="120px">
+                                    <col width="260px">
+                                    <col width="200px">
+                                    <col width="120px">
+                                    <col width="120px">
+                                    <col width="80px">
+                           </colgroup>
+                             <tr>
+                                <th></th>
+                                <th class="time">创建时间</th>
+                                <th>交易信息</th>
+                                <th>流水号</th>
+                                <th>金额</th>
+                                <th>类型</th>
+                                <th>状态</th>
+                            </tr>
+                             #set ($i=1)
+                             #foreach ($!tradeInfo in $!response.data.page.infos)
+                                #if($i%2 != 0)
+                                    #set ($odd_class="time")
+                                #else
+                                    #set ($odd_class="odd")
+                                #end
+                                <tr class=$odd_class>
+                                    <td>
+                                           <label class="checkbox">
+                                              <input type="checkbox" class="CheckboxOne" name="tradeVoucherNo" value="$!tradeInfo.tradeVoucherNo" id="id_$i">
+                                          </label>
+                                    </td>
+                                    <td class="time">$!dateUtil.getNoSecondDateString($!tradeInfo.gmtSubmit) </td>
+                                    #if($!tradeInfo.tradeType=="PREPAY_ACQUIRING")
+                                        <td>订金</td>
+                                    #else
+                                    	<td>$!tradeInfo.tradeMemo</td>
+                                    #end
+                                    <td>$!tradeInfo.tradeVoucherNo</td>
+                                    <td class="money ff5f40">-$!moneyUtil.getAmount($!tradeInfo.payAmount)</td>
+                                    #if($!tradeInfo.tradeType=="INSTANT_TRASFER")
+                                        <td>普通转账交易</td>
+                                    #elseif($!tradeInfo.tradeType=="INSTANT_ACQUIRING")
+                                        <td>即时到账收单交易</td>
+                                    #elseif($!tradeInfo.tradeType=="ENSURE_ACQUIRING")
+                                        <td>担保收单交易</td>
+                                    #elseif($!tradeInfo.tradeType=="PREPAY_ACQUIRING")
+                                        <td>下订收单交易</td>
+                                    #else
+                                        <td>收单退款交易</td>
+                                    #end
+                                    <td><span>待支付</span></td>
+                                </tr>
+                                <script type="text/javascript">
+                                    var trade = {"id":$i, "code":'id_$i',"fee":$!tradeInfo.payAmount};
+                                    tradeGrid.tradeArr.push(trade);
+                                    tradeGrid.totalFee += parseFloat($!moneyUtil.getAmount($!tradeInfo.payAmount));
+                                    tradeGrid.currentSize ++;
+                                </script>
+                                #set($i=$i+1)
+                               #end
+
+                            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+                            <tr>
+                            	<td colspan="10">无未付款信息！</td>
+                            </tr>
+                            #end
+
+        </table>
+            <ul class="choose_method">
+                <li>
+                    <a href="javascript:;" class="CheckboxAll" hidefocus="true">全选</a>
+                    |
+                    <a href="javascript:;" class="CheckboxNone" hidefocus="true">取消全选 </a>
+                 </li>
+             </ul>
+             <div class="trade_all clearfix" >
+             	<div style="margin-top:-55px; padding-right:0;float:right;">
+	             #parse("common/control/paginator.vm")
+	             </div>
+              </div>
+             <div class="total_eval">
+                  <span>已选择合并付款记录（<i id="choosedCount">0</i>）笔   </span><span>总额：<b id="choosedTotalFee">0.00</b> 元</span>
+             </div>
+               <input type="submit" id="meger_pay_submit" class="btn_h40_red bold make_sure_pay" value="确认付款" />
+    	</form>
+
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+ $(window).resize(function() {
+	$(".date-picker").datepicker( "hide" );
+	$(".date-picker").blur();
+});
+             $(function(){
+             		//日期控件初始化
+	                    $('.date-picker').datepicker( {
+	                        maxDate: new Date()
+	                    });
+	                     var initStartdate = '$!response.data.startDate';
+	                     var initEnddate = '$!response.data.endDate';
+	                     $( "#startDate" ).datepicker( "setDate", initStartdate )
+	                     $( "#endDate" ).datepicker( "setDate", initEnddate )
+
+                     $("#pay_Merge").find(".CheckboxOne").attr("checked",false);
+                    //全选
+                   $(".CheckboxAll").click(function(){
+                            $("#pay_Merge").find(".CheckboxOne").attr("checked",true);
+                            $("#choosedCount").html(tradeGrid.currentSize);
+                            $("#choosedTotalFee").html(tradeGrid.totalFee.toFixed(2));
+                     });
+                     //全部取消
+                     $(".CheckboxNone").click(function(){
+                            $("#pay_Merge").find(".CheckboxOne").attr("checked",false);
+                            $("#choosedCount").html(0);
+                            $("#choosedTotalFee").html(0.00);
+                     });
+                       //反选
+                     $(".CheckboxOpsite").click(function(){
+                        $("#pay_Merge :checkbox").each(function(){
+                                 $(this).attr("checked",!$(this).attr("checked"));
+                                 if($(this).attr("checked")) {
+                                    $("#choosedCount").html($!response.data.page.pageInfo.totalItem);
+                                    $("#choosedTotalFee").html(tradeGrid.totalFee.toFixed(2));
+                                 } else {
+                                     $("#choosedCount").html(0);
+                                     $("#choosedTotalFee").html(0.00);
+                                 }
+                        });
+                    });
+                    $(".CheckboxOne").click(function(){
+                            var totalFee = $("#choosedTotalFee").text();
+                            var totalCount = $("#choosedCount").text();
+                            var id = $(this).attr("id");
+                            var sno = parseInt(id.substr(3))-1;
+                            var thisFee = parseFloat(tradeGrid.tradeArr[sno].fee);
+                            if($(this).attr("checked")) {
+                                var all = parseFloat(totalFee) + thisFee;
+                                $("#choosedTotalFee").html(all.toFixed(2));
+                                var totalCount = parseInt(totalCount)+1;
+	                            $("#choosedCount").html(totalCount);
+                            } else {
+                                 var all = totalFee - thisFee;
+                                $("#choosedTotalFee").html(all.toFixed(2));
+                                var totalCount = parseInt(totalCount)-1;
+	                            $("#choosedCount").html(totalCount>0?totalCount:0);
+                            }
+                     });
+                  $("#meger_pay_submit").click(function (){
+                        var totalCount = $("#choosedCount").text();
+                        if(parseInt(totalCount) <= 0) {
+							$.dialog({
+								 title: "消息",
+								 lock: true,
+								 content: "请选择需要付款的选项后再付款!",
+								 height: 110,
+								 width:300,
+								 ok:function(){}
+								 });
+                            return false;
+                        }
+                        return true;
+                  });
+
+
+            });
+
+			  $("#search").click(function(){
+					return toQuerySubmit(1);
+			  });
+
+			function toQuerySubmit(sendPage){
+				var startDate = $( "#startDate" ).val();
+				var endDate = $( "#endDate" ).val();
+				if(endDate < startDate)  {
+					$.dialog({
+						 title: "消息",
+						 lock: true,
+			             content: "输入的截止时间必须大于起始时间！",
+						 height: 110,
+						 width:300,
+			             ok:function(){}
+						 });
+					return false;
+				}else{
+					queryForm.currentPage.value =  sendPage;
+					$("#queryForm")[0].submit();
+					return true;
+				}
+		   }
+
+</script>

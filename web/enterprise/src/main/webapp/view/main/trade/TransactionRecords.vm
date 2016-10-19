@@ -1,0 +1,1831 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/lhgcalendar.css" rel="stylesheet" type="text/css">
+#set($path = ${request.contextPath})
+<div class="wrapbg">
+<div id="money_cz" class="wrap">
+    <div class="page_title transaction">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">交易记录</span>
+        </div>
+    </div>
+	<div class="pagebox">
+    <form id="form_search">
+        <div class="search_row pl30 mt10">
+            <div class="select_div mr16 fl">
+				<select>
+					<option value="">创建时间</option>
+				</select>
+			</div>
+            <div class="data_div mr16 fl" >
+				<input class="datapick" type="text" id="startDate" name="queryStartTime" readonly value="$!response.data.queryStartTime">
+				<span>至</span>
+				<input class="datapick" type="text" id="endDate" name="queryEndTime" readonly value="$!response.data.queryEndTime">
+			</div>
+		<!--
+            <ul class="data_range fl">
+				<li class="data_range_week" data-value="7">一周内</li>
+				<li class="data_range_month" 4-value="30">一个月内</li>
+				<li class="data_range_quarter" data-value="90">三个月内</li>
+				<li class="data_range_year" data-value="365">一年内</li>
+				<input type="hidden" class="data_range_value">
+			</ul>
+		-->
+		</div>
+        <div class="search_row" id="search_type">
+            <dl class="search_dl">
+            <dt>查询类型：</dt>
+            <dd data-value="1" #if($!response.data.txnType=="1")class="cur"#end>网关交易</dd>
+            <dd data-value="2" #if($!response.data.txnType=="2")class="cur"#end>充值</dd>
+            <dd data-value="3" #if($!response.data.txnType=="3")class="cur"#end>提现</dd>
+            <dd data-value="4" #if($!response.data.txnType=="4")class="cur"#end>转账</dd>
+            <dd data-value="5" #if($!response.data.txnType=="5")class="cur"#end>退款</dd>
+			<dd data-value="8" #if($!response.data.txnType=="8")class="cur"#end>退票</dd>
+			<dd data-value="12" #if($!response.data.txnType=="12")class="cur"#end>云+交易</dd>
+		    <dd data-value="7" #if($!response.data.txnType=="7")class="cur"#end>委托付款</dd>
+		    <dd data-value="13" #if($!response.data.txnType=="13")class="cur"#end>POS交易</dd>
+            ##<dd data-value="6" #if($!response.data.txnType=="6")class="cur"#end>代发工资</dd>
+			##<dd data-value="9" #if($!response.data.txnType=="9")class="cur"#end>保理放贷</dd>
+		    ##<dd data-value="11" #if($!response.data.txnType=="11")class="cur"#end>银行卡代扣</dd>
+			##<dd data-value="10" #if($!response.data.txnType=="10")class="cur"#end>保理代扣</dd>
+            <input type="hidden" class="search_dl_value" name="txnType" id="txnType" value="$!response.data.txnType"  >
+            </dl>
+        </div>
+        
+       <!--网关交易-->
+		<div class="search_type_sub" #if($!response.data.txnType!="1")style="display:none;"#end>
+            <div class="search_row" id="search_dl_wgjy">
+                <dl class="search_dl">
+                <dt>交易类型：</dt>
+                <dd #if($!response.data.tradeType!="11" && $!response.data.tradeType!="12")class="cur"#end data-value="0">全部</dd>
+                <dd data-value="11" #if($!response.data.tradeType=="11")class="cur"#end>即时到账收单交易</dd>
+                <dd data-value="12" #if($!response.data.tradeType=="12")class="cur"#end>担保收单交易</dd>
+    			<input type="hidden" class="search_dl_value" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+                </dl>
+            </div>
+    		<div class="search_row">
+    			<dl class="search_dl" id="search_dl_wgjy_zt">
+                <dt>交易状态：</dt>
+                <dd data-value="0" #if($!response.data.tradeStatus!="100" && $!response.data.tradeStatus!="201"&&$!response.data.tradeStatus!="301"&&$!response.data.tradeStatus!="401"&&$!response.data.tradeStatus!="998")class="cur"#end>全部</dd>
+                <dd data-value="100" #if($!response.data.tradeStatus=="100")class="cur"#end>待支付</dd>
+    			<dd data-value="201" #if($!response.data.tradeStatus=="201")class="cur"#end>支付成功</dd>
+    			<dd data-value="301" #if($!response.data.tradeStatus=="301")class="cur"#end>交易成功</dd>
+    			<dd data-value="401" #if($!response.data.tradeStatus=="401")class="cur"#end>结算成功</dd>##交易结束
+    			<dd data-value="998" #if($!response.data.tradeStatus=="998")class="cur"#end>交易失败</dd>
+    			<input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+                </dl>
+            </div>
+		</div>
+		<!--充值-->
+		<div class="search_row search_type_sub" #if($!response.data.txnType!="2")style="display:none;"#end>
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!response.data.tradeStatus!="111" &&$!response.data.tradeStatus!="112")class="cur"#end>全部</dd>
+            <dd data-value="111" #if($!response.data.tradeStatus=="111")class="cur"#end>成功</dd>
+            <dd data-value="112" #if($!response.data.tradeStatus=="112")class="cur"#end>失败</dd>
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+		<!--提现-->
+		<div class="search_row search_type_sub" #if($!response.data.txnType!="3")style="display:none;"#end>
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!response.data.tradeStatus!="331" && $!response.data.tradeStatus!="332"&&$!response.data.tradeStatus!="333")class="cur"#end>全部</dd>
+            <dd data-value="331" #if($!response.data.tradeStatus=="331")class="cur"#end>处理中</dd>
+            <dd data-value="332" #if($!response.data.tradeStatus=="332")class="cur"#end>出款成功</dd>
+			<dd data-value="333" #if($!response.data.tradeStatus=="333")class="cur"#end>失败</dd>
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+		<!--转账-->
+		<div class="search_type_sub" #if($!response.data.txnType!="4")style="display:none;"#end>
+		<div class="search_row" id="search_dl_zz">
+            <dl class="search_dl">
+            <dt>交易类型：</dt>
+            <dd data-value="1" #if($!response.data.tradeType!="2")class="cur"#end>转账到永达账户</dd>
+            <dd data-value="2" #if($!response.data.tradeType=="2")class="cur"#end>转账到银行卡</dd>
+            <input type="hidden" class="search_dl_value" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+            </dl>
+        </div>
+		<div class="search_row">
+            <dl class="search_dl" id="search_dl_zz_zt">
+            <dt>交易状态：</dt>
+            <dd  data-value="0" #if($!response.data.tradeStatus!="221" &&$!response.data.tradeStatus!="222"&&$!response.data.tradeStatus!="223")class="cur"#end>全部</dd>
+            <dd data-value="221"#if($!response.data.tradeStatus=="221")class="cur"#end>处理中</dd>
+            <dd data-value="222" #if($!response.data.tradeStatus=="222")class="cur"#end>成功</dd>
+			<dd data-value="222" #if($!response.data.tradeStatus=="222")class="cur"#end>出款成功</dd>
+			##if($!response.data.tradeType!="2")
+				<dd data-value="223" #if($!response.data.tradeStatus=="223")class="cur"#end>失败</dd>
+			##end
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+		</div>
+		
+		<!--退款-->
+		<div class="search_row search_type_sub" #if($!response.data.txnType!="5")style="display:none;"#end>
+            <dl class="search_dl">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!response.data.tradeStatus!="950" &&$!response.data.tradeStatus!="951"&&$!response.data.tradeStatus!="952")class="cur"#end>全部</dd>
+            <dd data-value="950" #if($!response.data.tradeStatus=="950")class="cur"#end>退款中</dd>
+            <dd data-value="951" #if($!response.data.tradeStatus=="951")class="cur"#end>退款成功</dd>
+			<dd data-value="952" #if($!response.data.tradeStatus=="952")class="cur"#end>退款失败</dd>##已退款
+			##<dd data-value="-1">商户平台发起</dd>
+			##<dd data-value="-1">网关发起</dd>
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+        
+		<!--退票-->
+        <div class="search_type_sub" #if($!response.data.txnType!="8")style="display:none;"#end>
+        </div>
+        
+        
+		<!--云+交易-->
+         <div class="search_type_sub" #if($!response.data.txnType!="12")style="display:none;"#end>
+            <div class="search_row" id="search_dl_pos">
+                <dl class="search_dl">
+                <dt>交易类型：</dt>
+                <dd data-value="11" #if($!response.data.tradeType!="12")class="cur"#end>消费</dd>     ##担保收单交易
+                <dd data-value="12" #if($!response.data.tradeType=="12")class="cur"#end>消费撤销</dd>     ##退款
+    			<input type="hidden" class="search_dl_value" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+                </dl>
+            </div>
+    		<div class="search_row" id="search_dl_pos1" #if($!response.data.tradeType=="12")style="display:none;"#end>
+    			<dl class="search_dl">
+                <dt>交易状态：</dt>
+                <dd data-value="0" #if($!response.data.tradeStatus!="100" && $!response.data.tradeStatus!="201"&&$!response.data.tradeStatus!="301"&&$!response.data.tradeStatus!="401"&&$!response.data.tradeStatus!="998")class="cur"#end>全部</dd>
+                <dd data-value="100" #if($!response.data.tradeStatus=="100")class="cur"#end>待支付</dd>
+    			<dd data-value="201" #if($!response.data.tradeStatus=="201")class="cur"#end>支付成功</dd>
+    			##<dd data-value="301" #if($!response.data.tradeStatus=="301")class="cur"#end>交易成功</dd>
+    			<dd data-value="401" #if($!response.data.tradeStatus=="401")class="cur"#end>结算成功</dd>##交易结束
+    			<dd data-value="998" #if($!response.data.tradeStatus=="998")class="cur"#end>交易失败</dd>
+    			<input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+                </dl>
+            </div>
+            <div class="search_row" id="search_dl_pos2" #if($!response.data.tradeType!="12")style="display:none;"#end>
+                <dl class="search_dl">
+                <dt>交易状态：</dt>
+                <dd data-value="0" #if($!response.data.tradeStatus!="950" && $!response.data.tradeStatus!="951" && $!response.data.tradeStatus!="952")class="cur"#end>全部</dd>
+                <dd data-value="950" #if($!response.data.tradeStatus=="950")class="cur"#end>撤销中</dd>
+                <dd data-value="951" #if($!response.data.tradeStatus=="951")class="cur"#end>撤销成功</dd>
+			    <dd data-value="952" #if($!response.data.tradeStatus=="952")class="cur"#end>撤销失败</dd>##已撤销
+                <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+                </dl>
+            </div>
+		</div>
+		
+		<!--委托付款-->
+		<div class="search_type_sub" #if($!response.data.txnType!="7")style="display:none;"#end>
+		<div class="search_row" id="search_dl_wtfk">
+            <dl class="search_dl">
+            <dt>交易类型：</dt>
+            <dd data-value="14" #if($!response.data.tradeType!="13")class="cur"#end>委托付款到永达账户</dd>
+            <dd data-value="13" #if($!response.data.tradeType=="13")class="cur"#end>委托付款到银行卡</dd>
+            <input type="hidden" class="search_dl_value" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+            </dl>
+        </div>
+		<div class="search_row">
+            <dl class="search_dl" id="search_dl_wtfk_zt">
+            <dt>交易状态：</dt>
+            <dd  data-value="0" #if($!response.data.tradeStatus!="221" &&$!response.data.tradeStatus!="222"&&$!response.data.tradeStatus!="223")class="cur"#end>全部</dd>
+            <dd data-value="221"#if($!response.data.tradeStatus=="221")class="cur"#end>处理中</dd>
+            <dd data-value="222" #if($!response.data.tradeStatus=="222")class="cur"#end>成功</dd>
+			<dd data-value="222" #if($!response.data.tradeStatus=="222")class="cur"#end>出款成功</dd>
+			##if($!response.data.tradeType!="2")
+				<dd data-value="223" #if($!response.data.tradeStatus=="223")class="cur"#end>失败</dd>
+			##end
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+		</div>
+		<!--pos交易-->
+		<div class="search_type_sub" #if($!response.data.txnType!="13")style="display:none;"#end>
+            <div class="search_row">
+              <dl class="search_dl">
+              <dt>交易类型：</dt>
+              <div class="select_div mr16 fl">
+                <select name="tradeType">
+                    <option value="0" #if($!response.data.tradeType=="0")selected="selected"#end>全部</option>
+                  #foreach($posType in $response.data.posType)
+                    <option value=$!posType #if($!response.data.tradeType==$!posType)selected="selected"#end>$!posType</option>
+                  #end
+                </select>
+              </div>
+              </dl>
+            </div>
+    		<div class="search_row">
+    		  <dl class="search_dl">
+              <dt>交易状态：</dt>
+              <div class="select_div mr16 fl">
+                <select name="tradeStatus">
+                  <option value="0" #if($!response.data.tradeStatus=="0")selected="selected"#end >全部</option>
+                  <option value="1" #if($!response.data.tradeStatus=="1")selected="selected"#end >交易成功</option>
+                  <option value="2" #if($!response.data.tradeStatus=="2")selected="selected"#end >处理失败</option>
+                </select>
+              </div>
+              </dl>
+            </div>
+		</div>
+		
+		<!--<div class="search_type_sub" #if($!response.data.txnType!="9")style="display:none;"#end>
+        <div class="search_row">
+            <dl class="search_dl" id="search_dl_blfd">
+            <dt>交易状态：</dt>
+            <dd  data-value="0" #if($!response.data.tradeStatus!="101" &&$!response.data.tradeStatus!="102")class="cur"#end>全部</dd>
+            <dd data-value="101" #if($!response.data.tradeStatus=="101")class="cur"#end>成功</dd>
+            <dd data-value="102" #if($!response.data.tradeStatus=="102")class="cur"#end>失败</dd>
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+        </div>-->
+        <!--<div class="search_type_sub" #if($!response.data.txnType!="10")style="display:none;"#end>
+        <div class="search_row">
+            <dl class="search_dl" id="search_dl_bldk">
+            <dt>交易状态：</dt>
+            <dd  data-value="0" #if($!response.data.tradeStatus!="101" &&$!response.data.tradeStatus!="102")class="cur"#end>全部</dd>
+            <dd data-value="101" #if($!response.data.tradeStatus=="101")class="cur"#end>成功</dd>
+            <dd data-value="102" #if($!response.data.tradeStatus=="102")class="cur"#end>失败</dd>
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+        </div>-->
+        <!--<div class="search_type_sub" #if($!response.data.txnType!="11")style="display:none;"#end>
+        <div class="search_row">
+            <dl class="search_dl" id="search_dl_bldk">
+            <dt>交易状态：</dt>
+            <dd  data-value="0" #if($!response.data.tradeStatus!="100" &&$!response.data.tradeStatus!="301"&&$!response.data.tradeStatus!="401"&&$!response.data.tradeStatus!="998")class="cur"#end>全部</dd>
+            <dd data-value="100" #if($!response.data.tradeStatus=="100")class="cur"#end>处理中</dd>
+            <dd data-value="301" #if($!response.data.tradeStatus=="301")class="cur"#end>交易成功</dd>
+            <dd data-value="401" #if($!response.data.tradeStatus=="401")class="cur"#end>结算成功</dd>
+            <dd data-value="998" #if($!response.data.tradeStatus=="998")class="cur"#end>交易失败</dd>
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+        </div>-->
+        
+		<!--
+		<div class="search_type_sub" #if($!response.data.txnType!="6")style="display:none;"#end>
+		<div class="search_row">
+            <dl class="search_dl" id="search_dl_dfgz">
+            <dt>交易类型：</dt>
+            <dd data-value="1" #if($!response.data.tradeType!="03")class="cur"#end>代发工资到永达互联网金融</dd>
+            <dd data-value="03" #if($!response.data.tradeType=="03")class="cur"#end>代发工资到银行卡</dd>
+            <input type="hidden" class="search_dl_value" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+            </dl>
+        </div>
+		<div class="search_row">
+            <dl class="search_dl" id="search_dl_dfgz_zt">
+            <dt>交易状态：</dt>
+            <dd data-value="0" #if($!response.data.tradeStatus!="661" &&$!response.data.tradeStatus!="662"&&$!response.data.tradeStatus!="663")class="cur"#end>全部</dd>
+            <dd data-value="661" #if($!response.data.tradeStatus=="661")class="cur"#end>处理中</dd>
+			<dd data-value="662" #if($!response.data.tradeStatus=="662")class="cur"#end>成功</dd>
+            <dd data-value="662" #if($!response.data.tradeStatus=="662")class="cur"#end>出款成功</dd>##全部
+			##<dd data-value="-1">部分成功</dd>
+			<dd data-value="663" #if($!response.data.tradeStatus=="663")class="cur"#end>失败</dd>##全部
+            <input type="hidden" class="search_dl_value" name="tradeStatus" value="$!response.data.tradeStatus">
+            </dl>
+        </div>
+		</div>
+		-->
+        
+        
+        <div class="search_row">
+            <label class="label1 fl">关 键 字：</label>
+            <div class="select_div mr16 fl">
+                <select name="keyword" id="keyword">
+                    #if($!response.data.txnType=="1")<option value="4">商户订单号</option>#end
+                    #if($!response.data.txnType=="2")<option value="1">交易订单号</option>#end
+                    #if($!response.data.txnType=="3")<option value="1">交易订单号</option>#end
+                    #if($!response.data.txnType=="4")<option value="1">商户订单号</option><option value="6" #if($!response.data.keyword=="6")selected="selected"#end>商户批次号</option>#end
+                    #if($!response.data.txnType=="5")<option value="4">商户订单号</option><option value="5" #if($!response.data.keyword=="5")selected="selected"#end>原商户订单号</option><option value="6" #if($!response.data.keyword=="6")selected="selected"#end>商户批次号</option>#end
+                    #if($!response.data.txnType=="6")<option value="1">交易订单号</option><option value="6" #if($!response.data.keyword=="6")selected="selected"#end>批次号</option>#end
+                    #if($!response.data.txnType=="7")<option value="1">交易订单号</option>#end
+                    #if($!response.data.txnType=="8")<option value="1">交易订单号</option>#end
+                    #if($!response.data.txnType=="9")<option value="1">交易订单号</option><option value="6" #if($!response.data.keyword=="6")selected="selected"#end>批次号</option>#end
+                    #if($!response.data.txnType=="10")<option value="1">交易订单号</option><option value="6" #if($!response.data.keyword=="6")selected="selected"#end>批次号</option>#end
+                    #if($!response.data.txnType=="11")<option value="4">商户订单号</option><option value="6" #if($!response.data.keyword=="6")selected="selected"#end>商户批次号</option>#end
+                    #if($!response.data.txnType=="12")<option value="4">商户订单号</option>>#end
+                    #if($!response.data.txnType=="13")<option value="1" #if($!response.data.keyword=="1")selected="selected"#end>交易单号</option><option value="5" #if($!response.data.keyword=="5")selected="selected"#end>原交易单号</option>>#end
+                 </select>
+            </div>
+            <input class="inputtext w177" type="text" name="keyvalue" value="$!response.data.keyvalue">
+        </div>
+        <div class="search_row">
+            <input type="button" id="search"  class="btn J_btn_chaxun ml30 fl" value="查 询">
+            <span class="error fl pl10" style="line-height:28px;" id="errorSearch"></span>
+            #if($!response.data.txnType=="12")
+			 <span class="error fl pl10" style="padding-top:8px;">提示：POS交易记录不包含支付方式为现金和票据的数据</span>
+			#end
+        </div>
+        <div class="tools">
+            #set($para="queryEndTime=$!{response.data.queryEndTime}&queryStartTime=$!{response.data.queryStartTime}&txnType=$!response.data.txnType&keyword=$!response.data.keyword&keyvalue=$!response.data.keyvalue&tradeType=$!response.data.tradeType&tradeStatus=$!response.data.tradeStatus")
+            #if($!response.data.txnType=="1" || $!response.data.txnType=="11")
+            ##<a href="${request.contextPath}/my/TradeToExcel.htm?$para" class="tools_dc gray1 fr ml20">导出下载</a><!--class="tools_dc gray1 fr ml20"-->
+			<!--<a href="#springUrl('/my/TradeToExcel.htm?queryStartTime=$!response.data.queryStartTime')" class="tools_dc gray1 fr ml20">导出下载</a> -->
+			<a href="#" class="tools_dc gray1 fr ml20">导出下载</a>##${request.contextPath}/my/TradeToExcel.htm?$para
+			<a href="javascript:void(0)" class="gray1 fr" id="btn_a_drmb">批量退款</a> 
+			<span class="fr ml5 mr5">|</span> 
+			<a href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/download/model-batch-upload-refund.xls" class="gray1 fr">批量退款模板下载</a>
+			#end
+			#if($!response.data.txnType!="1" &&$!response.data.txnType!="11")	
+			<a href="#" class="tools_dc gray1 fr ml20">导出下载</a>
+			<a href="#" class="gray1 fr" id="btn_a_drmb"></a> 
+			<span class="fr ml5 mr5"></span> 
+			<a href="#" class="gray1 fr"></a>
+			#end
+			
+    </div>
+			<div class="table_div">
+						
+		#if($!response.data.txnType=="1")
+        <table class="table1">
+          <tr>
+            <th width="75">创建时间</th>
+            <th width="150">交易订单号</th>
+            <th width="150">商户订单号</th>
+            <th width="135">交易类型</th>
+            <th width="120">金额<em>（元）</em></th>
+            <th width="80">服务费<em>（元）</em></th>
+            <th width="90">退款金额<em>（元）</em></th>
+            <th width="85">状态</th>
+            <th width="80">操作</th>
+          </tr>
+            #set ($i=1)
+            #set($tradeType = "")##交易类型
+            #set($tradeStatus = "")##交易状态
+            #set($plusminus ="")##正负
+            #set($moneycolor="")
+            #foreach($info in $response.data.list)
+	            #if($i%2 != 0)
+	            #set ($odd="")
+	            #else
+	            #set ($odd="on")
+	            #end
+	            #set($i=$i+1)
+	
+	            #if(${info.orderState} == "100")
+	            #set($tradeStatus="待支付")##待支付
+	            #set($moneycolor="money")
+	            #elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+	            #set($tradeStatus="处理中")##
+	            #elseif(${info.orderState} == "201")
+	            #set($tradeStatus="支付成功")##   付款成功=支付成功
+	            #elseif($info.orderState == "999")
+	            #set($tradeStatus="交易失败")##   交易关闭视为交易失败
+	            #end
+	
+	            #if($info.tradeType == "INSTANT_TRASFER")
+	            #if($info.orderState == "301" || $info.orderState == "401")
+	            #set($tradeStatus="结算成功")##转账成功视为结算成功
+	            #end
+	            #if($info.orderState == "998")
+	            #set($tradeStatus="交易失败")##转账失败视为交易失败
+	            #end
+	            #else
+	            #if($info.orderState == "301")
+	            #set($tradeStatus="交易成功")##交易成功
+	            #elseif($info.orderState == "401")
+	            #set($tradeStatus="结算成功")##交易结束视为==结算成功
+	            #end
+	            #end  ##  #待支付 #处理中 退款中  交易成功  失败  退款失败      已退款    #等待发货       等待确认收货
+	            
+	            #if($info.memberId == $info.buyerId)
+	            	#set($plusminus ="-")
+	            	#set($moneycolor="orange f14 bold")
+	            #elseif($info.memberId == $info.sellerId)
+	            	#set($plusminus ="")
+	            	#set($moneycolor="green  f14 bold")
+	            #end
+	            
+	            #if($info.TradeType=="INSTANT_TRASFER")
+	            #set($tradeType ="普通转账交易")
+	            #elseif($info.TradeType=="INSTANT_ACQUIRING")
+	            #set($tradeType ="即时到账收单交易")
+	            #elseif($info.TradeType=="ENSURE_ACQUIRING")
+	            #set($tradeType ="担保收单交易")
+	            #elseif($info.TradeType=="PREPAY_ACQUIRING")
+	            #set($tradeType ="下订收单交易")
+	            #elseif($info.TradeType=="REFUND_ACQUIRING")
+	            #set($tradeType ="收单退款交易")
+	            #else
+	            #set($tradeType =$info.TradeType)
+	            #end
+
+            <tr class=$odd>
+                <td class="time"> $!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>##创建时间==交易提交时间
+                <td>$!{info.tradeVoucherNo}</td>##交易订单号==交易凭证号
+                <td>$!{info.serialNumber}</td>##商户订单号==流水号
+
+                <td>$!{tradeType}</td>##交易类型==$!{info.TradeType}
+                <td>##金额==实收金额(付款金额)
+				<span class='green f14 bold'>
+                     #if(${moneyUtil.getAmount($!info.payAmount)} == "0.00")
+                          --
+                     #else
+                          ##$!{plusminus}
+						  $!{moneyUtil.getAmount($!info.payAmount)}
+					 #end
+		        </span>
+                </td>
+                <td><span class="orange f14 bold">
+				#set($infoPayeeFee = $!{moneyUtil.getAmount($!info.payeeFee)})
+				#if(${infoPayeeFee}!="0.00")-#end
+                ${infoPayeeFee}
+		   </span></td>##手续费
+                <td>
+				<span class="red f14 bold">
+					$!{info.refundAmount}
+				</span>
+                </td>
+                <td>$!{tradeStatus}</td>##状态==订单状态（数字表示）
+                <td>
+                    <a href="${request.contextPath}/my/GatewayDetail.htm?tradeVoucherNo=$!{info.tradeVoucherNo}">查看</a>
+                    #if($info.orderState == "401") |
+                    <a href="javascript:void(0);" class="btn_tk" data-id="$!{info.tradeVoucherNo}" >退款</a>#end
+                </td>##${request.contextPath}/my/RefundApply.htm?tradeVoucherNo=$!{info.tradeVoucherNo}
+            </tr>
+            #end
+            #if(!$response.data.list || $response.data.list.size()<=0)
+            <tr>
+                <td colspan="10">无交易信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">金额统计->共<b class="b">$!{response.data.summary.totalTradeCount}</b>笔：<span class="green  f14 bold">${response.data.summary.totalTradeAmount}</span>元 <span class="bold orange"></span></div>
+                    <div class="nav_page mt10"> #parse("common/control/paginator.vm")</div>
+                </td>
+            </tr>
+            ##订单笔数$!{response.data.summary.totalTradeCount},
+            ##订单金额${response.data.summary.totalTradeAmount},
+            ##结算金额${response.data.summary.totalSettledAmount}
+            ##退单笔数${response.data.summary.totalRefundCount},
+            ##退单金额${response.data.summary.totalRefundAmount}
+        </table>
+		#end
+		#if($!response.data.txnType=="2")
+        <table class="table1">
+          <tr>
+           <th width="80">创建时间</th>
+            <th width="220">支付订单号</th>
+            <th width="150">交易类型</th>
+            <th width="150">金额<em>（元）</em></th>
+		   <th width="220">支付账户</th>
+            <th width="150">状态</th>
+              ##<th width="90">操作员</th>
+          </tr>
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #if($!tradeInfo.paymentStatus != "P")
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtPaySubmit) </td>
+                <td>$!tradeInfo.paymentVoucherNo</td>
+                <td>充值</td>
+                <td><span class="green f14 bold">$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+                <td>$!tradeInfo.bank</td>##支付账户~交易渠道payMode.getMessage()</td>
+                ##<td> $!tradeInfo.memberId</td>
+                #if($!tradeInfo.paymentStatus == "F")
+                <td><span>失败</span></td>
+                #elseif($!tradeInfo.paymentStatus == "P")
+                <td><span>充值中</span></td>
+                #else
+                <td><span>成功</span></td>
+                #end
+            </tr>
+            #end
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="10">无充值信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共充值
+                        ##<b class="b">5</b>笔，成功
+                        ##<b class="b">4</b>笔：
+                        ##<span class="bold green">5254852.58</span>
+                        ##元 | 失败<b class="b">1</b>笔：
+                        ##<span class="bold orange">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		#if($!response.data.txnType=="3")
+        <table class="table1">
+          <tr>
+           <th width="80">创建时间</th>
+            <th width="200">交易订单号</th>
+            <th width="190">金额<em>（元）</em></th>
+			<th width="200">服务费<em>（元）</em></th>
+              <th width="150" >收款账户</th>
+            <th width="150">状态</th>
+              ##<th width="135">交易类型</th>
+              ## <th width="90">操作员</th>
+          </tr>
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="odd")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime) </td>
+                <td>$!tradeInfo.fundoutOrderNo</td>
+                ##<td>提现</td>
+                <td><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.fee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.fee)</span></td>
+                <td>$!{tradeInfo.bankName} <br />$!{tradeInfo.cardNo}</td>
+                ##<td>$!tradeInfo.memberId</td>
+                #if($!tradeInfo.status == "submitted")
+                <td><span>处理中</span></td>## 原来是-已提交，原型
+                #elseif($!tradeInfo.status == "failed")
+                <td><span>失败</span></td>
+                #elseif($!tradeInfo.status == "success")
+                <td><span>出款成功</span></td>
+                #end
+            </tr>
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="6">无提现信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="6">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共提现  $!response.data.page.pageInfo.getTotalSum()
+                        ##<b class="b">6</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		#if($!response.data.txnType=="4")
+        <table class="table1">
+          <tr>
+            <th width="80">创建时间</th>
+            <th width="170">商户批次号/商户订单号</th>
+            <th width="170">交易批次号/交易订单号</th>
+            <th width="110">交易类型</th>
+			<th width="100">交易对象</th>
+            <th width="100">金额<em>（元）</em></th>
+		    <th width="100">服务费<em>（元）</em></th>
+            <th width="50">状态</th>
+			<th width="90">操作</th>
+          </tr>
+            #if($!response.data.tradeType=="2")
+
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime) </td>
+                <td>$!tradeInfo.sourceBatchNo<br />/$!tradeInfo.outOrderNo</td>
+                <td>$!tradeInfo.batchOrderNo<br />/$!tradeInfo.fundoutOrderNo</td>
+                <td>
+                    #if($!tradeInfo.productCode == "10222")
+                    自动打款
+                    #else
+                    转账到银行卡
+                    #end
+                </td>
+                <td>$!{tradeInfo.name}</td>
+                <td><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.fee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.fee)</span></td>
+                ##<td>$!tradeInfo.accountNo</td>
+                #if($!tradeInfo.status == "submitted")
+                <td><span>处理中</span></td>## 原来是-已提交，原型
+                #elseif($!tradeInfo.status == "failed")
+                <td><span>失败</span></td>
+                #elseif($!tradeInfo.status == "success")
+                <td><span>出款成功</span></td>
+                #end
+                <td><a href="${request.contextPath}/my/TransferBankDetail.htm?orderId=$!tradeInfo.fundoutOrderNo&tradeType=2&flag=1" target="_blank">查看</a></td>
+            </tr>
+            #end
+            #else
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime) </td>
+                <td>$!tradeInfo.sourceBatchNo<br />/$!tradeInfo.tradeSourceVoucherNo</td>
+                <td>$!tradeInfo.batchNo<br />/$!tradeInfo.orderId</td>
+                ##<td>批次号</td>
+                <td>转账到永达账户</td>
+
+                #if($!tradeInfo.plamId=="1")##plamId=1表示卖方
+                #set($moneycolor="green  f14 bold")
+                <td>$!tradeInfo.buyerName</td>
+                <td><span class='${moneycolor}'>$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayerFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayerFee)</span></td>
+                #else
+                #set($moneycolor="orange f14 bold")
+                <td>$!tradeInfo.sellerName</td>
+                <td><span class='${moneycolor}'>-$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayerFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayerFee)</span></td>
+                #end
+
+                ##if($tradeInfo.memberId == $tradeInfo.buyId)
+                ##else
+                ##<td>$!tradeInfo.sellerName</td>
+                ##end
+                <td>
+                    #if($!tradeInfo.state=="待支付")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="付款成功")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="转账成功")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易完成")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易关闭" || $!tradeInfo.state=="转账失败")
+                    #set($state="失败")
+                    #else
+                    #set($state=$!tradeInfo.state)
+                    #end
+                    $state
+                </td>
+                <td ><a href="${request.contextPath}/my/TransferKJTDetail.htm?orderId=$!tradeInfo.orderId&tradeType=1&flag=1" target="_blank">查看</a></td>
+            </tr>
+            #end
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="10">无转账信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共转账
+                        ##<b class="b">$!{response.data.summary.totalTradeCount}</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">$!{response.data.summary.totalTradeAmount}</span>
+                        ##元 | 失败<b class="b">1</b>笔：
+                        ##<span class="bold orange">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		#if($!response.data.txnType=="5")
+        <table class="table1">
+          <tr>
+           <th width="75">创建时间</th>
+		   <th width="100">退款订单号</th>
+            <th width="175">商户批次号/商户订单号</th>##原交易订单号
+            <th width="155">原商户订单号</th>
+            <th width="95">退款金额<em>（元）</em></th>
+			<th width="95">退还服务费<em>（元）</em></th>
+            <th width="90">状态</th>
+			<th width="95">退款备注</th>
+			<th width="90">操作</th>
+              ##<th width="70">发起人</th>
+          </tr>
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtSubmit) </td>
+                <td>$!{tradeInfo.tradeVoucherNo}</td>
+                <td>$!{tradeInfo.sourceBatchNo}/<br>
+                    $!{tradeInfo.tradeSourceVoucherNo}</td>##tradeSourceVoucherNo
+                ##<td>批次号</td>
+                ## <th>商户批次号/商户订单号</th>
+                <td>$!{tradeInfo.origTradeSourceVoucherNo}</td>
+                <td><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.payAmount)</span></td>
+                <td><span class="orange f14 bold">
+
+											###if($!{moneyUtil.getAmount($!tradeInfo.refundPayeeFee)}!="0.00")-#end
+                                           ## $!moneyUtil.getAmount($!tradeInfo.refundPayeeFee)
+                                           #set($refundPayerFee = $!{moneyUtil.getAmount($!tradeInfo.refundPayerFee)})
+				                            #if(${refundPayerFee}!="0.00")-#end
+                                              ${refundPayerFee}
+                                            </span></td>
+                ##<td>$amount</td>
+                ##if($!tradeInfo.buyerId == $!response.data.member.memberId)
+                ## <td>$!tradeInfo.sellerName</td>
+                ##else
+                ##<td>$!tradeInfo.buyerName</td>
+                ##end
+                #if($!tradeInfo.status == 100)
+                <td><span>待支付</span></td>
+                #elseif($!tradeInfo.status == 101 || $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+                <td><span>支付中</span></td>
+                #elseif($!tradeInfo.status == 201)
+                <td><span>付款成功</span></td>
+                #elseif($!tradeInfo.status == 301 || $!tradeInfo.status == 401)
+                <td><span>交易成功</span></td>
+                #elseif($!tradeInfo.status == 900 || $!tradeInfo.status == 901)
+                <td><span>退款中</span></td>
+                #elseif($!tradeInfo.status == 951)
+                <td><span>退款成功</span></td>
+                #elseif($!tradeInfo.status == 952)
+                <td><span>退款失败</span></td>
+                #elseif($!tradeInfo.status == 999)
+                <td><span>交易关闭</span></td>
+                #else
+                <td><span>$!tradeInfo.status</span></td>
+                #end
+                <td><span class="ellipsis" style="width:90px;display:block;" title="$!tradeInfo.tradeMemo">$!tradeInfo.tradeMemo</span></td>
+                <td>
+                    <a href="${request.contextPath}/my/RefundDetail.htm?tradeVoucherNo=$!tradeInfo.tradeVoucherNo&origTradeSourceVoucherNo=$!tradeInfo.origTradeSourceVoucherNo" target="_blank" >查看</a>
+                </td>
+            </tr>
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="9">无退款信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共转账
+                        ##<b class="b">6</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">5254852.58</span>
+                        ##元 | 失败<b class="b">1</b>笔：
+                        ##<span class="bold orange">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		#if($!response.data.txnType=="6")
+        <table class="table1">
+          <tr>
+           <th width="75">创建时间</th>
+            <th width="150">交易订单号</th>
+            <th width="135">交易类型</th>
+			<th width="135">交易对象</th>
+            <th width="120">金额<em>（元）</em></th>
+			<th width="120">服务费<em>（元）</em></th>
+            <th width="97">交易状态</th>
+			 <th width="90">操作</th>
+              ##<th width="135">批次号</th>
+          </tr>
+            #if($!response.data.tradeType=="03")
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="odd")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime) </td>
+                <td>$!tradeInfo.fundoutOrderNo</td>
+                ##<td>批次号</td>
+                <td>代发工资到银行卡</td>
+                <td>$!{tradeInfo.name}</td>
+                <td><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.fee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.fee)</span></td>
+                #if($!tradeInfo.status == "submitted")
+                <td><span>处理中</span></td>## 原来是-已提交，原型
+                #elseif($!tradeInfo.status == "failed")
+                <td><span>失败</span></td>
+                #elseif($!tradeInfo.status == "success")
+                <td><span>出款成功</span></td>
+                #end
+                <td>
+                    <a href="${request.contextPath}/my/PayrollDetail.htm?fundoutOrderNo=$!tradeInfo.fundoutOrderNo&tradeType=03" >查看</a>
+                </td>
+            </tr>
+            #end
+            #else
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime) </td>
+                <td>$!tradeInfo.orderId</td>
+                <td>代发工资到永达账户</td>
+                #if($!tradeInfo.plamId=="1")##plamId=1表示卖方
+                #set($moneycolor="green  f14 bold")
+                <td>$!tradeInfo.buyerName</td>
+                <td><span class='${moneycolor}'>$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayeeFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayeeFee)</span></td>
+                #else
+                #set($moneycolor="orange f14 bold")
+                <td>$!tradeInfo.sellerName</td>
+                <td><span class='${moneycolor}'>-$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayerFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayerFee)</span></td>
+                #end
+
+
+                <td>
+                    #if($!tradeInfo.state=="待支付")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="付款成功")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="转账成功")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易完成")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易关闭")
+                    #set($state="关闭")
+                    #end
+                    $state
+                </td>
+                <td><a href="${request.contextPath}/my/PayrollDetail.htm?fundoutOrderNo=$!tradeInfo.orderId&tradeType=1" >查看</a></td>
+            </tr>
+            #end
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="10">无代发工资信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共提现  $!response.data.page.pageInfo.getTotalSum()
+                        ##<b class="b">6</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div>
+                </td>
+            </tr>
+        </table>
+		#end
+		
+		
+		<!--委托付款-->
+		#if($!response.data.txnType=="7")
+        <table class="table1">
+          <tr>
+           <th width="75">创建时间</th>
+            <th width="150">交易订单号</th>
+			##<th width="135">批次号</th>
+            <th width="135">交易类型</th>
+			<th width="135">交易对象</th>
+            <th width="120">金额<em>（元）</em></th>
+		    <th width="120">服务费<em>（元）</em></th>
+            <th width="97">状态</th>
+			<th width="90">操作</th>
+          </tr>
+            #if($!response.data.tradeType=="13")
+
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime) </td>
+                <td>$!tradeInfo.fundoutOrderNo</td>
+                <td>委托付款到银行卡</td>
+                <td>$!{tradeInfo.name}</td>
+                <td><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.fee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.fee)</span></td>
+                ##<td>$!tradeInfo.accountNo</td>
+                #if($!tradeInfo.status == "submitted")
+                <td><span>处理中</span></td>## 原来是-已提交，原型
+                #elseif($!tradeInfo.status == "failed")
+                <td><span>失败</span></td>
+                #elseif($!tradeInfo.status == "success")
+                <td><span>出款成功</span></td>
+                #end
+                <td><a href="${request.contextPath}/my/fundscollectbank.htm?fundoutOrderNo=$!tradeInfo.fundoutOrderNo&tradeType=1&flag=2" target="_blank" >查看</a></td>
+            </tr>
+            #end
+            #else
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime) </td>
+                <td>$!tradeInfo.orderId</td>
+                ##<td>批次号</td>
+                <td>委托付款到永达账户</td>
+                #if($!tradeInfo.plamId=="1")##plamId=1表示卖方
+                <td>$!tradeInfo.buyerName</td>
+                #set($moneycolor="green  f14 bold")
+                <td><span class='${moneycolor}'>$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayeeFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayeeFee)</span></td>
+                #else
+                <td>$!tradeInfo.sellerName</td>
+                #set($moneycolor="orange f14 bold")
+                <td><span class='${moneycolor}'>-$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayerFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayerFee)</span></td>
+                #end
+                <td>
+                    #if($!tradeInfo.state=="待支付")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="付款成功")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="转账成功")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易完成")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易关闭" || $!tradeInfo.state=="转账失败")
+                    #set($state="失败")
+                    #else
+                    #set($state=$!tradeInfo.state)
+                    #end
+                    $state
+                </td>
+                <td><a href="${request.contextPath}/my/fundscollectYD.htm?orderId=$!tradeInfo.orderId&tradeType=1&flag=2" target="_blank" >查看</a></td>
+            </tr>
+            #end
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="10">无委托付款信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共转账
+                        ##<b class="b">$!{response.data.summary.totalTradeCount}</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">$!{response.data.summary.totalTradeAmount}</span>
+                        ##元 | 失败<b class="b">1</b>笔：
+                        ##<span class="bold orange">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		#if($!response.data.txnType=="8")
+        <table class="table1">
+          <tr>
+           <th width="80">退票时间</th>
+            <th width="200">交易订单号</th>
+            <th width="120">交易类型</th>
+			<th width="140">交易对象</th>
+            <th width="115">金额<em>（元）</em></th>
+		   <th width="115">服务费<em>（元）</em></th>
+            <th width="100">交易状态</th>
+			<th width="100">操作</th>
+              ##<th width="135">批次号</th>
+          </tr>
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.refundTime) </td>
+                <td>$!tradeInfo.fundoutOrderNo</td>
+                <td>$!tradeInfo.productName</td>
+                <td>$!{tradeInfo.name}</td>
+                <td><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.amount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.fee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.fee)</span></td>
+                <td><span>已退票</span></td>
+                <td><a href="${request.contextPath}/my/TransferBankDetail.htm?orderId=$!tradeInfo.fundoutOrderNo&tradeType=bankRefund" target="_blank">查看</a></td>
+            </tr>
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="8">无退票信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="8">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共转账
+                        ##<b class="b">$!{response.data.summary.totalTradeCount}</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">$!{response.data.summary.totalTradeAmount}</span>
+                        ##元 | 失败<b class="b">1</b>笔：
+                        ##<span class="bold orange">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		#if($!response.data.txnType=="9" ||$!response.data.txnType=="10")
+        <table class="table1">
+          <tr>
+           <th width="75">创建时间</th>
+            <th width="130">交易订单号</th>
+			##<th width="135">批次号</th>
+            <th width="115">交易类型</th>
+			<th width="135">交易对象</th>
+            <th width="120">金额<em>（元）</em></th>
+		   <th width="90">服务费<em>（元）</th>
+            <th width="97">交易状态</th>
+			<th width="97">操作</th>
+          </tr>
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime) </td>
+                <td>$!tradeInfo.orderId</td>
+                ##<td>批次号</td>
+                #if($!response.data.txnType=="9")
+                <td>保理放贷</td>
+                #elseif($!response.data.txnType=="10")
+                <td>保理代扣</td>
+                #end
+                #if($!tradeInfo.plamId=="1")##plamId=1表示卖方
+                #set($moneycolor="green  f14 bold")
+                <td>$!tradeInfo.buyerName</td>
+                <td><span class='${moneycolor}'>$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayerFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayerFee)</span></td>
+                #else
+                #set($moneycolor="orange f14 bold")
+                <td>$!tradeInfo.sellerName</td>
+                <td><span class='${moneycolor}'>-$!moneyUtil.getAmount($!tradeInfo.transferAmount)</span></td>
+                <td><span class="orange f14 bold">#if($!moneyUtil.getAmount($!tradeInfo.PayerFee)!="0.00")-#end$!moneyUtil.getAmount($!tradeInfo.PayerFee)</span></td>
+                #end
+
+                ##if($tradeInfo.memberId == $tradeInfo.buyId)
+                ##else
+                ##<td>$!tradeInfo.sellerName</td>
+                ##end
+                <td>
+                    #if($!tradeInfo.state=="待支付")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="付款成功")
+                    #set($state="处理中")
+                    #elseif($!tradeInfo.state=="转账成功")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易完成")
+                    #set($state="成功")
+                    #elseif($!tradeInfo.state=="交易关闭" || $!tradeInfo.state=="转账失败")
+                    #set($state="失败")
+                    #else
+                    #set($state=$!tradeInfo.state)
+                    #end
+                    $state
+                </td>
+                #if($!response.data.txnType=="9")
+                <td><a href="${request.contextPath}/my/TransferKJTDetail.htm?orderId=$!tradeInfo.orderId&tradeType=1&flag=3" >查看</a></td>
+                #elseif($!response.data.txnType=="10")
+                <td><a href="${request.contextPath}/my/TransferKJTDetail.htm?orderId=$!tradeInfo.orderId&tradeType=1&flag=4" >查看</a></td>
+                #end
+            </tr>
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            #if($!response.data.txnType=="9")
+            <tr>
+                <td colspan="10">无保理放贷信息！</td>
+            </tr>
+            #elseif($!response.data.txnType=="10")
+            <tr>
+                <td colspan="10">无保理代扣信息！</td>
+            </tr>
+            #end
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共转账
+                        ##<b class="b">$!{response.data.summary.totalTradeCount}</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">$!{response.data.summary.totalTradeAmount}</span>
+                        ##元 | 失败<b class="b">1</b>笔：
+                        ##<span class="bold orange">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		#if($!response.data.txnType=="11")
+        <table class="table1">
+          <tr>
+           <th width="60">创建时间</th>
+            <th width="150">商户批次号/商户订单号</th>
+			<th width="135">交易对象</th>
+            <th width="120">交易金额<em>（元）</em></th>
+		   <th width="100">服务费<em>（元）</th>
+            <th width="110">交易状态</th>
+			<th width="110">操作</th>
+          </tr>
+            #set ($i=1)
+            #set($tradeType = "")##交易类型
+            #set($tradeStatus = "")##交易状态
+            #set($plusminus ="")##正负
+            #set($moneycolor="")
+            #foreach($info in $response.data.list)
+            #if($i%2 != 0)
+            #set ($odd="")
+            #else
+            #set ($odd="on")
+            #end
+            #set($i=$i+1)
+
+            #if(${info.orderState} == "100")
+            #set($tradeStatus="处理中")##待支付
+            #set($moneycolor="money")
+            #elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+            #set($tradeStatus="处理中")##
+            #elseif(${info.orderState} == "201")
+            #set($tradeStatus="支付成功")##   付款成功=支付成功
+            #elseif($info.orderState == "999")
+            #set($tradeStatus="交易失败")##   交易关闭视为交易失败
+            #end
+
+            #if($info.tradeType == "INSTANT_TRASFER")
+            #if($info.orderState == "301" || $info.orderState == "401")
+            #set($tradeStatus="结算成功")##转账成功视为结算成功
+            #end
+            #if($info.orderState == "998")
+            #set($tradeStatus="交易失败")##转账失败视为交易失败
+            #end
+            #else
+            #if($info.orderState == "301")
+            #set($tradeStatus="交易成功")##交易成功
+            #elseif($info.orderState == "401")
+            #set($tradeStatus="结算成功")##交易结束视为==结算成功
+            #end
+            #end  ##  #待支付 #处理中 退款中  交易成功  失败  退款失败      已退款    #等待发货       等待确认收货
+            <tr class=$odd>
+                <td class="time"> $!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>##创建时间==交易提交时间
+                <td>$!{info.sourceBatchNo}/$!{info.serialNumber}</td>##商户订单号==流水号
+                <td>$!{info.extention}</td>
+                <td>##金额==实收金额(付款金额)
+				<span class='green  f14 bold'>
+                     #if(${moneyUtil.getAmount($!info.payAmount)} == "0.00")
+                          --
+                     #else
+                          ##$!{plusminus}
+						  $!{moneyUtil.getAmount($!info.payAmount)}
+					 #end
+		        </span>
+                </td>
+                <td><span class="orange f14 bold">
+				#set($infoPayeeFee = $!{moneyUtil.getAmount($!info.payeeFee)})
+				#if(${infoPayeeFee}!="0.00")-#end
+                ${infoPayeeFee}
+		   </span></td>##手续费
+                <td>$!{tradeStatus}</td>##状态==订单状态（数字表示）
+                <td>
+                    <a href="${request.contextPath}/my/Withholding.htm?tradeVoucherNo=$!{info.tradeVoucherNo}" >查看</a>
+                    #if($info.orderState == "401") |
+                    <a href="javascript:void(0);" class="btn_tk" data-id="$!{info.tradeVoucherNo}" >退款</a>#end
+                </td>
+            </tr>
+            #end
+            #if(!$response.data.list || $response.data.list.size()<=0)
+            <tr>
+                <td colspan="10">无银行卡代扣信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="nav_page mt10"> #parse("common/control/paginator.vm")</div>
+                </td>
+            </tr>
+        </table>
+		#end
+		
+		#if(($!response.data.txnType=="12")&&($!response.data.tradeType!="12"))
+        <table class="table1">
+          <tr>
+            <th width="70">创建时间</th>
+            <th width="150">交易订单号</th>
+            <th width="210">商户订单号</th>
+            ##<th width="135">交易类型</th>
+            <th width="120">金额<em>（元）</em></th>
+            <th width="100">服务费<em>（元）</em></th>
+            <th width="90">支付方式</th>
+            <th width="85">状态</th>
+            <th width="70">操作</th>
+          </tr>
+            #set ($i=1)
+            #set($tradeStatus = "")##交易状态
+            #set($plusminus ="")##正负
+            #set($moneycolor="")
+            #foreach($info in $response.data.list)
+	            #if($i%2 != 0)
+	            #set ($odd="")
+	            #else
+	            #set ($odd="on")
+	            #end
+	            #set($i=$i+1)
+	
+	            #if(${info.orderState} == "100")
+	            #set($tradeStatus="待支付")##待支付
+	            ##set($moneycolor="money")
+	            ##elseif(${info.orderState} == "110" || ${info.orderState}=="111" || ${info.orderState} == "121")
+	            ##set($tradeStatus="处理中")
+	            #elseif(${info.orderState} == "201"||${info.orderState} == "301")
+	            #set($tradeStatus="支付成功")##   付款成功=支付成功    交易成功视为支付成功
+	            #elseif(${info.orderState} == "999"||${info.orderState} == "998")
+	            #set($tradeStatus="交易失败")##  交易失败
+	            #elseif($info.orderState == "401")
+	            #set($tradeStatus="结算成功")##交易结束视为==结算成功
+	            #end
+	           
+	            #if($info.memberId == $info.buyerId)
+	            #set($plusminus ="-")
+	            #set($moneycolor="orange f14 bold")
+	            #elseif($info.memberId == $info.sellerId)
+	            #set($plusminus ="")
+	            #set($moneycolor="green  f14 bold")
+	            #end
+	            
+
+            <tr class=$odd>
+                <td class="time"> $!dateUtil.getNewFormatDateString(${info.gmtSubmit})</td>##创建时间==交易提交时间
+                <td>$!{info.tradeVoucherNo}</td>##交易订单号==交易凭证号
+                <td>$!{info.serialNumber}</td>##商户订单号==流水号
+                <td>##金额==实收金额(付款金额)
+				<span class='green f14 bold'>
+                     #if(${moneyUtil.getAmount($!info.payAmount)} == "0.00")
+                          --
+                     #else
+                          ##$!{plusminus}
+						  $!{moneyUtil.getAmount($!info.payAmount)}
+					 #end
+		        </span>
+                </td>
+                <td><span class="orange f14 bold">
+				#set($infoPayeeFee = $!{moneyUtil.getAmount($!info.payeeFee)})
+				#if(${infoPayeeFee}!="0.00")-#end
+                ${infoPayeeFee}
+		   </span></td>##手续费
+		        <td>$!{info.payChannel}</td>
+                <td>$!{tradeStatus}</td>##状态==订单状态（数字表示）
+                <td>
+                    <a href="${request.contextPath}/my/PosDetail.htm?tradeVoucherNo=$!{info.tradeVoucherNo}" target="_blank" >查看</a>
+                    #if($info.orderState == "401"||${info.orderState} == "201"||${info.orderState} == "301") |
+                       <a href="javascript:void(0);" class="btn_postk" data-id="$!{info.tradeVoucherNo}" >退款</a>
+                    #end
+                </td>##${request.contextPath}/my/RefundApply.htm?tradeVoucherNo=$!{info.tradeVoucherNo}
+            </tr>
+            #end
+            #if(!$response.data.list || $response.data.list.size()<=0)
+            <tr>
+                <td colspan="10">无交易信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">金额统计->共<b class="b">$!{response.data.summary.totalTradeCount}</b>笔：<span class="green  f14 bold">${response.data.summary.totalTradeAmount}</span>元 <span class="bold orange"></span></div>
+                    <div class="nav_page mt10"> #parse("common/control/paginator.vm")</div>
+                </td>
+            </tr>
+        </table>
+		#end
+		
+		#if(($!response.data.txnType=="12")&&($!response.data.tradeType=="12"))
+		<table class="table1">
+          <tr>
+            <th width="115">创建时间</th>
+		    <th width="150">撤销订单号</th>
+            <th width="175">商户订单号</th>
+            <th width="155">原商户订单号</th>
+            <th width="95">撤销金额<em>（元）</em></th>
+            <th width="90">状态</th>
+			<th width="90">操作</th>
+          </tr>
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.page.infos)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.gmtSubmit) </td>
+                <td>$!{tradeInfo.tradeVoucherNo}</td>
+                <td>$!{tradeInfo.tradeSourceVoucherNo}</td>
+                <td>$!{tradeInfo.origTradeSourceVoucherNo}</td>
+                <td><span class="orange f14 bold">-$!moneyUtil.getAmount($!tradeInfo.payAmount)</span></td>
+                
+                #if($!tradeInfo.status == 900 || $!tradeInfo.status == 901)
+                <td><span>撤销中</span></td>
+                #elseif($!tradeInfo.status == 951)
+                <td><span>撤销成功</span></td>
+                #elseif($!tradeInfo.status == 952)
+                <td><span>撤销失败</span></td>
+                #else
+                <td><span>$!tradeInfo.status</span></td>
+                #end
+                <td>
+                    <a href="${request.contextPath}/my/PosRefundDetail.htm?tradeVoucherNo=$!tradeInfo.tradeVoucherNo&origTradeSourceVoucherNo=$!tradeInfo.origTradeSourceVoucherNo" target="_blank" >查看</a>
+                </td>
+            </tr>
+            #end
+            #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+            <tr>
+                <td colspan="10">无撤销信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">
+                        ##金额统计->共转账
+                        ##<b class="b">6</b>笔，成功
+                        ##<b class="b">5</b>笔：
+                        ##<span class="bold green">5254852.58</span>
+                        ##元 | 失败<b class="b">1</b>笔：
+                        ##<span class="bold orange">5254852.58</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/pagePost.vm")
+                    </div></td>
+            </tr>
+        </table>
+		#end
+		
+		
+		#if($!response.data.txnType=="13")
+		<table class="table1">
+          <tr>
+            <th width="115">创建时间</th>
+		    <th width="150">交易单号</th>
+            <th width="175">交易类型</th>
+            <th width="155">金额（元）</em></th>
+            <th width="95">服务费（元）</em></th>
+            <th width="90">状态</th>
+			<th width="90">操作</th>
+          </tr>
+            #set ($i=1)
+            #foreach ($!tradeInfo in $!response.data.pospage.posList)
+            #if($i%2 != 0)
+            #set ($odd_class="")
+            #else
+            #set ($odd_class="on")
+            #end
+            #set($i=$i+1)
+            <tr class=$odd_class>
+                <td class="time">$!dateUtil.getNewFormatDateString($!tradeInfo.tradeTime) </td>
+                <td>$!{tradeInfo.tradeNo}</td>
+                <td>$!{tradeInfo.tradeType}</td>
+                <td>
+                #if($!moneyUtil.getAmountSize($!tradeInfo.tradeAmount))
+                  <span class="orange f14 bold">$!tradeInfo.tradeAmount</span>
+                #else
+                  <span class="green f14 bold">$!tradeInfo.tradeAmount</span>
+                #end
+                </td> 
+                <td>
+                #if($!moneyUtil.getAmountSize($!tradeInfo.tradeFee))
+                  <span class="orange f14 bold">$!tradeInfo.tradeFee</span>
+                #else
+                  <span class="green f14 bold">$!tradeInfo.tradeFee</span>
+                #end
+                </td>
+                <td><span>$!tradeInfo.status</span></td>
+                
+                <td>
+                    <a href="${request.contextPath}/my/NewPosDetail.htm?tradeNo=$!tradeInfo.tradeNo" target="_blank">查看</a>
+                </td>
+            </tr>
+            #end
+            #if(!$response.data.pospage.posList || $!response.data.pospage.posList.size()<=0)
+            <tr>
+                <td colspan="10">无交易信息！</td>
+            </tr>
+            #end
+            <tr class="nbb">
+                <td colspan="9">
+                    <div class="fl table1_bottom_left">金额统计->共<b class="b">$!{response.data.summary.totalTradeCount}</b>笔,
+                                                               结算金额: <span class="orange  f14 bold">$!response.data.minusAmount</span><span class="green  f14 bold">$!response.data.plusAmount</span>元,
+                                                               服务费:<span class="orange  f14 bold">$!response.data.minusFee</span><span class="green  f14 bold">$!response.data.plusFee</span>元
+                    </div>
+                    <div class="nav_page mt10"> #parse("common/control/paginator.vm")</div>
+                </td>
+            </tr>
+        </table>
+		#end
+        </div>
+
+    </form>
+    </div>
+
+ <form id="withdrawForm" name="withdrawForm" action="${request.contextPath}/my/TransactionRecords.htm" method="post">
+	<input  type="hidden" value="$!response.data.queryStartTime" id="startDate" name="queryStartTime" >
+	<input  type="hidden" value="$!response.data.queryEndTime" id="endDate" name="queryEndTime">
+    <input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+	<input type="hidden" class="search_dl_value" name="txnType" id="txnType" value="$!response.data.txnType"  >
+	<input  type="hidden" value="$!response.data.keyword" id="keyword" name="keyword">
+	<input  type="hidden" value="$!response.data.keyvalue" id="keyvalue" name="keyvalue">
+	<input type="hidden" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+		<input type="hidden" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+			<input type="hidden" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+				<input type="hidden" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+				   <input type="hidden" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+		<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+			<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+				<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+					<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+						<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+							<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+								<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+									<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+										<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+    </form>
+	
+ <form id="download" name="download" action="${request.contextPath}/my/TradeToExcel.htm" method="post">
+	<input  type="hidden" value="$!response.data.queryStartTime" id="startDate" name="queryStartTime" >
+	<input  type="hidden" value="$!response.data.queryEndTime" id="endDate" name="queryEndTime">
+    <input type="hidden" name="currentPage" id="currentPage" value="$!response.data.page.currentPage">
+	<input type="hidden" class="search_dl_value" name="txnType" id="txnType" value="$!response.data.txnType"  >
+	<input  type="hidden" value="$!response.data.keyword" id="keyword" name="keyword">
+	<input  type="hidden" value="$!response.data.keyvalue" id="keyvalue" name="keyvalue">
+	<input type="hidden" name="tradeType" id="tradeType" value="$!response.data.tradeType">
+	<input type="hidden"  name="tradeStatus"  id="tradeStatus" value="$!response.data.tradeStatus">
+ </form>
+</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcore.min.js" type="text/javascript"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcalendar.min.js" type="text/javascript"></script>
+<script>
+function toQuerySubmit(currentPage){
+        $("#currentPage").val(currentPage);
+        $("#withdrawForm").submit();
+}
+
+var dayRang = 31;
+var totalItem = $!response.data.totalItem;
+function exportTrade() {
+	
+}
+
+$(".tools_dc").click(function(){
+		if(totalItem>10000){
+			alert("您选择的日期范围内记录条数过多，可能会导致下载失败，请重新选择日期范围"); return false;
+		}
+		$('#download').submit();
+});
+
+$(function(){
+	setClearStartDate2('#startDate', '#endDate', dayRang);
+	setClearEndDate2('#startDate', '#endDate', dayRang);
+	
+	$(".J_btn_chaxun").click(function(){
+		doSearchBeforDate2($("#form_search"), $("#errorSearch"), $("#startDate"), $("#endDate"), dayRang);
+	});
+
+	$("#search_dl_wgjy dd").each(function(index){
+		if($(this).attr("class")=="cur"&&index==1){
+			$("#search_dl_wgjy_zt dd").eq(2).hide();
+		}
+	});
+
+	$("#search_dl_wgjy dd").each(function(index){
+    	$(this).click(function(){
+    		if(index==1){
+				$("#search_dl_wgjy_zt dd").eq(0).click();
+    			$("#search_dl_wgjy_zt dd").eq(2).hide();
+    		}else{
+    			
+    			$("#search_dl_wgjy_zt dd").eq(2).show();
+    		}
+    	})
+	});
+	
+	$("#search_dl_zz dd").each(function(index){
+		if($(this).attr("class")=="cur"&&index==0){
+			$("#search_dl_zz_zt dd").eq(1).hide();
+			$("#search_dl_zz_zt dd").eq(2).show();
+			$("#search_dl_zz_zt dd").eq(3).hide();
+		}else if($(this).attr("class")=="cur"&&index==1){
+			$("#search_dl_zz_zt dd").eq(1).show();
+			$("#search_dl_zz_zt dd").eq(2).hide();
+			$("#search_dl_zz_zt dd").eq(3).show();
+		}
+	});
+	
+	$("#search_dl_zz dd").each(function(index){
+		$(this).click(function(){
+    		if(index==0){
+				$("#search_dl_zz_zt dd").eq(0).click();
+    			$("#search_dl_zz_zt dd").eq(1).hide();
+				$("#search_dl_zz_zt dd").eq(2).show();
+				$("#search_dl_zz_zt dd").eq(3).hide();
+    		}else{
+    			$("#search_dl_zz_zt dd").eq(1).show();
+				$("#search_dl_zz_zt dd").eq(2).hide();
+				$("#search_dl_zz_zt dd").eq(3).show();
+    		}
+    	})
+	});
+	
+	$("#search_dl_wtfk dd").each(function(index){
+		if($(this).attr("class")=="cur"&&index==0){
+			$("#search_dl_wtfk_zt dd").eq(1).hide();
+			$("#search_dl_wtfk_zt dd").eq(2).show();
+			$("#search_dl_wtfk_zt dd").eq(3).hide();
+		}else if($(this).attr("class")=="cur"&&index==1){
+			$("#search_dl_wtfk_zt dd").eq(1).show();
+			$("#search_dl_wtfk_zt dd").eq(2).hide();
+			$("#search_dl_wtfk_zt dd").eq(3).show();
+		}
+	});
+	
+	$("#search_dl_wtfk dd").each(function(index){
+		$(this).click(function(){
+    		if(index==0){
+				$("#search_dl_wtfk_zt dd").eq(0).click();
+    			$("#search_dl_wtfk_zt dd").eq(1).hide();
+				$("#search_dl_wtfk_zt dd").eq(2).show();
+				$("#search_dl_wtfk_zt dd").eq(3).hide();
+    		}else{
+    			$("#search_dl_wtfk_zt dd").eq(1).show();
+				$("#search_dl_wtfk_zt dd").eq(2).hide();
+				$("#search_dl_wtfk_zt dd").eq(3).show();
+    		}
+    	})
+	});
+	
+	/*zzq20141118改--V*/
+/*
+	$("#search_dl_dfgz dd").each(function(index){
+		if($(this).attr("class")=="cur"&&index==0){
+			$("#search_dl_dfgz_zt dd").eq(1).hide();
+			$("#search_dl_dfgz_zt dd").eq(2).show();
+			$("#search_dl_dfgz_zt dd").eq(3).hide();
+		}else if($(this).attr("class")=="cur"&&index==1){
+			$("#search_dl_dfgz_zt dd").eq(1).show();
+			$("#search_dl_dfgz_zt dd").eq(2).hide();
+			$("#search_dl_dfgz_zt dd").eq(3).show();
+		}
+	});
+
+	$("#search_dl_dfgz dd").each(function(index){
+		$(this).click(function(){
+    		if(index==0){
+				$("#search_dl_dfgz_zt dd").eq(0).click();
+    			$("#search_dl_dfgz_zt dd").eq(1).hide();
+				$("#search_dl_dfgz_zt dd").eq(2).show();
+				$("#search_dl_dfgz_zt dd").eq(3).hide();
+    		}else{
+    			$("#search_dl_dfgz_zt dd").eq(1).show();
+				$("#search_dl_dfgz_zt dd").eq(2).hide();
+				$("#search_dl_dfgz_zt dd").eq(3).show();
+    		}
+    	})
+	});
+*/
+	/*zzq20141118改--A*/
+	/*zzq20141111改--V*/
+	$("#search_dl_zjgj dd").each(function(index){
+		if($(this).attr("class")=="cur"&&index==0){
+			$("#search_dl_zjgj_zt dd").eq(1).hide();
+			$("#search_dl_zjgj_zt dd").eq(2).show();
+			$("#search_dl_zjgj_zt dd").eq(3).hide();
+		}else if($(this).attr("class")=="cur"&&index==1){
+			$("#search_dl_zjgj_zt dd").eq(1).show();
+			$("#search_dl_zjgj_zt dd").eq(2).hide();
+			$("#search_dl_zjgj_zt dd").eq(3).show();
+		}
+	});
+	
+	$("#search_dl_zjgj dd").each(function(index){
+		$(this).click(function(){
+    		if(index==0){
+				$("#search_dl_zjgj_zt dd").eq(0).click();
+    			$("#search_dl_zjgj_zt dd").eq(1).hide();
+				$("#search_dl_zjgj_zt dd").eq(2).show();
+				$("#search_dl_zjgj_zt dd").eq(3).hide();
+    		}else{
+    			$("#search_dl_zjgj_zt dd").eq(1).show();
+				$("#search_dl_zjgj_zt dd").eq(2).hide();
+				$("#search_dl_zjgj_zt dd").eq(3).show();
+    		}
+    	})
+	});
+	/*zzq20141111改--A*/
+	
+	$("#search_type dd").each(function(index){
+		$(this).click(function(){
+			$(".search_type_sub").hide().eq(index).show();
+			switch(index){
+				case 0:
+					$("#keyword").html('<option value="4">商户订单号</option>');
+				break;
+				case 1:
+					$("#keyword").html('<option value="1">交易订单号</option>');
+				break;
+				case 2:
+					$("#keyword").html('<option value="1">交易订单号</option>');
+				break;
+				case 3:
+					$("#keyword").html('<option value="1">商户订单号</option><option value="6">商户批次号</option>');
+				break;
+				case 4:
+					$("#keyword").html('<option value="4">商户订单号</option><option value="5">原商户订单号</option><option value="6" >商户批次号</option>');
+				break;
+				
+			    case 5:
+					$("#keyword").html('<option value="1">交易订单号</option>');
+				break;
+				case 6:
+					$("#keyword").html('<option value="4">商户订单号</option>');
+				break;
+				case 7:
+					$("#keyword").html('<option value="1">交易订单号</option>');
+				break;
+				case 8:
+					$("#keyword").html('<option value="1">交易单号</option><option value="5">原交易单号</option>');
+				break;
+				case 9:
+					$("#keyword").html('<option value="4">商户订单号</option><option value="6">商户批次号</option>');
+			}
+			
+			
+		});
+	});
+ 
+	$("#search_dl_pos dd").each(function(index){
+    	$(this).click(function(){
+    		if(index==0){
+				$("#search_dl_pos1").show();
+    			$("#search_dl_pos2").hide();
+    			$("#keyword").html('<option value="4">商户订单号</option>');
+    		}else{
+				$("#search_dl_pos1").hide();
+    			$("#search_dl_pos2").show();
+    			$("#keyword").html('<option value="4">商户订单号</option><option value="6">原商户订单号</option>');
+    		}
+    	})
+	});
+	
+	
+	
+	$("#search_dl_wtfk dd").each(function(index){
+    	$(this).click(function(){
+    		if(index==0){
+				$("#search_dl_wtfk1").show();
+    			$("#search_dl_wtfk2").hide();
+    			$("#keyword").html('<option value="1">交易订单号</option>');
+    		}else{
+				$("#search_dl_wtfk1").hide();
+    			$("#search_dl_wtfk2").show();
+    			$("#keyword").html('<option value="1">交易订单号</option>');
+    		}
+    	})
+	});
+	
+	$("#btn_a_drmb").click(function(){
+		var html = '<form class="upload_file" action="$!{path}/my/importBatchRefund.htm" method="post" enctype="multipart/form-data">' 
+			+ '<div class="floatbox2"><div class="cont_info"><div class="sz_info">'
+			+ '<div style="display:inline-block;"><input type="text" class="inputtext w264 fl" id="file1" style="margin-right:6px;"> <div class="relative fl">'
+			+ '<input type="button" value="浏 览" class="btn_liulan">' 
+			+ '<input for="file1" id="file_select" name="batchFile" type="file" class="input_file" ></div></div>' 
+			+ '<div style=" height:30px; line-height:30px;" class="error"></div>'
+			+ '<p class="">模板更新于2015-3-23，请注意使用最新模板。</p>' 
+			+ '<p class="">文件格式要求：xls、xlsx，仅支持最大单次<span class="b red">999</span>笔批量转账操作</p>'
+			+ '</div></div><div class="div_btn_submit"><input type="button" class="btn_upload"></div></div></form>';
+		showWin('html', html, '', 700, 300, '上传文件', '', '');
+	});
+	
+	$(".btn_tk").bind("click",function(){
+		var id = $(this).attr("data-id");
+		$.ajax({
+        	type: "POST",
+    		url: '${request.contextPath}/my/getIsRefund.htm?tradeVoucherNo='+id,
+    		data: 'id=' + id,
+    		async:false,
+    		cache:false,
+    		dataType: "JSON",
+    		success: function(result){
+				if (result && result.success) {
+					if(result.data.isrefund){
+					
+					var html = '<div class="floatbox2"><div class="cont_info pt30b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+	                html += '<tr><td class="tcenter"><i class="zzffwqfm txtipicon"><span class="f16 b tip_title">该订单已全额退款！</span><br><span class="color_4c f12">请到退款审核记录或退款记录页面查询相关信息。</span></span></i></td></tr></table>';
+	                html += '</div></div>';
+					showWin('html', html, '', 580, 190, ' ', '', '');
+						return false;
+					}else{
+					    window.location.href = '${request.contextPath}/my/RefundApply.htm?maxRefundMoney='+result.data.maxRefundMoney+"&"+'noRefundMoney='+result.data.noRefundMoney;
+                		return true;
+					}
+				} else {
+					return false;
+				}
+    		}
+        });
+	});
+	
+	$(".btn_postk").bind("click",function(){
+		var id = $(this).attr("data-id");
+		$.ajax({
+        	type: "POST",
+    		url: '${request.contextPath}/my/pos/getIsRefund.htm?tradeVoucherNo='+id,
+    		data: 'id=' + id,
+    		async:false,
+    		cache:false,
+    		dataType: "JSON",
+    		success: function(result){
+				if (result && result.success) {
+					if(result.data.isrefundApi){
+						if(result.data.isrefund){
+							var html = '<div class="floatbox2"><div class="cont_info pt30b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+			                html += '<tr><td class="tcenter"><i class="zzffwqfm txtipicon"><span class="f16 b tip_title">该订单已全额退款！</span><br><span class="color_4c f12">请到退款审核记录或退款记录页面查询相关信息。</span></span></i></td></tr></table>';
+			                html += '</div></div>';
+							showWin('html', html, '', 580, 190, ' ', '', '');
+							return false;
+						}else{
+						    window.location.href = '${request.contextPath}/my/pos/RefundApply.htm';
+	                		return true;
+						}
+					}else{
+						var html = '<div class="floatbox2"><div class="cont_info pt30b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+		                html += '<tr><td class="tcenter"><i class="zzffwqfm txtipicon"><span class="f16 b tip_title">该订单不能发起退款</span><br><span class="color_4c f12">请尝试从云+APP中发撤销。</span></span></i></td></tr></table>';
+		                html += '</div></div>';
+						showWin('html', html, '', 580, 190, ' ', '', '');
+						return false;
+					}
+				} else {
+					return false;
+				}
+    		}
+        });
+	});
+	
+	$("body").delegate(".input_file","change",function(){
+		var $this = $(this);
+		var path = $this.val();
+		var txtid = $this.attr("for");
+		$("#" + txtid).val(path);
+		checkFile({
+			fileId: $this.attr("id"),
+			fileTextId: txtid,
+			fileType: "notimg",
+			path: path,
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: $this.parent().parent().find(".error")
+		});
+	}).delegate(".btn_upload","click",function(){
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_upload_disabled");
+		var $tip = $btn_submit.parent().parent().find(".error");
+		$tip.text("");
+		
+		var $this = $("#file_select");
+		var flag = checkFile({
+			fileId: $this.attr("id"),
+			fileTextId: $this.attr("for"),
+			fileType: "notimg",
+			path: $this.val(),
+			format: "xls|xlsx|XLS|XLSX",
+			$tip: $this.parent().parent().find(".error")
+		});
+		if(!flag) { $btn_submit.attr("disabled", false).removeClass("btn_upload_disabled"); return false; }
+		
+		$(".upload_file").submit();
+	});
+})
+</script>

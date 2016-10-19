@@ -1,0 +1,291 @@
+<div class="wrap">
+	<div class="recharge_bar">
+    	<span class="sp">充值账户：<b>$!response.data.mobile</b></span><span class="sp">账户余额：<b class="fc_r_ff">$!response.data.accountBalance</b> 元</span>
+    </div>
+    
+    <form id="rechargeForm" class="form-horizontal recharge_form" action="/my/doRecharge.htm" method="POST">
+          <div class="control-group">
+            <label class="control-label" for="moneyNum">充值金额：</label>
+            <div class="controls">
+              <input type="text" id="moneyNum" name="moneyNum" class="in_txt"> 元    <div id="bankchoose_money_error"> </div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label icon_tit">选择银行：</label>
+            <div class="controls">
+                <ul class="icons_list">
+                    <li>
+                        <input type="radio" id="bankICBC" name="bank_ico" value="ICBC">
+                            <label class="icon_box" for="bankICBC">
+                                <span title="中国工商银行" class="icon ICBC">icbc</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankABC" name="bank_ico" value="ABC">
+                            <label class="icon_box" for="bankABC">
+                                <span title="中国农业银行" class="icon ABC">abc</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankBCOM" name="bank_ico" value="BCOM">
+                            <label class="icon_box" for="bankBCOM">
+                                <span title="交通银行" class="icon BCOM">bcom</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCCB" name="bank_ico" value="CCB">
+                            <label class="icon_box" for="bankCCB">
+                                <span title="中国建设银行" class="icon CCB">ccb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankBOC" name="bank_ico" value="BOC">
+                            <label class="icon_box" for="bankBOC">
+                                <span title="中国银行" class="icon BOC">boc</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCMB" name="bank_ico" value="CMB">
+                            <label class="icon_box" for="bankCMB">
+                                <span title="招商银行" class="icon CMB">cmb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankPAB" name="bank_ico" value="PAB">
+                            <label class="icon_box" for="bankPAB">
+                                <span title="平安银行" class="icon PAB">pab</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCEB" name="bank_ico" value="CEB">
+                            <label class="icon_box" for="bankCEB">
+                                <span title="中国光大银行" class="icon CEB">ceb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankSPDB" name="bank_ico" value="SPDB">
+                            <label class="icon_box" for="bankSPDB">
+                                <span title="上海浦东发展银行" class="icon SPDB">spdb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCIB" name="bank_ico" value="CIB">
+                            <label class="icon_box" for="bankCIB">
+                                <span title="兴业银行" class="icon CIB">cib</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCITIC" name="bank_ico" value="CITIC">
+                            <label class="icon_box" for="bankCITIC">
+                                <span title="中信银行" class="icon CITIC">citic</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCMBC" name="bank_ico" value="CMBC">
+                            <label class="icon_box" for="bankCMBC">
+                                <span title="中国民生银行" class="icon CMBC">cmbc</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankPSBC" name="bank_ico" value="PSBC">
+                            <label class="icon_box" for="bankPSBC">
+                                <span title="中国邮政储蓄" class="icon PSBC">psbc</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankBEA" name="bank_ico" value="BEA">
+                            <label class="icon_box" for="bankBEA">
+                                <span title="东亚银行" class="icon BEA">bea</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankHXB" name="bank_ico" value="HXB">
+                            <label class="icon_box" for="bankHXB">
+                                <span title="华夏银行" class="icon HXB">hxb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankHZB" name="bank_ico" value="HZB">
+                            <label class="icon_box" for="bankHZB">
+                                <span title="杭州银行" class="icon HZB">hzb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankNBCB" name="bank_ico" value="NBCB">
+                            <label class="icon_box" for="bankNBCB">
+                                <span title="宁波银行" class="icon NBCB">nbcb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankNJCB" name="bank_ico" value="NJCB">
+                            <label class="icon_box" for="bankNJCB">
+                                <span title="南京银行" class="icon NJCB">njcb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankSHB" name="bank_ico" value="SHB">
+                            <label class="icon_box" for="bankSHB">
+                                <span title="上海银行" class="icon SHB">shb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankBOB" name="bank_ico" value="BOB">
+                            <label class="icon_box" for="bankBOB">
+                                <span title="北京银行" class="icon BOB">bob</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCBHB" name="bank_ico" value="CBHB">
+                        <label class="icon_box" for="bankCBHB">
+                            <span title="渤海银行" class="icon CBHB">cbhb</span>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankGZCB" name="bank_ico" value="GZCB">
+                            <label class="icon_box" for="bankGZCB">
+                                <span title="广州银行" class="icon GZCB">gzcb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankGDB" name="bank_ico" value="GDB">
+                            <label class="icon_box" for="bankGDB">
+                                <span title="广东发展银行" class="icon GDB">gdb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankSDB" name="bank_ico" value="SDB">
+                            <label class="icon_box" for="bankSDB">
+                                <span title="深圳发展银行" class="icon SDB">sdb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankCZB" name="bank_ico" value="CZB">
+                            <label class="icon_box" for="bankCZB">
+                                <span title="浙商银行" class="icon CZB">czb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankHSB" name="bank_ico" value="HSB">
+                            <label class="icon_box" for="bankHSB">
+                                <span title="徽商银行" class="icon HSB">hsb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankSRCB" name="bank_ico" value="SRCB">
+                            <label class="icon_box" for="bankSRCB">
+                                <span title="上海农村商业银行" class="icon SRCB">srcb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankBJRCB" name="bank_ico" value="BJRCB">
+                            <label class="icon_box" for="bankBJRCB">
+                                <span title="北京农村商业银行" class="icon BJRCB">bjrcb</span>
+                            </label>
+                    </li>
+                    <li>
+                        <input type="radio" id="bankGZRCC" name="bank_ico" value="GZRCC">
+                            <label class="icon_box" for="bankGZRCC">
+                                <span title="广州市农村信用合作社" class="icon GZRCC">gzrcc</span>
+                            </label>
+                    </li>
+                </ul>
+            </div>
+            <div id="bankchoose_bank_ico_error"> </div>
+          </div>
+          <div class="control-group align_center">
+            <button id="rechargeSubmit" type="button" class="btn_h40_red bold">下一步</button>
+          </div>
+        </form>
+</div>
+<div class="go_bank" id="bankDialog">
+    <div class="form-horizontal recharge_form">
+          <div class="control-group">
+            <label class="control-label icon_tit_dialog">付款方式：</label>
+            <div class="controls icons_list">
+              <label class="icon_box" id="choose_bank_icon">
+              </label>
+            </div>
+          </div>
+        <div class="control-group">
+            <label class="control-label">充值金额：</label>
+            <div class="controls ">
+                <span class="con_txt"><b class="fc_r_ff" id="real_money_num" ></b> 元</span>
+            </div>
+         </div>
+        <div class="control-group">
+            <div class="controls icons_list">
+              <button id="recharge_confirm_Submit" type="button" class="btn_h40_red bold">登录到网上银行付款</button>
+              <p class="other_bank"><a href="#">选择其它银行付款</a></p>
+            </div>
+         </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+$(function(){
+    $("#moneyNum").blur(function(){
+        var money = $("#moneyNum").val().trim();
+        if(money ==null || money == ""||money<0) {
+            $("#bankchoose_money_error").html("x 充值金额不能为空或负值，请输入！");
+        } else if (!jQuery.isNumeric(money)) {
+            $("#bankchoose_money_error").html("充值金额必须为整数或小数，小数点后不超过2位");
+        } else if(money <= 0) {
+	        $("#bankchoose_money_error").html("充值金额必须为整数或小数，小数点后不超过2位");
+	    } else {
+            $("#bankchoose_money_error").html("");
+        }
+    });
+    $("#moneyNum").focus(function(){
+        $("#bankchoose_money_error").html("");
+    });
+
+	$("#rechargeSubmit").click(function (){
+	    var money = $("#moneyNum").val();
+	    if(money == "") {
+	       $("#bankchoose_money_error").html("x 充值金额不能为空，请输入！");
+	        return false;
+	    }
+	    if(!jQuery.isNumeric(money)) {
+	        $("#bankchoose_money_error").html("充值金额必须为整数或小数，小数点后不超过2位");
+	        return false;
+	    } else if(money <= 0) {
+	        $("#bankchoose_money_error").html("充值金额必须为整数或小数，小数点后不超过2位");
+	        return false;
+	    } else {
+	        var n = money.toString();
+	        var point = n.indexOf('.');
+	        if( point > 0 &&( n.length > point + 3)) {
+	            $("#bankchoose_money_error").html("充值金额必须为整数或小数，小数点后不超过2位");
+	            return false;
+	        }
+	    }
+	    var bank=$("input[name='bank_ico']:checked").val();
+	    if(!bank) {
+	        $("#bankchoose_bank_ico_error").html("请选择银行卡!");
+	        alert("请选择银行卡!");
+	        return false;
+	    }
+	    $("#real_money_num").html(money);
+	    $("#choose_bank_icon").html('<span title="中国工商银行" class="icon '+ bank +'">'+bank+'</span>');
+
+	   jQuery.dialog({
+	        title:"账户充值",
+	        content:document.getElementById("bankDialog"),
+	        lock:true,
+	        fixed:true,
+	        ok: function(){
+	            this.close();
+	            rechargeForm.submit();
+	        },
+	        cancle: function(){
+	            this.close();
+	            return false;
+	        }
+	    });
+	});
+
+});
+</script>

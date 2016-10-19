@@ -1,0 +1,62 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>支付密码找回</h2></div>
+     
+     <div class="safetyMain">
+     	 <div class="cz_step step step_1" style="margin-left: 56px;"><i></i>
+            <span class="s1">验证身份</span>
+            <span class="s2" style="left: 396px;">重置支付密码</span>
+			<span class="s3" style="left: 653px;">重置成功</span>
+		  </div>
+         <div class="safetyMainBlock">
+			       <input type="hidden" id="bizType" name="bizType" value="$!bizType"/>
+				   <input id="url" name="url" type="hidden" value="$!loginMailUrl"/>
+                   <p class="f16 bold mb15 pdl185">我们已将找回支付密码的确认邮件发送到您 注册/绑定邮箱：$!email</p>
+                   <p class="pdl185">您可以马上登录邮箱通过确认邮件找回支付密码，<a href="#" id="loginEmail">前往邮箱</a></p>
+                   <p class="pdl185">如没有收到邮件，请查看邮件垃圾箱，或选择，<span id="again_text"><em class="red pdlr5 bold time_left">60</em>秒后可点击 重新发送</span><input class="savelxr ml10" type="button" value="重新发送" id="again" style="display:none;" disabled></p>
+                   <p class="error pdl185"></p>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	countDownDo({timePlace:$(".time_left"), time:10, callback:function(){
+		$("#again_text").hide();
+		$("#again").attr("disabled", false).show();
+	}});
+	
+	$("#again").click(function(){
+		$(this).hide().attr("disabled",true);
+		$("#again_text").show();
+		
+		countDownDo({timePlace:$(".time_left"), time:10, callback:function(){
+			$("#again_text").hide();
+			$("#again").attr("disabled", false).show();
+		}});
+		jQuery.ajax({
+		    type: 'GET',
+		    url: "#springUrl('/my/refindPwd/ajaxSendMail.htm')" ,
+			data: "bizType=" + $("#bizType").val(),
+		    success: function(response){
+		    } ,
+		    dataType: "json"
+		});
+	});
+	
+	$("#loginEmail").click(function(){
+		var url = $("#url").val();
+		if (url != '') {
+			window.open(url,'_blank');
+		}else {
+			$(".error").html('暂不支持此邮箱登陆跳转，请您手动登陆邮箱并完成验证');
+		}
+	});
+
+})
+
+</script>

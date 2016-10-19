@@ -1,0 +1,88 @@
+<!--无须登录头部-->
+#parse("/common/control/ie6.vm")
+<div class="header">
+	<div class="top_nav">
+    	<div class="wrap">
+        <span class="fc_c fr">
+        	#if($!session.getAttribute("CURRENT_ENTERPRISE_USER"))
+       			 <i class="fc_6">你好，$!jsonUtil.getMemberName($!session.getAttribute("CURRENT_ENTERPRISE_USER")).memberName</i> <a href="#springUrl('/logout.htm')" class="a">退出</a>
+        	#else
+		        <a href="$!response.data.registUrl" class="a">注册</a>
+	        #end
+	        |<a href="#springUrl('/my/home.htm')" class="a">我的钱包</a>
+	        |<a href="#" class="a" target="view_windowbz">帮助中心</a>
+        </span>
+        </div>
+    </div>
+    <div class="logo_nav">
+        <h1 class="logo"><a href="#springUrl('/my/home.htm')"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/image/logo_online.png"></a></h1>
+    	<ul class="nav">
+            <li class="nav_li">
+            	<a class="a_nav" href="#springUrl('/my/home.htm')">首页</a>|
+            </li>
+            <li class="nav_li">
+                <a class="a_nav" href="#">个人服务</a>|
+                <div class="sl-shadow col_2">
+                    <table>
+                        <thead>
+                        <tr>
+                        <th>资金交易</th>
+                        <th class="last">账户管理</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        <td><a href="#" target="_blank">充值</a></td>
+                        <td class="last"><a href="#" target="_blank">账户管理</a></td>
+                        </tr>
+                        <tr>
+                        <td><a href="#" target="_blank">提现</a></td>
+                        <td class="last"><a href="#" target="_blank">实名认证</a></td>
+                        </tr>
+                        <tr>
+                        <td><a href="#" target="_blank">转账</a></td>
+                        <td class="last"></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="angle"></div>
+
+            </li>
+            <li class="nav_li">
+            	<a class="a_nav" href="#">付款方式</a>
+                <div class="sl-shadow">
+                    <table>
+                        <thead>
+                        <tr>
+                        <th class="last">付款方式介绍</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        <td class="last"><a href="#" target="_blank">余额支付</a></td>
+                        </tr>
+                        <tr>
+                        <td class="last"><a href="#" target="_blank">网银支付</a></td>
+                        </tr>
+                        <tr>
+                        <td class="last"><a href="#" target="_blank">组合支付</a></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="angle"></div>
+
+            </li>
+
+        </ul>
+    </div>
+</div>
+<script>
+$(function(){
+	$(".nav_li").hover(
+		function(){$(this).find(".sl-shadow").show();$(this).find(".angle").show();},
+		function(){$(this).find(".sl-shadow").hide();$(this).find(".angle").hide();}
+	);
+})
+</script>

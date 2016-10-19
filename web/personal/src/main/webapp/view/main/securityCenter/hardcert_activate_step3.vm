@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>快捷盾</h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+               <div class="tx_step step step_2" style="margin-left:80px; padding-bottom:10px;"><i></i><span class="s1">验证身份</span><span class="s2">下载激活</span><span class="s3">激活成功</span></div>
+               
+               
+               
+               <div class="usbKeyCenter" style="height:100px;">
+                   <div class="ml90"> <img src="${WEB_RESOURCE.staticAddress}wallet/common/images/zsDown.gif" alt="" class="fl"><p class="fl" style="padding:20px 0 0 20px; line-height:22px;">正在下载证书，激活您的快捷盾<br>请确保在激活成功前不要拔出快捷盾</p></div>
+               </div>
+               <div id="errormessage" style="padding:20px 0 0 20px; line-height:22px; color:red;"></div>
+               <div class="usbKeyFaq">
+                    <h4>快捷盾问题：</h4>
+                    <dl>
+                        <dt>为什么会下载失败？</dt>
+                        <dd>答：1、 请检查快捷盾是否有正确插入电脑<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2、 请检查快捷盾是否有被拔出电脑<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3、 请检查网络是否稳定<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4、 其他原因请联系客服热线：4006110909
+</dd>
+                    </dl>
+
+                   <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+                </div>
+               
+               
+               
+          </div>
+      
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+
+
+<form id="form2" action="#springUrl('/hardcertActivate/certActive.htm')" method="post"><input type="hidden" id="certSn" name="certSn" /><input type="hidden" id="position" name="position"/></form>
+<form id="error" action="#springUrl('/securityCenter/error.htm')" method="post"></form>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>		
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+<script>
+//certReqBuf
+$(document).ready(function(){
+	
+	//获取key序列号
+	var serialNo = getKeySeriaNo();
+	//获取csr
+	var csr = getCsr("hard");
+	$.ajax({
+		type:"POST",
+		url:"#springUrl('/hardcertActivate/certApply.htm')",
+		async:true,
+		data:{"csr":csr, "serialNo":serialNo},
+		dataType: "json",
+		success:function(restP){
+			if(restP.success){
+				if (restP.data.certSignBufP7.length > 0){
+					var flag = installCert(restP.data.certSignBufP7);
+					if(flag) {
+						$("#certSn").val(restP.data.certSerialNumber);
+						$("#position").val($!{position})
+						$("#form2").submit();
+					}
+				}
+			} else {
+				//$("#errormessage").html(restP.message);
+				$("#error").submit();
+			}
+		},
+		error:function(){/*alert("系统错误！");*/}
+	});
+});
+</script>
+</body>
+</html>

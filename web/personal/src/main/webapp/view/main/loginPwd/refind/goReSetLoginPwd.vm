@@ -1,0 +1,242 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>找回登录密码</h2></div>
+
+     <div class="safetyMain">
+     	 <style>
+			.loginList{ margin-left:110px;}
+			</style>
+         <div class="loginList">
+              
+               <div class="cz_step step step_2" style="margin-left:-56px;"><i></i><span class="s1">验证身份</span><span class="s2" style="left:394px;">重置登录密码</span><span class="s3" style="left:653px;">重置成功</span></div>  
+                 
+         
+               <form id="reset-loginpwd-form" name="reset-loginpwd-form" class="" action="${request.contextPath}/my/refind/loginPwd/reSetLoginPwd.htm" method="POST">
+               
+                <div class="login_limit">
+                   <label>
+                       <span class="f14 limitLeft ">账户名：</span><span class="f14  color_f60">$!response.data.loginName</span> 
+                   </label>    
+                   <div class="mainTips ml160 error clear"></div>              
+               </div>  
+                 
+                 #if ($!response.data.certType)
+                    <div class="login_limit">
+                          <input type="hidden" id="certType" name="certType" value="$response.data.certType">
+		                  #if ($response.data.certType=="idCard")		                       
+		                       <label><span class="f14 limitLeft l_h28">身份证号码：</span><input id="idcard" name="certificateNo" type="text" class="login_input w232 fl" maxlength="19">
+	                           <em class="f12 color_b3 fl ml5 mt5">请输入证件号</em>
+	                           </label>    
+		                  #elseif ($response.data.certType=="hkCard")
+		                       <label><span class="f14 limitLeft l_h28">港澳台公民身份证号：</span><input id="idcard" name="certificateNo" type="text" class="login_input w232 fl" maxlength="19">
+	                           <em class="f12 color_b3 fl ml5 mt5">请输入证件号</em>
+	                           </label>    
+		                  #elseif ($response.data.certType=="otherCard")
+		                       <label><span class="f14 limitLeft l_h28">证件号码：</span> <input id="idcard" name="certificateNo" type="text" class="login_input w232 fl" maxlength="19">
+	                           <em class="f12 color_b3 fl ml5 mt5">请输入证件号</em>
+	                           </label>
+	                      #elseif ($response.data.certType=="licenseNo")
+		                       <label><span class="f14 limitLeft l_h28">营业执照号：</span><input id="idcard" name="certificateNo" type="text" class="login_input w232 fl" maxlength="19">
+	                           <em class="f12 color_b3 fl ml5 mt5">请输入营业执照号</em>
+	                           </label>   
+	                      #elseif ($response.data.certType=="organizationNo")
+		                       <label><span class="f14 limitLeft l_h28">组织机构代码号：</span><input id="idcard" name="certificateNo" type="text" class="login_input w232 fl" maxlength="19">
+	                           <em class="f12 color_b3 fl ml5 mt5">请输入组织机构代码号</em>
+	                           </label>  
+	                      #else
+	                        
+		                  #end	                      
+	                     <div class="mainTips ml160 error clear"></div>
+                    </div>                   
+                 #else                 
+                     <input type="hidden" id="certType" name="certType" value="">
+                 #end 
+               
+               <div class="login_limit" id="pwdiv_login_pw">
+                   <label><span class="f14 limitLeft l_h28">输入新登录密码：</span>
+                     <div class="pwdiv fl"><input name="loginPwd" type="hidden" id="login_pw" data-type="11" /></div>
+                     <div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！</em>
+                   </label>
+                   <div class="mainTips ml160 error clear"></div>
+               </div>
+               
+               <div class="login_limit" id="pwdiv_login_pw2">
+                   <label><span class="f14 limitLeft l_h28">重新输入登录密码：</span>
+                     <div class="pwdiv fl"><input name="reLoginPwd" type="hidden" id="reLoginPwd" data-type="11" /></div>
+                     <em class="f12 color_b3 fl ml5 mt5">请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！</em>
+                   </label>
+                   <div class="mainTips ml160 error clear">$!errorMsg</div>
+               </div>
+               <div class="error h22" style="padding-left:180px;" id="sError"></div>
+			   <input id="membertype" name="membertype" type="hidden" value="$!response.data.membertype">
+               <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+               </form>
+         </div> 
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+   var certType = $('#certType').val();
+	$(function(){
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$("#pwdiv_login_pw .pwdiv").append(pgeditor.load());
+		pgeditor.pgInitialize();
+
+		var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$("#pwdiv_login_pw2 .pwdiv").append(pgeditor1.load());
+		pgeditor1.pgInitialize();
+		
+		window.setInterval(function(){checkPwStrongPG(pgeditor, $('#pwdiv_login_pw').find('.error'), $('#pwdiv_login_pw').find('.gradeIcon'), $('#pwdiv_login_pw').find('.gradeText'));},1000); //实时显示密码强度
+		/*
+		$("#loginPwd").blur(function(){
+			checkPW($(this), $(this).parent().parent().find(".error"));
+		});
+		
+		$("#loginPwd").keyup(function(e){
+			checkPwStrong($(this), $(this).parent().parent().find(".error"), $(this).parent().parent().find(".gradeIcon"), $(this).parent().parent().find(".gradeText"));
+		});
+		
+		$("#reLoginPwd").blur(function(){
+			checkPW2($("#loginPwd"), $(this), $(this).parent().parent().find(".error"));
+		});
+		*/
+		/*$("#idcard").blur(function () {
+			var flag = checkMust($(this), $(this).parent().parent().find(".error"), "请输入您的身份证号码！");
+			if(flag)
+			checkIdCard($(this), $(this).parent().parent().find(".error"), "请输入18位身份证号码，字母请大写！");
+		});*/
+		$("#idcard").blur(function(){
+			var jThis = $(this);
+			var jTip = jThis.parent().parent().find(".error");
+			
+			var f=checkMust(jThis,jTip,"请输入您的证件号码！");
+			if(!f){return false;}
+			
+			var value = jThis.val();
+			var jCardtype = $("#certType");
+			if(jCardtype.val() == "idCard") {
+				checkIdCard(jThis,jTip,"请输入正确的身份证号码！");
+			}
+			else {
+				if(value.length > 19) { jTip.text("证件号码位数不能超过19位！");}
+			}
+		})
+
+		function _submit(){
+			var jBtnSubmit = $(".btn_submit");
+			jQuery.ajax({
+				url:"#springUrl('/my/refind/loginPwd/reSetLoginPwd.htm')",
+				type:'post',
+				dataType:'json',
+				data:$("#reset-loginpwd-form").serialize(),
+				success:function(data, textStatus, jqXHR){
+					if(data.success) {
+						window.location.href = data.redirect;
+					} else {
+						$("#sError").text(data.message);
+						jBtnSubmit.attr("disabled", false).removeClass("btn_qr_disabled");
+						return false;
+					}
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					jBtnSubmit.attr("disabled", false).removeClass("btn_qr_disabled");
+					return false;
+				}
+			});
+		}
+
+		$(".btn_submit").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+			$(".error").text("");
+			/*
+			var flag = checkPW($("#loginPwd"), $("#loginPwd").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			
+			flag = checkPW2($("#loginPwd"), $("#reLoginPwd"), $("#reLoginPwd").parent().parent().find(".error"));
+			if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+			*/
+			
+			if($.trim(certType) != ""){
+				flag = checkMust($("#idcard"),$("#idcard").parent().parent().find(".error"),"请输入您的证件号码！");
+				if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				
+				var jCardtype = $("#cardtype");
+				var jTip = $("#idcard").parent().parent().find(".error");
+				if(jCardtype.val() == "idCard") {
+					flag = checkIdCard($("#idcard"),jTip,"请输入正确的身份证号码！");
+					if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				}
+				else {
+					var value = $("#idcard").val();
+					if(value.length > 19) { jTip.text("证件号码位数不能超过19位！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;}
+				}
+			}
+
+			if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11) {
+				var wid = pgeditor.settings.pgeWindowID;
+				var wid1 = pgeditor1.settings.pgeWindowID;
+				pgeditor.pwdLength(function(){
+					if(outs[wid].length == 0){
+						$("#pwdiv_login_pw").find(".error").text("请输入新的登录密码！");
+						btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+						return false;
+					}
+
+					pgeditor.pwdStrength(function(n){
+						if(n <= 2){
+							$("#pwdiv_login_pw").find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！");
+							btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+							return false;
+						}
+
+						pgeditor1.pwdLength(function(){
+							if(outs[wid1].length == 0){
+								$("#pwdiv_login_pw2").find(".error").text("请输入新的登录密码！");
+								btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+								return false;
+							}
+
+							pgeditor.pwdHash(function() {
+								pgeditor1.pwdHash(function() {
+									if(outs[wid].hash != outs[wid1].hash){
+										$("#pwdiv_login_pw2").find(".error").text("您输入的两次登录密码不一致，请重新输入！");
+										btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+										return false;
+									}
+
+									getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor,pgeditor1],function(){
+										setPwdResult(pgeditor,$('#login_pw'),function(){
+											setPwdResult(pgeditor1,$('#reLoginPwd'),function(){
+												_submit();
+											});
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+			}
+			else{
+				if(pgeditor.pwdLength() == 0) { $("#pwdiv_login_pw").find(".error").text("请输入新的登录密码！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				if(pgeditor.pwdStrength() <= 2) { $("#pwdiv_login_pw").find(".error").text("对不起， 您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				if(pgeditor1.pwdLength() == 0) { $("#pwdiv_login_pw2").find(".error").text("请输入新的登录密码！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+				if(pgeditor.pwdHash() != pgeditor1.pwdHash()) { $("#pwdiv_login_pw2").find(".error").text("您输入的两次登录密码不一致，请重新输入！"); btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+
+				getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor,pgeditor1]);//产生随机数去加密
+				setPwdResult(pgeditor,$('#login_pw'));
+				setPwdResult(pgeditor1,$('#reLoginPwd'));
+
+				_submit();
+			}
+		});
+	})
+</script>

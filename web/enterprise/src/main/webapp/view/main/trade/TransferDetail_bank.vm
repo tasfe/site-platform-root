@@ -1,0 +1,175 @@
+<div class="wrapbg">
+  <div id="money_cz" class="wrap">
+	##<div class="page_title"> <h2>转账记录详情</h2> </div>
+    <div class="page_title">
+      <div class="title fl">
+        <i class="icon fl"></i>
+        #foreach ($!tradeInfo in $!response.data.page.infos)
+        #if($!response.data.tradeType != 'bankRefund' && $!tradeInfo.status == "success")
+        ##<div class="fr mt5"><a class="color_66 mt10 dzdzd dzdzd1" href="javascript:">查看交易回单</a></div>
+        #if($!tradeInfo.fee !="0.00")
+        ##<div class="fr mt5"><a class="color_66 mt10 dzdzd dzdzd2" href="javascript:" style="width:120px;">查看服务费回单</a></div>
+        #end
+        #end
+        <span class="tt fl">转账记录详情</span>
+      </div>
+    </div>
+
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>转账记录</h3>
+    </div>
+    <div class="pagebox5">
+		<table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      
+      <tr>
+        <td class="tab_w">商户订单号</td>
+        <td class="tab_w2">$!tradeInfo.outOrderNo<br></td>
+        <td  class="tab_w">商户批次号（仅批量转账）</td>
+        <td  class="Detail_tab_no tab_w2">$!tradeInfo.sourceBatchNo</td>
+      </tr>
+      
+      <tr>
+        <td class="tab_w">交易订单号</td>
+        <td class="tab_w2">$!tradeInfo.fundoutOrderNo<br></td>
+        <td  class="tab_w">批次号（仅批量转账）</td>
+        <td  class="Detail_tab_no tab_w2">$!tradeInfo.batchOrderNo</td>
+      </tr>
+      <tr class="cl">
+        <td class="tab_w">创建时间</td>
+        <td class="tab_2">$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime) <br/></td>
+        <td class="tab_w">交易类型</td>
+        <td class="Detail_tab_no tab_w2">#if($!tradeInfo.productCode == "10222")
+                                                                                                                              自动打款
+                                    #else
+										转账到银行卡                                                                                
+                                    #end</td>
+      </tr>
+      <tr>
+        <td class="tab_w">交易金额（元）</td>
+        <td class="tab_w2">$!moneyUtil.getAmount($!tradeInfo.amount)</td>
+        <td class="tab_w">服务费（元）</td>
+        <td class="Detail_tab_no tab_w2">$!moneyUtil.getAmount($!tradeInfo.fee)</td>
+       </tr>
+      <tr class="cl">
+        <td class="tab_w">总金额（元）</td>
+        <td class="tab_w2">$response.data.sum</td>
+		<td class="tab_w">短信通知</td>
+		#if($!response.data.sendMessage)
+			<td class="Detail_tab_no tab_w2">是</td>
+		#else
+			<td class="Detail_tab_no tab_w2">否</td>
+		#end
+      </tr>
+	  #if($!response.data.tradeType != 'bankRefund')
+      <tr >
+        <td class="tab_w">备注</td>
+        <td class="tab_w">$!tradeInfo.purpose</td>
+		<td class="tab_w">状态</td>
+		<td class="Detail_tab_no tab_w2" width="97"><span>
+        #if($!tradeInfo.status == "submitted")
+				处理中## 原来是-已提交，原型
+        #elseif($!tradeInfo.status == "failed")
+				失败
+        #elseif($!tradeInfo.status == "success")
+				出款成功
+		#end
+		</span></td>
+	  </tr>
+	  #else
+	  <tr >
+        <td>退票时间</td>
+        <td>$!dateUtil.getNewFormatDateString($!response.data.refundTime)</td>
+		<td>状态</td>
+		<td width="97"><span>已退票</span></td>
+	  </tr>
+	  <tr>
+        <td>备注</td>
+        <td>$!tradeInfo.purpose</td>
+		<td></td>
+		<td width="97"></td>
+	  </tr>
+	  #end
+    </table>
+    </div>
+    <div class="table_div">
+      <h3>交易对象</h3>
+    </div>
+    <div class="pagebox5">
+	<table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">账户名称</td>
+        <td class="tab_w2">$!response.data.payeeAccountName<br></td>
+        <td  class="tab_w">帐号</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.payeeNo</td>
+      </tr>
+    </table>
+    </div>
+	#end
+    <div class="table_div">
+      <h3>申请信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">申请时间</td>
+        <td class="tab_w2">$!response.data.applyTime</td>
+        <td  class="tab_w">申请操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.operatorName</td>
+      </tr>
+    </table>
+    </div>
+    <div class="table_div">
+      <h3>审核信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">审核时间</td>
+        <td class="tab_w2">$!response.data.gmtModified</td>
+        <td  class="tab_w">审核操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.auditorName</td>
+      </tr>
+      <tr class="cl">
+        <td class="tab_w">审核结果</td>
+		#if($!response.data.status=="1")
+		<td class="tab_w2">待审核</td>
+		#elseif($!response.data.status=="2")
+        <td class="tab_w2">审核通过</td>
+		#elseif($!response.data.status=="3")
+		<td class="tab_w2">审核拒绝</td>
+		#else
+		<td class="tab_w2"></td>
+		#end
+        <td  class="tab_w">审核说明</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.remark</td>
+      </tr>
+    </table>
+    </div>
+    <div class="fun_btn relative">
+		<input type="button" value="返 回" class="btn btn-bg" onClick="goBackOrClose();">
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	/*$(".dzdzd").click(function(){
+		var html = '<div style="width:702px; margin:0 auto;"><div style="text-align:right; padding-bottom:5px;"><a href="${request.contextPath}/print.htm?tradeType=${response.data.tradeType}&flag=1&sign=trade" class="print" target="_blank">打印</a> | <a href="${request.contextPath}/downImage.htm?tradeType=${response.data.tradeType}&flag=1&sign=trade">下载</a></div>';
+		html += '<div id="dzdzd_xq"><img src="${request.contextPath}/SingleReceipt.htm?tradeType=${response.data.tradeType}&flag=1&sign=trade" alt="电子对账单"></div></div>';
+		showWin('html', html, '', 810, 500, ' ', '', '');
+	});*/
+	
+	$(".dzdzd1").click(function(){
+		var html = '<div style="width:700px; margin:0 auto 20px;"><div style="text-align:right; padding-bottom:5px;"><a href="${request.contextPath}/downImage.htm?tradeType=${response.data.tradeType}&flag=1&sign=trade" class="a_5A5A5A">下载</a></div>';
+		/*var html = '<div style="width:702px; margin:0 auto;"><div style="text-align:right; padding-bottom:5px;"><a href="TransferInformationPrint.html" class="print" target="_blank">打印</a> | <a href="#@">下载</a></div>';*/
+		html += '<div id="dzdzd_xq" style="height:472px;"><img src="${request.contextPath}/SingleReceipt.htm?tradeType=${response.data.tradeType}&flag=1&sign=trade" alt="电子对账单"></div></div>';
+		showWin('html', html, '', 810, 'auto', ' ', '', '');
+	});
+	$(".dzdzd2").click(function(){
+		var html = '<div style="width:700px; margin:0 auto 20px;"><div style="text-align:right; padding-bottom:5px;"><a href="${request.contextPath}/downImage.htm?tradeType=${response.data.tradeType}&flag=1&sign=fee" class="a_5A5A5A">下载</a></div>';
+		html += '<div id="dzdzd_xq" style="height:472px;"><img src="${request.contextPath}/SingleReceipt.htm?tradeType=${response.data.tradeType}&flag=1&sign=fee" alt="电子对账单"></div></div>';
+		showWin('html', html, '', 810, 'auto', ' ', '', '');
+	});
+})
+</script>

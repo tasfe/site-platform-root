@@ -1,0 +1,165 @@
+<style>
+@charset "utf-8";
+/* CSS Document */
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+body{line-height:1}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+nav ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:none}
+a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent}
+ins{background-color:#ff9;color:#000;text-decoration:none}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold}
+del{text-decoration:line-through}
+abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}
+table{border-collapse:collapse;border-spacing:0}
+hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
+input,select{vertical-align:middle}
+.tc{ text-align: center;}
+ul{ list-style:none;}
+
+/* 清除浮动 */
+.clearfix:before,.clearfix:after {display: table;content:'';}
+.clearfix:after { clear: both; }
+.clearfix { *zoom:1;}
+q:before,q:after{content: ""}
+.clear { clear:both;}
+
+/*重置*/
+body{min-width:320px; font-family:"Microsoft YaHei";font-size:100%; background-color:#dbdbdb;}
+a{text-decoration:none;}
+body,a{color: #333333;}
+a:visited{color: #333334;}
+a:active{color: #333335;}
+a:hover{color: #333336;}
+textarea:focus, input:focus{outline: none;}
+input:-moz-placeholder { color: #999999;}
+::-webkit-input-placeholder { color:#999999;}
+
+/*头部*/
+.header{ position:relative; height:4em; line-height:4em;text-align:center; background-color:#a40000;}
+.header h1{font-size:1.5em; color:#fff; font-weight:normal;}
+.header .reback{ position:absolute; left:2em; top:0.7em; width:46px; height:40px; background:url(image/phone_set.png) 0 0 no-repeat;}
+.section{ margin:2em;padding:2em 2em; line-height:180%; background-color:#ededed; border-radius:10px;}
+.form-set{}
+.form-set li{ position:relative;  margin-bottom:1em; height:60px;}
+.form-set li.phone-num{ padding-left:0.5em; margin-bottom:0.5em;height:40px; line-height:40px; color:#ec6d46; font-size:1.4em;}
+.form-set input[type=text],
+.form-set input[type=password]{ display:block; padding-left:20%; padding-top:15px; padding-bottom:15px;width:80%;height:28px; line-height:28px;font-size:1.4em;font-family:"Microsoft YaHei"; color:#969696;background-color:#fff; border:0;border-radius:10px;}
+.form-set input[type=text]{ float:left; padding-left:3%;width:53%;}
+.form-set .get-code{ display:block; float:right; width:35%; min-width:130px;padding-top:15px; padding-bottom:15px;height:28px; line-height:28px;font-size:1.4em; text-align:center;font-family:"Microsoft YaHei"; color:#fff;background-color:#9d9d9d; border:0;border-radius:10px;}
+.form-set .ico-input{ position:absolute; top:1em; left:1em; width:12%; max-width:120px; height:37px; border-right:1px solid #e5e5e5; background:url(image/phone_set.png) 50% -64px no-repeat;}
+.form-set .submit-set{ margin-top:2.5em; display:block;width:100%;padding-top:15px; padding-bottom:15px;height:28px; line-height:28px; text-align:center;font-size:1.5em;font-family:"Microsoft YaHei"; color:#fff;background-color:#ec6d46; border:0;border-radius:10px;}
+
+.footer{ padding:1em; height:4em; line-height:1.8em; text-align:center; color:#9d9d9d;}
+
+
+@media screen and (max-width: 520px) {
+    .header{height:3em; line-height:3em;}
+    .header h1{font-size:1em;}
+    .header .reback{left:1em; top:.7em; width:30px; height:26px; background:url(image/phone_set.png) 0 0 no-repeat; background-size:100%;}
+    .section{margin:.8em;padding:.8em;}
+    .form-set input[type=text],
+    .form-set input[type=password]{padding-left:22%;width:78%;padding-top:15px; padding-bottom:15px;height:28px; line-height:28px;font-size:1.2em;}
+    .form-set input[type=text]{ float:left; padding-left:3%;width:53%;font-size:1em;}
+    .form-set .get-code{width:15%; min-width:100px;padding-top:15px; padding-bottom:15px;height:28px; line-height:28px;font-size:1em;}
+    .form-set .submit-set{ display:block; margin-top:.2em; width:100%;padding-top:15px; padding-bottom:15px;height:28px; line-height:28px; text-align:center;font-size:1.5em;font-family:"Microsoft YaHei"; color:#fff;background-color:#ec6d46; border:0;border-radius:10px;}
+    .footer{ padding:.5em; height:2em; line-height:1.6em;}
+    .form-set .ico-input{background:url(image/phone_set.png) 10% -64px no-repeat;}
+
+}
+@media screen and (max-width: 320px) {
+    .section{margin:.8em;padding:.4em;}
+    .form-set input[type=text],
+    .form-set input[type=password]{width:75%;padding-top:18px; padding-bottom:12px;height:28px; line-height:28px; font-size:1.1em;}
+    .form-set input[type=text]{ float:left; padding-left:3%;width:53%;font-size:1.1em;}
+    .form-set .get-code{width:15%; min-width:100px;padding-top:15px; padding-bottom:15px;height:28px; line-height:28px;font-size:1.1em;}
+    .form-set .ico-input{ top:.8em;background:url(image/phone_set.png) 10% -64px no-repeat;}
+}
+
+</style>
+<header class="header">
+    <a class="reback" href="#" title="返回"></a>
+    <h1>设置支付密码</h1>
+</header>
+<section class="section">
+    <ul class="form-set">
+        <li class="phone-num">手机号：$!response.data.mobile</li>
+        <li><span class="ico-input"></span><input id="password" name="password" type="password" placeholder="请设置支付密码"></li>
+        <input type="hidden" id="model" name="model"  value="$!response.data.model" />
+        <li><span class="ico-input"></span><input id="confirmPasswd" name="confirmPasswd" type="password" placeholder="请再次输入支付密码"></li>
+        <li><input id="msg" type="text" placeholder="请输入6位验证码"><span id="send_msg" class="get-code">获取验证码</span></li>
+        <li><span id="submit-btn" class="submit-set">完成</span></li>
+    </ul>
+</section>
+
+<script>
+$("#send_msg").click(function(){
+			if($("#send_msg").attr("disabled")) {
+                return;
+            }
+            $('#send_msg').countDown({
+                text:"秒后重新获取",
+                endText:"发送验证码",
+                isDisabled:false,
+                count:120
+            });
+         jQuery.ajax({
+            type: 'GET',
+            url: "#springUrl('/my/active/sendMessage.htm')" ,
+            success: function(response) {
+             if(response.success) {
+             	//
+             } else {
+                alert("若长时间未收到校验码，请联系客服 400-611-0909");
+             }
+            } ,
+            dataType: "json"
+        });
+  });
+$(".get-code").css("cursor","pointer")
+$(".submit-set").css("cursor","pointer")
+$("#submit-btn").click(function(){
+        if($("#submit-btn").attr("disabled")) {
+            return;
+         }
+         var password = $("#password").val();
+         var confirmPasswd = $("#confirmPasswd").val();
+         var model = $("#model").val();
+         var msg = $("#msg").val();
+         if(password == null || password == "") {
+            alert("支付密码不能为空");
+            return false;
+         }
+         if(confirmPasswd == null || confirmPasswd == "") {
+            alert("支付密码确认不能为空");
+            return false;
+         }
+         if(confirmPasswd != password) {
+            alert("支付密码确认不对");
+            return false;
+         }
+         if(msg == null || msg == "") {
+            alert("验证码不能为空");
+            return false;
+         }
+
+         jQuery.ajax({
+            type: 'POST',
+            data: {
+                password:password,
+                msg:msg,
+                model:model
+            },
+            url: "#springUrl('/my/active/setpaypasswdMobile.htm')" ,
+            success: function(response) {
+             if(response.success) {
+                 alert("恭喜您设置支付密码成功，将跳转到商户首页。");
+             } else {
+                alert(response.message?response.message:"支付密码设置失败");
+             }
+            } ,
+            dataType: "json"
+        });
+  });
+</script>

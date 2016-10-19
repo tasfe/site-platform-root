@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+
+    <div class="page_title"><h2></h2></div>
+
+    <div class="safetyMain">
+
+        <div class="usbKeyCon">
+
+            <div class="activateTit pos_rel">
+
+                <ul>
+                    <li><span class="bold f16">快捷盾</span><span class="ml10">（<em class="bold red">68</em>元）</span></li>
+                    <li class="mt5">申请后账户安全等级为：<span class=" ml10 green">高</span></li>
+                </ul>
+
+                <span class="imgAct"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/shieldImg.gif" alt=""></span>
+
+            </div>
+
+            <div class="usbConBox clearfix" style="padding:25px; width:870px;">
+
+                <p class="bold">激活快捷盾后，只有在插入快捷盾的情况下，才能进行转账、提现、审核等涉及资金变动的操作。</p>
+
+                <p class="mt20 l_h20" style="color:#858689;">支持的操作系统：Windows XP/Windows 7/Windows Vista<br>支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等
+                </p>
+
+                <ul class="actList2">
+                    <li><input class="saBtn_ck" id="saBtn_ck" type="button" value="">查看快捷盾详情。</li>
+                    <li style="display:none"><input class="saBtn_jb" id="saBtn_jb" type="button" value="">解绑后在进行资金操作时将不受到硬证书的安全保护，建议解绑后尽快重新绑定。
+                    </li>
+                    <li><input class="saBtn_zx" id="saBtn_zx" type="button" value="">注销后您的硬证书将永久不可使用，建议您及时申请新的快捷盾保护帐号安全。
+                    </li>
+                    <li class="div_gs"><input class="saBtn_gs" id="saBtn_gs" type="button" value="">挂失后,您的帐号安全将不再受到快捷盾的保护,如挂失时间超过15天,快捷盾将会自动恢复。
+                    </li>
+                    <li class="div_jg" style="display:none"><input class="saBtn_jg" id="saBtn_jg" type="button"
+                                                                   value="">解除挂失后，您的帐号安全将受到原有快捷盾的保护
+                    </li>
+                    <!-- <li>您的硬证书即将/已过期，为保护您的帐号安全，请马上<a href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">更新</a>。</li> -->
+                    <li><span id="needUpdataKjd" class="error" style="display:none"><span></span>，<a
+                            href="#springUrl('/certRenew/gotoUpdateDun.htm')" id="updata">点此更新</a>。</span></li>
+                </ul>
+            </div>
+
+            <div class="usbKeyFaq" style="padding:30px 70px 50px">
+                <h4>快捷盾问题：</h4>
+                <dl>
+                    <dt>什么是快捷盾？</dt>
+                    <dd>答：快捷盾是永达互联网金融推出的安全产品，是为了更好的保障用户的账户资金安全，防止用户账户和资金被盗。</dd>
+                </dl>
+                <dl>
+                    <dt>收到快捷盾后该怎么操作？</dt>
+                    <dd>答：请您先仔细阅读《快捷盾用户使用手册》，然后登录永达互联网金融账户，根据激活向导进行激活操作。</dd>
+                </dl>
+                <dl>
+                    <dt>申请快捷盾的前提条件是什么？</dt>
+                    <dd>答：1、所有通过永达互联网金融个人实名认证的永达互联网金融账户。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;2、通过永达互联网金融商家实名认证的永达互联网金融账户。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;3、永达互联网金融数字证书用户（证书已登录情况下）。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;4、支持的操作系统：Windows2000/XP、Vista、win7版本的操作系统。<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;5、支持的浏览器：支持windows所有【非64位IE内核浏览器】。
+                    </dd>
+                </dl>
+                <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a
+                        href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+            </div>
+            <input type="hidden" name="certSn" id="certSn" value="$!{certSn}"/>
+        </div>
+    </div>
+
+</div>
+<!-- E 主要内容 -->
+
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/showwin.js"></script>
+<OBJECT id="ukeyadmin_ie" classid="clsid:05395F06-244C-4599-A359-5F442B857C28"></OBJECT>
+<embed id="ukeyadmin_firefox" type="application/Itrusukeyadmin.ukeyadmin.1" width="0" height="0"/>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery.cookie.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/xenroll.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/pta.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/cert.js"></script>
+<script>
+    var pgeditor = null;
+
+    function btnDoOrNot(flag) {
+        stopCountDown($(".btn_mfhq"));
+        if (flag) {
+            $(".btn_submit").attr("disabled", false).removeClass("btn_qr_disabled");
+            $(".btn_mfhq").attr("disabled", false).removeClass("btn_mfhq_disabled").val("");
+        }
+        else {
+            $(".btn_submit").attr("disabled", true).addClass("btn_qr_disabled");
+            $(".btn_mfhq").attr("disabled", true).addClass("btn_mfhq_disabled").val("免费获取");
+        }
+    }
+
+    function swT(option) {
+        var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc" style="padding-bottom:0">';
+        html += '<div style=" padding-left:50px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span class="color_f60">' + option.message + '</i></p></div>';
+        html += '<form action="' + option.action + '"><table cellpadding="0" cellspacing="0" border="0" class="sqinfo" style="margin:0; width:100%;"><tr><td class="tcright" width="233">' + '$!{company}' + '：</td><td><input type="text" class="inputtext w232" value="" id="idcard" name="idcard"></td></tr><tr><td class="tcright" width="233">绑定的手机号码：</td><td>' + '$!{mobile}' + '</td></tr><tr><td class="tcright" width="233">手机校验码：</td><td><label><input type="text" class="inputtext w80" value="" id="sjyzm"><input class="btn_mfhq ml10" type="button" value=""></label></td></tr><tr><td class="tcright">支付密码：</td><td><div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div></td></tr><tr><td>&nbsp;</td><td class="error" id="swError">&nbsp;</td></tr></table></form>';
+        html += '</div></div>';
+        html += '<div class="div_btn_submit"><input type="button" class="btn_qr btn_submit btn_sumbit_qr" id="swSubmit" ></div></div>';
+        showWin('html', html, '', 650, 450, ' ', '', '');
+
+        btnDoOrNot(false);
+
+        pgeditor = null;
+        pgeditor = newPgeditor(1, '${response.data.ocx_skey}', '${response.data.ocx_enstr}');
+        window.pgeCtrl = pgeditor;
+        $(".pwdiv").append(pgeditor.load());
+        pgeditor.pgInitialize();
+    }
+
+
+    $(function () {
+
+//免费获取手机验证码
+        $("body").delegate(".btn_mfhq", "click", function () {
+            $("#swError").html("&nbsp;");
+            countDown($(this), 60, "");
+            jQuery.ajax({
+                type: 'GET',
+                url: "#springUrl('/my/mobile/sendMessage.htm')",
+                data: "bizType=KJTSHILED_ACTIVE",
+                success: function (response) {
+                    if (response.success) {
+                        $("#swError").html("校验码已发送");
+                    } else {
+                        $("#swError").html("若长时间未收到校验码，请联系客服 400-611-0909");
+                    }
+                },
+                cache: false,
+                error: function () {
+                    $("#swError").html(G.sysError)
+                },
+                dataType: "json"
+            });
+        });
+
+        $("body").delegate("#idcard", "blur", function () {
+            var jTip = $("#swError");
+            var flag = checkMust($(this), jTip, "请输入您的身份证号码！");
+            if (flag)
+                flag = checkIdCard($(this), jTip, "请输入18位身份证号码！");
+            if (flag) {
+                var value = $(this).val();
+                jTip.text("");
+                jQuery.ajax({
+                    type: 'POST',
+                    url: "#springUrl('/softcertActivate/idcard.htm')",
+                    data: "idcard=" + value,
+                    success: function (response) {
+                        if (response.success) {
+                            btnDoOrNot(true);
+                        } else {
+                            btnDoOrNot(false);
+                            jTip.text("身份验证失败！");
+                        }
+                    },
+                    cache: false,
+                    error: function () {
+                        jTip.text(G.sysError);
+                        btnDoOrNot(true);
+                    },
+                    dataType: "json"
+                });
+            }
+            else btnDoOrNot(false);
+        });
+
+        function _submitSw(){
+            var btn_submit = $("#swSubmit");
+            var jTip = $("#swError");
+            jQuery.ajax({
+                type: 'POST',
+                url: "#springUrl('')" + $("form").attr("action"),
+                data: {
+                    "idcard": $("#idcard").val(),
+                    "authCode": $("#sjyzm").val(),
+                    "password": $('#password').val(),
+                    "certSn": $("#certSn").val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        //$("form").submit();
+                        window.location.href = "#springUrl('/hardcertActivate/showHardDetails.htm')";
+                    } else {
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        jTip.text(response.message);
+                        btnDoOrNot(true);
+                    }
+                },
+                cache: false,
+                error: function () {
+                    jTip.text(G.sysError);
+                    btnDoOrNot(true);
+                },
+                dataType: "json"
+            });
+        }
+
+        $("body").delegate("#swSubmit", "click", function () {
+            var btn_submit = $(this);
+            btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+            var jTip = $("#swError");
+            jTip.html("&nbsp;");
+
+            var thisObj = $("#idcard");
+            var flag = checkMust(thisObj, jTip, "请输入您的身份证号码！");
+            if (!flag) {
+                btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                return false;
+            }
+            flag = checkIdCard(thisObj, jTip, "请输入18位身份证号码！");
+            if (!flag) {
+                btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                return false;
+            }
+
+            var flag = checkMust($("#sjyzm"), jTip, "请输入手机校验码");
+            if (!flag) {
+                btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                return false;
+            }
+
+            if(pgeditor.osBrowser == 10 || pgeditor.osBrowser == 11){
+                var wid = pgeditor.settings.pgeWindowID;
+                pgeditor.pwdLength(function(){
+                    if(outs[wid].length == 0){
+                        jTip.text("请输入密码！");
+                        btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                        return false;
+                    }
+
+                    //产生随机数加密
+                    getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor],function(){
+                        //获得密文
+                        setPwdResult(pgeditor,$('#password'),function(){
+                            _submitSw();
+                        });
+                    });
+                });
+            }
+            else{
+                if (pgeditor.pwdLength() == 0) {
+                    jTip.text("请输入密码！");
+                    btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+                    return false;
+                }
+
+                getSrandNum("#springUrl('/ocx/generateRandomKey.htm')",[pgeditor]); //产生随机数去加密
+                setPwdResult(pgeditor, $('#password'));
+
+                //$("form").submit();
+                _submitSw();
+            }
+        });
+
+        // 查询出所有
+        checkHardCert("#springUrl('/hardcertActivate/getCertSns.htm')", 'hard', 'ACTIVATED', function (result) {
+            //console.log("result:"+result);
+            //console.log("result.status:"+result.status);
+            if (result && result.status) {
+                if (result.status == 5) {//console.log("result.status:="+5);
+                    //硬证书被挂失了
+                    $(".div_gs").hide();
+                    $(".div_jg").show();
+                    return;
+                }
+
+                if (result.status == 4) {//console.log("result.status:="+4);
+                    // 硬证书已经过期
+                    cert = result.cert;
+                    certSnsNo = result.certSnsNo;
+                    $("#saBtn_jb").attr("disabled", true);
+                    //$("#saBtn_ck").attr("disabled",true);
+
+                    // 已经过期显示，即将过去隐藏，解绑按钮置灰.查询按钮置灰
+                    //$('#needUpdataKjd').show().find("span").text("您的快捷盾证书已过期");
+                    //$('#needUpdataKjd').find("#updata").attr("href", "#springUrl('/hardcertActivate/step1.htm')");
+
+                    return;
+                } else if (result.status == 3) {//console.log("result.status:="+3);
+                    // 硬证书即将过期
+                    cert = result.cert;
+                    certSnsNo = result.certSnsNo;
+                    //csr = result.csr;
+                    //旧证书对CSR签名
+                    oldcsr = result.csr;
+                    pkcsInfo = signCSR(cert, oldcsr);
+                    origCert = cert.GetEncodedCert(2)
+                    certSn = result.certSn;
+                    var provider = "ExcelSecu CSP for TWCX V5.0";
+                    csr = genRenewCSR(provider, 1, 2048, cert, "Y");
+                    // 已经过期隐藏，即将过去显示，解绑按钮置灰
+                    $('#needUpdataKjd').show().find("span").text("您的快捷盾证书即将过期");
+                    $('#needUpdataKjd').find("#updata").attr("href", "#springUrl('/certRenew/gotoUpdateDun.htm')");
+                    $("#saBtn_jb").attr("disabled", false);
+                    $("#saBtn_ck").attr("disabled", false);
+                    return;
+                } else if (result.status == 1) {//console.log("result.status:="+1);
+                    //没有插入快捷盾
+                    cert = result.cert;
+                    certSnsNo = result.certSnsNo;
+                    csr = result.csr;
+                    // 已经过期隐藏，即将过去隐藏，解绑按钮置灰
+                    $('#needUpdataKjd').remove();
+                    $("#saBtn_jb").attr("disabled", false);
+                    //$('#errorMsg').text('请插入您的快捷盾！');
+                    return;
+                } else if (result.status == 0) {//console.log("result.status:="+0);
+                    //证书可用
+                    cert = result.cert;
+                    certSnsNo = result.certSnsNo;
+                    csr = result.csr;
+                    // 已经过期隐藏，即将过去隐藏，解绑按钮可用
+
+                    $('#needUpdataKjd').remove();
+                    $("#saBtn_jb").attr("disabled", false);
+                    $("#saBtn_ck").attr("disabled", false);
+                    return;
+                }
+            } else {//console.log("result.status:==other");
+                // 隐藏点击更新，解绑按钮置灰
+                $('#needUpdataKjd').remove();
+                $("#saBtn_jb").attr("disabled", true);
+                $("#saBtn_ck").attr("disabled", true);
+                return;
+            }
+        });
+        $(".saBtn_ck").click(function () {
+            showWin('iframe', '${request.contextPath}/hardcertActivate/showHardCertDetail.htm?certSn=$!{certSn}', '', 720, 314, '快捷盾详情', '', '');
+        });
+        /*$(".saBtn_jb").click(function(){
+         window.location.href="${request.contextPath}/hardcertUnbind/step1.htm?certSn=$!{certSn}";
+         })*/
+        $(".saBtn_gs").click(function () {
+            swT({
+                "message": "如果挂失快捷盾，您将失去快捷盾的保护，此操作请慎重！<br>如有需要，您可以在挂失完成后通过解除挂失重新启用之前挂失的快捷盾。",
+                "action": "/hardcertActivate/hardCertLoss.htm"
+            });
+        });
+        $(".saBtn_jg").click(function () {
+            swT({"message": "解除挂失<br />您的帐号安全将受到原有快捷盾的保护", "action": "/hardcertActivate/hardCertRlvLoss.htm"});
+        });
+        $(".saBtn_zx").click(function () {
+            swT({
+                "message": "如果注销快捷盾，您的帐号将不受快捷盾的保护，且当前快捷盾永久不可使用。<br>您可以尽快重新申请新的快捷盾保护帐号安全。",
+                "action": "/hardcertActivate/hardCertRevoke.htm"
+            });
+        })
+    });
+</script>
+</body>
+</html>

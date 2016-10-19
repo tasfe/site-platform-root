@@ -1,0 +1,21 @@
+<!--会员提现结果-->
+<div class="min_height6">
+    #if($response.success)
+	    <div class="user_done_success">
+	          <i class="right_sign"></i>
+	          <ul>
+	              <li class="tit">恭喜您，提现申请成功！</li>
+	              <li>通过人工审核成功后，提现金额将会在2个工作日内打到您的银行卡上。</li>
+	              <li class="last"><a href="#springUrl('/my/home.htm')">返回钱包首页</a></li>
+	          </ul>
+	    </div>
+	#else
+		<div class="user_done_success">
+		          <i class="ico_err"></i>
+		          <ul>
+		              <li class="tit">$!response.message</li>
+		              <li class="last"><a href="#springUrl('/my/home.htm')">返回钱包首页</a></li>
+		         </ul>
+		</div>
+	#end
+</div>

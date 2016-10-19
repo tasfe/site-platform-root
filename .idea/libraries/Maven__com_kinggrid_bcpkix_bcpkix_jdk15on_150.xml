@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.kinggrid.bcpkix:bcpkix-jdk15on:150">
+    <CLASSES>
+      <root url="jar://D:/repository/com/kinggrid/bcpkix/bcpkix-jdk15on/150/bcpkix-jdk15on-150.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/kinggrid/bcpkix/bcpkix-jdk15on/150/bcpkix-jdk15on-150-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/kinggrid/bcpkix/bcpkix-jdk15on/150/bcpkix-jdk15on-150-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.ucs:ucs-memcached:1.0.20121211">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/ucs/ucs-memcached/1.0.20121211/ucs-memcached-1.0.20121211.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/ucs/ucs-memcached/1.0.20121211/ucs-memcached-1.0.20121211-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/ucs/ucs-memcached/1.0.20121211/ucs-memcached-1.0.20121211-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

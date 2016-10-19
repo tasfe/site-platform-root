@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="css/Yonda-UI.css">
+  <link rel="stylesheet" href="css/default.css">
+  <link rel="stylesheet" href="css/pullToRefresh.css" />
+  <script src="js/iscroll.js"></script>
+  <script src="js/pullToRefresh.js"></script>
+  <title>余额明细</title>
+</head>
+<body style="display: none;">
+<div id="wrapper" style="margin-top:-27px;">
+    <ul class="yd-itemList detailList shuaxinList">
+        <!--<li>
+            <div class='detailLine1'><span class='moneyDetailTitle'>充值</span><span class='moneyDetailAmount moneyDetailAmount-add'>+233.00</span></div>
+            <div class='detailLine2'><span class='moneyDetailTime'>2016-05-25 21:10</span><span class='moneyDetailBlance'>666.00</span></div>
+        </li>
+        <li>
+            <div class='detailLine1'><span class='moneyDetailTitle'>充值</span><span class='moneyDetailAmount moneyDetailAmount-add'>+233.00</span></div>
+            <div class='detailLine2'><span class='moneyDetailTime'>2016-05-25 21:10</span><span class='moneyDetailBlance'>666.00</span></div>
+        </li>-->
+    </ul>
+</div>
+<div class="nocard" id="msgNodata" style="display:none;background:#F0EFF5;z-index:999999;position:fixed;top:0px;left:0px;width:100%;height:95%;">
+  <img src="images/none.png">
+  <p style="color:#999;">暂无数据</p>
+</div>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/pullToRefresh.js"></script>
+<script>
+    var J_Wrapper = $("#wrapper"),
+            currentPage = 1,
+            ids = ",";
+
+    function loadData(reload){
+        if(reload){
+            currentPage = 1;
+            ids = ",";
+        }
+
+        // 获取明细
+        tools.ajaxSubmit({
+            "type": "GET",
+            "data": {"currentPage":currentPage,"pageSize":15,"txnType":1},
+            "url": gurl + "/trade/query/tradeflow",
+            "suc_suc": function(response){
+                var data = response.data.pageData;
+                if(reload && (data == undefined || data.length == 0)){
+                    $("#msgNodata").show();
+                    return false;
+                }
+
+                var _html = "";
+                for(var i = 0, len = data.length; i < len; i++){
+                    var _data = data[i],
+                            addClass = "",
+                            amount = "";
+                    // 如果记录未显示
+                    if(ids.indexOf("," + _data.sysTraceNo + ",") < 0) {
+                        ids += _data.sysTraceNo + ",";
+                        if (_data.txnType == "INCOME") {
+                            addClass = "moneyDetailAmount-add";
+                            amount = "+" + _data.txnAmt.amount;
+                        }
+                        else {
+                            addClass = "";
+                            amount = "-" + _data.txnAmt.amount;
+                        }
+                        _html += '<li>'
+                                + '<div class="detailLine1"><span class="moneyDetailTitle">' + _data.summary + '</span><span class="moneyDetailAmount ' + addClass + '">' + amount + '</span></div>'
+                                + '<div class="detailLine2"><span class="moneyDetailTime">' + (new Date(_data.txnTime)).format("yyyy-MM-dd hh:mm:ss") + '</span><span class="moneyDetailBlance">余额 ' + _data.afterAmt.amount + '</span></div>'
+                                + '</li>';
+                    }
+                }
+
+                if(!reload){
+                    J_Wrapper.find(".shuaxinList").append(_html);
+                }
+                else{
+                    J_Wrapper.find(".shuaxinList").html(_html);
+                }
+
+                currentPage++;
+            },
+            "complete": function(){
+                $("body").show();
+                wrapper.refresh();
+            }
+        });// ajaxSubmit
+    }
+    refresher.init({
+        id: "wrapper",
+        pullDownAction: Refresh,
+        pullUpAction: Load
+    });
+    // 重新开始
+    function Refresh() {
+        loadData(true);
+    }
+    Refresh();
+    // 加载新内容
+    function Load() {
+        loadData();
+    }
+</script>
+</body>
+</html>

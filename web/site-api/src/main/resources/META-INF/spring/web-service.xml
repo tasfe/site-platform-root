@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <jaxws:endpoint address="/receiptFacade" implementor="#receiptService" />
+    <jaxws:endpoint address="/auditFacade" implementor="#auditServiceImpl" />
+    <jaxws:endpoint address="/autoFundoutFacade" implementor="#autoFundoutServiceImpl"/>
+    <jaxws:endpoint address="/sendTemplateMessageFacade" implementor="#sendTemplateMessageImpl"/>
+	
+	<!-- 银行卡认证接口 -->
+	<bean id="personalIdentificationBankCard" class="com.yongda.site.ext.service.facade.personal.impl.PersonalIdentificationBankCard"/>
+	<!-- 金额校验接口 --> 
+	<bean id="personalVerifyAmount" class="com.yongda.site.ext.service.facade.personal.impl.PersonalVerifyAmount"/>
+	<!-- 查询绑定银行卡接口 -->
+	<bean id="personalFindBankAccount" class="com.yongda.site.ext.service.facade.personal.impl.PersonalFindBankAccount"></bean>
+	<!-- 删除绑定银行卡接口 -->
+	<bean id="personalRemoveBankCard" class="com.yongda.site.ext.service.facade.personal.impl.PersonalRemoveBankCard"></bean>
+	<!-- 身份认证接口 -->
+	<bean id="PersonalVerifyIdentity" class="com.yongda.site.ext.service.facade.personal.impl.PersonalVerifyIdentity"></bean>
+	<!-- 签约接口 -->
+	<bean id="personalShortcutSig" class="com.yongda.site.ext.service.facade.personal.impl.PersonalShortcutSig"></bean>
+	<!-- 签约推进 -->
+	<bean id="personalSignAdvance" class="com.yongda.site.ext.service.facade.personal.impl.PersonalSignAdvance"></bean>
+	<!-- 添加银行卡接口 -->
+	<bean id="personalAddBankCard" class="com.yongda.site.ext.service.facade.personal.impl.PersonalAddBankCard"></bean>
+	<bean id="FastRegisterMemberService" class="com.yongda.site.ext.service.facade.personal.impl.FastRegisterMemberService"/>
+	<bean id="YDBindAccountService" class="com.yongda.site.ext.service.facade.personal.impl.YDBindAccountService"/>
+	<bean id="SetPayPWDService" class="com.yongda.site.ext.service.facade.personal.impl.SetPayPWDService"/>
+	<bean id="PersonalModifyPayPWDService" class="com.yongda.site.ext.service.facade.personal.impl.PersonalModifyPayPWDService"/>
+	<bean id="PersonalVerificationPayPWDService" class="com.yongda.site.ext.service.facade.personal.impl.PersonalVerificationPayPWDService"/>
+
+    <!-- 提现接口 -->
+	<bean id="personalSubmitWithdrawService" class="com.yongda.site.ext.service.facade.personal.impl.PersonalSubmitWithdrawService"></bean>
+    <!-- 身份信息查询接口 -->
+    <bean id="personalMemberInfoService" class="com.yongda.site.ext.service.facade.personal.impl.PersonalMemberInfoService"></bean>
+    <!-- 修改手机接口 -->
+    <bean id="personalModifyPhoneService" class="com.yongda.site.ext.service.facade.personal.impl.PersonalModifyPhoneService"></bean>
+    <!-- 账户余额查询接口 -->
+    <bean id="personalBalanceService" class="com.yongda.site.ext.service.facade.personal.impl.PersonalBalanceService"></bean>
+    
+    <bean id="queryRechargeCashierUrlService" class="com.yongda.site.ext.service.facade.personal.impl.QueryRechargeCashierUrl"></bean>
+</beans>

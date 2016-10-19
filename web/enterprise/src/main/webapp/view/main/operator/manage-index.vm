@@ -1,0 +1,687 @@
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title operator">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">操作员</span>
+		</div>
+	</div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+     	  	   	    <li>
+     	  	   	         <a class="subBlock " href="#springUrl('/my/operator/operator-index.htm?refresh=true')">
+     	  	   	             <span class="subNavIcon jsgl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">角色管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="#springUrl('/my/operator/manage-index.htm')">
+     	  	   	             <span class="subNavIcon cygl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">成员管理</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+            <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1 pos_rel">成员管理<a class="member_tj" href="#springUrl('/my/operator/toAdd.htm')"></a></div>
+     	  	   <div class="account_memberMain_con clearfix">
+                       
+                    <div class="memberMain_left">
+                    
+                         <div class="memberSearch">
+                             
+                              <input type="text" data-placeholder="输入操作员账号" value="" class="search placeholder" />
+
+                         </div>
+                         <div class="memberContent" style="height:600px;">
+                              <ul class="memberContentList">
+                              </ul>
+                         </div>
+                    
+                    </div>
+
+                    <!-- 显示 -->
+                    
+                    
+ 
+                    <div class="memberMain_right" id="infoshow" >
+                        <p class="memberH1"></p>
+                        <div class="memberRightList">
+
+							<div class="main_limit">
+								<span class="f14 limitLeft">用户账号：</span>
+								<span class="f14 ml10 show_text" id="account"></span>
+							</div>
+
+							<div class="main_limit">
+								<span class="f14 limitLeft">用户名称：</span>
+								<span class="f14 ml10 show_text" id="accountname"></span>
+							</div>
+
+							<div class="main_limit">
+								<span class="f14 limitLeft">联系方式：</span>
+								<span class="f14 ml10 show_text" id="contact"></span>
+							</div>
+
+                             <div class="main_limit">
+                                <span class="f14 limitLeft">账号状态：</span>
+                                <span class="f14 ml10 show_text" id="accountstatus"></span>
+                             </div>
+
+							<div class="main_limit" style="height:auto;">
+								<span class="f14 fd limitLeft">备注：</span>
+								<span class="f14 ml10 show_text" id="remarks"></span>
+							</div>
+
+                             <div class="main_limit">
+                                 <span class="f14 limitLeft">角色：</span>
+                                 <span class="f14 ml10" id="role"></span>
+								 <span><input class="addZzToKjt ml100" type="button" value="分配角色" id="btn_assign_roles" data-id=""></span>
+                             </div>
+							<!--
+                             <div class="main_limit">
+                                 <span class="f14 limitLeft">永达盾状态：</span>
+                                 <span class="f14 ml10 show_text" id="kjdstatus"></span>
+                             </div>
+							 -->
+
+
+
+
+							 <!--
+                             <div class="main_limit">
+                                 <span class="f14 limitLeft">最近登录时间：</span>
+                                  <span class="f14 ml10" id="recelogintime"></span>
+                             </div>
+
+                             <div class="main_limit">
+                                <span class="f14 limitLeft">最近登录IP：</span>
+                                <span class="f14 ml10" id="receloginip"></span>
+                                <span><a class="addZzToKjt ml100" href="#" style="height:26px; line-height:26px;">操作日志</a></span>
+                                 
+                             </div>
+							-->
+
+
+                             <div class="memberBtn">
+                                  <input type="button" style="float:left; margin-right:30px;" id="cont_edit" class="btn" value="编 辑" data-id="">
+                                  <input type="button" style="float:left; margin-right:30px;" id="cont_edit_pw" class="btn" value="修改密码" data-id="">
+                                  <input type="button" id="delcontact" class="btn btn-bg" value="删除成员" data-id="">
+                             </div>
+
+
+                        </div>
+
+                    </div>
+                    
+                    <!--编辑 基本信息-->
+					<div class="memberMain_right" id="infoedit" style="display:none;">
+						<form id="modify-oper-form" name="modify-oper-form" class="" action="${request.contextPath}/my/operator/addOperator.htm" method="POST">
+                        <p class="memberH1"></p>
+                        <div class="memberRightList">
+
+							<div class="main_limit">
+								<label><span class="f14 limitLeft">用户账号：</span>
+									<span id="loginNameText" class="f14 show_text"></span><input type="hidden" class="inputtext wpw cutdown_words" id="loginName" name="loginName" value="" maxlength="25"  data-tip-place="2">
+								</label>
+								<div class="error h22 pl152 tip"></div>
+							</div>
+
+							<div class="main_limit">
+								<label><span class="f14 limitLeft">用户名称：</span>
+									<span id="nickNameText" class="f14 show_text" style="display: none;"></span><input type="text" class="inputtext wpw cutdown_words" id="nickName" name="nickName" value="" maxlength="25"  data-tip-place="2">
+								</label>
+								<div class="error h22 pl152 tip"></div>
+							</div>
+
+							<div class="main_limit">
+								<label><span class="f14 limitLeft">联系方式：</span>
+									<span id="contactText" class="f14 show_text"></span><input type="text" class="inputtext wpw" id="contactEdit" name="contact" value="" maxlength="11"  data-tip-place="2">
+								</label>
+								<div class="error h22 pl152 tip"></div>
+							</div>
+
+							<div class="main_limit">
+								<span class="f14 limitLeft">账号状态：</span>
+								<div class="select_div edit_input"><select name=""><option value="0">启用</option><option value="1">禁用</option></select></div>
+							</div>
+
+							<div class="main_limit" style="height:auto;padding-bottom:10px;"> <span class="f14 fd limitLeft">备注：</span>
+								<textarea cols="45" rows="5" class="edit_input" id="remark" name="remark"></textarea>
+							</div>
+
+							<div class="main_limit" style="height:auto;padding-bottom:0;"> <span class="f14 fd limitLeft">&nbsp;</span>
+								<div class="error h22">&nbsp;</div>
+							</div>
+
+							<div class="memberBtn"  style="padding-top:7px;">
+								<input type="button" data-disabled="btn" id="sub_editcontact" class="btn" value="确 认" style="margin-right:30px;" data-id=""><input type="button" class="btn btn-bg J_btn_qx" value="取 消" data-id="">
+							</div>
+
+							<input type="hidden" value="0" id="status" name="status">
+							<input type="hidden" value="update" id="operType" name="operType">
+							<input type="hidden" value="" class="operatorId" name="operatorId">
+							<input type="hidden" value="" id="extention" name="extention">
+
+							<input type="hidden" id="role_ids" value="">
+							<input type="hidden" id="role_ids_new" value="">
+							<input type="hidden" id="role_add" name="role_add">
+							<input type="hidden" id="role_del" name="role_del">
+
+                        </div>
+						</form>
+                    </div>
+
+				   <!--编辑 密码-->
+				   <div class="memberMain_right" id="pwedit" style="display:none;">
+					   <form id="modify-pw-form" name="modify-pw-form" class="" action="${request.contextPath}/my/operator/setPassword.htm" method="POST">
+						   <p class="memberH1"></p>
+						   <div class="memberRightList">
+
+							   <div class="main_limit" id="pwdiv_login_pw">
+								   <span class="f14 limitLeft">登录密码：</span>
+								   <div class="pwdiv fl"><input name="loginPwd" type="hidden" id="loginPwd" data-type="22" /></div>
+								   <div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+								   <div class="error h22 pl152 tip clear"></div>
+							   </div>
+
+							   <div class="main_limit" id="pwdiv_login_pw2">
+								   <span class="f14 limitLeft">确认登录密码：</span>
+								   <div class="pwdiv fl"><input name="loginPwdConfirm" type="hidden" id="loginPwdConfirm" data-type="22" /></div>
+								   <div class="error h22 pl152 tip clear"></div>
+							   </div>
+
+							   <div class="main_limit" id="pwdiv_pay_pw">
+								   <span class="f14 limitLeft">支付密码：</span>
+								   <div class="pwdiv fl"><input name="payPwd" type="hidden" id="payPwd" data-type="22" /></div>
+								   <div class="grade fl" style="margin:3px 0 0 5px;"><span class="gradeIcon g1"></span><em class="mr10 gradeText">弱</em></div>
+								   <div class="error h22 pl152 tip clear"></div>
+							   </div>
+
+							   <div class="main_limit" id="pwdiv_pay_pw2">
+								   <span class="f14 limitLeft">确认支付密码：</span>
+								   <div class="pwdiv fl"><input name="payPwdConfirm" type="hidden" id="payPwdConfirm" data-type="22" /></div>
+								   <div class="error h22 pl152 tip clear"></div>
+							   </div>
+
+							   <div class="main_limit" style="height:auto;padding-bottom:0;"> <span class="f14 fd limitLeft">&nbsp;</span>
+								   <div class="error h22">&nbsp;</div>
+							   </div>
+
+							   <div class="memberBtn"  style="padding-top:7px;">
+								   <input type="button" data-disabled="btn" id="sub_editpw" class="btn" value="确 认" style="margin-right:30px;" data-id=""><input type="button" class="btn btn-bg J_btn_qx" value="取 消" data-id="">
+							   </div>
+
+							   <input type="hidden" value="" class="operatorId" name="operatorId">
+
+						   </div>
+					   </form>
+				   </div>
+
+     	  	   </div>
+
+     	  </div>
+     	  <!-- E 右边内容 -->
+
+     </div>
+</div>
+</div>
+<script>
+	var member_data = [],
+	isDefaultOperator = false;
+
+	// 初始化操作员
+	function initOperKjt($list, data){
+		if (!data) {
+			return;
+		}
+		var data_len = data.length;
+		var data_html = "";
+		for(var i = 0; i< data_len; i++){
+			var mc = data[i];
+			if(i==0){
+				showOper(mc.operatorId);
+			}
+			data_html += '<li data-id="' + mc.operatorId + '"><a class="name" href="#" onclick="showOper('+mc.operatorId+');return false;">' + mc.loginName + '</a></li>';
+		}
+		$list.html(data_html);
+	}
+
+	function showOper(id){
+		$("#cont_edit,#cont_edit_pw,#delcontact,#sub_editcontact,#sub_editpw,#btn_assign_roles").attr("data-id",id);
+		$(".operatorId").val(id);
+		
+		jQuery.ajax({
+			type: 'post',
+			data:'operId=' + id,
+			url:'${request.contextPath}/my/operator/querySingleOperator.htm',
+			dataType:'json',
+			cache:false,
+			success:function(result){
+				$(".error").html('');
+				// 没有查询到操作员信息
+				if (!result || !result.messageObj) {
+					return;
+				}
+				var data = result.messageObj;
+				$(".memberH1").text(data.nickName);
+				if(result.data.status == 0){$("#accountstatus").text("启用");}else{$("#accountstatus").text("禁用");}
+				$(".edit_input select").val(result.data.status);
+				$("#role").text(result.data.role);
+				/*
+				 $("#kjdstatus").text(data.kjdstatus);
+				 */
+				$("#account").text(data.loginName);
+				$("#accountname").text(data.nickName);
+				var _contact = data.contact == null ? "" : data.contact;
+				$("#contact").text(_contact);
+				/*
+				 $("#recelogintime").text(data.recelogintime);
+				 $("#receloginip").text(data.receloginip);
+				 */
+				$("#remarks").text(result.data.remark);
+
+				$("#status").val(result.data.status);
+				$("#loginName").val(data.loginName);
+				$("#loginNameText").text(data.loginName);
+				$("#nickName").val(data.nickName);
+				$("#nickNameText").text(data.nickName);
+				$("#contactEdit").val(_contact);
+				$("#contactText").text(_contact);
+				$("#remark").val(result.data.remark);
+				$("#extention").val(data.extention);
+
+				if(result.data.isDefault == "true"){
+					isDefaultOperator = true;
+					$("#btn_assign_roles").hide();
+					$("#delcontact").hide();
+					$("#cont_edit_pw").hide();
+
+					$("#contactEdit").hide();
+					$("#contactText").show();
+				}else{
+					isDefaultOperator = false;
+					$("#btn_assign_roles").show();
+					$("#delcontact").show();
+					$("#cont_edit_pw").show();
+
+					$("#contactEdit").show();
+					$("#contactText").hide();
+				}
+
+				$("#infoshow").show();
+				$("#infoedit").hide();
+				$("#pwedit").hide();
+			},
+			error:function (){
+				$(".error").html("获取操作员信息失败！");
+			}
+		});
+	}
+
+	// 从联系人中搜索
+	function searchFromMembers(key, data){
+		var arrayData_result = new Array();
+		var len = data.length;
+
+		var data_result = new Array();
+		for( var i = 0; i < len; i++){
+			var mc = data[i];
+
+			if(strIndexOf(mc.loginName, key)){
+				data_result.push(mc);
+			}
+		}
+
+		return data_result;
+	}
+
+	function strIndexOf(str, key) {
+		if (str && str.indexOf(key) >= 0) {
+			return true;
+		}
+		return false;
+	}
+
+	function setChangeIds(){
+		var newIds = "", addIds = "", delIds = "", isHave = false;
+		var oldIds_array = ($("#role_ids").val()).split(",");
+		var oldIds_array_len = oldIds_array.length;
+
+
+
+		var checkbox_checked = $(".mr5:checked");
+		var checkbox_checked_len = checkbox_checked.length;
+		for(var i = 0; i < checkbox_checked_len; i++){
+			if(i == 0) newIds = checkbox_checked.eq(i).val();
+			else newIds += "," + checkbox_checked.eq(i).val();
+		}
+		var newIds_array = newIds.split(",");
+
+		for(var i = 0; i < oldIds_array_len; i++){
+			isHave = false;
+			for(var j = 0; j < checkbox_checked_len; j++){
+				if(oldIds_array[i] == newIds_array[j]) { isHave = true; break; }//没删除
+			}
+			if(!isHave){
+				if(delIds == "") delIds = oldIds_array[i];
+				else delIds += "," + oldIds_array[i];
+			}
+		}
+		for(var i = 0; i < checkbox_checked_len; i++){
+			isHave = false;
+			for(var j = 0; j < oldIds_array_len; j++){
+				if(newIds_array[i] == oldIds_array[j]) { isHave = true; break; }//没增加
+			}
+			if(!isHave){
+				if(addIds == "") addIds = newIds_array[i];
+				else addIds += "," + newIds_array[i];
+			}
+		}
+
+		$("#role_ids_new").val(newIds);
+		$("#role_add").val(addIds);
+		$("#role_del").val(delIds);
+	}
+
+	$(function(){
+		var pgeditor = newPgeditor(1,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		window.pgeCtrl = pgeditor;
+		$("#pwdiv_login_pw .pwdiv").append(pgeditor.load());
+		pgeditor.pgInitialize();
+
+		var pgeditor1 = newPgeditor(2,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$("#pwdiv_login_pw2 .pwdiv").append(pgeditor1.load());
+		pgeditor1.pgInitialize();
+
+		var pgeditor2 = newPgeditor(3,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$("#pwdiv_pay_pw .pwdiv").append(pgeditor2.load());
+		pgeditor2.pgInitialize();
+
+		var pgeditor3 = newPgeditor(4,'${response.data.ocx_skey}','${response.data.ocx_enstr}');
+		$("#pwdiv_pay_pw2 .pwdiv").append(pgeditor3.load());
+		pgeditor3.pgInitialize();
+		
+		window.setInterval(function(){checkPwStrongPG(pgeditor, $('#pwdiv_login_pw').find('.error'), $('#pwdiv_login_pw').find('.gradeIcon'), $('#pwdiv_login_pw').find('.gradeText'));},1000); //实时显示密码强度
+		window.setInterval(function(){checkPwStrongPG(pgeditor2, $('#pwdiv_pay_pw').find('.error'), $('#pwdiv_pay_pw').find('.gradeIcon'), $('#pwdiv_pay_pw').find('.gradeText'));},1000); //实时显示密码强度
+
+		$(".select_div").click(function(){
+			var selOption = $('.select_div option:selected');
+			$("#status").val(selOption.val());
+		});
+
+		// 初始化操作员
+		jQuery.ajax({
+			type: "get",
+			url: "${request.contextPath}/my/operator/queryOperators.htm",
+			cache:false,
+			data: "",
+			dataType: "JSON",
+			success: function(result){
+				member_data = result.messageObj;
+				initOperKjt($(".memberContentList"), result.messageObj);
+			}
+		});
+
+		//成员搜索
+		$(".memberSearch .search").keyup(function(){
+			var key = jQuery.trim($(this).val());
+			initOperKjt($(".memberContentList"), searchFromMembers(key, member_data));
+		});
+
+		//分配角色
+		$("body").delegate("#btn_assign_roles","click",function(){
+			var id=$(this).attr("data-id");
+
+			jQuery.ajax({
+				type: "get",
+				url: "${request.contextPath}/my/operator/getOperatorByRole.htm",
+				data:'operId=' + id,
+				dataType: "JSON",
+				cache:false,
+				success: function(result){
+					if (result && result.data) {
+						var curRoleList = result.data.curRoleList;
+						var allRoleList = result.data.allRoleList;
+						$("#role_ids").val(result.data.curRoleStr);
+						var html = '<div class="allot">';
+						var len = allRoleList.length;
+						for (var i=0; i<len; i++) {
+							var role = allRoleList[i];
+							html += '<span><input type="checkbox" name="rolebox" class="mr5" value="'+role.roleId+'" id="'+role.roleId+'"/>'+role.roleName+'</span>';
+						}
+						html += '</div><div class="btn_allot"><input type="button" id="modify_role" value="确 认" class="btn"><input type="button" value="取 消" class="btn btn-bg J_btn_qx ml30" onclick="closeSW();"></div>';
+						len = curRoleList.length;
+
+						showWin('html', html, '', 600, 200, ' ', '', '');
+
+						for (var i=0; i<len; i++) {
+							$("#"+curRoleList[i].roleId).attr("checked", true);
+						}
+
+						$(".mr5").click(function(){
+							setChangeIds();
+						})
+
+						$("#modify_role").live("click",function(){
+
+							if($("input[name='rolebox']:checked").length > 1){
+								alert("只能选择一个角色！");
+								return false;
+							}
+
+							jQuery.ajax({
+								type: "get",
+								url: "${request.contextPath}/my/operator/updateOperatorRole.htm",
+								data:'operId=' + id+"&role_add="+$("#role_add").val()+"&role_del="+$("#role_del").val(),
+								dataType: "JSON",
+								cache:false,
+								success: function(result){
+									window.location.href = "${request.contextPath}/my/operator/manage-index.htm";
+								}
+							});
+
+						})
+					}else{
+						window.location.href="#springUrl('/error.htm')";
+					}
+				}
+			});
+		});
+
+		//编辑 按钮
+		$("#cont_edit").click(function(){
+			$("#infoshow").hide();
+			$("#infoedit").show();
+			$("#pwedit").hide();
+		});
+		//修改密码 按钮
+		$("#cont_edit_pw").click(function(){
+			$("#infoshow").hide();
+			$("#infoedit").hide();
+			$("#pwedit").show();
+		});
+
+		//删除操作员
+		$("#delcontact").click(function(){
+			var id=$(this).attr("data-id");
+			var name=$(".memberH1").eq(0).text();
+			var html = '<div class=" f14 b" style="text-align:center">确认删除'+name+'？</div>';
+			html += '<div class="div_btn_submit"> <input type="button" class="btn btn_submit_del" value="确 认" data-disabled="btn" id="bankcontact_qr"><input type="button" class="btn btn-bg J_btn_qx ml30" value="取 消" onclick="closeSW();"></div></div>';
+
+			showWin('html', html, '', 600, 160, ' ', '', '');
+
+			$(".btn_submit_del").live("click",function(){
+				jQuery.ajax({
+					type: "get",
+					url: "${request.contextPath}/my/operator/delOperator.htm",
+					data: "id="+$("#delcontact").attr("data-id"),
+					dataType: "JSON",
+					cache:false,
+					success: function(result){
+						window.location.href = "${request.contextPath}/my/operator/manage-index.htm";
+					}
+				});
+			})
+
+		});
+
+		$("#nickName").blur(function(){
+			if($(this).val()==""){
+				$(this).parent().parent().find(".error").text("请输入用户姓名");
+			}
+		});
+
+		$("#loginName").blur(function(){
+			if($(this).val()==""){
+				$(this).parent().parent().find(".error").text("请输入用户帐号");
+			}
+		});
+		
+		function checkPhone(){
+			var value = $.trim($("#contactEdit").val()),
+			J_Error = $("#contactEdit").parent().parent().find(".error");
+			J_Error.text("");
+			
+			if (value == "") {
+				J_Error.text("请输入联系方式");
+				return false;
+			}
+			else if (!RegExp(regexEnum.mobile).test(value)){
+				J_Error.text("您输入的联系方式格式错误，请重新输入！");
+				return false;
+			}
+			return true;
+		}
+		
+		$("#contactEdit").blur(function(){
+			checkPhone();
+		});
+	
+		//编辑确定
+		$("#sub_editcontact").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+
+			var loginName=$("#loginName").val();
+			var nickName=$("#nickName").val();
+			var remark=$("#remark").val();
+
+			if(loginName==""){
+				$("#loginName").parent().parent().find(".error").text("请输入用户账号");
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+
+			if(nickName==""){
+				$("#nickName").parent().parent().find(".error").text("请输入用户姓名");
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+console.log(isDefaultOperator);
+			if( isDefaultOperator == false && !checkPhone() ){
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+
+			$("#modify-oper-form").submit();
+		});
+
+		//编辑密码确定
+		$("#sub_editpw").click(function(){
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			$(".error").text("");
+
+			var jsonSubmit = {
+				jBtnSubmit:btn_submit,
+				cssClass:"btn_disabled",
+				urlGetSrandNum:"#springUrl('/ocx/generateRandomKey.htm')"
+			};
+			var pgeditors = [
+				{
+					jPwInput:pgeditor,
+					jInput:$("#loginPwd"),
+					jTip:$("#pwdiv_login_pw").find(".error"),
+					txtEmpty:"请输入登录密码！",
+					txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的登录密码，空格除外"
+				},
+				{
+					jPwInput:pgeditor1,
+					jInput:$("#loginPwdConfirm"),
+					jTip:$("#pwdiv_login_pw2").find(".error"),
+					txtEmpty:"请输入登录密码！",
+					numCompareEqual:0,
+					txtCompareEqual:"您输入的两次登录密码不一致，请重新输入！"
+				},
+				{
+					jPwInput:pgeditor2,
+					jInput:$("#payPwd"),
+					jTip:$("#pwdiv_pay_pw").find(".error"),
+					txtEmpty:"请输入支付密码！",
+					txtPwStrength:"对不起，您输入的密码不符合规定，请输入7~23位数字、字母或特殊符号相结合的支付密码，空格除外"
+				},
+				{
+					jPwInput:pgeditor3,
+					jInput:$("#payPwdConfirm"),
+					jTip:$("#pwdiv_pay_pw2").find(".error"),
+					txtEmpty:"请输入支付密码！",
+					numCompareEqual:2,
+					txtCompareEqual:"您输入的两次支付密码不一致，请重新输入！",
+					numCompareUnEqual:0,
+					txtCompareUnEqual:"支付密码不能与登录密码相同，请重新输入！"
+				}
+			];
+			checkPgeditor({
+				jsonSubmit:jsonSubmit,
+				pgeditors:pgeditors,
+				callback:function(){
+					$("#modify-pw-form").submit();
+				}
+			});
+		});
+
+
+		//取消
+		$(".J_btn_qx").click(function(){
+			$("#infoshow").show();
+			$("#infoedit").hide();
+			$("#pwedit").hide();
+		});
+	});
+
+	/*
+	//密码验证及强度
+
+	$("#loginPwd").blur(function(){
+		checkPW($(this), $(".error"));
+	});
+	$("#loginPwd").keyup(function(e){
+		checkPwStrong($(this), $(".error"), $(this).parent().find(".gradeIcon"), $(this).parent().find(".gradeText"));
+	});
+	$("#loginPwdConfirm").blur(function(){
+		checkPW2($("#loginPwd"), $(this), $(".error"));
+	});
+	
+	$("#payPwd").blur(function(){
+		checkPW($(this),  $(".error"));
+	});
+	$("#payPwd").keyup(function(e){
+		checkPwStrong($(this), $(".error"), $(this).parent().find(".gradeIcon"), $(this).parent().find(".gradeText"));
+	});
+	$("#payPwdConfirm").blur(function(){
+		checkPW2($("#payPwd"), $(this), $(".error"));
+	});
+	*/
+</script>
+

@@ -1,0 +1,102 @@
+<div class="wrap">
+     
+     <div class="page_title"><h2>会员注册</h2></div>
+
+     <div class="login_main">
+     	  
+     	  <div class="login_flow">
+     	  	   <p class="lf_1"><span>1 选择注册方式</span><span>2 填写账号信息</span><span>3 完成注册</span></p>
+     	  </div>
+          
+          <div class="login_verify clearfix">
+               
+               <div class="verify_h1">验证账户名</div>
+
+               <div class="verify_con">
+                    
+                    <p class="f14"></p>
+                    <p class="f14">账户名：<span class="color_33 bold">$!response.data.username</span></p>
+                    <div class="f14 reg2_mobile_yzm">
+						<label><span>校验码：</span><input type="text" id="mobileCaptcha" name="mobileCaptcha" style="margin-right:11px;" class="inputtext w145"></label>
+						<input type="button" class="btn_bg_26_1" value="免费获取"><span class="f12 color_95 pl10">60秒内没有收到校验码，请点击重发</span>
+					</div>
+                    <div id="mobileCaptchaTip" class="error h22"></div>
+                    <div class="h60 mt10"><input class="btn_next btn_submit" type="button" value=""></div>
+                    <div class="color_95 mt30">一直没有收到，建议您 使用<a href="#springUrl('/register/main.htm')">邮箱注册</a></div>
+
+               </div>
+			   
+			   <input type="hidden" name="mobile"  id="mobile" value="$!response.data.username"/>
+
+          </div>
+          
+          
+          
+     </div>
+     
+</div>
+	
+<script>
+$(function(){
+	$(".btn_bg_26_1").click(function(){
+		$("#mobileCaptchaTip").html("");
+		countDown($(this),60);
+		jQuery.ajax({
+            type: 'post',
+            url: "#springUrl('/register/sendMobileMessage.htm')" ,
+			data: { mobile: $("#mobile").val() },
+			cache:false,
+            success: function(response) {
+             if(response.success) {
+				$("#mobileCaptchaTip").html("校验码已发送");
+             } else {
+                $("#mobileCaptchaTip").html("若长时间未收到校验码，请联系客服 400-611-0909");
+             }
+            } ,
+			error:function(){$("#mobileCaptchaTip").html(G.sysError)},
+            dataType: "json"
+        });
+	});
+	
+	$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_qr_disabled");
+		$(".error").text("");
+		
+		var thisObj = $("#mobile");
+		var tipObj = thisObj.parent().parent().find(".error");
+		var value = $.trim(thisObj.val());
+		if (value == "") {
+			tipObj.text("请输入需要绑定的手机号码！");
+			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+		}
+		else if (!RegExp(regexEnum.mobile).test(value)){
+			tipObj.text("您输入的手机号码错误，请重新输入！");
+			btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false;
+		}
+		
+		flag = checkMust($("#mobileCaptcha"),$("#mobileCaptcha").parent().parent().find(".error"),"请输入手机校验码");
+		if(!flag) { btn_submit.attr("disabled", false).removeClass("btn_qr_disabled"); return false; }
+		
+		jQuery.ajax({
+			url:"#springUrl('/register/phone-active.htm')",
+			type:'post',
+			dataType:'json',
+			data:{mobile:$("#mobile").val(),mobileCaptcha:$("#mobileCaptcha").val()},
+			success:function(data, textStatus, jqXHR){
+				if(data.success) {
+					window.location.href = data.redirect;
+                } else {
+                	$(".error").text(data.message);
+					btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+					return false;
+				}
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown){
+				btn_submit.attr("disabled", false).removeClass("btn_qr_disabled");
+				return false;
+			}
+		});
+	});
+})
+</script>

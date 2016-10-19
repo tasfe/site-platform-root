@@ -1,0 +1,52 @@
+<div class="wrapbg">
+<div class="wrap">
+    <div class="page_title">
+        <div class="title fl">
+            <i class="icon fl"></i>
+            <span class="tt fl">退款结果</span>
+        </div>
+    </div>
+	<div class="safetyMain">
+         #if($!type=="tradeSuccess") 
+				<div class="logiAmend_succeed">
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">退款操作已成功。</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至
+					<a href="${request.contextPath}/my/TransactionRecords.htm">交易记录</a></p>
+              </div>
+              
+         </div> 
+         #elseif($!type=="auditSuccess")
+		<div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">退款申请操作已成功。</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至
+					<a href="${request.contextPath}/my/TransactionRecords.htm">交易记录</a></p>
+              </div>
+              
+         </div> 
+		#else
+             <div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">操作失败!</p>
+                   <p class="f16  mb10">$!{message}</p>
+                
+                   <p><em class="red time_left">3</em>秒后会自动跳转至
+					<a href="${request.contextPath}/my/TransactionRecords.htm">交易记录</a></p>
+              </div>
+         </div>  
+		  #end
+     </div>
+     
+</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:3, url:"#springUrl('/my/TransactionRecords.htm')"});
+});
+</script>

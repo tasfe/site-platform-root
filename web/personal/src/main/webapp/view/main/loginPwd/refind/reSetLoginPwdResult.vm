@@ -1,0 +1,43 @@
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>登陆密码找回</h2></div>
+
+     <div class="safetyMain">
+     	 <div class="cz_step step step_3" style="margin-left:48px; padding-top:70px;"><i></i><span class="s1">验证身份</span><span class="s2" style="left:394px;">重置登录密码</span><span class="s3" style="left:653px;">重置成功</span></div>  
+		 #if($response.success)
+         <div class="logiAmend_succeed" style="padding-top:50px;padding-bottom:100px;">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">恭喜您!您的登录密码已成功修改!</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至<a href="${request.contextPath}/my/accountManage.htm">首页</a></p>
+              
+              </div>
+              
+         </div> 
+		 #else 
+		<div class="logiAmend_succeed" style="padding-top:50px;padding-bottom:100px;">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">对不起，修改登录密码失败！$!{response.message}</p>
+                   <p><em class="red time_left">3</em>秒后会自动跳转至<a href="${request.contextPath}/my/accountManage.htm">首页</a></p>
+              
+              </div>
+              
+         </div> 
+		 #end
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+	goUrlByTime({$obj:$(".time_left"), time:3, url:"${request.contextPath}/my/accountManage.htm"});
+})
+</script>
+

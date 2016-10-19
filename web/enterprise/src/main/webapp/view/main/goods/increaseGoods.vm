@@ -1,0 +1,299 @@
+<div class="wrapbg">
+	<div id="money_cz" class="wrap">
+		<div class="page_title audit">
+			<div class="title fl">
+				<i class="icon fl"></i>
+				<span class="tt fl">添加商品详情</span>
+			</div>
+		</div>
+		<div class="safetyMain">
+
+			<div class="loginList">
+				<form method="POST" action="/site-web-enterprise/my/do-reset-ent-loginpasswd.htm" class="" name="reset-paypasswd-form" id="reset-paypasswd-form">
+					<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="50%" height="50">
+								<label class="label1w120 fl">商品类型*：</label>
+								<div class="select_div mr16 fl">
+									<select id="J_LeiXing" name="cata_id" class="w240">
+
+									</select></div>
+							</td>
+							<td width="50%">
+								<label class="label1w120 fl">品牌名称*：</label>
+								<div class="select_div mr16 fl">
+									<select id="J_PinPai" name="brand_id" class="w240">
+
+									</select></div>
+							</td>
+						</tr>
+						<tr>
+							<td height="50">
+								<label class="label1w120 fl">系列*：</label>
+								<input id="J_XiLie" type="text" name="xilie" class="inputtext w232" maxlength="25">
+							</td>
+							<td>
+								<label class="label1w120 fl">车型*：</label>
+								<input id="J_CheXing" type="text" name="chexing" class="inputtext w232" maxlength="50">
+							</td>
+						</tr>
+						<tr>
+							<td height="50">
+								<label class="label1w120 fl">型号：</label>
+								<input id="J_XingHao" type="text" name="xinghao" class="inputtext w232" maxlength="50">
+							</td>
+							<td>
+								<label class="label1w120 fl">商品名称*：</label>
+								<div id="J_MingCheng_SelectDiv" class="select_div mr16 fl">
+									<select id="J_MingCheng_Select" name="name" class="w240">
+										<option value="新车">新车</option>
+										<option value="二手车">二手车</option>
+									</select></div>
+								<input id="J_MingCheng_Input" type="text" name="name" class="inputtext w232" style="display: none;" maxlength="50">
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top; padding-top: 10px;">
+								<label class="label1w120 fl">销售价格（元）*：</label>
+								<input id="J_JiaGe" type="text" name="price" class="inputtext w232 money2" maxlength="11">
+							</td>
+							<td height="100">
+								<label class="label1w120 fl">商品描述*：</label>
+								<textarea id="J_MiaoShu" name="desc" class="textarea w232" style="height: 66px;" maxlength="100"></textarea>
+							</td>
+						</tr>
+					</table>
+
+					<input id="J_ProductId" type="hidden" name="id">
+					<input id="J_ProductStoreId" type="hidden" name="store_id">
+					<div id="errorMsg" style="margin-left:120px; line-height: 22px; height: 22px;" class="red"></div>
+					<div class="loginAmendBtn" style="padding-left: 120px;"> <input type="submit" value="确 认" class="btn btn_submit"> <input type="button" value="返 回" class="btn btn-bg ml10" onclick="goBackOrClose();"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/JSON2.js"></script>
+<script>
+	jQuery.support.cors = true;
+	var memberid = $!response.data.member.memberId;
+	var token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjg4NjY4MjI0NDUsIm1pZCI6IjAwMSIsInVpZCI6IjAwMSJ9.sPN9IxlDf5ex9RQuA17BRqEODLNPngLk7FQ7C3dkODlhJI175HrD_00yipR2NOllXpaB8R5Emd6-v18DacjTNQ";
+	function getQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]); return null;
+	}
+	$(function(){
+
+		var pid = getQueryString("pid"),
+				dataPost = {},
+				J_ProductId = $("#J_ProductId"),
+				J_ProductStoreId = $("#J_ProductStoreId"),
+				J_LeiXing = $("#J_LeiXing"),
+				J_PinPai = $("#J_PinPai"),
+				J_XiLie = $("#J_XiLie"),
+				J_CheXing = $("#J_CheXing"),
+				J_XingHao = $("#J_XingHao"),
+				J_MingCheng_SelectDiv = $("#J_MingCheng_SelectDiv"),
+				J_MingCheng_Select = $("#J_MingCheng_Select"),
+				J_MingCheng_Input = $("#J_MingCheng_Input"),
+				J_MiaoShu = $("#J_MiaoShu"),
+				J_JiaGe = $("#J_JiaGe"),
+				J_Error = $("#errorMsg");
+
+		J_LeiXing.change(function(){
+			if(J_LeiXing.find("option:selected").val() == 1){
+				J_MingCheng_SelectDiv.show();
+				J_MingCheng_Input.hide();
+			}
+			else{
+				J_MingCheng_SelectDiv.hide();
+				J_MingCheng_Input.show();
+			}
+		});
+
+
+
+		// 添加
+		if(pid == null || pid == ""){
+			$(".page_title .tt").text("添加商品详情");
+
+			dataTools.initSelectOptions({
+				"url":"#springUrl('/agent.htm')",
+				"data":{"service":"products","method":"Products.ListCata"},
+				"J_Select":$("#J_LeiXing"),
+				"callback": function(data){
+					J_LeiXing.val(1).change();
+				}
+			});
+
+			dataTools.initSelectOptions({
+				"url":"#springUrl('/agent.htm')",
+				"data":{"service":"products","method":"Products.ListBrand"},
+				"J_Select":$("#J_PinPai")
+			});
+
+		}
+		// 修改
+		else{
+			$(".page_title .tt").text("修改商品详情");
+
+			dataTools.initSelectOptions({
+				"url":"#springUrl('/agent.htm')",
+				"data":{"service":"products","method":"Products.ListCata"},
+				"J_Select":$("#J_LeiXing"),
+				"callback": function(data){
+					dataTools.initSelectOptions({
+						"url":"#springUrl('/agent.htm')",
+						"data":{"service":"products","method":"Products.ListBrand"},
+						"J_Select":$("#J_PinPai"),
+						"callback": function(data){
+							dataPost.service = "products";
+							dataPost.method = "Products.ListProduct";
+							dataPost.request = {"id":parseInt(pid),"current":1,"row_count":1,"op_info":{"partner_id":"ANDROID_DEBUG","token":token}};
+							dataPost.request.store_id = memberid;
+							dataPost = JSON.stringify(dataPost);
+
+							$.ajax({
+								"type":"POST",
+								"url":"#springUrl('/agent.htm')",
+								"contentType":"application/json",
+								"data":dataPost,
+								"cache":false,
+								"success":function (response,e) {
+									if(response && response.err && response.err.err_code == 1 && response.rows && response.rows.length > 0){
+										var data = response.rows[0];
+										J_ProductId.val(data.id);
+										J_ProductStoreId.val(data.storeId);
+										var cateId = data.cata_id;
+										J_LeiXing.val(cateId).change();
+										if(cateId == 1)
+											J_MingCheng_Select.val(data.name);
+										else
+											J_MingCheng_Input.val(data.name);
+
+										J_PinPai.val(data.brand_id);
+										J_XiLie.val(data.xilie);
+										J_CheXing.val(data.chexing);
+										J_XingHao.val(data.xinghao);
+										J_MiaoShu.val(data.desc);
+										J_JiaGe.val(data.price.toFixed(2));
+									}
+									else{
+										alert("商品不存在");
+									}
+								},
+								"error":function(){
+									alert(G.sysError);
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+
+		$(".btn_submit").click(function(e) {
+			e.preventDefault();
+			var btn_submit = $(this);
+			btn_submit.attr("disabled", true).addClass("btn_disabled");
+			J_Error.text("");
+
+			if(!checkMust(J_XiLie, J_Error, "请输入：系列")) {
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+
+			if(!checkMust(J_CheXing, J_Error, "请输入：车型")) {
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+
+			if(J_LeiXing.find("option:selected").val() == 1){
+				if(!checkMust(J_MingCheng_Select, J_Error, "请选择：商品名称")) {
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					return false;
+				}
+			}
+			else{
+				if(!checkMust(J_MingCheng_Input, J_Error, "请输入：商品名称")) {
+					btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					return false;
+				}
+			}
+
+			if(!checkMust(J_MiaoShu, J_Error, "请输入：商品描述")) {
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+			else if($.trim(J_MiaoShu.val()).length > 100){
+				J_Error.text("商品描述字数不可超过100字");
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+
+			if(!checkMust(J_JiaGe, J_Error, "请输入：销售价格")) {
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+				return false;
+			}
+			if(parseFloat(J_JiaGe.val()) == 0){
+				J_Error.text("商品价格不可为：0");
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+	            return false;
+			}
+			if(parseFloat(J_JiaGe.val()) >= 100000000){
+	            J_Error.text("商品价格过高");
+				btn_submit.attr("disabled", false).removeClass("btn_disabled");
+	            return false;
+	        }
+
+			dataPost = {};
+			dataPost.service = "products";
+			dataPost.method = "Products.EditProduct";
+			dataPost.request = {"product":{},"op_info":{"partner_id":"ANDROID_DEBUG","token":token}};
+
+			if(J_ProductId.val() != "")
+				dataPost.request.product.id = parseInt(J_ProductId.val());
+			if(J_ProductStoreId.val() != "")
+				dataPost.request.product.store_id = parseInt(J_ProductStoreId.val());
+			dataPost.request.product.cata_id = parseInt(J_LeiXing.find("option:selected").val());
+			dataPost.request.product.brand_id = parseInt(J_PinPai.find("option:selected").val());
+			dataPost.request.product.xilie = J_XiLie.val();
+			dataPost.request.product.chexing = J_CheXing.val();
+			dataPost.request.product.xinghao = J_XingHao.val();
+			if(J_LeiXing.find("option:selected").val() == 1){
+				dataPost.request.product.name = J_MingCheng_Select.find("option:selected").val();
+			}
+			else{
+				dataPost.request.product.name = J_MingCheng_Input.val();
+			}
+			dataPost.request.product.desc = J_MiaoShu.val();
+			dataPost.request.product.price = parseFloat(J_JiaGe.val());
+			dataPost.request.product.store_id = memberid;
+			dataPost = JSON.stringify(dataPost);
+
+			$.ajax({
+				"type":"POST",
+				"url":"#springUrl('/agent.htm')",
+				"contentType":"application/json",
+				"data":dataPost,
+				"cache":false,
+				"success":function (response,e) {
+					//btn_submit.attr("disabled", false).removeClass("btn_disabled");
+					//window.location.reload();
+					var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+    				html += '<tr><td class="tcenter"><i class="zzffwqfm txsh_wq2"><span class="f16 b tip_title">提交成功！</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="#springUrl('/appCenter/goods.htm?link=0601')">商品管理</a></span></span></i></td></tr></table>';
+    				html += '</div></div>';
+    				showWin('html', html, {mode:1}, 600, 200, '提示', '', '');
+    				
+    				goUrlByTime({$obj:$(".time_left"), time:3, url:"#springUrl('/appCenter/goods.htm?link=0601')"});
+				},
+				"error":function(){
+					alert(G.sysError);
+				}
+			});
+
+			return false;
+		});
+	})
+</script>

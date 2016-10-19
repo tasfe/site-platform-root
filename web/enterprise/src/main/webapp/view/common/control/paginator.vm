@@ -1,0 +1,70 @@
+
+	#set($totalItem = $!response.data.page.totalItem)
+	#set($pageCount = $!response.data.page.getTotalPage())
+	#set($currentPage = $!response.data.page.currentPage)
+	
+	<div class="nav_page mt10"><a href="javascript:toQuerySubmit(1);">首页</a><a id="prevPage">上一页</a><i>第 $currentPage 页，共 #if($pageCount==0) 1 #else $pageCount #end页</i>
+		<a id="nextPage">下一页</a><a href="javascript:toQuerySubmit($pageCount);">尾页</a><span class="ml10">转到</span>
+		<input type="text" class="input_go"><span>页</span><input type="button" class="btn_go" #if(!$totalItem || $totalItem == 0) disabled="disabled" #end></div>
+	
+ <script language="javascript">	
+ $(function(){
+		var totalItem = '$!response.data.page.totalItem';
+		var pageSize = '$!response.data.page.pageSize';
+		var currentPage = '$!response.data.page.currentPage';
+		var pageCount = '$!response.data.page.getTotalPage()';
+		
+		if(pageCount == 0){
+			pageCount=1;
+		}
+		if(!currentPage || totalItem == 0){
+			currentPage = 1;
+		}
+		
+		if(currentPage!=1){
+			$("#prevPage").attr("style","cursor:pointer");
+		}else{
+			$("#prevPage").css("color","gray");
+		}
+		
+		if(currentPage != pageCount){
+			$("#nextPage").attr("style","cursor:pointer");
+		}else{
+			$("#nextPage").css("color","gray");
+		}
+		
+		<!--上一页-->
+		$("#prevPage").click(function(){
+			if(currentPage!=1){
+				return toQuerySubmit(currentPage-1);
+			}
+		});
+		
+		<!--下一页 -->
+		$("#nextPage").click(function(){
+			if(currentPage != pageCount){
+				return toQuerySubmit(parseInt(currentPage)+1);
+			}
+		});
+		
+		
+		$(".btn_go").click(function(){
+			var page = $(".input_go").val();	
+			var patm=/^\d*$/;
+			if(!patm.test(page)){alert("输入的页数有误"); $(".input_go").val(""); return false;}
+			if(parseInt(page)>parseInt(pageCount)){
+				return toQuerySubmit(pageCount);
+			}
+				return toQuerySubmit(page);
+			});
+		
+ });
+</script>
+            
+           
+   
+ 
+    	
+
+    
+  

@@ -1,0 +1,176 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2></h2></div>
+     
+     <div class="safetyMain">
+
+          ##<div class="safetyGrade">
+          ##	   <div class="safetyGradeT">您当前的安全等级为：<img src="../common/images/safetyImg.gif" width="271" height="15" alt=""><em class="ml10 color_f6 b">高</em></div>
+          ##	   <span class="txt c_8A8989">您的账户比较安全，请继续保持</span>
+          ##</div>
+
+          <div class="safetyinfo">
+          	   <ul>
+          	     	<li>
+          	     	     <span class="s1">登录密码：</span>
+          	     	     <span class="s2">登录时需验证，保护账户信息</span>
+          	     	     <span class="s3"><a href="${request.contextPath}/my/reset-login-passwd.htm">修改登录密码</a></span>
+          	     	</li>
+          	     	<li>
+          	     	     <span class="s1">支付密码：</span>
+          	     	     <span class="s2">资金变动或账户信息变更时需验证，安全级别更高。</span>
+						 #if(!$!response.data.isSetPayPwd == 'false')
+						 <span class="s3"><a href="${request.contextPath}/my/go-set-pay-passwd.htm">设置支付密码</a></span>	
+						 #else
+          	     	     <span class="s3"><a href="${request.contextPath}/my/reset-pay-passwd.htm">修改支付密码</a> <em>|</em> <a href="${request.contextPath}/my/go-get-paypasswd-index.htm">找回支付密码</a></span>
+						 #end
+					</li>
+          	     	<li>
+          	     	     <span class="s1">手机绑定：</span>
+          	     	     <span class="s2">您绑定的手机：$!member.mobileStar</span>
+						 
+          	     	     <span class="s3">
+							#if(!$!member.mobileStar)
+							<a href="${request.contextPath}/my/go-set-mobilephoneByPayPwd.htm">绑定</a>
+							#else	
+							<!--<a href="${request.contextPath}/my/go-unset-mobilephon.htm">解绑</a> <em>|</em> -->
+							<a href="${request.contextPath}/my/go-reset-mobilephone.htm">修改</a>
+							#end
+						 </span>
+          	     	</li>
+          	     	<li>
+          	     	     <span class="s1">邮箱绑定：</span>
+          	     	     <span class="s2">您绑定的邮箱为：$!response.data.email</span>
+          	     	     <span class="s3">
+							#if(!$!response.data.email)
+							<a href="${request.contextPath}/my/check-set-email.htm">绑定</a>
+							#elseif($!response.data.mobile)
+							<a href="${request.contextPath}/my/go-unset-email.htm">解绑</a> <em>|</em> 
+							<a href="${request.contextPath}/my/check-update-email.htm?gopage=aqzx">修改</a></span>
+							#else
+							<a href="${request.contextPath}/my/check-update-email.htm?gopage=aqzx">修改</a></span>
+							#end
+          	     	</li>
+          	   </ul>
+          </div>
+
+          <div class="safetyProduct">
+          	   
+			   #if($!response.data.memberType == 'personal')
+			   <div class="spBox">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/attestationImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">实名认证</p>
+						#if ($!response.data.certifyLevel == '1')
+          	   	    	<p class="con">您已通过实名校验</p>
+						#elseif ($!response.data.certifyLevel == '2')
+          	   	    	<p class="con">您已经通过实名认证（V1）！</p>
+						#elseif ($!response.data.certifyLevel == '3')
+          	   	    	<p class="con">您已经通过实名认证（V2）！</p>
+						#else
+						<p class="con">您还未实名认证！</p>
+						#end
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:50px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">中</div>
+          	   	    <div class="sp4">
+						<a href="#springUrl('/my/go-personal-certification.htm?link=0400')" class="btn_ckxq"></a>
+					</div>
+          	   </div>
+			   #else
+			   <div class="spBox">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/attestationImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">实名认证</p>
+						#if ($!response.data.verify_name == 'PASS')
+          	   	    	<p class="con">您已通过实名认证</p>
+						#else
+          	   	    	<p class="con">认证您的网络身份，账户更加安全！</p>
+						#end
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:50px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">中</div>
+          	   	    <div class="sp4">
+						#if ($!response.data.verify_name == 'checkPass')
+							<a href="#springUrl('/my/verifyAmount.htm')" class="btn_jeyz"></a>
+						#elseif ($!response.data.verify_name == 'PASS')
+							<a href="#springUrl('/my/certification-detail.htm')" class="btn_ckxq"></a>
+						#elseif ($!response.data.verify_name == 'init')
+							<a href="javascript:" class="btn_rzz"></a>
+						#elseif ($!response.data.verify_name == 'checkReject')
+							<a href="#springUrl('/my/go-enterprise-certification.htm')" class="btn_cxrz"></a>
+						#else
+							<a href="#springUrl('/my/go-enterprise-certification.htm')" class="btn_ljrz"></a>	
+						#end
+					</div>
+          	   </div>
+			   #end
+            
+               <div class="spBox">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/DigitalCertificateImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">数字证书</p>
+          	   	    	<p class="con color_59">申请后，只能在安装数字证书的电脑上支付。</p>
+                        <p class="con mt10">支持的操作系统：Windows XP/Windows 7/Windows Vista</p>
+                        <p class="con">支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等</p>
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:50px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">中</div>
+          	   	    <div class="sp4"><a href="#" class="btn_ckxq" id="btn_szzs"></a></div>
+          	   </div>
+               
+               <div class="spBox">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/shieldImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">快捷盾<span class="color_f6 ml20" style="display:none">（500元）</span></p>
+          	   	    	<p class="con color_59">未激活 激活后只有在插入快捷盾的情况下，才能进行涉及账户、资金变动的操作。</p>
+						<p class="con mt10">支持的操作系统：Windows XP/Windows 7/Windows Vista</p>
+					    <p class="con">支持的浏览器：IE内核浏览器，火狐浏览器，谷歌浏览器等</p>
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:135px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">高</div>
+          	   	    <div class="sp4"><a href="#springUrl('/hardcertActivate/showHardDetails.htm')" class="btn_ckxq"></a></div>
+          	   </div>
+              
+               <div class="spBox nobb">
+          	   	    <div class="sp1"><img src="${WEB_RESOURCE.staticAddress}wallet/common/images/controlImg.gif" alt=""></div>
+          	   	    <div class="sp2">
+          	   	    	<p class="tit mt20">安全控件</p>
+          	   	    	<p class="con color_59">安装后，安全控件会实时保护您的密码及账号不被窃取，并及时发现交易风险，有效制止仿冒网站的交易诈骗。</p>
+          	   	    </div>
+          	   	    <div class="sp3">
+          	   	    	 <div class="spBar"><div style="width:50px;"></div></div>
+          	   	    </div>
+                    <div class="sp5">中</div>
+          	   	    ##<div class="sp4"><a href="#" class="btn_ckxq"></a></div>
+          	   </div>
+
+          </div>
+          
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+<script>
+$(function(){
+	$(".safetyinfo li").hover(
+		function(){ $(this).addClass("cur"); },
+		function(){ $(this).removeClass("cur"); }
+	);
+	
+	$("#btn_szzs").click(function(){
+		window.location.href = "#springUrl('/appCenterTemp.htm')";
+	});
+})
+</script>

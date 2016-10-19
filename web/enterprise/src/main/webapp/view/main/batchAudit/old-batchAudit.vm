@@ -1,0 +1,145 @@
+﻿<div class="wrapbg">
+<div id="money_cz" class="wrap">
+  <div class="page_title audit">
+    <div class="title fl">
+      <i class="icon fl"></i>
+      <span class="tt fl">批量审核信息确认</span>
+    </div>
+  </div>
+  <div class="pagebox">
+    <div class="table_div">
+      <table border="0" cellspacing="0" cellpadding="0" class="table1">
+        <tr>
+          <th width="87">审核类型</th>
+          <th width="154">交易订单号/批次号</th>
+          <th width="136"><div id="u239">
+              <p>申请时间</p>
+            </div></th>
+          <th width="130">金额<em>（元）</em></th>
+          <th width="130">服务费（元）</th>
+          <th width="102">申请人</th>
+          <th width="229"><div id="u241">
+              <p>收款账户</p>
+            </div></th>
+        </tr>
+      </table>
+    </div>
+    <table border="0" cellspacing="0" cellpadding="0" class="table1">
+      <tr>
+        <td width="87">转账</td>
+        <td width="154"> 123456789123567891234 </td>
+        <td width="135"> 2014-6-1 12:05:12 </td>
+        <td width="132"><span class="orange f14 bold">-36528.25</span></td>
+        <td width="128"><span class="orange f14 bold">-0.02</span></td>
+        <td width="102">王大锤</td>
+        <td width="230"><p>6252 5254 0585 5845 </p>
+          <p> 工商银行 杭州高新支行 </p></td>
+      </tr>
+      <tr class="on">
+        <td width="87">转账</td>
+        <td width="154">123456789123567891234</td>
+        <td width="135">2014-6-1 12:05:12</td>
+        <td width="132"><span class="orange f14 bold">-36528.25</span></td>
+        <td width="128"><span class="orange f14 bold">-0.02</span></td>
+        <td width="102">王大锤</td>
+        <td width="230"><p>6252 5254 0585 5845 </p>
+          <p>工商银行 杭州高新支行 </p></td>
+      </tr>
+      <tr>
+        <td width="87">转账</td>
+        <td width="154">123456789123567891234</td>
+        <td width="135" class="on">2014-6-1 12:05:12</td>
+        <td width="132"><span class="orange f14 bold">-36528.25</span></td>
+        <td width="128"><span class="orange f14 bold">-0.02</span></td>
+        <td width="102">王大锤</td>
+        <td width="230"><p>6252 5254 0585 5845 </p>
+          <p>工商银行 杭州高新支行 </p></td>
+      </tr>
+    </table>
+    <div class="pagebox5"></div>
+    <div class="audit_select">
+      <ul>
+        <li>
+          <label>
+            <input name="audit" type="radio" value="审核通过" checked>
+            审核通过</label>
+        </li>
+        <li>
+          <label>
+            <input name="audit" type="radio" value="审核通过">
+            审核拒绝</label>
+        </li>
+      </ul>
+    </div>
+    <div class="audit_ok" >
+      <div class="kjt_limit">
+        <label><span class="f14 ">备　　注：</span>
+          <input type="text" class="inputtext w177">
+        </label>
+        &nbsp;&nbsp;&nbsp;
+        <label> </label>
+      </div>
+      <div class="kjt_limit">
+        <label><span class="f14">支付密码：</span>
+          <input type="text" class="inputtext w177" id="pay_pw">
+        </label>
+        &nbsp;&nbsp;
+        <div class="error h18" style="padding-left:76px;"></div>
+      </div>
+      <span class="pdlf170">
+      <input class="btn" id="btn_pass" type="button" value="确 认" style="margin-left:76px;">
+      </span> </div>
+    <div class="audit_ok" style="display:none">
+      <div class="kjt_limit ">
+        <label><span class="f14 fd">备　　注：</span>
+          <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>
+        </label>
+      </div>
+      <span class="pdlf170">
+      <input class="btn" id="btn_reject" type="button" value="确 认" style="margin-left:76px;">
+      </span> </div>
+  </div>
+</div>
+</div>
+<script>
+$(function(){
+	$(".audit_select input").each(function(index, element) {
+        var $thisobj = $(this);
+		$thisobj.click(function(){
+			$(".audit_ok").hide().eq(index).show();
+		});
+    });
+	$("#btn_pass").click(function(){
+		time = 2;
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		
+		if($("#pay_pw").val() == "") { $(".error").text("请输入支付密码"); $btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false; }
+		
+		var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+		html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">审核通过操作已成功</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="">我的待审核页面</a></span></span></i></td></tr></table>';
+		html += '</div></div>';
+		
+		showWin('html', html, '', 600, 200, ' ', '', '');
+		
+		goUrlByTime({$obj:$(".time_left"), time:3, url:"http://www.baidu.com/"});
+		
+	});
+	$("#btn_reject").click(function(){
+		time = 2;
+		var $btn_submit = $(this);
+		$btn_submit.attr("disabled", true).addClass("btn_qd_disabled");
+		$(".error").text("");
+		
+		var html = '<div class="floatbox2"><div class="cont_info pt20b30l100"><table cellpadding="0" cellspacing="0" border="0"  class="" width="100%">';
+		html += '<tr><td class="tcenter"><i class="zzffwqfm"><span class="f16 b tip_title">审核通过操作已成功</span><br><span class="color_4c f12"><i class="time_left">3</i>秒后将自动返回<a href="">我的待审核页面</a></span></span></i></td></tr></table>';
+		html += '</div></div>';
+													
+		showWin('html', html, '', 600, 200, ' ', '', '');
+		
+		goUrlByTime({$obj:$(".time_left"), time:3, url:"http://www.baidu.com/"});
+		
+	});
+})
+</script>

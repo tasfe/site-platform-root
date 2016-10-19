@@ -1,0 +1,4 @@
+#set($registPageTitle=$session.getAttribute("registPageTitle"))
+#if(!$!registPageTitle)
+	#set($registPageTitle="用户注册")
+#end

@@ -1,0 +1,10 @@
+#set($page_title = '登陆错误')
+<div class="wrap">
+    <div class="busy_box min_height6">
+        <p class="p">$!{message}</p>
+        </br>
+        #if($errorType == "1")
+         <p class="p"><a href="${WEB_RESOURCE.personalWalletAddr}/my/home.htm">去个人钱包</a></p>
+        #end
+    </div>
+</div>

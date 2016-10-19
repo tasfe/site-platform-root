@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>#if($page_title) $page_title #else 永达互联网金融钱包 #end</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/jquery.min.js${WEB_RESOURCE.staticVersion}"></script>
+	<script src="${WEB_RESOURCE.staticAddress}wallet/js/comment.js${WEB_RESOURCE.staticVersion}"></script>
+<style>
+input.datepicker_start,input.datepicker_end{ display:inline-block; width:150px;margin-bottom:0; height:22px; padding:0 6px; font-size:12px;}
+</style>
+</head>
+<body>
+	<div class="container">
+
+		$screen_content
+
+    </div>
+</body>
+</html>

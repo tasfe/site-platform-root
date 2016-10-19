@@ -1,0 +1,12 @@
+<!--会员绑卡失败-->
+<div class="min_height6">
+		<div class="busy_box">
+		          <i class="busy_icobg"></i>
+		          <ul>
+		              <li class="tit">绑定银行卡失败！</li>
+
+		              <li>#springMessageText("error_bankcardid_check","")</li>
+		              <li class="last"><a href="#springUrl('/my/home.htm')">返回钱包首页</a></li>
+		         </ul>
+		</div>
+</div>

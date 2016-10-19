@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.smsgateway:smsgateway-service-facade:1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/smsgateway/smsgateway-service-facade/1.0.0-SNAPSHOT/smsgateway-service-facade-1.0.0-20141107.031818-20.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/smsgateway/smsgateway-service-facade/1.0.0-SNAPSHOT/smsgateway-service-facade-1.0.0-20141107.031818-20-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/smsgateway/smsgateway-service-facade/1.0.0-SNAPSHOT/smsgateway-service-facade-1.0.0-20141107.031818-20-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

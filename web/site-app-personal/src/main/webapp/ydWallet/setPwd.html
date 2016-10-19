@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" href="css/Yonda-UI.css">
+    <link rel="stylesheet" href="css/default.css">
+    <title>设置支付密码</title>
+</head>
+<body>
+<div class="yd-wrap getPwWrap" style="z-index:1;" id="wx-realNameCheck">
+    <div class="me-list">
+        <ul class="yd-itemList">
+            <li id="J_NameText" style="display:none"><span class="leftTitle">姓名</span><span id="J_RealName">--</span></li>
+            <li id="J_NameLi" style="display: none;"><span class="leftTitle">姓名</span><input type="text" class="yd-input-noBorder input-pointer" placeholder="真实姓名" id="J_Name" /><span class="clearInput"></span></li>
+            <li><span class="leftTitle">证件号</span><input type="text" class="yd-input-noBorder input-pointer" placeholder="身份证号" id="J_IdCard" /></li>
+        </ul>
+    </div>
+    <div class="yd-btn-big" id="wxGetPw-next">下一步</div>
+</div>
+
+<div class="yd-wrap getPwWrap upInAnimation" style="z-index:2;display:none" id="wx-msgCheck">
+    <div class="me-list">
+        <ul class="yd-itemList">
+            <li><span class="leftTitle">校验码</span><input type="tel" class="yd-input-noBorder" style="width:45%" placeholder="6位校验码" name="" id="authCode"/><span class="sendMsg yd-layouts-right sendMsgGray" id="sendMsg" send="send" onClick="return false;" style="margin-top:7px">获取短信</span></li>
+        </ul>
+    </div>
+    <div class="yd-btn-big" id="wxCkMsg-next">下一步</div>
+</div>
+
+<div class="yd-wrap getPwWrap upInAnimation" style="z-index:3;display:none" id="wx-payPwdSet">
+    <div class="me-list">
+        <ul class="yd-itemList">
+            <li><span class="leftTitle">支付密码</span><input type="password" class="yd-input-noBorder" style="width:45%; margin-left:10px;" placeholder="输入密码" name="" id="payPwd"/><span class="clearInput"></span></li>
+        </ul>
+    </div>
+    <div class="yd-btn-big" id="payPwd-next">确定</div>
+</div>
+
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/Yonda-UI.js"></script>
+<script src="js/common.js"></script>
+<script src="js/commonCenter.js"></script>
+<script src="js/event.js"></script>
+<script>
+    var J_NameText = $("#J_NameText"),
+            J_RealName = $("#J_RealName"),
+            J_NameLi = $("#J_NameLi"),
+            J_Name = $("#J_Name"),
+            J_IdCard = $("#J_IdCard"),
+            isRealName = false,
+            username = "",
+            loginname = "",
+            token = "";
+
+    tools.ajaxSubmit({
+        "url": gurl + "/identity",
+        "suc_suc": function(response){
+            // 实名认证
+            //alert("实名认证");
+            isRealName = true;
+            var data = response.data;
+            J_NameText.show();
+            username = data.name;
+            J_RealName.text("*" + username.substring(1));
+
+            loginname = data.loginname;
+            token = data.token;
+        },
+        "suc_err": function(response){
+            // 未实名认证
+            //alert("未实名认证");
+            isRealName = false;
+            var data = response.data;
+            J_NameLi.show();
+            J_Name.val("");
+
+            loginname = data.loginname;
+            token = data.token;
+        }
+    });// ajaxSubmit
+
+    $("#wxGetPw-next").click(function(){
+        if($(this).hasClass("yd-btn-disabled")) return false;
+
+        //实名认证点击下一步
+        // 未实名认证
+        if(!isRealName){
+            if(!tools.checkMust(J_Name,"姓名不能为空",true)){
+                return false;
+            }
+            username = J_Name.val();
+        }
+
+        if(!tools.checkMust(J_IdCard,"证件号不能为空",true)){
+            return false;
+        }
+        else if(!tools.checkIdCard(J_IdCard,"身份证号格式不正确")){
+            return false;
+        }
+
+        tools.ajaxSubmit({
+            "jBtnSubmit": $("#wxGetPw-next"),
+            "url": gurl + "/checkIdentity",
+            "data": {"token":token,"realname":username,"username":loginname,"idcard":J_IdCard.val()},
+            "suc_suc": function(response){
+                token = response.data.token;
+
+                tools.ajaxSubmit({
+                    "url": gurl + "/sendMobileMessagezf",
+                    "suc_suc": function(response){
+                        //接口返回成功时，跳转至下一步（显示短信验证码页面） ↓
+                        $("#wx-msgCheck").show();
+                        settime(document.getElementById("sendMsg"));
+                    }
+                });
+            },
+            "suc_err": function(response){
+                token = response.data.token;
+                yonda.Tip(getErrCodeMessage(response) || "操作失败");
+            }
+        });
+    });
+
+    $("#wxCkMsg-next").click(function(){
+        if($(this).hasClass("yd-btn-disabled")) return false;
+
+        var jAuthCode = $("#authCode");
+        if(!tools.checkMust(jAuthCode,"短信码不能为空",true)){
+            return false;
+        }
+
+        //填写验证码点击下一步
+        var authCode = jAuthCode.val();//验证码的值
+
+        tools.ajaxSubmit({
+            "jBtnSubmit": $("#wxCkMsg-next"),
+            "url": gurl + "/checkdx",
+            "data": {"mobilecode":authCode},
+            "suc_suc": function(){
+                $("#wx-payPwdSet").show();
+            }
+        });
+
+    });
+
+    $("#payPwd-next").click(function(){
+        if($(this).hasClass("yd-btn-disabled")) return false;
+
+        //设置支付密码点击确定
+        var J_Pw = $("#payPwd");
+
+        if(!tools.checkMust(J_Pw,"密码不能为空")){
+            return false;
+        }
+        else if(!tools.checkStrong2(J_Pw,"密码由7-23位英文字母、数字或者特殊符号组成")){
+            return false;
+        }
+
+        tools.ajaxSubmit({
+            "jBtnSubmit": $("#payPwd-next"),
+            "url": gurl + "/setPayPwd",
+            "data": {"token":token,"username":loginname,"password":J_Pw.val()},
+            "suc_suc": function(){
+                window.location.href = linkPre + "/setting.html?time=" + new Date().getTime();
+            },
+            "suc_err": function(response){
+                token = response.data.token;
+                yonda.Tip(getErrCodeMessage(response) || "操作失败");
+            }
+        });
+
+    });
+
+    $("#sendMsg").click(function(){
+        if($(this).hasClass("sendMsgGray")) return false;
+
+        //tools.refreshVeriCode(J_VeriCodeImg);
+
+        //重发短信验证码
+        tools.ajaxSubmit({
+            "url": gurl + "/sendMobileMessagezf",
+            "suc_suc": function(response){
+                //接口返回成功时，跳转至下一步（显示短信验证码页面） ↓
+                settime(document.getElementById("sendMsg"));
+            }
+        });
+    });
+</script>
+</body>
+</html>

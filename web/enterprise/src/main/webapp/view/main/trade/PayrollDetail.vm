@@ -1,0 +1,199 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/style.css" rel="stylesheet" type="text/css">
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/account.css" rel="stylesheet" type="text/css">
+<div id="money_cz" class="wrap">
+	<div class="page_title"> <h2>代发工资详情</h2> </div>
+  ##<div class="page_title"> <div class="fr"><i class="color_66 mt10 dzdzd">查看电子回单</i></div> <h2>代发工资信息</h2></div>
+  <div class="pagebox">
+    <div class="table_div">
+      <h3>代发工资</h3>
+    </div>
+    <div class="pagebox5">
+	#foreach ($!tradeInfo in $!response.data.page.infos)
+	
+	#if($response.data.tradeType.equals("1"))
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">交易订单号</td>
+        <td class="tab_w2">$!tradeInfo.orderId<br></td>
+        <td  class="tab_w">批次号（仅批量转账）</td>
+        <td  class="Detail_tab_no tab_w2">$!tradeInfo.batchNo</td>
+      </tr>
+      <tr class="cl">
+        <td>创建时间</td>
+        <td>$!dateUtil.getNewFormatDateString($!tradeInfo.transferTime) <br/></td>
+        <td >交易类型</td>
+        <td class="Detail_tab_no">代发工资到永达账户</td>
+      </tr>
+      <tr>
+        <td>交易金额（元）</td>
+        <td>$!moneyUtil.getAmount($!tradeInfo.transferAmount)</td>
+        <td>服务费（元）</td>
+        <td class="Detail_tab_no">$!moneyUtil.getAmount($!tradeInfo.payeeFee)</td>
+       </tr>
+      <tr>
+        <td>总金额（元）</td>
+        <td >$response.data.sum</td>
+		<td>短信通知</td>
+		#if($!response.data.sendMessage)
+			<td>是</td>
+		#else
+			<td>否</td>
+		#end
+        </tr>
+		<!--
+		<tr class="cl">
+        <td> 支付账户</td>
+        <td >$!{tradeInfo.bankName} <br/>$!{tradeInfo.cardNo}<br /></td>
+        <td >支付时间</td>
+        <td class="Detail_tab_no" >$!dateUtil.getNewFormatDateString($!tradeInfo.gmtPaid)</td>
+        </tr>
+		-->
+      <tr  >
+        <td>备注</td>
+        <td>$!tradeInfo.tradeMemo</td>
+		<td>状态</td>
+        <td width="97">
+    	#if($!tradeInfo.state=="待支付")
+              #set($state="处理中")
+        #elseif($!tradeInfo.state=="付款成功")
+              #set($state="处理中")
+    	#elseif($!tradeInfo.state=="转账成功")
+    		#set($state="出款成功")
+    	#elseif($!tradeInfo.state=="交易完成")
+    	      #set($state="出款成功")
+    	 #elseif($!tradeInfo.state=="交易关闭")
+    		#set($state="关闭")
+		#end
+		$state
+		</td>
+	  </tr>
+    </table>
+	#elseif($response.data.tradeType.equals("03"))
+		<table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">交易订单号</td>
+        <td class="tab_w2">$!tradeInfo.fundoutOrderNo<br></td>
+        <td  class="tab_w">批次号（仅批量转账）</td>
+        <td  class="Detail_tab_no tab_w2">$!tradeInfo.batchOrderNo</td>
+      </tr>
+      <tr class="cl">
+        <td>创建时间</td>
+        <td>$!dateUtil.getNewFormatDateString($!tradeInfo.orderTime) <br/></td>
+        <td >交易类型</td>
+        <td class="Detail_tab_no">代发工资到银行卡</td>
+      </tr>
+      <tr>
+        <td>交易金额（元）</td>
+        <td>$!moneyUtil.getAmount($!tradeInfo.amount)</td>
+        <td>服务费（元）</td>
+        <td class="Detail_tab_no">$!moneyUtil.getAmount($!tradeInfo.fee)</td>
+       </tr>
+      <tr>
+        <td>总金额（元）</td>
+        <td >$response.data.sum</td>
+		<td>短信通知</td>
+		#if($!response.data.sendMessage)
+			<td>是</td>
+		#else
+			<td>否</td>
+		#end
+        </tr>
+      <tr>
+        <td>备注</td>
+        <td>$!tradeInfo.purpose</td>
+		<td>状态</td>
+        #if($!tradeInfo.status == "submitted")
+           <td width="75"><span>处理中</span></td>## 原来是-已提交，原型
+        #elseif($!tradeInfo.status == "failed")
+           <td width="75"><span>失败</span></td>
+        #elseif($!tradeInfo.status == "success")
+           <td width="75"><span>出款成功</span></td>
+		#end
+	  </tr>
+    </table>
+	#end
+	
+    </div>
+    <div class="table_div">
+      <h3>交易对象</h3>
+    </div>
+    <div class="pagebox5">
+	#if($response.data.tradeType.equals("1"))
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">账户名称</td>
+		#if($!tradeInfo.plamId=="1")##plamId=1表示卖方
+			<td class=" tab_w2">$!tradeInfo.buyerName</td>
+		#else
+			<td class=" tab_w2">$!tradeInfo.sellerName</td>
+        #end
+        <td  class="tab_w">帐号</td>
+        <td class="Detail_tab_no tab_w2">$!response.data.loginName</td>
+      </tr>
+    </table>
+	#elseif($response.data.tradeType.equals("03"))
+		<table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">账户名称</td>
+        <td class="tab_w2">$!response.data.payeeAccountName<br></td>
+        <td  class="tab_w">帐号</td>
+        <td  class="Detail_tab_no tab_w2"><p>$!response.data.payeeBankInfo</p>$!response.data.payeeNo</td>
+      </tr>
+    </table>
+	#end
+    </div>
+	#end
+    <div class="table_div">
+      <h3>申请信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">申请时间</td>
+        <td class="tab_w2">$!response.data.applyTime</td>
+        <td  class="tab_w">申请操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.operatorName</td>
+      </tr>
+    </table>
+    </div>
+    <div class="table_div">
+      <h3>审核信息</h3>
+    </div>
+    <div class="pagebox5">
+    <table class="Detail_tab" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="tab_w">审核时间</td>
+        <td class="tab_w2">$!response.data.gmtModified</td>
+        <td  class="tab_w">审核操作员</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.auditorName</td>
+      </tr>
+      <tr>
+        <td class="tab_w">审核结果</td>
+		#if($!response.data.status=="1")
+		<td class="tab_w2">待审核</td>
+		#elseif($!response.data.status=="2")
+        <td class="tab_w2">审核通过</td>
+		#elseif($!response.data.status=="3")
+		<td class="tab_w2">审核拒绝</td>
+		#else
+		<td class="tab_w2"></td>
+		#end
+        <td  class="tab_w">审核说明</td>
+        <td  class="Detail_tab_no tab_w2">$!response.data.remark</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/jquery-1.8.2.min.js"></script> 
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/showwin.js"></script> 
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/js.js"></script> 
+<script>
+$(function(){
+	$(".dzdzd").click(function(){
+		var html = '<div style="width:702px; margin:0 auto;"><div style="text-align:right; padding-bottom:5px;"><a href="TransferInformationPrint.html" class="print" target="_blank">打印</a> | <a href="#@">下载</a></div>';
+		html += '<div id="dzdzd_xq"><img src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/images/dzdzd_xq.gif" alt="电子对账单"></div></div>';
+		showWin('html', html, '', 810, 500, ' ', '', '');
+	});
+})
+</script>

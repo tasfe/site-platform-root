@@ -1,0 +1,122 @@
+ <style>
+	.ui-datepicker-calendar {
+    	display: none;
+    }
+	button.ui-datepicker-current {display: none;}​
+	.zhanghu_infor{ background-color:#fff;}
+	.select_by_time{border-bottom:1px solid #d0d7e0;}
+</style>
+<form id="queryForm" name="queryForm" action="/my/all-walletCheck.htm" method="post" >
+	<input type="hidden" id="currentPage" name="currentPage" value='$!response.data.page.currentPage' />
+    <input type="hidden" id="queryTime" name="queryTime" value='$!{response.data.queryTime}'/>
+</form>
+              <div class="trade_all">
+                       #parse("common/control/menu.vm")
+                         <ul class="select_by_time">
+                            <li>
+                              	   <lab for="queryDate"> 请选择年月 :</lab>
+   								   <input type="text" name="datepicker" id="datepicker" class="date-picker"  readonly="readonly" value='$!{response.data.queryTime}'/>
+                                   <input  type="button" id="search" class="btn_h24" value="搜索"/>          
+                            </li>
+                         </ul>
+                         <h2 class="check_h2">账户余额</h2>
+                          <table class="list_check_table business_record">
+                           <colgroup>
+                                    <col width="190px">
+                                    <col width="270px">
+                                    <col width="140px">
+                                    <col width="220px">                                     
+                                    <col width="180px">
+                            </colgroup>
+                            <tr>                                              
+                               <th class="time">日期 </th>
+                               <th>摘要 </th>
+                               <th>收款</th>
+                               <th>扣款</th>
+                               <th>余额</th>
+                            </tr>                                                                                             
+                            <tr class="odd">                                              
+                               <td class="time"></td>
+                               <td>接上月余额</td>
+                               <td >-  </td>
+                               <td>- </td>
+                               <td class="balance">$!{response.data.summary.lmldBalance}</td>
+                            </tr>
+                            #set ($i=1)
+                            #foreach($balance in $response.data.balanceList)
+                                #if($i%2 != 0)
+                                    #set ($odd="time")
+                                #else
+                                    #set ($odd="odd")
+                                #end
+                                #set($i=$i+1) 
+                            <tr class=${odd}>                                              
+                               <td>$!dateUtil.getNoSecondDateString($!{balance.txnTime})</td>
+                               <td>$!{balance.summary}</td>
+                                ##if(${balance.txnType} == DealType.INCOME)
+                                #if(${balance.txnType.getCode()} == 3)
+                              	 <td class="fc_green">$!{balance.txnAmt}</td>
+                                #else
+                              	 <td>-</td>
+                                #end
+                                #if(${balance.txnType.getCode()} == 2)
+                                 <td class="fc_r_ff"> $!{balance.txnAmt}  </td>
+                                #else
+                                 <td>-</td>
+                                #end
+                               <td class="balance">${balance.afterAmt}</td>
+                            </tr>
+                            #end
+                             #if(!$response.data.balanceList || $response.data.balanceList.size() < 0)
+                             <tr><td colspan='10'>无钱包对账信息！</td></tr>
+                             #end  
+                            <tr><td td colspan='10'></td></tr>
+                            <tr class="odd border_bottom">                                              
+                               <td class="time"></td>
+                               <td class="total">本月合计 </td>
+                               <td class="fc_green">$!{response.data.summary.totalIncome}</td>
+                               <td class="fc_r_ff">$!{response.data.summary.totalPayout}</td>
+                               <td class="balance">$!moneyUtil.getAmount($response.data.summary.currentMonthBalance)</td>
+                            </tr>
+                         </table>
+                        #parse("common/control/paginator.vm")     
+         </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+
+ $(window).resize(function() {
+	$(".date-picker").datepicker( "hide" );
+	$(".date-picker").blur();
+});
+			 $(function(){
+                     
+                        //时间控件
+						  $('.date-picker').datepicker( {
+							changeMonth: true,
+							changeYear: true,
+							showButtonPanel: true,
+							dateFormat: 'yy-mm',
+							yearRange: '2013:2033',
+							closeText: '确定',
+							onClose: function(dateText, inst) { 
+								var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+								var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+								$(this).datepicker('setDate', new Date(year, month, 1));
+							}
+						});	
+						  
+              });
+              $("#search").click(function(){
+						toQuerySubmit(1);
+              });
+            
+			  function toQuerySubmit(sendPage){
+				  var queryTime = document.getElementById("datepicker").value;
+				  queryForm.queryTime.value = queryTime;
+				  queryForm.currentPage.value =  sendPage;
+				  document.getElementById("queryForm").submit(); 
+			  }  
+</script>
+

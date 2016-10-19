@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <link rel="stylesheet" href="../css/Yonda-UI.css">
+  <link rel="stylesheet" href="../css/default.css">
+  <title>订购说明</title>
+</head>
+<body style="overflow:scroll">
+<div id="J_FaqList" class="blockWrap" style="margin-top:25px;">
+    <div class="helpCenterList">
+        <div class="helpCenterTitle">
+            <span class="helpCenterTextLeft">请问什么样的手机可以进行充值？</span>
+            <i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i>
+        </div>
+        <div class="helpCenterContent">
+            <p>目前永达互金服务号分别支持话费及手机流量的充值。</p>
+            <p>话费：支持全国范围内（港，澳，台除外）的中国移动、中国联通、中国电信的手机号码充值。</p>
+            <p>流量：支持全国范围内（港，澳，台除外）的中国移动、中国联通、中国电信的手机号码进行全国流量的及时到账充值。</p>
+        </div>
+    </div>
+
+    <div class="helpCenterList">
+        <div class="helpCenterTitle">
+            <span class="helpCenterTextLeft">请问流量充值的生效及失效时间</span>
+            <i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i>
+        </div>
+        <div class="helpCenterContent">
+            <P>中国移动流量充值即时生效，次月底失效【最长两个月有效期】；</P>
+            <p>中国联通流量充值即时生效，当月底失效【最长一个月有效期】；</p>
+            <p>中国电信流量充值即时生效，当月底失效【最长一个月有效期】；</p>
+        </div>
+    </div>
+
+    <div class="helpCenterList">
+        <div class="helpCenterTitle">
+            <span class="helpCenterTextLeft">怎样查询流量话费是否充值到账？</span>
+            <i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i>
+        </div>
+        <div class="helpCenterContent">
+            <p>流量充值成功后一般1-30分钟左右到账，若您的订单超过30分钟仍未收到到账信息通知，请尽快拨打运营商客服电话或登录运营商官网查询近期的缴费记录，也可以在服务号中留言，客服人员会在第一时间帮您进行订单核实。</p>
+        </div>
+    </div>
+
+    <div class="helpCenterList">
+        <div class="helpCenterTitle">
+            <span class="helpCenterTextLeft">我充值的话费怎么没有到账？</span>
+            <i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i>
+        </div>
+        <div class="helpCenterContent">
+            <p>请不要担心，话费充值后请于24小时内关注到账情况，详情可联系运营商合适（移动10086，联通10010，电信10000）</p>
+            <p>话费充值高峰期（一般常见于月初月末），可能会延迟到账。</p>
+        </div>
+    </div>
+
+    <div class="helpCenterList">
+        <div class="helpCenterTitle">
+            <span class="helpCenterTextLeft">充错号码怎么办？</span>
+            <i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i>
+        </div>
+        <div class="helpCenterContent">
+            <p>交易一旦成功，话费会马上入账，资金也会即时支付到运营商，永达互金服务号侧是无法直接发起退款的。</p>
+            <p>温馨提示：</p>
+            <p>充值的时候一定要核对清楚号码，再进行充值，以免造成不必要的损失。</p>
+        </div>
+    </div>
+
+    <div class="helpCenterList">
+        <div class="helpCenterTitle">
+            <span class="helpCenterTextLeft">信用卡可以充话费么？</span>
+            <i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i>
+        </div>
+        <div class="helpCenterContent">
+            <p>永达互金服务号手机充值支持使用信用卡快捷支付，在付款的永达-收银台-支付方式中可以选择绑定信用卡进行支付。具体支持的信用卡种类和付款限额请您以页面提示为准。</p>
+        </div>
+    </div>
+
+    <div class="helpCenterList">
+        <div class="helpCenterTitle">
+            <span class="helpCenterTextLeft">联系客服</span>
+            <i class="yd-icon icon-payway helpCenterArrow" style="margin-right:10px;float:right;">&nbsp;</i>
+        </div>
+        <div class="helpCenterContent">
+            <p>永达互金服务号客服电话：0571-28276085</p>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-2.0.0.min.js"></script>
+<script src="../js/Yonda-UI.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/commonCenter.js"></script>
+<script src="../js/event.js"></script>
+<script> 
+  $(".helpCenterTitle").unbind().click(function(){
+    if($(this).find(".helpCenterArrow").hasClass("helpCenterArrowActive")){
+      $(this).parent().find(".helpCenterContent").hide();
+      $(this).css("border-bottom","none");
+      $(this).find(".helpCenterArrow").removeClass("helpCenterArrowActive");
+    }
+    else{
+      $(this).parent().find(".helpCenterContent").show();
+      $(this).css("border-bottom","1px solid #E5E5E5");
+      $(this).find(".helpCenterArrow").addClass("helpCenterArrowActive");
+    }
+  });
+</script>
+</body>
+</html>

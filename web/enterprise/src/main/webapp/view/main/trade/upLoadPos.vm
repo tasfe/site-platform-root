@@ -1,0 +1,101 @@
+<link href="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/css/lhgcalendar.css" rel="stylesheet" type="text/css">
+<div class="wrapbg">
+<div class="wrap">
+	<div class="page_title operator">
+		<div class="title fl">
+			<i class="icon fl"></i>
+			<span class="tt fl">上传</span>
+		</div>
+	</div>
+     <div class="account_set_wrap clearfix">
+     	  
+     	  <!-- S 左边内容 -->
+     	  <div class="account_set_left">
+     	  	   <ul>
+                    <li>
+     	  	   	         <a class="subBlock selected" href="">
+     	  	   	             <span class="subNavIcon cygl"></span>
+     	  	   	             <span class="subNavArrows"></span>
+                             <span class="subNavTxt">上传</span>
+     	  	   	         </a>
+     	  	   	    </li>
+     	  	   </ul>
+     	  </div>
+     	  <!-- S 左边内容 -->
+
+            <!-- S 右边内容 -->
+     	  <div class="account_set_right">
+     	  	   
+     	  	   <div class="account_set_right_h1 pos_rel">上传对账单</div>
+     	  	   <div class="account_memberMain_con clearfix">
+                    <form id="J_Form" name="add-oper-form" class="" action="#springUrl('/setteleBill/upLoadPosDayFill.htm')" method="POST" target="_blank">
+                    <div class="addMemberCon">
+
+						<div class="addMember_limit">
+							<label><span class="f14 limitLeft">会员ID：</span>
+								<input type="text" class="inputtext w232 cutdown_words" id="memberId" name="memberId" value="" maxlength="50"  data-tip-place="2">
+							</label>
+							<div class="error h22 pl152 tip"></div>
+						</div>
+
+						<div class="addMember_limit">
+							<label><span class="f14 limitLeft">时间：</span>
+								<input type="text" class="datapick" id="startDate" name="date" readonly value="">
+								<input type="hidden" class="datapick" id="endDate" readonly value="">
+							</label>
+							<div class="error h22 pl152 tip"></div>
+						</div>
+
+						
+
+						<div class="error h22" id="submit_error" style="padding-left:155px;"></div>
+                             <div class="btn_addMember">
+                                  <input class="btn btn_submit" type="button" value="确 认">
+                             </div>
+							
+                    </div>
+					</form>
+     	  	   </div>
+
+     	  </div>
+     	  <!-- E 右边内容 -->
+
+     </div>
+
+</div>
+</div>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcore.min.js" type="text/javascript"></script>
+<script src="${WEB_RESOURCE.staticAddress}enterpriseWallet/common/js/lhgcalendar.min.js" type="text/javascript"></script>
+
+<script>
+$(function(){
+
+J("#startDate").calendar({
+        format: 'yyyy-MM-dd',
+        starttime: '00:00:00',
+        //minDate: minDate,
+        maxDate: '%y-%M-%d'
+    });
+    
+
+$(".btn_submit").click(function(){
+		var btn_submit = $(this);
+		btn_submit.attr("disabled", true).addClass("btn_disabled");
+		$(".error").text("");
+		$("#submit_error").text("");
+
+		if($("#memberId").val()==""){
+			$("#memberId").parent().parent().find(".error").text("请输入会员ID");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+
+		if($("#startDate").val()==""){
+			$("#date").parent().parent().find(".error").text("请输入时间");
+			btn_submit.attr("disabled", false).removeClass("btn_disabled"); return false;
+		}
+		
+		$("#J_Form").submit();
+		btn_submit.attr("disabled", false).removeClass("btn_disabled");
+	});
+})
+</script>

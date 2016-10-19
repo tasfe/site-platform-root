@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netfinworks.mq:netfinworks-mq-jms-listener:1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netfinworks/mq/netfinworks-mq-jms-listener/1.0.0-SNAPSHOT/netfinworks-mq-jms-listener-1.0.0-20131108.035326-5.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netfinworks/mq/netfinworks-mq-jms-listener/1.0.0-SNAPSHOT/netfinworks-mq-jms-listener-1.0.0-20131108.035326-5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netfinworks/mq/netfinworks-mq-jms-listener/1.0.0-SNAPSHOT/netfinworks-mq-jms-listener-1.0.0-20131108.035326-5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,149 @@
+
+                     <div class="trade_all">
+                         <div class="tab">
+                               <em class="icon_left"></em>
+                               <em class="icon_right"></em>
+                               <a class="fr" href="/my/megerPay.htm" >合并付款</a>
+                               <ul class="clearfix">
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-trade.htm')" hidefocus="true">交易记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-recharge.htm')" hidefocus="true">充值记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-cach.htm')" hidefocus="true">提现记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-transfer.htm')" hidefocus="true">转账记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                                       <li class="navitem cur">
+                                          <s class="yj_l"></s><a href="#springUrl('/my/all-refund.htm')" hidefocus="true">退款记录</a><s class="yj_r"></s><b></b>
+                                       </li>
+                               </ul>
+
+                         </div>
+                         <form id="queryForm" name="queryForm" action="#springUrl('/my/all-refund.htm')" method="post" >
+                         <ul class="select_by_time">
+                            <li>
+
+                                时间：
+                                        <input name="startDate"  id="startDate" type="text"  class="date-picker"  readonly="readonly"/>
+                                 至
+                                      <input name="endDate"  id="endDate" type="text"  class="date-picker"  readonly="readonly"/>
+                                      <input id="search" class="btn_h24" type="button" value="搜索"/>
+                            </li>
+                         </ul>
+                         			 <input type="hidden" id="currentPage" name="currentPage" />
+                         </form>
+                         <table class="list_check_table business_record">
+                             <colgroup>
+                                    <col width="100px">
+                                    <col width="200px">
+                                    <col width="200px">
+                                    <col width="120px">
+                                    <col width="100px">
+                                    <col width="90px">
+                            </colgroup>
+                           <tr>
+                                <th class="time">创建时间</th>
+                                <th>名称|交易信息</th>
+                                <th>流水号</th>
+                                <th>金额</th>
+                                <th>对方</th>
+                                <th>状态</th>
+                            </tr>
+                              #set ($i=1)
+                             #foreach ($!tradeInfo in $!response.data.page.infos)
+                                #if($i%2 != 0)
+                                    #set ($odd_class="time")
+                                #else
+                                    #set ($odd_class="odd")
+                                #end
+                                #set($i=$i+1)
+                                <tr class=$odd_class>
+                                    <td class="time">$!dateUtil.getNoSecondDateString($!tradeInfo.gmtSubmit) </td>
+                                    <td>$!tradeInfo.tradeType.getMessage()<br>$!tradeInfo.tradeMemo</td>
+                                    <td>$!tradeInfo.tradeVoucherNo</td>
+                                    <td class="fc_green">+$!moneyUtil.getAmount($!tradeInfo.payAmount)</td>
+                                    #if($!tradeInfo.buyerId == $!response.data.member.memberId)
+	                                    <td>$!tradeInfo.sellerName</td>
+                                	#else
+                                	 	<td>$!tradeInfo.buyerName</td>
+                                    #end
+                                    #if($!tradeInfo.status == 100)
+                                         <td><span>待支付</span></td>
+                                    #elseif($!tradeInfo.status == 101 || $!tradeInfo.status==111 || $!tradeInfo.status == 121)
+                                         <td><span>支付中</span></td>
+                                    #elseif($!tradeInfo.status == 201)
+                                         <td><span>付款成功</span></td>
+                                    #elseif($!tradeInfo.status == 301 || $!tradeInfo.status == 401)
+                                         <td><span>交易成功</span></td>
+                                    #elseif($!tradeInfo.status == 900 || $!tradeInfo.status == 901)
+                                         <td><span>退款中</span></td>
+                                    #elseif($!tradeInfo.status == 951)
+                                         <td><span>退款成功</span></td>
+                                    #elseif($!tradeInfo.status == 952)
+                                         <td><span>退款失败</span></td>
+                                    #elseif($!tradeInfo.status == 999)
+                                         <td><span>交易关闭</span></td>
+                                    #else
+                                        <td><span>$!tradeInfo.status</span></td>
+                                    #end
+                                </tr>
+                            #end
+							 #if(!$response.data.page.infos || $!response.data.page.infos.size()<=0)
+                           	<tr>
+                            	<td colspan="10">无退款信息！</td>
+                            </tr>
+                            #end
+                         </table>
+                          #parse("common/control/paginator.vm")
+                     </div>
+             </div>
+        </div>
+</div>
+<script type="text/javascript">
+ $(window).resize(function() {
+	$(".date-picker").datepicker( "hide" );
+	$(".date-picker").blur();
+});
+	 $(function(){
+
+		    //日期控件初始化
+			$('.date-picker').datepicker( {
+				dateFormat: 'yy-mm-dd',
+				maxDate: new Date()
+			});
+
+			 var initStartdate = '$!response.data.startDate';
+			 var initEnddate = '$!response.data.endDate';
+			 $( "#startDate" ).datepicker( "setDate", initStartdate );
+			 $( "#endDate" ).datepicker( "setDate", initEnddate );
+	  });
+
+	  $("#search").click(function(){
+			return toQuerySubmit(1);
+	  });
+
+	    function toQuerySubmit(sendPage){
+			var startDate = $( "#startDate" ).val();
+			var endDate = $( "#endDate" ).val();
+			if(endDate <startDate)  {
+				$.dialog({
+						 title: "消息",
+						 lock: true,
+			             content: "输入的截止时间必须大于起始时间！",
+						 height: 110,
+						 width:300,
+			             ok:function(){}
+						 });
+				return false;
+			}else{
+				queryForm.currentPage.value =  sendPage;
+				$("#queryForm")[0].submit();
+				return true;
+			}
+	   }
+
+	</script>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>管理数字证书</h2></div>
+
+     <div class="safetyMain">
+     
+          <div class="usbKeyCon">
+  				<div style="margin:0 0 0 425px; padding-top:67px;" class="usbKeyCenter">
+                    <div class="loginTipsBox" style="height:80px;">
+                           <i class="tipsIcon succeed"></i>
+                           <p class="f16 bold mb10">证书取消成功!</p>
+                           <p>为了您的账户安全，你可以重新登录永达互联网金融，申请新的证书。</p>
+                    </div>
+               </div>
+               <p style="text-align:center;"><a href="#springUrl('/softcertActivate/step1.htm')" class="mr16">申请证书</a> | <a href="#springUrl('/my/accountManage.htm')">安全中心</a></p>
+              
+               <div class="usbKeyFaq">
+                    <h4>数字证书问题：</h4>
+                    <dl>
+                        <dt>删除本地证书和取消证书的区别？</dt>
+                        <dd>答：<b>删除本地证书：</b>可以防止他人用证书登录进行操作。删除后仍然是证书用户，只是把当前机器中安装的证书删除了。如果之后仍要在这台机器上使用数字证书，将原来备份的证书导入进去即可。<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>取消证书：</b>当不想继续使用数字证书登录账户时，或证书备份密码忘记、证书丢失或过期，将无法使用永达互联网金融系统的一些功能时，可申请取消数字证书。取消证书成功后，不再是数字证书用户，账户安全将降低。</dd>
+                    </dl>
+                   <div class="link_bottom"><a href="#springUrl('/help/helpcenter.htm')" class="more">更多帮助</a><a href="#springUrl('/my/home.htm')">回到我的永达互联网金融</a></div>
+                </div>
+               
+              
+               
+          </div>
+      
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/jquery-1.8.2.min.js"></script>
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/js.js"></script> 
+<script src="${WEB_RESOURCE.staticAddress}wallet/common/js/showwin.js"></script>
+<script>
+$(function(){
+	
+	
+	
+	
+	$(".btn_mfhq").click(function(){
+		countDown($(this),60,"");
+	});
+	
+	
+	
+})
+function del(obj){
+	
+	var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		
+	html += '<div style=" padding-left:132px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span class="f14 b l_h47">您正在删除此数字证书,是否继续操作？</i></p></div>';
+	
+	html += '</div></div>';
+	
+	
+	html += '<div class="div_btn_submit"><input type="button" class="btn_qr" ></div></div>';
+	
+	
+	showWin('html', html, '', 611, 270, ' ', '', '');
+
+if($("#digitalcertificatelist tr").length==2){
+	var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		
+	html += '<div style=" padding-left:50px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span>您正在删除账户中唯一的数字证书。如果您不想再使用数字证书，<br>请您<span class="color_f60">取消数字证书</span>。是否继续操作？</i></p></div>';
+	
+	html += '</div></div>';
+	
+	
+	html += '<div class="div_btn_submit"><input type="button" class="btn_qr btn_sumbit_qr" ></div></div>';
+	
+	
+	showWin('html', html, '', 611, 270, ' ', '', '');
+	
+	$(".btn_sumbit_qr").live("click",function(){
+		var html = '<div class="floatbox2"><div class="cont_info"><div class="bankcx_fc">';
+		
+		html += '<div style=" padding-left:50px;" class="ApplyDigitalinfo f14"><p><i class="tipcautionMax"><span class="color_f60">证书一旦取消，你将失去证书保护功能，此操作请慎重！<br>如有需要，您可以在取消完成后重新申请证书。</i></p></div>';
+		
+		html += '<table cellpadding="0" cellspacing="0" border="0" class="sqinfo" style="margin:0; width:100%;"><tr><td class="tcright" width="233">手机校验码：</td><td><label><input type="text" class="inputtext w80" value="" id="sjyzm"><input class="btn_mfhq ml10" type="button" value=""></label></td></tr><tr><td class="tcright">支付密码：</td><td><div class="pwdiv fl"><input name="password" type="hidden" id="password" /></div></td></tr></table>';
+		
+		html += '</div></div>';
+		
+		
+		html += '<div class="div_btn_submit"><input type="button" class="btn_qr btn_sumbit_qr" ></div></div>';
+		
+		
+		showWin('html', html, '', 611, 350, ' ', '', '');
+	})
+}
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+ 
+ <link href="${WEB_RESOURCE.staticAddress}wallet/common/css/account2.css" rel="stylesheet" type="text/css">
+ <!-- S 主要内容 -->
+  <div class="wrap">
+		<div class="page_title"><h2>绑定邮箱</h2></div>
+		<div class="safetyMain">
+			<div style="text-align: center;line-height: 28px;">您正在为账户 <span class="b">$!response.data.loginName</span> 绑定邮箱，请选择绑定方式：</div>
+			<div >
+			    <div class="dlmm_chtype" style="width:80%;margin-left: auto;margin-right: auto;">
+					<i class="typeicon messageicon"></i>
+                	<span class="p1">通过验证短信</span>
+                    <span class="p2">如果您的$!response.data.Secretmobile手机还在正常使用，请选择此方式</span>
+                    <a href="${request.contextPath}/my/go-set-emailByPayPwd.htm?type=mobile">
+						<img style="position: absolute;right: 20px;top: 16px;" src="${WEB_RESOURCE.staticAddress}wallet/common/images/btn_ljbd.gif">
+					</a>
+			    </div>    
+				<div class="dlmm_chtype" style="width:80%;margin-left: auto;margin-right: auto;">
+					<i class="typeicon emailicon"></i>
+                	<span class="p1">通过支付密码</span>
+                    <p class="p2">如果您的$!response.data.Secretmobile手机不能正常使用，请选择此方式</p>
+                    <a href="${request.contextPath}/my/go-set-emailByPayPwd.htm?type=payPwd" >
+						<img style="position: absolute;right: 20px;top: 16px;" src="${WEB_RESOURCE.staticAddress}wallet/common/images/btn_ljbd.gif">
+					</a>
+			  </div>      
+      </div>
+    </div>
+  </div>

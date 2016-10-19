@@ -1,0 +1,61 @@
+
+<!-- S 主要内容 -->
+<div class="wrap">
+     
+     <div class="page_title"><h2>邮箱绑定</h2></div>
+
+     <div class="safetyMain">
+		 #if($!response.success) 
+     	 <div class="cz_step step step_3" style="margin-left: 56px;">
+          <i></i>
+          <span class="s1">验证身份</span>
+          <span class="s2" style="left: 408px;">修改邮箱</span>
+          <span class="s3" style="left: 653px;">修改成功</span>
+        </div>
+         <div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon succeed"></i>
+                   <p class="f16 bold mb10">恭喜您!您的邮箱$!response.data.email已成功绑定!</p>
+				   #if($!response.data.gopage=="aqzx")
+						<p><em class="red time_left">3</em>秒后会自动跳转至<a href="${request.contextPath}/my/accountManage.htm">安全中心</a></p>
+				   #else
+						<p><em class="red time_left">3</em>秒后会自动跳转至<a href="${request.contextPath}/my/accountManage.htm">账户设置</a></p>
+					#end
+              </div>
+              
+         </div> 
+		 #else
+          
+			<div class="logiAmend_succeed">
+              
+              <div class="loginTipsBox">
+                   <i class="tipsIcon error"></i>
+                   <p class="f16 bold mb10">$!response.message</p>
+				   #if($!response.data.gopage=="aqzx")
+						<p><em class="red time_left">3</em>秒后会自动跳转至<a href="${request.contextPath}/my/accountManage.htm?link=0400">安全中心</a></p>
+				   #else
+						<p><em class="red time_left">3</em>秒后会自动跳转至<a href="${request.contextPath}/my/accountSetting.htm?link=0103">账户设置</a></p>
+					#end
+              </div>
+              
+         </div> 
+			
+		 #end
+          
+     </div>
+     
+</div>
+<!-- E 主要内容 -->
+
+<script>
+$(function(){
+	var gopage="$!response.data.gopage";
+    if(gopage=="aqzx"){
+		goUrlByTime({$obj:$(".time_left"), time:3, url:"${request.contextPath}/my/accountManage.htm?link=0400"});
+	}else{
+		goUrlByTime({$obj:$(".time_left"), time:3, url:"${request.contextPath}/my/accountSetting.htm?link=0103"});
+	}
+})
+</script>
+

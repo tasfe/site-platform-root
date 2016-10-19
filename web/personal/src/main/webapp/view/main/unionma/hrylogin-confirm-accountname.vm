@@ -1,0 +1,80 @@
+ <link href="${WEB_RESOURCE.staticAddress}wallet/common/css/account2.css" rel="stylesheet" type="text/css">
+<!-- S 主要内容 -->
+<div class="wrap">
+     <div class="safetyMain">
+		<div class="usbKeyCon_tips w655px">
+						因系统升级，为提升您的帐号安全，请完成以下信息确认。完成后，您将可以继续使用永达互联网金融的服务。
+                 </div>
+				 <div class="content w697px">
+		<div class="title">请确认以下信息</div>	
+				 <p class="f12">选择后，将使用您选择的账户名进行登录。您可以在我的永达互联网金融—账户设置中进行账户名的修改。</p>
+				</div>
+	<div class="verify_con">
+	
+         <div class="loginCenter">
+              <form class="from1" id="nameupdateForm" name="nameupdateForm" action="${request.contextPath}/my/hrylogin-set-name.htm" method="post">
+				 #if($!{response.data.email} !="false")
+		         <div class="login_limit">
+                   <label><input type="radio" value="$!{response.data.email}" name="account"  #if($!{response.data.email} !="false")checked="checked"#end/>
+						$!{response.data.email}
+					</label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error">
+                <span></span>
+				</div>
+               </div>
+			   ##<div class="error pdlf170">$!{response.message}</div>
+				 #end
+				 #if($!{response.data.mobile} !="false")
+			   <div class="login_limit">
+				<label>
+					<input type="radio" value="$!{response.data.mobile}" name="account"  #if($!{response.data.email} =="false")checked="checked"#end/>
+						$!{response.data.mobile}
+				</label>
+                <label class="ml5"></label>
+                <div class="mainTips ml160 error">
+                <span></span>
+				</div>
+               </div>
+				 #end
+				 <div class="error pdlf170">$!{response.message}</div>
+			<input  type="hidden" name="accountname" id="accountname" />
+				<input  type="hidden" name="Mid" id="Mid" value="$!{response.data.Mid}"/>
+				<input  type="hidden" name="hry" id="hry" value="hry"/>
+				<input  type="hidden" name="memberIdentity" id="memberIdentity" value="$!{response.data.memberIdentity}"/>
+           <div class="loginAmendBtn"> <input class="btn_qr btn_submit" type="button" value=""></div>
+              </form>
+			  </div>
+         </div>      
+         </div> 
+</div>
+  <!-- E 主要内容 -->
+  <script type="text/javascript">
+
+$(function(){
+	$(".btn_submit").click(function(){
+    	var radios=document.getElementsByName("account");
+        for(var i=0;i<radios.length;i++)
+        {
+            if(radios[i].checked==true)
+            {
+    			var username=radios[i].value;
+    			$("#accountname").val(username);
+        		var regPattern_email = /^(\w)+(\.\w+)*@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+        		var regPattern_mobile = /^[1]([3][0-9]{1}|([4][7]{1})|([5][0-3|5-9]{1})|([8][0-9]{1}))[0-9]{8}$/;
+        		if(regPattern_email.test(username)) {
+        			$("#memberIdentity").val("EMAIL");
+					var usernameTipObj = $(this).parent().parent().parent().find(".error");
+    				checkAccount({cmd:"register", username:username, tipObj:usernameTipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:1});//type 2 邮箱
+        		} else if (regPattern_mobile.test(username)) {
+        			$("#memberIdentity").val("MOBILE");
+					var usernameTipObj = $(this).parent().parent().parent().find(".error");
+    				checkAccount({cmd:"register", username:username, tipObj:usernameTipObj, async:false,url:"#springUrl('/login/checkNewLoginName.htm')", type:2});//type 2 邮箱
+        		}
+                
+            }
+        }
+    	$("#nameupdateForm").submit();
+	});
+})
+</script>
