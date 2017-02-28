@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd"
+    default-autowire="byName">
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <context:annotation-config />
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+	        <list>
+	            <value>file:${config.root}/app.properties</value>
+	            <value>file:${config.root}/session.properties</value>
+	            <value>file:${config.root}/wallet-app/config.properties</value>
+	        </list>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="com.netfinworks.site.core" />
+    <context:component-scan base-package="com.netfinworks.site.ext" />
+    <context:component-scan base-package="com.yongda.site.ext" />
+    <context:component-scan base-package="com.netfinworks.site.domainservice" />
+
+    <import resource="classpath:META-INF/spring/site-domainservice-common.xml" />
+    <import resource="classpath:META-INF/spring/site-domainservice-main.xml" />
+    <import resource="classpath:META-INF/spring/site-ext-integration.xml" />
+    <import resource="classpath:META-INF/spring/site-ext-integration-sars.xml" />
+    <import resource="classpath:META-INF/spring/site-ext-service.xml" />
+    <!-- memcache -->
+	<import resource="classpath:ucs-support-annotatiion.xml" />
+	
+	<import resource="classpath:META-INF/spring/persistence.xml" />
+	<import resource="classpath:META-INF/spring/persistent-apps.xml" />
+	<import resource="classpath:META-INF/spring/persistent-apps-dao.xml" />
+	<import resource="classpath*:META-INF/spring/**/*-bean.xml"/>
+    <bean id="customImgUploader" parent="abstractFileUploader">
+        <property name="subPath" value="/custom_img" />
+    </bean>
+
+    <bean id="dalLoggerInterceptor" class="com.yongda.site.wallet.app.common.interceptor.LoggerInterceptor">
+        <property name="loggerName" value="${dalLoggerName}" />
+    </bean>
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <list>
+                <value>customOrderRepository</value>
+                <value>functionRepository</value>
+                <value>functionContentRepository</value>
+                <!-- <value>memberRepository</value> <value>roleRepository</value> -->
+                <value>industryRepository</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <value>dalLoggerInterceptor</value>
+        </property>
+    </bean>
+    <!-- 注册cmsUFSClient资源管理系统客户端 -->
+    <bean id="pfsMgrUfsClient" class="com.netfinworks.ufs.client.UFSClient">
+        <property name="host" value="${ufs.host}"/>
+        <property name="user" value="${ufs.user}"/>
+        <property name="password" value="${ufs.password}"/>
+        <property name="serverRoot" value="${ufs.serverRoot}"/>
+    </bean>
+
+    <bean id="sessionFilter" class="com.yongda.site.wallet.app.filter.SessionFilter"/>
+	<import resource="classpath:META-INF/spring/vfsso-cache-session-service.xml" />
+
+    <bean class="com.yongda.site.wallet.app.listener.ServletContextInitListener">
+        <property name="webResource">
+            <ref bean="webResource"/>
+        </property>
+    </bean>
+
+     <bean id="webResource" class="com.yongda.site.wallet.app.WebDynamicResource">
+        <property name="staticAddress" value="${staticAddress}" />
+        <property name="staticVersion" value="${staticVersion}" />
+        <property name="walletAddress" value="${walletAddress}" />
+      <!--  <property name="walletH5Address" value="${walletH5Address}" />-->
+        <property name="resetPaypassWordUrl" value="${reset_paypassword_url_string}" />
+        <property name="enterWalletAddr" value="${enterpriseWalletAddress}" />
+        <property name="registerPersonAddress" value="${register_url_person}" />
+        <property name="registerEnterpriseAddress" value="${register_url_enterprise}" />
+        <property name="staticAddressDomain" value="${staticAddressDomain}" />
+        <property name="signatureAddress" value="${signature.address}" />
+        <property name="vfssoDomain" value="${vfssoDomain}" />
+        <property name="enterpriseAccountHash" value="${enterpriseAccountHash}"></property>
+        <property name="gatewayAccountHash" value="${gatewayAccountHash}"></property>
+        <property name="personalPAccountHash" value="${personalPAccountHash}"></property>
+        <property name="personalEAccountHash" value="${personalEAccountHash}"></property>
+        <property name="uploadFilePath" value="${uploadFilePath}"></property>
+        <property name="gatewayUrl" value="${gatewayUrl}"></property>
+        <property name="rechargeEnterpriseMemberId" value="${rechargeEnterpriseMemberId}"></property>
+         <property name="magSignkey" value="${mag.sign.key}"></property>
+         <property name="timeout" value="${http.timeout}"></property>
+         <property name="walletrechargeReturnUrl" value="${walletrechargeReturnUrl}"></property>
+    </bean>
+</beans>
